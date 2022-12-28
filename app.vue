@@ -1,5 +1,13 @@
+<script setup lang="ts">
+</script>
+
 <template>
-  <div>
-    <NuxtWelcome />
+  <div class="app">
+    <NuxtLayout>
+      <main>
+        <NuxtPage />
+      </main>
+    </NuxtLayout>
   </div>
 </template>
+
