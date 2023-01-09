@@ -8,16 +8,16 @@ export default defineNuxtConfig({
   components: true,
   app: {
     // global transition
-    pageTransition: { name: "page", mode: "out-in" },
-    layoutTransition: { name: "layout", mode: "out-in" },
+    pageTransition: { name: 'page', mode: 'out-in' },
+    layoutTransition: { name: 'layout', mode: 'out-in' },
   },
   // css
   css: [
-    "virtual:windi-base.css",
-    "virtual:windi-components.css",
-    "virtual:windi-utilities.css",
-    "~/assets/sass/vendor.scss",
-    "~/assets/sass/app.scss",
+    'virtual:windi-base.css',
+    'virtual:windi-components.css',
+    'virtual:windi-utilities.css',
+    '~/assets/sass/vendor.scss',
+    '~/assets/sass/app.scss',
   ],
-  modules: ["nuxt-windicss"],
-});
+  modules: ['nuxt-windicss', '@pinia/nuxt'],
+})

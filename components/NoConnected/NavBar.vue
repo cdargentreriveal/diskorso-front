@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { IMenuItem } from "../../types/MenuItems";
+import { IMenuItem } from '../../types/MenuItems'
 const menus = computed((): IMenuItem[] => [
   {
-    type: "link",
-    text: "Accueil",
-    route: { name: "index" },
+    type: 'link',
+    text: 'Accueil',
+    route: { name: 'index' },
   },
   {
-    type: "link",
-    text: "Les Promenades",
-    route: { name: "promenades" },
+    type: 'link',
+    text: 'Les Promenades',
+    route: { name: 'promenades' },
   },
   {
-    type: "button",
-    text: "Connexion",
-    route: { name: "login" },
+    type: 'button',
+    text: 'Connexion',
+    route: { name: 'login' },
   },
-]);
+])
 </script>
 
 <template>
