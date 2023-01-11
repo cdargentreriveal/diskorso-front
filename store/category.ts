@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Category } from '~~/models/Category'
+import { Category } from '~~/types/Categories'
 
 export type Categories = Category[] | undefined[]
 

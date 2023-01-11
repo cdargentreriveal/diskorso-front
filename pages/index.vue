@@ -10,9 +10,7 @@ const categoryStore = useCategoryStore()
 onMounted(() => {
   categoryStore.fetchCategories()
 })
-// await useAsyncData('categories', () => {
-//   return categoryStore.fetchCategories()
-// })
+
 const categoriesList = computed(() => {
   return categoryStore.categories
 })
@@ -20,7 +18,10 @@ const categoriesList = computed(() => {
 
 <template>
   <div>Page d'Accueil</div>
-  <div v-for="(category, index) in categoriesList" :key="index">
-    {{ category?.title }}
+  <p>Les catégories</p>
+  <div class="lg:flex items-center ml-auto space-x-20">
+    <div v-for="(category, index) in categoriesList" :key="index">
+      {{ category!.title }}
+    </div>
   </div>
 </template>

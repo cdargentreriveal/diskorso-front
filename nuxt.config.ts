@@ -1,16 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: true,
+  // ssr: true,
   typescript: {
     strict: true,
     typeCheck: true,
   },
   components: true,
-  app: {
-    // global transition
-    pageTransition: { name: 'page', mode: 'out-in' },
-    layoutTransition: { name: 'layout', mode: 'out-in' },
-  },
+  // app: {
+  //   // global transition
+  //   pageTransition: { name: 'page', mode: 'out-in' },
+  //   layoutTransition: { name: 'layout', mode: 'out-in' },
+  // },
   // css
   css: [
     'virtual:windi-base.css',
