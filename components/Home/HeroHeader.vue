@@ -7,9 +7,10 @@
         <img
           src="@/assets/images/diskorso-line.svg"
           alt="ligne design diskorso"
+          class="mx-auto"
         />
       </div>
-      <div class="heroHeader-title text-center uppercase relative">
+      <div class="heroHeader-title text-center uppercase relative blur-lg">
         <h1>
           <span class="font-bold">Plateforme Collaborative</span> <br />
           <span class="title-el"
@@ -48,6 +49,7 @@ export default {}
 .heroHeader {
   height: 80vh;
   background-color: var(--purple-color);
+  animation: mymove 15s infinite ease-in-out;
   &-title {
     color: white;
     font-size: 3.75em;
@@ -62,7 +64,7 @@ export default {}
     margin-top: 0.75vw;
   }
   &-line {
-    top: -6em;
+    top: -8em;
     transform: translateX(-50%);
   }
 }
@@ -71,5 +73,19 @@ export default {}
 }
 em {
   text-transform: capitalize;
+}
+@keyframes mymove {
+  0% {
+    background-color: var(--purple-color);
+  }
+  25% {
+    background-color: rgb(255, 73, 112);
+  }
+  75% {
+    background-color: rgb(244, 116, 24);
+  }
+  100% {
+    background-color: var(--purple-color);
+  }
 }
 </style>

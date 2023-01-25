@@ -43,20 +43,20 @@ const menus = computed((): IMenuItem[] => [
           </div>
         </div>
         <div class="w-1/2">
-          <ul class="flex justify-end gap-16 text-white items-center">
+          <ul class="flex justify-end text-white items-center">
             <li v-for="(item, i) in menus" :key="i">
               <Anchor
                 v-if="item.type === 'link'"
                 :to="item.route ? item.route : undefined"
                 :href="item.href ? item.href : undefined"
-                class="hover:no-underline"
+                class="hover:no-underline mx-7"
                 >{{ item.text }}
               </Anchor>
               <Button
                 v-else-if="item.type === 'button'"
                 :text="item.text"
                 size="xs"
-                class="font-bold p-5 capitalize"
+                :class="item.text + ' font-bold p-5 capitalize mx-3 '"
                 :to="item.route ? item.route : undefined"
                 :href="item.href ? item.href : undefined"
               />
@@ -76,5 +76,14 @@ const menus = computed((): IMenuItem[] => [
     border-left: 2px solid black;
     border-right: 2px solid black;
   }
+}
+li .Connexion {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+}
+li .Inscription {
+  background-color: black;
+  border: none;
 }
 </style>
