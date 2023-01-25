@@ -3,6 +3,20 @@
 // vars
 @import 'variables';
 
+*{
+  font-family: 'Montserrat', sans-serif;
+}
+.font-italic{
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+}
+/* colors */
+:root {
+  --purple-color:#986FFC;
+}
+.purple-color{
+  color: var(--purple-color);
+}
 // components
 ::-webkit-scrollbar {
   width: 16px;

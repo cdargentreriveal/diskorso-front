@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useCategoryStore } from '~~/store/category'
-
 definePageMeta({
   layout: 'page',
 })
@@ -17,6 +16,7 @@ const categoriesList = computed(() => {
 </script>
 
 <template>
+  <HomeHeroHeader />
   <div>Page d'Accueil</div>
   <p>Les catégories</p>
   <div class="lg:flex items-center ml-auto space-x-20">
