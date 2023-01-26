@@ -6,7 +6,7 @@ definePageMeta({
 
 const categoryStore = useCategoryStore()
 
-onMounted(() => {
+onBeforeMount(() => {
   categoryStore.fetchCategories()
   const navbar = document.querySelector('.navbar')
   if (navbar) {

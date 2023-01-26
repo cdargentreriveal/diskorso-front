@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: "page",
-});
+  layout: 'page',
+})
 </script>
 
 <template>
-  <div>Les promenades</div>
+  <div class="container mx-auto">
+    <div>Les promenades</div>
+  </div>
 </template>
