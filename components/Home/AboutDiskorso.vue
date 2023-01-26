@@ -47,7 +47,6 @@ export default {}
 <style lang="scss" scoped>
 .about {
   overflow: hidden;
-
 }
 .diskorso-line-car {
   top: 0rem;

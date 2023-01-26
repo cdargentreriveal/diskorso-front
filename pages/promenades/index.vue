@@ -6,6 +6,11 @@ definePageMeta({
 
 <template>
   <div class="container mx-auto">
-    <div>Les promenades</div>
+    <div class="promenades">Les promenades</div>
   </div>
 </template>
+<style lang="scss" scoped>
+.promenades {
+  height: 120vh;
+}
+</style>
