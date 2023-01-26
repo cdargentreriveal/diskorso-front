@@ -22,7 +22,7 @@ const categoriesList = computed(() => {
   <div class="container mx-auto">
     <div class="flex my-20">
       <CardsTemplateCard
-        class="w-1/3 gap-4"
+        class="w-1/3 gap-6"
         image=""
         alt="coucou toi"
         title="La planète Terre"
@@ -36,10 +36,14 @@ const categoriesList = computed(() => {
             categoryName: 'Science',
             color: 'cat-orange ',
           },
+          {
+            categoryName: 'Société',
+            color: 'cat-blue ',
+          },
         ]"
         text="La Terre est la troisième planète par ordre d'éloignement
         au Soleil et la cinquième plus grande du Système solaire
-        aussi bien par la masse que par le diamètre…"
+        aussi bien par la masse que par le diamètre"
         :author="[
           {
             authorName: 'Florian Bridoux',

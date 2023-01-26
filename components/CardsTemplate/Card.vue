@@ -19,7 +19,7 @@
           </button>
         </div>
       </div>
-      <p class="text-sm gray-color">{{ text }}</p>
+      <p class="text-sm gray-color card-content-description">{{ text }}</p>
       <div class="card-content-bottom pt-8 pb-2">
         <div class="flex items-center">
           <div class="card-content-author w-1/2">
@@ -87,6 +87,13 @@ const props = defineProps({
     type: [String, Object],
     default: undefined,
   },
+})
+onMounted(() => {
+  const descriptionCard = document.querySelector('.card-content-description')
+  if (descriptionCard) {
+    const shortDescription = descriptionCard.textContent?.substring(0, 170) ?? ''
+    descriptionCard.textContent = shortDescription + '...'
+  }
 })
 </script>
 
