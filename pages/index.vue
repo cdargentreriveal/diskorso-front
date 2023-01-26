@@ -20,7 +20,7 @@ const categoriesList = computed(() => {
   <HomeAboutDiskorso />
   <Separator />
   <div class="container mx-auto">
-    <div class="flex">
+    <div class="flex my-20">
       <CardsTemplateCard
         class="w-1/3 gap-4"
         image=""
@@ -30,11 +30,11 @@ const categoriesList = computed(() => {
         :categories="[
           {
             categoryName: 'Histoire',
-            color: 'red',
+            color: 'cat-purple ',
           },
           {
             categoryName: 'Science',
-            color: 'blue',
+            color: 'cat-orange ',
           },
         ]"
         text="La Terre est la troisième planète par ordre d'éloignement

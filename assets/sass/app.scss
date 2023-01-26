@@ -14,10 +14,30 @@
 /* colors */
 :root {
   --purple-color:#986FFC;
+  --gray-color :#525252;
 }
 .purple-color{
   color: var(--purple-color);
 }
+.gray-color{
+  color: var(--gray-color);
+}
+.box-shaddow{
+  -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.11);
+  box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.11);
+}
+
+// categories
+
+.cat-purple {
+  background-color:#E8DEFF;
+  color: #986FFC;
+}
+.cat-orange {
+  background-color:#FAE7D4;
+  color: #FBB369;
+}
+
 // components
 ::-webkit-scrollbar {
   width: 16px;
