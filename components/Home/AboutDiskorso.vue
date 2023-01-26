@@ -13,7 +13,7 @@
               >
             </h2>
           </div>
-          <div class="about-description my-10 w-9/12">
+          <div class="about-description mt-10 w-9/12">
             <p>
               Diskorso est une plateforme collaborative permettant de mettre en
               relation les contributeurs, qui confectionneraient un nouveau
