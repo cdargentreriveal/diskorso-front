@@ -19,7 +19,20 @@
           </button>
         </div>
       </div>
-      <p class="text-sm gray-color py-2">{{ text }}</p>
+      <p class="text-sm gray-color">{{ text }}</p>
+      <div class="card-content-bottom pt-8 pb-2">
+        <div class="flex items-center">
+          <div class="card-content-author w-1/2">
+            <div class="flex gap-4 items-center">
+              <div class="avatar">ddss</div>
+              <div class="author text-xs">fdkhf</div>
+            </div>
+          </div>
+          <div class="promenade-link text-right w-1/2">
+            <button class="font-semibold underline text-sm">Lire la promenade ></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
