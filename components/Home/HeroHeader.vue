@@ -17,7 +17,10 @@
             >De <em class="font-italic">Promenades</em> numériques</span
           >
         </h1>
-        <button class="heroHeader-button rounded-full px-10 py-4 uppercase">
+        <button
+          class="heroHeader-button rounded-full px-10 py-4 uppercase"
+          @click="scrollTo"
+        >
           <span class="flex items-center gap-4">
             <span>Découvrir</span>
             <span
@@ -42,7 +45,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    scrollTo() {
+      const element = document.getElementById('about')
+      element.scrollIntoView({ behavior: 'smooth' })
+    },
+  },
+}
 </script>
 
 <style lang="scss" scoped>

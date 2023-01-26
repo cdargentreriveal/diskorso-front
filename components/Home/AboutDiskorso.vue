@@ -1,5 +1,5 @@
 <template>
-  <section class="about relative">
+  <section id="about" class="about relative">
     <div class="diskorso-line-car absolute">
       <img src="@/assets/images/diskorso-line-card.svg" alt="ligne design" />
     </div>

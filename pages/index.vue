@@ -18,6 +18,7 @@ const categoriesList = computed(() => {
 <template>
   <HomeHeroHeader />
   <HomeAboutDiskorso />
+  <Separator />
   <div>Page d'Accueil</div>
   <p>Les catégories</p>
   <div class="lg:flex items-center ml-auto space-x-20">
