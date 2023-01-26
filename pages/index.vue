@@ -8,8 +8,19 @@ const categoryStore = useCategoryStore()
 
 onMounted(() => {
   categoryStore.fetchCategories()
+  const navbar = document.querySelector('.navbar')
+  if (navbar) {
+    const navBarWhite = navbar.classList.add('navbar-white')
+    return navBarWhite
+  }
 })
-
+onUnmounted(() => {
+  const navbar = document.querySelector('.navbar')
+  if (navbar) {
+    const navBarWhite = navbar.classList.remove('navbar-white')
+    return navBarWhite
+  }
+})
 const categoriesList = computed(() => {
   return categoryStore.categories
 })
@@ -22,7 +33,10 @@ const categoriesList = computed(() => {
   <div class="container mx-auto">
     <div class="py-8 text-center">
       <div class="title uppercase font-bold text-4xl">
-        <h2>Les dernières <br /> <span class="font-medium purple-color">Promenades</span></h2>
+        <h2>
+          Les dernières <br />
+          <span class="font-medium purple-color">Promenades</span>
+        </h2>
       </div>
     </div>
     <div class="flex my-20 gap-6 flex-wrap">
