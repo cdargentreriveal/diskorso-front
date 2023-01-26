@@ -19,11 +19,35 @@ const categoriesList = computed(() => {
   <HomeHeroHeader />
   <HomeAboutDiskorso />
   <Separator />
-  <div>Page d'Accueil</div>
+  <div class="container mx-auto">
+    <div class="flex">
+      <CardsTemplateCard
+        class="w-1/3 gap-4"
+        image=""
+        alt="coucou toi"
+        title="La planète Terre"
+        date="01/03/2023"
+        :categories="[
+          {
+            categoryName: 'Histoire',
+            color: 'red',
+          },
+          {
+            categoryName: 'Science',
+            color: 'blue',
+          },
+        ]"
+        text="La Terre est la troisième planète par ordre d'éloignement
+      au Soleil et la cinquième plus grande du Système solaire
+      aussi bien par la masse que par le diamètre…"
+      />
+    </div>
+  </div>
+  <!--   <div>Page d'Accueil</div>
   <p>Les catégories</p>
   <div class="lg:flex items-center ml-auto space-x-20">
     <div v-for="(category, index) in categoriesList" :key="index">
       {{ category!.title }}
     </div>
-  </div>
+  </div> -->
 </template>
