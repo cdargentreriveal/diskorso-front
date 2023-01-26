@@ -22,7 +22,11 @@
               et qui trouverait dans ces promenades un contenu adapté selon le
               niveau de détails, de vulgarisation…
             </p>
-            <Button text="helo" type="secondary" to="/promenades" />
+            <Button
+              text="Voir les promenades"
+              type="secondary"
+              to="/promenades"
+            />
           </div>
         </div>
         <div class="about-card w-1/2 flex justify-center">

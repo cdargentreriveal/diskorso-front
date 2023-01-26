@@ -24,15 +24,16 @@ const props = defineProps({
 // state:styles
 const defaultStyle = `
   cursor-pointer
-  my-10
-  border transition-color duration-300 inline-flex items-center rounded-full
+  border transition-color duration-300
+  focus:outline-none focus:ring-1 focus:ring-offset-1 focus:dark:ring-offset-gray-50 focus:dark:ring-gray-400 focus:ring-gray-600/[0.6] focus:ring-offset-gray-800/[0.6]
+  flex items-center justify-center font-semibold
 `
 const styles = reactive<{
   [key: string]: string
 }>({
   none: '',
   primary: 'bg-primary-500 hover:bg-primary-400 border-primary-500',
-  secondary: '',
+  secondary: 'cursor-pointer',
   opposite:
     'text-white bg-gray-800 hover:bg-white hover:text-gray-800 hover:border-gray-900 dark:text-gray-800 dark:bg-gray-100 dark:hover:bg-gray-800 dark:hover:text-gray-100 dark:border-white',
 })
@@ -40,7 +41,7 @@ const sizes = reactive<{
   [key: string]: string
 }>({
   lg: 'h-13 px-8 text-lg rounded-lg',
-  md: 'h-10 px-6 text-base rounded',
+  md: 'h-10 px-4 text-base rounded',
   sm: 'h-9 px-4 text-sm rounded',
   xs: 'h-6 px-3 text-xs rounded',
 })
@@ -63,13 +64,30 @@ const onClick = (event: MouseEvent) => {
 
 <template>
   <NuxtLink
-    v-if="to"
+    v-if="type === 'primary'"
     tag="a"
     :to="to"
     :class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
   >
     <slot>{{ text }}</slot>
   </NuxtLink>
+  <div
+    v-else-if="type === 'secondary'"
+    class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4"
+  >
+    <div class="link uppercase">
+      <NuxtLink tag="a" :to="to" :class="`${selectedStyle} ${selectedSize}`">
+        <slot>{{ text }}</slot>
+      </NuxtLink>
+    </div>
+    <span>
+      <img
+        src="@/assets/images/icons/arrow-right-black.svg"
+        alt="fleche droite noire"
+        class="pr-4"
+      />
+    </span>
+  </div>
   <a
     v-else
     :class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
