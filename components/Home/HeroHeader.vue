@@ -1,11 +1,11 @@
 <template>
-  <div class="heroHeader">
+  <div class="heroHeader relative">
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
       <div class="heroHeader-line absolute w-full left-1/2">
         <img
-          src="@/assets/images/diskorso-line.svg"
+          src="@/assets/images/diskorso-line-2.svg"
           alt="ligne design diskorso"
           class="mx-auto"
         />
@@ -29,14 +29,14 @@
         </button>
       </div>
     </div>
-  </div>
-  <div class="heroHeader-image">
-    <div class="container mx-auto">
-      <img
-        class="mx-auto"
-        src="@/assets/images/diskorso-people.svg"
-        alt="illustration groupe de personne "
-      />
+    <div class="heroHeader-image absolute w-full">
+      <div class="container mx-auto">
+        <img
+          class="mx-auto"
+          src="@/assets/images/diskorso-people.svg"
+          alt="illustration groupe de personne "
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -49,7 +49,7 @@ export default {}
 .heroHeader {
   height: 80vh;
   background-color: var(--purple-color);
-  animation: mymove 15s infinite ease-in-out;
+  animation: mymove 25s infinite ease-in-out;
   &-title {
     color: white;
     font-size: 3.75em;
@@ -60,8 +60,8 @@ export default {}
     background-color: black;
   }
   &-image {
-    transform: translateY(-100%);
-    margin-top: 0.75vw;
+    margin-top: 0;
+    bottom: -0.7vw;
   }
   &-line {
     top: -8em;
