@@ -99,6 +99,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .card {
+  width: 32%;
   &-image {
     height: 240px;
     width: 100%;

@@ -20,9 +20,8 @@ const categoriesList = computed(() => {
   <HomeAboutDiskorso />
   <Separator />
   <div class="container mx-auto">
-    <div class="flex my-20">
+    <div class="flex my-20 gap-6 flex-wrap">
       <CardsTemplateCard
-        class="w-1/3 gap-6"
         image=""
         alt="coucou toi"
         title="La planète Terre"
