@@ -20,6 +20,11 @@ const categoriesList = computed(() => {
   <HomeAboutDiskorso />
   <Separator />
   <div class="container mx-auto">
+    <div class="py-8 text-center">
+      <div class="title uppercase font-bold text-4xl">
+        <h2>Les dernières <br /> <span class="font-medium purple-color">Promenades</span></h2>
+      </div>
+    </div>
     <div class="flex my-20 gap-6 flex-wrap">
       <CardsTemplateCard
         image=""

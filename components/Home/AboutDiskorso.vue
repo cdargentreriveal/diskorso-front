@@ -6,7 +6,7 @@
     <div class="container mx-auto my-20">
       <div class="flex items-center">
         <div class="about-content w-1/2">
-          <div class="about-title font-bold">
+          <div class="about-title font-bold text-4xl uppercase">
             <h2>
               Pourquoi <br /><span class="font-normal purple-color"
                 >Diskorso ?</span
@@ -47,10 +47,7 @@ export default {}
 <style lang="scss" scoped>
 .about {
   overflow: hidden;
-  &-title {
-    font-size: 2.7rem;
-    line-height: 3.3rem;
-  }
+
 }
 .diskorso-line-car {
   top: 0rem;
