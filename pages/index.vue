@@ -38,8 +38,14 @@ const categoriesList = computed(() => {
           },
         ]"
         text="La Terre est la troisième planète par ordre d'éloignement
-      au Soleil et la cinquième plus grande du Système solaire
-      aussi bien par la masse que par le diamètre…"
+        au Soleil et la cinquième plus grande du Système solaire
+        aussi bien par la masse que par le diamètre…"
+        :author="[
+          {
+            authorName: 'Florian Bridoux',
+            authorAvatar: 'cat-purple ',
+          },
+        ]"
       />
     </div>
   </div>

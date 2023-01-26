@@ -3,7 +3,7 @@
     <div class="card-image">
       <img class="w-full" src="@/assets/images/test-img-card.jpg" :alt="alt" />
     </div>
-    <div class="card-content p-5">
+    <div class="card-content p-8">
       <div class="card-content-title font-bold text-2xl my-1">
         <h2>{{ title }}</h2>
       </div>
@@ -23,13 +23,21 @@
       <div class="card-content-bottom pt-8 pb-2">
         <div class="flex items-center">
           <div class="card-content-author w-1/2">
-            <div class="flex gap-4 items-center">
-              <div class="avatar">ddss</div>
-              <div class="author text-xs">fdkhf</div>
+            <div class="flex gap-3 items-center">
+              <div
+                class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black"
+              >
+                <img src="@/assets/images/test-avatar.jpg" alt="avatar" />
+              </div>
+              <div class="card-content-author gray-color text-xs italic">
+                par : {{ author[0].authorName }}
+              </div>
             </div>
           </div>
-          <div class="promenade-link text-right w-1/2">
-            <button class="font-semibold underline text-sm">Lire la promenade ></button>
+          <div class="card-content-link text-right w-1/2">
+            <button class="font-semibold underline text-sm">
+              Lire la promenade >
+            </button>
           </div>
         </div>
       </div>
@@ -47,6 +55,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  title: {
+    type: String,
+    default: '',
+  },
   date: {
     type: String,
     default: '',
@@ -61,9 +73,11 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  title: {
-    type: String,
-    default: '',
+  author: {
+    type: Array,
+    default() {
+      return []
+    },
   },
   size: {
     type: String,
