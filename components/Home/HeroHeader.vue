@@ -74,8 +74,11 @@ export default {
     bottom: -0.7vw;
   }
   &-line {
-    top: -8em;
     transform: translateX(-50%);
+    & img {
+      top: -8rem;
+      position: relative;
+    }
   }
 }
 .title-el {
@@ -89,10 +92,10 @@ em {
     background-color: var(--purple-color);
   }
   25% {
-    background-color: rgb(255, 73, 112);
+    background-color: rgb(245, 91, 122);
   }
   75% {
-    background-color: rgb(244, 116, 24);
+    background-color: #ff832b;
   }
   100% {
     background-color: var(--purple-color);

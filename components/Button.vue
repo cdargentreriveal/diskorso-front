@@ -40,10 +40,10 @@ const styles = reactive<{
 const sizes = reactive<{
   [key: string]: string
 }>({
-  lg: 'h-13 px-8 text-lg rounded-lg',
-  md: 'h-10 px-4 text-base rounded',
-  sm: 'h-9 px-4 text-sm rounded',
-  xs: 'h-6 px-3 text-xs rounded',
+  lg: 'h-13 px-6 text-lg rounded-lg',
+  md: 'h-10 px-2 text-base rounded',
+  sm: 'h-9 px-3 text-sm rounded',
+  xs: 'h-6 px-4 text-xs rounded',
 })
 // state
 const selectedStyle = computed(() =>
@@ -84,7 +84,7 @@ const onClick = (event: MouseEvent) => {
       <img
         src="@/assets/images/icons/arrow-right-black.svg"
         alt="fleche droite noire"
-        class="pr-4"
+        class="pr-2"
       />
     </span>
   </div>
