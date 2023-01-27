@@ -1,7 +1,11 @@
 <template>
   <section id="about" class="about relative">
-    <div class="diskorso-line-car absolute">
-      <img src="@/assets/images/diskorso-line-card.svg" alt="ligne design" />
+    <div class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto">
+      <img
+        src="@/assets/images/diskorso-line-card.svg"
+        alt="ligne design"
+        class="mx-auto"
+      />
     </div>
     <div class="container mx-auto my-20">
       <div class="flex items-center">
