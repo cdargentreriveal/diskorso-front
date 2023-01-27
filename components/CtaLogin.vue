@@ -1,14 +1,17 @@
 <template>
   <section class="cta_login">
     <div class="container mx-auto">
-      <div class="cta_login-content p-15 my-15 text-white">
+      <div class="cta_login-content p-15 my-15 text-white text-center">
         <div
-          class="text-center cta_login-content-title font-bold text-4xl uppercase"
+          class="justify-center cta_login-content-title font-bold text-4xl uppercase relative inline-block"
         >
           <h3>
             Créateur de <br />
             <span class="font-medium">promenades</span>
           </h3>
+          <div class="hand absolute top-0">
+            <img src="@/assets/images/icons/hand-two.png" alt="" />
+          </div>
         </div>
         <div
           class="cta_login-content-description text-center w-1/2 mx-auto pt-5"
@@ -75,5 +78,8 @@ li .Inscription {
   background-color: black;
   color: white;
   border: none;
+}
+.hand {
+  right: -7rem;
 }
 </style>
