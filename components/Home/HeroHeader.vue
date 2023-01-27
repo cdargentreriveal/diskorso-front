@@ -11,7 +11,7 @@
         />
       </div>
       <div
-        class="heroHeader-title text-center uppercase relative blur-lg text-white 2xl:text-6xl xl:text-5xl -mt-[1.75rem]"
+        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-2xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem]"
       >
         <h1>
           <span class="font-bold">Plateforme Collaborative</span> <br />
