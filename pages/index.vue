@@ -30,7 +30,7 @@ const categoriesList = computed(() => {
   <HomeHeroHeader />
   <HomeAboutDiskorso />
   <Separator />
-  <div class="container mx-auto">
+  <section class="container mx-auto promenades">
     <div class="py-8 text-center">
       <div class="title uppercase font-bold text-4xl">
         <h2>
@@ -70,7 +70,11 @@ const categoriesList = computed(() => {
         ]"
       />
     </div>
-  </div>
+    <div class="text-center">
+      <Button text="Voir les promenades" type="secondary" to="/promenades" />
+    </div>
+  </section>
+  <CtaLogin />
   <!--   <div>Page d'Accueil</div>
   <p>Les catégories</p>
   <div class="lg:flex items-center ml-auto space-x-20">
