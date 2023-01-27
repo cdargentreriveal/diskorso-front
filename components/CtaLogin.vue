@@ -1,7 +1,7 @@
 <template>
   <section class="cta_login">
     <div class="container mx-auto">
-      <div class="cta_login-content p-15 my-15 text-white text-center">
+      <div class="cta_login-content py-25 my-15 text-white text-center">
         <div
           class="justify-center cta_login-content-title font-bold text-4xl uppercase relative inline-block"
         >
