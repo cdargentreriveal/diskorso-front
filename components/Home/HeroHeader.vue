@@ -3,11 +3,11 @@
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
-      <div class="heroHeader-line absolute 2xl:w-9/12 xl:w-[75vw] left-1/2">
+      <div class="heroHeader-line absolute 2xl:w-9/12 xl:w-[70vw] left-1/2">
         <img
           src="@/assets/images/diskorso-line-2.svg"
           alt="ligne design diskorso"
-          class="mx-auto 2xl:-top-25 xl:-top-[11vh]"
+          class="mx-auto 2xl:-top-25 xl:-top-[10vh]"
         />
       </div>
       <div
