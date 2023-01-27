@@ -3,14 +3,16 @@
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
-      <div class="heroHeader-line absolute w-full left-1/2">
+      <div class="heroHeader-line absolute lg:w-9/12 md:w-9/12 left-1/2">
         <img
           src="@/assets/images/diskorso-line-2.svg"
           alt="ligne design diskorso"
-          class="mx-auto"
+          class="mx-auto 2xl:-top-25 xl:-top-18"
         />
       </div>
-      <div class="heroHeader-title text-center uppercase relative blur-lg">
+      <div
+        class="heroHeader-title text-center uppercase relative blur-lg text-white 2xl:text-6xl xl:text-5xl -mt-[1.75rem]"
+      >
         <h1>
           <span class="font-bold">Plateforme Collaborative</span> <br />
           <span class="title-el"
@@ -18,7 +20,7 @@
           >
         </h1>
         <button
-          class="heroHeader-button rounded-full px-10 py-4 uppercase"
+          class="heroHeader-button rounded-full px-10 py-4 my-8 uppercase"
           @click="scrollTo"
         >
           <span class="flex items-center gap-4">
@@ -35,7 +37,7 @@
     <div class="heroHeader-image absolute w-full">
       <div class="container mx-auto">
         <img
-          class="mx-auto"
+          class="mx-auto 2xl:w-auto xl:w-9/12"
           src="@/assets/images/diskorso-people.svg"
           alt="illustration groupe de personne "
         />
@@ -60,11 +62,6 @@ export default {
   height: 80vh;
   background-color: var(--purple-color);
   animation: mymove 25s infinite ease-in-out;
-  &-title {
-    color: white;
-    font-size: 3.75em;
-    margin-top: -1.75em;
-  }
   &-button {
     font-size: 0.25em;
     background-color: black;
@@ -76,7 +73,6 @@ export default {
   &-line {
     transform: translateX(-50%);
     & img {
-      top: -8rem;
       position: relative;
     }
   }
