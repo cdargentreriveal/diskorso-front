@@ -9,7 +9,7 @@
             Créateur de <br />
             <span class="font-medium">promenades</span>
           </h3>
-          <div class="hand absolute top-0">
+          <div class="hand absolute top-0 -right-[7rem] -sm:right-0">
             <img src="@/assets/images/icons/hand-two.png" alt="" />
           </div>
         </div>
@@ -80,6 +80,5 @@ li .Inscription {
   border: none;
 }
 .hand {
-  right: -7rem;
 }
 </style>
