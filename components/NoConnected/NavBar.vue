@@ -38,10 +38,12 @@ const menus = computed((): IMenuItem[] => [
         <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2">
             <div class="logo">
-              <img
-                src="@/assets/images/logos/diskorso-logo-white.svg"
-                alt="logo diskorso"
-              />
+              <NuxtLink to="/">
+                <img
+                  src="@/assets/images/logos/diskorso-logo-white.svg"
+                  alt="logo diskorso"
+                />
+              </NuxtLink>
             </div>
           </div>
           <div class="w-1/2">
