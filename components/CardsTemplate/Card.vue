@@ -89,11 +89,12 @@ const props = defineProps({
   },
 })
 onMounted(() => {
-  const descriptionCard = document.querySelector('.card-content-description')
+  const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
-    const shortDescription =
-      descriptionCard.textContent?.substring(0, 170) ?? ''
-    descriptionCard.textContent = shortDescription + '...'
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 170) ?? ''
+      element.textContent = shortDescription + '...'
+    })
   }
 })
 </script>

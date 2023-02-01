@@ -1,6 +1,6 @@
 <template>
   <section id="about" class="about relative">
-    <div class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto">
+    <div class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto xl:-top-5">
       <img
         src="@/assets/images/diskorso-line-card.svg"
         alt="ligne design"
@@ -55,7 +55,6 @@ export default {}
   overflow: hidden;
 }
 .diskorso-line-car {
-  top: 0rem;
   right: -2rem;
   z-index: -1;
 }
