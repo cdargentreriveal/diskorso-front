@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { IMenuItem } from '../../types/MenuItems'
+const windowWidth = process.client && window.innerWidth
 const menus = computed((): IMenuItem[] => [
   {
     type: 'link',
@@ -27,14 +28,14 @@ const menus = computed((): IMenuItem[] => [
 <template>
   <div class="navbar">
     <div class="w-full mx-auto py-3 text-center top-banner relative z-10">
-      <p class="top-banner-text font-bold uppercase">
+      <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm">
         La plateforme collaborative
         <span class="purple-color">100% gratuite</span>
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 z-10">
       <div class="container mx-auto py-10">
-        <nav role="navigation" class="flex items-center">
+        <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2">
             <div class="logo">
               <img
@@ -44,7 +45,7 @@ const menus = computed((): IMenuItem[] => [
             </div>
           </div>
           <div class="w-1/2">
-            <ul class="flex justify-end items-center">
+            <ul v-if="windowWidth > 768" class="flex justify-end items-center">
               <li v-for="(item, i) in menus" :key="i">
                 <Anchor
                   v-if="item.type === 'link'"
@@ -63,6 +64,7 @@ const menus = computed((): IMenuItem[] => [
                 />
               </li>
             </ul>
+            <div v-else class="burger text-right text-white">Menu</div>
           </div>
         </nav>
       </div>
@@ -71,7 +73,7 @@ const menus = computed((): IMenuItem[] => [
 </template>
 <style lang="scss" scoped>
 .top-banner {
-  background-color: #E8DEFF;
+  background-color: #e8deff;
   &-text {
     display: inline-block;
     padding: 0 1rem 0 1rem;

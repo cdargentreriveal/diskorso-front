@@ -1,26 +1,28 @@
 <template>
-  <div class="heroHeader relative">
+  <div class="heroHeader relative overflow-hidden">
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
-      <div class="heroHeader-line absolute 2xl:w-9/12 xl:w-[70vw] left-1/2">
+      <div
+        class="heroHeader-line absolute 2xl:w-9/12 xl:w-[70vw] -sm:w-[90vh] left-1/2"
+      >
         <img
           src="@/assets/images/diskorso-line-2.svg"
           alt="ligne design diskorso"
-          class="mx-auto 2xl:-top-25 xl:-top-[10vh]"
+          class="mx-auto 2xl:-top-25 -xl:-top-[10vh]"
         />
       </div>
       <div
-        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-2xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem]"
+        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-3xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem] -sm:-mt-[0]"
       >
         <h1>
           <span class="font-bold">Plateforme Collaborative</span> <br />
-          <span class="title-el"
+          <span class="title-el -sm:text-2xl"
             >De <em class="font-italic">Promenades</em> numériques</span
           >
         </h1>
         <button
-          class="heroHeader-button rounded-full px-10 py-4 my-8 uppercase"
+          class="heroHeader-button rounded-full px-10 py-4 -sm:text-2xl -sm:text-sm md:text-lg my-10 uppercase"
           @click="scrollTo"
         >
           <span class="flex items-center gap-4">
@@ -34,7 +36,7 @@
         </button>
       </div>
     </div>
-    <div class="heroHeader-image absolute w-full">
+    <div class="heroHeader-image absolute w-full -sm:w-[90vh]">
       <div class="container mx-auto">
         <img
           class="mx-auto 2xl:w-auto xl:w-9/12"
@@ -63,7 +65,6 @@ export default {
   background-color: var(--purple-color);
   animation: mymove 25s infinite ease-in-out;
   &-button {
-    font-size: 0.25em;
     background-color: black;
   }
   &-image {

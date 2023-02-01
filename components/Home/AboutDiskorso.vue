@@ -8,8 +8,8 @@
       />
     </div>
     <div class="container mx-auto my-20">
-      <div class="flex items-center">
-        <div class="about-content w-1/2">
+      <div class="flex items-center flex-wrap">
+        <div class="about-content w-1/2 -md:w-full">
           <div class="about-title font-bold text-4xl uppercase">
             <h2>
               Pourquoi <br /><span class="font-normal purple-color"
@@ -17,7 +17,7 @@
               >
             </h2>
           </div>
-          <div class="about-description mt-10 w-9/12">
+          <div class="about-description mt-10 w-9/12 -md:w-full">
             <p>
               Diskorso est une plateforme collaborative permettant de mettre en
               relation les contributeurs, qui confectionneraient un nouveau
@@ -33,7 +33,7 @@
             />
           </div>
         </div>
-        <div class="about-card w-1/2 flex justify-center">
+        <div class="about-card w-1/2 -md:w-full flex justify-center">
           <img
             src="@/assets/images/card-home.png"
             alt="exemple de promenade numérique"
