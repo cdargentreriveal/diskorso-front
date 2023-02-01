@@ -10,27 +10,29 @@
     <div class="container mx-auto my-20">
       <div class="flex items-center flex-wrap">
         <div class="about-content w-1/2 -md:w-full">
-          <div class="about-title font-bold text-4xl uppercase">
-            <h2>
-              Pourquoi <br /><span class="font-normal purple-color"
-                >Diskorso ?</span
-              >
-            </h2>
-          </div>
-          <div class="about-description mt-10 w-9/12 -md:w-full">
-            <p>
-              Diskorso est une plateforme collaborative permettant de mettre en
-              relation les contributeurs, qui confectionneraient un nouveau
-              document constitué d’extraits de pages existantes (une promenade),
-              et d’autre part le grand public souhaitant s’informer sur un sujet
-              et qui trouverait dans ces promenades un contenu adapté selon le
-              niveau de détails, de vulgarisation…
-            </p>
-            <Button
-              text="Voir les promenades"
-              type="secondary"
-              to="/promenades"
-            />
+          <div class="w-9/12 mx-auto">
+            <div class="about-title font-bold text-4xl uppercase">
+              <h2>
+                Pourquoi <br /><span class="font-normal purple-color"
+                  >Diskorso ?</span
+                >
+              </h2>
+            </div>
+            <div class="about-description mt-10 -md:w-full">
+              <p>
+                Diskorso est une plateforme collaborative permettant de mettre
+                en relation les contributeurs, qui confectionneraient un nouveau
+                document constitué d’extraits de pages existantes (une
+                promenade), et d’autre part le grand public souhaitant
+                s’informer sur un sujet et qui trouverait dans ces promenades un
+                contenu adapté selon le niveau de détails, de vulgarisation…
+              </p>
+              <Button
+                text="Voir les promenades"
+                type="secondary"
+                to="/promenades"
+              />
+            </div>
           </div>
         </div>
         <div class="about-card w-1/2 -md:w-full flex justify-center">

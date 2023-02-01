@@ -98,7 +98,7 @@ const categoriesList = computed(() => {
           },
         ]"
       />
-            <CardsTemplateCard
+      <CardsTemplateCard
         image=""
         alt="coucou toi"
         title="La planète Terre"
@@ -140,4 +140,5 @@ const categoriesList = computed(() => {
       {{ category!.title }}
     </div>
   </div> -->
+  <Footer />
 </template>
