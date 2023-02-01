@@ -69,6 +69,93 @@ const categoriesList = computed(() => {
           },
         ]"
       />
+      <CardsTemplateCard
+        image=""
+        alt="coucou toi"
+        title="La planète Terre"
+        date="01/03/2023"
+        :categories="[
+          {
+            categoryName: 'Histoire',
+            color: 'cat-purple ',
+          },
+          {
+            categoryName: 'Science',
+            color: 'cat-orange ',
+          },
+          {
+            categoryName: 'Société',
+            color: 'cat-blue ',
+          },
+        ]"
+        text="La Terre est la troisième planète par ordre d'éloignement
+        au Soleil et la cinquième plus grande du Système solaire
+        aussi bien par la masse que par le diamètre"
+        :author="[
+          {
+            authorName: 'Florian Bridoux',
+            authorAvatar: 'cat-purple ',
+          },
+        ]"
+      />
+      <CardsTemplateCard
+        image=""
+        alt="coucou toi"
+        title="La planète Terre"
+        date="01/03/2023"
+        :categories="[
+          {
+            categoryName: 'Histoire',
+            color: 'cat-purple ',
+          },
+          {
+            categoryName: 'Science',
+            color: 'cat-orange ',
+          },
+          {
+            categoryName: 'Société',
+            color: 'cat-blue ',
+          },
+        ]"
+        text="La Terre est la troisième planète par ordre d'éloignement
+        au Soleil et la cinquième plus grande du Système solaire
+        aussi bien par la masse que par le diamètre"
+        :author="[
+          {
+            authorName: 'Florian Bridoux',
+            authorAvatar: 'cat-purple ',
+          },
+        ]"
+      />
+      <CardsTemplateCard
+        image=""
+        alt="coucou toi"
+        title="La planète Terre"
+        date="01/03/2023"
+        :categories="[
+          {
+            categoryName: 'Histoire',
+            color: 'cat-purple ',
+          },
+          {
+            categoryName: 'Science',
+            color: 'cat-orange ',
+          },
+          {
+            categoryName: 'Société',
+            color: 'cat-blue ',
+          },
+        ]"
+        text="La Terre est la troisième planète par ordre d'éloignement
+        au Soleil et la cinquième plus grande du Système solaire
+        aussi bien par la masse que par le diamètre"
+        :author="[
+          {
+            authorName: 'Florian Bridoux',
+            authorAvatar: 'cat-purple ',
+          },
+        ]"
+      />
     </div>
     <div class="text-center">
       <Button text="Voir les promenades" type="secondary" to="/promenades" />
