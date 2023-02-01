@@ -39,7 +39,7 @@ const categoriesList = computed(() => {
         </h2>
       </div>
     </div>
-    <div class="flex my-20 gap-6 flex-wrap">
+    <div class="flex mt-10 mb-20 gap-6 flex-wrap">
       <CardsTemplateCard
         image=""
         alt="coucou toi"
