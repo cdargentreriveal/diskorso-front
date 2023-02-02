@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { IMenuItem } from '../../types/MenuItems'
-const windowWidth = process.client && window.innerWidth
+
+const windowWidth = ref(process.client ? window.innerWidth : 0)
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+const handleResize = () => {
+  windowWidth.value = window.innerWidth
+}
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize)
+})
 const menus = computed((): IMenuItem[] => [
   {
     type: 'link',
@@ -46,28 +56,33 @@ const menus = computed((): IMenuItem[] => [
               </NuxtLink>
             </div>
           </div>
-          <div class="w-1/2">
-            <ul v-if="windowWidth > 768" class="flex justify-end items-center">
-              <li v-for="(item, i) in menus" :key="i">
-                <Anchor
-                  v-if="item.type === 'link'"
-                  :to="item.route ? item.route : undefined"
-                  :href="item.href ? item.href : undefined"
-                  class="hover:no-underline mx-7"
-                  >{{ item.text }}
-                </Anchor>
-                <Button
-                  v-else-if="item.type === 'button'"
-                  :text="item.text"
-                  size="xs"
-                  :class="item.text + ' font-bold p-5 capitalize mx-3 '"
-                  :to="item.route ? item.route : undefined"
-                  :href="item.href ? item.href : undefined"
-                />
-              </li>
-            </ul>
-            <div v-else class="burger text-right text-white">Menu</div>
-          </div>
+          <client-only>
+            <div class="w-1/2">
+              <ul
+                v-if="windowWidth > 768"
+                class="flex justify-end items-center"
+              >
+                <li v-for="(item, i) in menus" :key="i">
+                  <Anchor
+                    v-if="item.type === 'link'"
+                    :to="item.route ? item.route : undefined"
+                    :href="item.href ? item.href : undefined"
+                    class="hover:no-underline mx-7"
+                    >{{ item.text }}
+                  </Anchor>
+                  <Button
+                    v-else-if="item.type === 'button'"
+                    :text="item.text"
+                    size="xs"
+                    :class="item.text + ' font-bold p-5 capitalize mx-3 '"
+                    :to="item.route ? item.route : undefined"
+                    :href="item.href ? item.href : undefined"
+                  />
+                </li>
+              </ul>
+              <div v-else class="burger text-right text-white">Menu</div>
+            </div>
+          </client-only>
         </nav>
       </div>
     </div>

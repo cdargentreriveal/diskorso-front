@@ -28,11 +28,11 @@ const categoriesList = computed(() => {
 
 <template>
   <HomeHeroHeader />
-  <HomeAboutDiskorso />
+  <HomeAboutDiskorso class="-md:px-5" />
   <Separator />
-  <section class="container mx-auto promenades">
+  <section class="container mx-auto promenades -md:px-5">
     <div class="py-8 text-center">
-      <div class="title uppercase font-bold text-4xl">
+      <div class="title uppercase font-bold text-4xl -md:text-3xl">
         <h2>
           Les dernières <br />
           <span class="font-medium purple-color">Promenades</span>
@@ -132,7 +132,7 @@ const categoriesList = computed(() => {
       <Button text="Voir les promenades" type="secondary" to="/promenades" />
     </div>
   </section>
-  <CtaLogin />
+  <CtaLogin class="-md:px-5" />
   <!--   <div>Page d'Accueil</div>
   <p>Les catégories</p>
   <div class="lg:flex items-center ml-auto space-x-20">
