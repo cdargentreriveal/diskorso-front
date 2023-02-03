@@ -3,6 +3,7 @@ export interface Category {
   createdAt: string
   updatedAt: string
   title: string
+  color: string
   meta_title: string
   meta_description: string
 }

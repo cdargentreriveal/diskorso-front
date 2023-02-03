@@ -1,5 +1,5 @@
 <template>
-  <div class="card rounded bg-white box-shaddow">
+  <div class="card rounded bg-white box-shaddow w-[32%] -md:w-full">
     <div class="card-image">
       <img class="w-full" src="@/assets/images/test-img-card.jpg" :alt="alt" />
     </div>
@@ -11,7 +11,7 @@
         Crée le : {{ date }}
       </div>
       <div class="card-content-categories flex gap-4 py-5">
-        <div v-for="cat in categories" :key="cat" class="category">
+        <div v-for="(cat, index) in categories" :key="index" class="category">
           <button
             :class="cat.color + ' category-btn px-5 py-2 rounded-full text-xs'"
           >
@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps({
+const propsCard = defineProps({
   image: {
     type: String,
     default: '',
@@ -89,17 +89,18 @@ const props = defineProps({
   },
 })
 onMounted(() => {
-  const descriptionCard = document.querySelector('.card-content-description')
+  const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
-    const shortDescription = descriptionCard.textContent?.substring(0, 170) ?? ''
-    descriptionCard.textContent = shortDescription + '...'
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 170) ?? ''
+      element.textContent = shortDescription + '...'
+    })
   }
 })
 </script>
 
 <style lang="scss" scoped>
 .card {
-  width: 32%;
   &-image {
     height: 240px;
     width: 100%;
