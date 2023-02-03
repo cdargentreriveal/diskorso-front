@@ -101,7 +101,7 @@ export default {
               <!-- Menu burger mobile -->
               <div v-else class="menu-burger">
                 <div
-                  class="menu-burger-line text-right text-white"
+                  class="menu-burger-line text-right"
                   @click="displayMobileMenu"
                 >
                   <span>Menu</span>
@@ -184,6 +184,9 @@ li .Inscription {
     filter: invert(0);
   }
   ul {
+    color: white;
+  }
+  .menu-burger-line {
     color: white;
   }
 }
