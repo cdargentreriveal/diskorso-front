@@ -9,7 +9,9 @@
             Créateur de <br />
             <span class="font-medium">promenades</span>
           </h3>
-          <div class="hand absolute top-0 -right-[7rem] -sm:right-0">
+          <div
+            class="hand absolute top-0 -right-[7rem] -md:-right-10 -md:-top-21"
+          >
             <img src="@/assets/images/icons/hand-two.png" alt="" />
           </div>
         </div>
