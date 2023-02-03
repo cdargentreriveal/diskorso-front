@@ -1,38 +1,56 @@
-<script setup lang="ts">
+<script lang="ts">
 import { IMenuItem } from '../../types/MenuItems'
+export default {
+  setup() {
+    const menuOpen = ref(false)
+    const windowWidth = ref(process.client ? window.innerWidth : 0)
+    const menus = computed((): IMenuItem[] => [
+      {
+        type: 'link',
+        text: 'Accueil',
+        route: { name: 'index' },
+      },
+      {
+        type: 'link',
+        text: 'Les Promenades',
+        route: { name: 'promenades' },
+      },
+      {
+        type: 'button',
+        text: 'Connexion',
+        route: { name: 'login' },
+      },
+      {
+        type: 'button',
+        text: 'Inscription',
+        route: { name: 'index' },
+      },
+    ])
 
-const windowWidth = ref(process.client ? window.innerWidth : 0)
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-})
-const handleResize = () => {
-  windowWidth.value = window.innerWidth
+    const handleResize = () => {
+      windowWidth.value = window.innerWidth
+    }
+
+    onMounted(() => {
+      window.addEventListener('resize', handleResize)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('resize', handleResize)
+    })
+
+    const displayMobileMenu = () => {
+      menuOpen.value = !menuOpen.value
+    }
+
+    return {
+      menuOpen,
+      windowWidth,
+      menus,
+      displayMobileMenu,
+    }
+  },
 }
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize)
-})
-const menus = computed((): IMenuItem[] => [
-  {
-    type: 'link',
-    text: 'Accueil',
-    route: { name: 'index' },
-  },
-  {
-    type: 'link',
-    text: 'Les Promenades',
-    route: { name: 'promenades' },
-  },
-  {
-    type: 'button',
-    text: 'Connexion',
-    route: { name: 'login' },
-  },
-  {
-    type: 'button',
-    text: 'Inscription',
-    route: { name: 'index' },
-  },
-])
 </script>
 
 <template>
@@ -80,7 +98,50 @@ const menus = computed((): IMenuItem[] => [
                   />
                 </li>
               </ul>
-              <div v-else class="burger text-right text-white">Menu</div>
+              <!-- Menu burger mobile -->
+              <div v-else class="menu-burger">
+                <div
+                  class="menu-burger-line text-right text-white"
+                  @click="displayMobileMenu"
+                >
+                  <span>Menu</span>
+                </div>
+                <div
+                  v-if="menuOpen === true"
+                  class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
+                >
+                  <div
+                    class="closed absolute right-10 top-10"
+                    @click="displayMobileMenu"
+                  >
+                    Fermer
+                  </div>
+                  <ul class="py-10 text-xl mt-15">
+                    <li v-for="(item, i) in menus" :key="i" class="py-3">
+                      <Anchor
+                        v-if="item.type === 'link'"
+                        :to="item.route ? item.route : undefined"
+                        :href="item.href ? item.href : undefined"
+                        class="hover:no-underline mx-3"
+                        @click="menuOpen = false"
+                        >{{ item.text }}
+                      </Anchor>
+                      <Button
+                        v-if="item.type === 'button'"
+                        :text="item.text"
+                        size="xs"
+                        :class="
+                          item.text +
+                          ' font-bold p-5 capitalize mx-3 -md:py-7 -md:text-base'
+                        "
+                        :to="item.route ? item.route : undefined"
+                        :href="item.href ? item.href : undefined"
+                        @click="menuOpen = false"
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </client-only>
         </nav>
@@ -101,6 +162,7 @@ const menus = computed((): IMenuItem[] => [
 .logo {
   filter: invert(1);
 }
+
 li .Connexion {
   background-color: white;
   color: black;
@@ -118,11 +180,35 @@ li .Inscription {
   .main-nav {
     position: absolute;
   }
+  .logo {
+    filter: invert(0);
+  }
   ul {
     color: white;
   }
-  .logo {
-    filter: invert(0);
+}
+.menu-burger li:nth-child(3) {
+  padding-top: 2rem;
+}
+.menu-burger {
+  & ul {
+    cursor: pointer;
+    color: black;
+  }
+  &-line {
+    cursor: pointer;
+  }
+  &-open {
+    top: -100%;
+    animation: menuOpen 0.7s ease-in-out forwards;
+  }
+}
+@keyframes menuOpen {
+  from {
+    top: -100%;
+  }
+  to {
+    top: 0;
   }
 }
 </style>
