@@ -1,29 +1,11 @@
 <script lang="ts" setup>
-import { useCategoryStore } from '~~/store/category'
+import { Promenade } from '../types/Promenades'
 definePageMeta({
   layout: 'page',
 })
-
-const categoryStore = useCategoryStore()
-
-onBeforeMount(() => {
-  categoryStore.fetchCategories()
-  const navbar = document.querySelector('.navbar')
-  if (navbar) {
-    const navBarWhite = navbar.classList.add('navbar-white')
-    return navBarWhite
-  }
-})
-onUnmounted(() => {
-  const navbar = document.querySelector('.navbar')
-  if (navbar) {
-    const navBarWhite = navbar.classList.remove('navbar-white')
-    return navBarWhite
-  }
-})
-const categoriesList = computed(() => {
-  return categoryStore.categories
-})
+const { data: promenades } = useFetch<Promenade[]>(
+  'https://promenadesapi-production.up.railway.app/promenade/all'
+)
 </script>
 
 <template>
@@ -40,133 +22,21 @@ const categoriesList = computed(() => {
       </div>
     </div>
     <div class="flex my-20 gap-6 flex-wrap">
-      <CardsTemplateCard
-        image=""
-        alt="coucou toi"
-        title="La planète Terre"
-        date="01/03/2023"
-        :categories="[
-          {
-            categoryName: 'Histoire',
-            color: 'cat-purple ',
-          },
-          {
-            categoryName: 'Science',
-            color: 'cat-orange ',
-          },
-          {
-            categoryName: 'Société',
-            color: 'cat-blue ',
-          },
-        ]"
-        text="La Terre est la troisième planète par ordre d'éloignement
-        au Soleil et la cinquième plus grande du Système solaire
-        aussi bien par la masse que par le diamètre"
-        :author="[
-          {
-            authorName: 'Florian Bridoux',
-            authorAvatar: 'cat-purple ',
-          },
-        ]"
-      />
-      <CardsTemplateCard
-        image=""
-        alt="coucou toi"
-        title="La planète Terre"
-        date="01/03/2023"
-        :categories="[
-          {
-            categoryName: 'Histoire',
-            color: 'cat-purple ',
-          },
-          {
-            categoryName: 'Science',
-            color: 'cat-orange ',
-          },
-          {
-            categoryName: 'Société',
-            color: 'cat-blue ',
-          },
-        ]"
-        text="La Terre est la troisième planète par ordre d'éloignement
-        au Soleil et la cinquième plus grande du Système solaire
-        aussi bien par la masse que par le diamètre"
-        :author="[
-          {
-            authorName: 'Florian Bridoux',
-            authorAvatar: 'cat-purple ',
-          },
-        ]"
-      />
-      <CardsTemplateCard
-        image=""
-        alt="coucou toi"
-        title="La planète Terre"
-        date="01/03/2023"
-        :categories="[
-          {
-            categoryName: 'Histoire',
-            color: 'cat-purple ',
-          },
-          {
-            categoryName: 'Science',
-            color: 'cat-orange ',
-          },
-          {
-            categoryName: 'Société',
-            color: 'cat-blue ',
-          },
-        ]"
-        text="La Terre est la troisième planète par ordre d'éloignement
-        au Soleil et la cinquième plus grande du Système solaire
-        aussi bien par la masse que par le diamètre"
-        :author="[
-          {
-            authorName: 'Florian Bridoux',
-            authorAvatar: 'cat-purple ',
-          },
-        ]"
-      />
-      <CardsTemplateCard
-        image=""
-        alt="coucou toi"
-        title="La planète Terre"
-        date="01/03/2023"
-        :categories="[
-          {
-            categoryName: 'Histoire',
-            color: 'cat-purple ',
-          },
-          {
-            categoryName: 'Science',
-            color: 'cat-orange ',
-          },
-          {
-            categoryName: 'Société',
-            color: 'cat-blue ',
-          },
-        ]"
-        text="La Terre est la troisième planète par ordre d'éloignement
-        au Soleil et la cinquième plus grande du Système solaire
-        aussi bien par la masse que par le diamètre"
-        :author="[
-          {
-            authorName: 'Florian Bridoux',
-            authorAvatar: 'cat-purple ',
-          },
-        ]"
-      />
+      <div v-for="(promenade, index) in promenades" :key="index">
+        <CardsTemplateCard
+          :image="promenade.main_image"
+          :alt="promenade.title"
+          :title="promenade.title"
+          date="01/03/2023"
+          :categories="promenade.categories"
+          :text="promenade.summary"
+          :author="promenade.user.username"
+        />
+      </div>
     </div>
     <div class="text-center">
       <Button text="Voir les promenades" type="secondary" to="/promenades" />
     </div>
   </section>
   <CtaLogin />
-  <!--   <div>Page d'Accueil</div>
-  <p>Les catégories</p>
-  <div class="lg:flex items-center ml-auto space-x-20">
-    <div v-for="(category, index) in categoriesList" :key="index">
-      {{ category!.title }}
-    </div>
-  </div> -->
 </template>

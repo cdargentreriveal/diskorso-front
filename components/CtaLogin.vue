@@ -79,6 +79,4 @@ li .Inscription {
   color: white;
   border: none;
 }
-.hand {
-}
 </style>
