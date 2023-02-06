@@ -10,11 +10,13 @@ definePageMeta({
       <button
         class="category-btn px-8 py-4 rounded-full text-sm cat-purple uppercase"
       >
-        Science
+        Histoire
       </button>
     </div>
     <div class="search-bar-container">
-      <div class="search-bar my-10 flex items-center w-1/2 mx-auto h-[50px]">
+      <div
+        class="search-bar my-10 flex items-center w-1/2 -xl:w-8/12 mx-auto h-[50px]"
+      >
         <div class="search-bar-input w-full h-full">
           <input
             type="search"
@@ -31,6 +33,9 @@ definePageMeta({
       </div>
     </div>
     <Separator />
+    <div class="my-10">
+      <TitleSection title-black="Toutes les" title-purple="Promenades" />
+    </div>
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
       <CardsTemplateCard
         image=""

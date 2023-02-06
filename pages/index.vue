@@ -31,14 +31,7 @@ const categoriesList = computed(() => {
   <HomeAboutDiskorso class="-md:px-5" />
   <Separator />
   <section class="container mx-auto promenades -md:px-5">
-    <div class="py-8 text-center">
-      <div class="title uppercase font-bold text-4xl -md:text-3xl">
-        <h2>
-          Les dernières <br />
-          <span class="font-medium purple-color">Promenades</span>
-        </h2>
-      </div>
-    </div>
+    <TitleSection title-black="Les dernières" title-purple="Promenades" />
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
       <CardsTemplateCard
         image=""
