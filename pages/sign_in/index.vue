@@ -10,11 +10,35 @@ definePageMeta({
       <div class="py-8 text-center">
         <div class="title uppercase font-bold text-4xl -md:text-3xl">
           <h2>
-            Se connecter <br />
+            S'inscrire <br />
             <span class="font-medium">sur Diskorso</span>
           </h2>
         </div>
         <form action="" class="my-8">
+          <div class="flex items-center gap-4">
+            <div class="w-1/2">
+              <input
+                type="text"
+                value=""
+                placeholder="Nom"
+                class="rounded-md border border-gray w-full p-4 my-2"
+              />
+            </div>
+            <div class="w-1/2">
+              <input
+                type="text"
+                value=""
+                placeholder="Prénom"
+                class="rounded-md border border-gray w-full p-4 my-2"
+              />
+            </div>
+          </div>
+          <input
+            type="text"
+            value=""
+            placeholder="Username"
+            class="rounded-md border border-gray w-full p-4 my-2"
+          />
           <input
             type="mail"
             value=""
@@ -29,21 +53,17 @@ definePageMeta({
           />
           <button
             type="submit"
-            class="py-4 px-8 my-4 btn-submit rounded-md text-white font-semibold w-full"
+            class="py-4 px-8 my-4 btn-submit rounded-md font-semibold w-full"
           >
-            Se connecter
+            S'inscrire
           </button>
         </form>
-        <p class="text-left font-medium">
-          Mot de passe perdu ?
-          <a href="#" class="underline"> Recevoir un nouveau mot de passe</a>
-        </p>
       </div>
     </div>
   </div>
 </template>
 <style scoped lang="scss">
 .btn-submit {
-  background-color: #f55a78;
+  background-color: #d9f028;
 }
 </style>

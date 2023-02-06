@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const props = defineProps({
+const propsBtn = defineProps({
   text: {
     type: String,
     default: '',
@@ -47,9 +47,9 @@ const sizes = reactive<{
 })
 // state
 const selectedStyle = computed(() =>
-  props.type in styles ? styles[props.type] : styles.primary
+  propsBtn.type in styles ? styles[propsBtn.type] : styles.primary
 )
-const selectedSize = computed(() => sizes[props.size] || sizes.lg)
+const selectedSize = computed(() => sizes[propsBtn.size] || sizes.lg)
 // methods
 const onClick = (event: MouseEvent) => {
   const router = useRouter()

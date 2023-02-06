@@ -23,7 +23,7 @@ export default {
       {
         type: 'button',
         text: 'Inscription',
-        route: { name: 'index' },
+        route: { name: 'sign_in' },
       },
     ])
 
