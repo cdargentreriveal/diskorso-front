@@ -7,21 +7,23 @@ definePageMeta({
 <template>
   <div class="container mx-auto">
     <div class="btns-categories w-9/12 mx-auto">
-      <button
-        class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-purple uppercase"
-      >
-        Histoire
-      </button>
-      <button
-        class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-orange uppercase"
-      >
-        Science
-      </button>
-      <button
-        class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-blue uppercase"
-      >
-        Société
-      </button>
+      <div class="flex items-center justify-center">
+        <button
+          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-purple uppercase"
+        >
+          Histoire
+        </button>
+        <button
+          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-orange uppercase"
+        >
+          Science
+        </button>
+        <button
+          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-blue uppercase"
+        >
+          Société
+        </button>
+      </div>
     </div>
     <div class="search-bar-container">
       <div
