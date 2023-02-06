@@ -79,6 +79,9 @@ definePageMeta({
         ]"
       />
     </div>
+    <div class="py-5">
+      <Pagination />
+    </div>
   </div>
 </template>
 <style lang="scss" scoped>
