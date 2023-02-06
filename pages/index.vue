@@ -140,5 +140,4 @@ const categoriesList = computed(() => {
       {{ category!.title }}
     </div>
   </div> -->
-  <Footer />
 </template>
