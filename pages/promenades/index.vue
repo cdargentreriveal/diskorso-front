@@ -6,16 +6,26 @@ definePageMeta({
 
 <template>
   <div class="container mx-auto">
-    <div class="btns-categories">
+    <div class="btns-categories w-9/12 mx-auto">
       <button
-        class="category-btn px-8 py-4 rounded-full text-sm cat-purple uppercase"
+        class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-purple uppercase"
       >
         Histoire
+      </button>
+      <button
+        class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-orange uppercase"
+      >
+        Science
+      </button>
+      <button
+        class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-blue uppercase"
+      >
+        Société
       </button>
     </div>
     <div class="search-bar-container">
       <div
-        class="search-bar my-10 flex items-center w-1/2 -xl:w-8/12 mx-auto h-[50px]"
+        class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
       >
         <div class="search-bar-input w-full h-full">
           <input
@@ -33,7 +43,7 @@ definePageMeta({
       </div>
     </div>
     <Separator />
-    <div class="my-10">
+    <div class="">
       <TitleSection title-black="Toutes les" title-purple="Promenades" />
     </div>
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
