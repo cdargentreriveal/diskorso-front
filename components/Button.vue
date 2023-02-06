@@ -71,23 +71,27 @@ const onClick = (event: MouseEvent) => {
   >
     <slot>{{ text }}</slot>
   </NuxtLink>
-  <div
+  <NuxtLink
     v-else-if="type === 'secondary'"
-    class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4"
+    tag="a"
+    :to="to"
+    :class="`${selectedStyle} ${selectedSize}`"
   >
-    <div class="link uppercase">
-      <NuxtLink tag="a" :to="to" :class="`${selectedStyle} ${selectedSize}`">
+    <div
+      class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4"
+    >
+      <div class="link uppercase">
         <slot>{{ text }}</slot>
-      </NuxtLink>
+      </div>
+      <span>
+        <img
+          src="@/assets/images/icons/arrow-right-black.svg"
+          alt="fleche droite noire"
+          class="pl-3"
+        />
+      </span>
     </div>
-    <span>
-      <img
-        src="@/assets/images/icons/arrow-right-black.svg"
-        alt="fleche droite noire"
-        class="pr-2"
-      />
-    </span>
-  </div>
+  </NuxtLink>
   <a
     v-else
     :class="`${defaultStyle} ${selectedStyle} ${selectedSize}`"
