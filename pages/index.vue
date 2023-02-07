@@ -6,6 +6,20 @@ definePageMeta({
 const { data: promenades } = useFetch<Promenade[]>(
   'https://promenadesapi-production.up.railway.app/promenade/latest'
 )
+onMounted(() => {
+  const navbar = document.querySelector('.navbar')
+  if (navbar) {
+    const navBarWhite = navbar.classList.add('navbar-white')
+    return navBarWhite
+  }
+})
+onUnmounted(() => {
+  const navbar = document.querySelector('.navbar')
+  if (navbar) {
+    const navBarWhite = navbar.classList.remove('navbar-white')
+    return navBarWhite
+  }
+})
 </script>
 
 <template>
@@ -36,6 +50,7 @@ const { data: promenades } = useFetch<Promenade[]>(
           :categories="promenade.categories"
           :text="promenade.summary"
           :author="promenade.user.username"
+          :slug="promenade.slug"
         />
       </div>
     </div>

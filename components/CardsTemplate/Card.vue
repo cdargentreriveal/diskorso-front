@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <NuxtLink to="/promenades/mapromenadetest">
+    <NuxtLink :to="`/promenades/${slug}`">
       <div class="card-image">
         <img class="w-full" :src="image" :alt="alt" />
       </div>
@@ -37,7 +37,7 @@
             </div>
           </div>
           <div class="card-content-link text-right w-1/2">
-            <NuxtLink to="/promenades/mapromenadetest">
+            <NuxtLink :to="`/promenades/${slug}`">
               <button class="font-semibold underline text-sm">
                 Lire la promenade >
               </button>
@@ -91,6 +91,10 @@ const propsCard = defineProps({
   to: {
     type: [String, Object],
     default: undefined,
+  },
+  slug: {
+    type: String,
+    default: '',
   },
 })
 onMounted(() => {
