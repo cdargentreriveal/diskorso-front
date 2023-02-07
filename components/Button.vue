@@ -53,12 +53,12 @@ const selectedSize = computed(() => sizes[propsBtn.size] || sizes.lg)
 // methods
 const onClick = (event: MouseEvent) => {
   const router = useRouter()
-  if (props.to) {
-    router.push(props.to)
-  }
-  if (!props.href) {
-    event.preventDefault()
-  }
+  // if (props.to) {
+  //   router.push(props.to)
+  // }
+  // if (!props.href) {
+  //   event.preventDefault()
+  // }
 }
 </script>
 
