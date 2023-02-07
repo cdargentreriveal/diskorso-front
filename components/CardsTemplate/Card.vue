@@ -1,8 +1,14 @@
 <template>
   <div class="card rounded bg-white box-shaddow w-[32%] -md:w-full">
-    <div class="card-image">
-      <img class="w-full" src="@/assets/images/test-img-card.jpg" :alt="alt" />
-    </div>
+    <NuxtLink to="/promenades/mapromenadetest">
+      <div class="card-image">
+        <img
+          class="w-full"
+          src="@/assets/images/test-img-card.jpg"
+          :alt="alt"
+        />
+      </div>
+    </NuxtLink>
     <div class="card-content p-8">
       <div class="card-content-title font-bold text-2xl my-1">
         <h2>{{ title }}</h2>
@@ -35,9 +41,11 @@
             </div>
           </div>
           <div class="card-content-link text-right w-1/2">
-            <button class="font-semibold underline text-sm">
-              Lire la promenade >
-            </button>
+            <NuxtLink to="/promenades/mapromenadetest">
+              <button class="font-semibold underline text-sm">
+                Lire la promenade >
+              </button>
+            </NuxtLink>
           </div>
         </div>
       </div>
