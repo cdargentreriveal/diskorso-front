@@ -23,7 +23,7 @@ const { data: promenades } = useFetch<Promenade[]>(
           Science
         </button>
         <button
-          class="category-btn px-8 py-4 mx-2 rounded-full text-xs cat-blue uppercase"
+          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-blue uppercase"
         >
           Société
         </button>
