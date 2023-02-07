@@ -15,10 +15,54 @@
       <div
         class="promenade_page_content_created flex gap-2 italic text-sm py-4"
       >
-        <p>Crée le : 01/05/2023</p>
+        <p>Créee le : 01/05/2023</p>
         <span>-</span>
-        <p>par: Florian Bridoux</p>
+        <p>par : Florian Bridoux</p>
       </div>
+      <div class="btns-categories py-4">
+        <div class="flex items-center">
+          <button
+            class="category-btn px-6 py-3 mx-2 rounded-full text-xs cat-purple uppercase"
+          >
+            Histoire
+          </button>
+          <button
+            class="category-btn px-6 py-3 mx-2 rounded-full text-xs cat-orange uppercase"
+          >
+            Science
+          </button>
+          <button
+            class="category-btn px-6 py-3 mx-2 rounded-full text-xs cat-blue uppercase"
+          >
+            Société
+          </button>
+        </div>
+      </div>
+      <div class="promenade_page_content_details py-5">
+        <div class="promenade_page_content_details_transition py-10">
+          <div
+            class="promenade_page_content_details_transition_title text-2xl font-semi-bold py-4"
+          >
+            <h2>Définition</h2>
+          </div>
+          <div class="promenade_page_content_details_transition_text">
+            <p>Ceci est une transition créee par le créateur de la promenade</p>
+          </div>
+        </div>
+      </div>
+      <div class="promenade_page_content_details_extrait py-10">
+        <div
+          class="promenade_page_content_details_extrait_title text-2xl font-semi-bold py-4"
+        >
+          <h2>Titre de l'extrait</h2>
+        </div>
+        <div class="promenade_page_content_details_extrait_text">
+          <p>Ceci est un extrait intégré par le créateur à la promenade</p>
+        </div>
+      </div>
+    </div>
+    <div class="w-8/12 mx-auto">
+      <CtaLogin />
     </div>
   </div>
 </template>
@@ -39,6 +83,11 @@ const route = useRoute()
     background-size: cover;
   }
   &_content {
+    &_details {
+      &_extrait {
+        background-color:#F8F8F8;
+      }
+    }
   }
 }
 </style>
