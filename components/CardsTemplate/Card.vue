@@ -21,7 +21,7 @@
           <button
             :class="cat.color + ' category-btn px-5 py-2 rounded-full text-xs'"
           >
-            {{ cat.categoryName }}
+            {{ cat.title }}
           </button>
         </div>
       </div>
@@ -36,7 +36,7 @@
                 <img src="@/assets/images/test-avatar.jpg" alt="avatar" />
               </div>
               <div class="card-content-author gray-color text-xs italic">
-                par : {{ author[0].authorName }}
+                par : {{ author }}
               </div>
             </div>
           </div>
@@ -54,6 +54,10 @@
 </template>
 
 <script lang="ts" setup>
+
+import { PropType } from 'vue'
+import { Category } from '~~/types/Categories'
+
 const propsCard = defineProps({
   image: {
     type: String,
@@ -72,7 +76,7 @@ const propsCard = defineProps({
     default: '',
   },
   categories: {
-    type: Array,
+    type: Array as PropType<Category[]>,
     default() {
       return []
     },
@@ -82,10 +86,8 @@ const propsCard = defineProps({
     default: '',
   },
   author: {
-    type: Array,
-    default() {
-      return []
-    },
+    type: String,
+    default: '',
   },
   size: {
     type: String,

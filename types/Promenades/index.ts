@@ -1,4 +1,14 @@
+import { Category } from '../Categories/'
+
+interface ExtractsPourPromenade {
+  id: number
+}
+
+interface User {
+  username: string
+}
 export interface Promenade {
+  user: User
   id: number
   createdAt: string
   updatedAt: string
@@ -6,10 +16,12 @@ export interface Promenade {
   slug: string
   summary: string
   main_image: string
-  content: JSON
+  content: string
   meta_title?: string
   meta_description?: string
+  published: boolean
+  publishedAt: string
   userId: number
-  categories: number[]
-  extracts: number[]
+  categories: Category[]
+  extracts: ExtractsPourPromenade[]
 }
