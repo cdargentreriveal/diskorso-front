@@ -13,17 +13,17 @@ const { data: promenades } = useFetch<Promenade[]>(
     <div class="btns-categories w-9/12 mx-auto">
       <div class="flex items-center justify-center">
         <button
-          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-purple uppercase"
+          class="category-btn px-8 py-4 mx-2 rounded-full text-xs cat-purple uppercase"
         >
           Histoire
         </button>
         <button
-          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-orange uppercase"
+          class="category-btn px-8 py-4 mx-2 rounded-full text-xs cat-orange uppercase"
         >
           Science
         </button>
         <button
-          class="category-btn px-8 py-4 mx-2 rounded-full text-sm cat-blue uppercase"
+          class="category-btn px-8 py-4 mx-2 rounded-full text-xs cat-blue uppercase"
         >
           Société
         </button>
