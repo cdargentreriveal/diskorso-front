@@ -62,7 +62,7 @@ export default {
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 z-10">
-      <div class="container mx-auto py-10">
+      <div class="container mx-auto py-10 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2">
             <div class="logo">

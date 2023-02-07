@@ -26,6 +26,7 @@ const { data: categories } = useFetch<Category[]>(
             </button>
           </NuxtLink>
         </div>
+
       </div>
     </div>
     <div class="search-bar-container">
@@ -65,6 +66,7 @@ const { data: categories } = useFetch<Category[]>(
           :categories="promenade.categories"
           :text="promenade.summary"
           :author="promenade.user.username"
+          :slug="promenade.slug"
         />
       </div>
     </div>
