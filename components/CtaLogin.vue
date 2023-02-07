@@ -60,7 +60,7 @@ const menus = computed((): IMenuItem[] => [
   {
     type: 'button',
     text: 'Inscription',
-    route: { name: 'index' },
+    route: { name: 'sign_in' },
   },
 ])
 </script>
