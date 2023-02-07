@@ -1,7 +1,11 @@
 <script lang="ts" setup>
+import { Promenade } from '../../types/Promenades'
 definePageMeta({
   layout: 'page',
 })
+const { data: promenades } = useFetch<Promenade[]>(
+  'https://promenadesapi-production.up.railway.app/promenade/all'
+)
 </script>
 
 <template>
@@ -49,35 +53,17 @@ definePageMeta({
       <TitleSection title-black="Toutes les" title-purple="Promenades" />
     </div>
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
-      <CardsTemplateCard
-        image=""
-        alt="coucou toi"
-        title="La planète Terre"
-        date="01/03/2023"
-        :categories="[
-          {
-            categoryName: 'Histoire',
-            color: 'cat-purple ',
-          },
-          {
-            categoryName: 'Science',
-            color: 'cat-orange ',
-          },
-          {
-            categoryName: 'Société',
-            color: 'cat-blue ',
-          },
-        ]"
-        text="La Terre est la troisième planète par ordre d'éloignement
-        au Soleil et la cinquième plus grande du Système solaire
-        aussi bien par la masse que par le diamètre"
-        :author="[
-          {
-            authorName: 'Florian Bridoux',
-            authorAvatar: 'cat-purple ',
-          },
-        ]"
-      />
+      <div v-for="(promenade, index) in promenades" :key="index">
+        <CardsTemplateCard
+          :image="promenade.main_image"
+          :alt="promenade.title"
+          :title="promenade.title"
+          date="01/03/2023"
+          :categories="promenade.categories"
+          :text="promenade.summary"
+          :author="promenade.user.username"
+        />
+      </div>
     </div>
     <div class="py-5">
       <Pagination />

@@ -2,11 +2,7 @@
   <div class="card rounded bg-white box-shaddow w-[32%] -md:w-full">
     <NuxtLink to="/promenades/mapromenadetest">
       <div class="card-image">
-        <img
-          class="w-full"
-          src="@/assets/images/test-img-card.jpg"
-          :alt="alt"
-        />
+        <img class="w-full" :src="image" :alt="alt" />
       </div>
     </NuxtLink>
     <div class="card-content p-8">
@@ -54,7 +50,6 @@
 </template>
 
 <script lang="ts" setup>
-
 import { PropType } from 'vue'
 import { Category } from '~~/types/Categories'
 

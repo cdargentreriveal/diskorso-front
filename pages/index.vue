@@ -34,7 +34,6 @@ const { data: promenades } = useFetch<Promenade[]>(
           :author="promenade.user.username"
         />
       </div>
-
     </div>
     <div class="text-center">
       <Button text="Voir les promenades" type="secondary" to="/promenades" />
@@ -42,12 +41,4 @@ const { data: promenades } = useFetch<Promenade[]>(
   </section>
 
   <CtaLogin class="-md:px-5" />
-  <!--   <div>Page d'Accueil</div>
-  <p>Les catégories</p>
-  <div class="lg:flex items-center ml-auto space-x-20">
-    <div v-for="(category, index) in categoriesList" :key="index">
-      {{ category!.title }}
-    </div>
-  </div> -->
-
 </template>
