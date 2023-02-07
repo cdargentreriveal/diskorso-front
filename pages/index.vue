@@ -36,6 +36,7 @@ const { data: promenades } = useFetch<Promenade[]>(
           :categories="promenade.categories"
           :text="promenade.summary"
           :author="promenade.user.username"
+          :slug="promenade.slug"
         />
       </div>
     </div>

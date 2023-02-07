@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <NuxtLink to="/promenades/mapromenadetest">
+    <NuxtLink :to="`/promenades/${slug}`">
       <div class="card-image">
         <img class="w-full" :src="image" :alt="alt" />
       </div>
@@ -14,11 +14,15 @@
       </div>
       <div class="card-content-categories flex gap-4 py-5">
         <div v-for="(cat, index) in categories" :key="index" class="category">
-          <button
-            :class="cat.color + ' category-btn px-5 py-2 rounded-full text-xs'"
-          >
-            {{ cat.title }}
-          </button>
+          <NuxtLink :to="`/categorie/${cat.slug}`">
+            <button
+              :class="
+                cat.color + ' category-btn px-5 py-2 rounded-full text-xs'
+              "
+            >
+              {{ cat.title }}
+            </button>
+          </NuxtLink>
         </div>
       </div>
       <p class="text-sm gray-color card-content-description">{{ text }}</p>
@@ -37,7 +41,7 @@
             </div>
           </div>
           <div class="card-content-link text-right w-1/2">
-            <NuxtLink to="/promenades/mapromenadetest">
+            <NuxtLink :to="`/promenades/${slug}`">
               <button class="font-semibold underline text-sm">
                 Lire la promenade >
               </button>
@@ -67,6 +71,10 @@ const propsCard = defineProps({
     default: '',
   },
   date: {
+    type: String,
+    default: '',
+  },
+  slug: {
     type: String,
     default: '',
   },

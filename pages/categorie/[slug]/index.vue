@@ -1,12 +1,18 @@
 <script lang="ts" setup>
-import { Promenade } from '../../types/Promenades'
-import { Category } from '~~/types/Categories'
+import { Category, CategoryNested } from '../../../types/Categories/'
+
 definePageMeta({
   layout: 'page',
 })
-const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
-)
+
+// const { data: promenadesFromCategory } = useFetch<CategoryNested[]>(
+//   'https://promenadesapi-production.up.railway.app/category/categorie/histoire'
+// )
+const route = useRoute()
+
+const categorySelected = await fetch(
+  `https://promenadesapi-production.up.railway.app/category/categorie/${route.params.slug}`
+).then((res) => res.json())
 
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
@@ -49,11 +55,14 @@ const { data: categories } = useFetch<Category[]>(
     </div>
     <Separator />
     <div class="">
-      <TitleSection title-black="Toutes les" title-purple="Promenades" />
+      <TitleSection
+        title-black="Les promenades"
+        :title-purple="categorySelected[0].title"
+      />
     </div>
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
       <div
-        v-for="(promenade, index) in promenades"
+        v-for="(promenade, index) in categorySelected[0].promenades"
         :key="index"
         class="card rounded bg-white box-shaddow w-[32%] -md:w-full"
       >
