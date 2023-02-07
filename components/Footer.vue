@@ -14,7 +14,13 @@
           </div>
           <div class="w-3/12 text-center">
             <span
-              >Réalisé avec amour par
+              >Réalisé avec
+              <img
+                src="@/assets/images/icons/heart.svg"
+                alt="icone coeur"
+                class="inline-block mx-1"
+              />
+              par
               <a href="https://www.riveal.fr" target="_blank" class="underline"
                 >Riveal</a
               ></span
