@@ -26,7 +26,6 @@ const { data: categories } = useFetch<Category[]>(
             </button>
           </NuxtLink>
         </div>
-
       </div>
     </div>
     <div class="search-bar-container">

@@ -47,31 +47,8 @@
           <Separator />
         </div>
         <section class="promenade_page_content_details_transition">
-          <div class="px-20 py-10">
-            <div
-              class="promenade_page_content_details_transition_title text-2xl font-semi-bold py-4"
-            >
-              <h2>Définition</h2>
-            </div>
-            <div class="promenade_page_content_details_transition_text">
-              <p>
-                Ceci est une transition créee par le créateur de la promenade
-              </p>
-            </div>
-          </div>
+          <div class="px-20 py-10" v-html="filteredPromenades[0].content"></div>
         </section>
-        <aside class="promenade_page_content_details_extrait">
-          <div class="px-20 py-10">
-            <div
-              class="promenade_page_content_details_extrait_title text-2xl font-semi-bold py-4"
-            >
-              <h2>Titre de l'extrait</h2>
-            </div>
-            <div class="promenade_page_content_details_extrait_text">
-              <p>Ceci est un extrait intégré par le créateur à la promenade</p>
-            </div>
-          </div>
-        </aside>
         <div class="promenade_page_content_details_image">
           <div class="px-20 py-10">
             <img
@@ -117,16 +94,28 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .promenade_page {
   &_banner {
     background-size: cover;
     background-position: center;
   }
   &_content {
+    &_created {
+      color: var(--gray-color);
+    }
     &_details {
-      &_extrait {
-        background-color: #f8f8f8;
+      &_transition {
+        color: var(--gray-color);
+        & p {
+          margin: 1.5rem 0;
+        }
+        & article {
+          margin: 1.5rem 0;
+          padding-right: 1rem;
+          /* background-color: #f8f8f8; */
+          border-right: 2px solid var(--purple-color);
+        }
       }
     }
   }
