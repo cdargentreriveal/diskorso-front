@@ -23,7 +23,11 @@ const { data: promenades } = useFetch<Promenade[]>(
       </div>
     </div>
     <div class="flex my-20 gap-6 flex-wrap">
-      <div v-for="(promenade, index) in promenades" :key="index">
+      <div
+        v-for="(promenade, index) in promenades"
+        :key="index"
+        class="card rounded bg-white box-shaddow w-[32%] -md:w-full"
+      >
         <CardsTemplateCard
           :image="promenade.main_image"
           :alt="promenade.title"

@@ -1,5 +1,5 @@
 <template>
-  <div class="card rounded bg-white box-shaddow w-[32%] -md:w-full">
+  <div class="card">
     <NuxtLink to="/promenades/mapromenadetest">
       <div class="card-image">
         <img class="w-full" :src="image" :alt="alt" />
