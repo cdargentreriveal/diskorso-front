@@ -4,7 +4,7 @@ definePageMeta({
   layout: 'page',
 })
 const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
+  'https://promenadesapi-production.up.railway.app/promenade/latest'
 )
 </script>
 
