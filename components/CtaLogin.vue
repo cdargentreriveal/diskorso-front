@@ -3,18 +3,20 @@
     <div class="container mx-auto">
       <div class="cta_login-content py-25 my-15 text-white text-center">
         <div
-          class="justify-center cta_login-content-title font-bold text-4xl uppercase relative inline-block"
+          class="justify-center cta_login-content-title font-bold text-4xl uppercase relative inline-block -md:text-3xl"
         >
           <h3>
             Créateur de <br />
             <span class="font-medium">promenades</span>
           </h3>
-          <div class="hand absolute top-0 -right-[7rem] -sm:right-0">
+          <div
+            class="hand absolute top-0 -right-[7rem] -md:-right-10 -md:-top-21"
+          >
             <img src="@/assets/images/icons/hand-two.png" alt="" />
           </div>
         </div>
         <div
-          class="cta_login-content-description text-center w-1/2 mx-auto pt-5"
+          class="cta_login-content-description text-center w-1/2 -md:w-full -md:px-5 -md:text-sm mx-auto pt-5"
         >
           <p>
             Créez dès à présent votre promenade de manière collaborative en vous
@@ -58,7 +60,7 @@ const menus = computed((): IMenuItem[] => [
   {
     type: 'button',
     text: 'Inscription',
-    route: { name: 'index' },
+    route: { name: 'sign_in' },
   },
 ])
 </script>

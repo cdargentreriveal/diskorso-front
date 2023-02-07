@@ -10,8 +10,9 @@ const { data: promenades } = useFetch<Promenade[]>(
 
 <template>
   <HomeHeroHeader />
-  <HomeAboutDiskorso />
+  <HomeAboutDiskorso class="-md:px-5" />
   <Separator />
+
   <section class="container mx-auto promenades">
     <div class="py-8 text-center">
       <div class="title uppercase font-bold text-4xl">
@@ -33,10 +34,20 @@ const { data: promenades } = useFetch<Promenade[]>(
           :author="promenade.user.username"
         />
       </div>
+
     </div>
     <div class="text-center">
       <Button text="Voir les promenades" type="secondary" to="/promenades" />
     </div>
   </section>
-  <CtaLogin />
+
+  <CtaLogin class="-md:px-5" />
+  <!--   <div>Page d'Accueil</div>
+  <p>Les catégories</p>
+  <div class="lg:flex items-center ml-auto space-x-20">
+    <div v-for="(category, index) in categoriesList" :key="index">
+      {{ category!.title }}
+    </div>
+  </div> -->
+
 </template>
