@@ -50,12 +50,50 @@ const { data: categories } = useFetch<Category[]>(
     <Separator />
     <div class="flex mt-10 mb-20">
       <div class="w-1/3 relative">
-        <div class="filter">fdkdfj</div>
+        <div class="filter py-5 w-1/2">
+          <div class="filter-categories">
+            <div class="filter-title mb-5 font-semibold text-lg">
+              <h3>Catégories</h3>
+            </div>
+            <div v-for="(categorie, index) in categories" :key="index">
+              <div>
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="my-4 mx-2 text-sm"
+                />
+                <label for="scales"
+                  >{{ categorie.title }} <span class="text-sm">(5)</span></label
+                >
+              </div>
+            </div>
+          </div>
+          <Separator />
+          <div class="filter-author">
+            <div class="filter-title mb-5 font-semibold text-lg">
+              <h3>Auteurs / Autrices</h3>
+            </div>
+            <div v-for="(categorie, index) in categories" :key="index">
+              <div>
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="my-4 mx-2 text-sm"
+                />
+                <label for="scales"
+                  >{{ categorie.title }} <span class="text-sm">(5)</span></label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="w-2/3">
         <p class="py-5">
           <span class="text-xl font-bold purple-color">38</span> résultats pour
-          la recherche <span class="text-xl italic">“ effet de serre “</span>
+          la recherche <span class="text-lg italic">“ effet de serre “</span>
         </p>
         <div class="flex flex-wrap gap-6 justify-center">
           <div
