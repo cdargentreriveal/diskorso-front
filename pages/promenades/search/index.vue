@@ -93,7 +93,7 @@ const { data: categories } = useFetch<Category[]>(
       <div class="w-2/3">
         <p class="py-5">
           <span class="text-xl font-bold purple-color">38</span> résultats pour
-          la recherche <span class="text-lg italic">“ effet de serre “</span>
+          la recherche <span class="text-lg italic">“effet de serre“</span>
         </p>
         <div class="flex flex-wrap gap-6 justify-center">
           <div
