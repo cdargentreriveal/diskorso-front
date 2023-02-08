@@ -1,11 +1,15 @@
 <script lang="ts" setup>
-import { Promenade } from '../../types/Promenades'
-import { Category } from '~~/types/Categories'
+import { Category } from '../../../types/Categories/'
+import { Promenade } from '~~/types/Promenades'
+
 definePageMeta({
   layout: 'page',
 })
+
+const route = useRoute()
+
 const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
+  `https://promenadesapi-production.up.railway.app/promenade/user/${route.params.id}`
 )
 
 const { data: categories } = useFetch<Category[]>(
@@ -41,17 +45,15 @@ const { data: categories } = useFetch<Category[]>(
           />
         </div>
         <div class="search-bar-button text-white text-sm h-full">
-          <NuxtLink to="/promenades/search">
-            <button class="px-8 w-full h-full uppercase">
-              <span class="flex items-center">Rechercher</span>
-            </button>
-          </NuxtLink>
+          <button class="px-8 w-full h-full uppercase">
+            <span class="flex items-center">Rechercher</span>
+          </button>
         </div>
       </div>
     </div>
     <Separator />
     <div class="">
-      <TitleSection title-black="Toutes les" title-purple="Promenades" />
+      <TitleSection title-black="Les promenades" title-purple="de Charles" />
     </div>
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
       <div
@@ -100,11 +102,6 @@ const { data: categories } = useFetch<Category[]>(
   }
 }
 .search-bar-button {
-  a {
-    display: inline-block;
-    height: 100%;
-    border-radius: 0 9999px 9999px 0;
-  }
   & :hover {
     background-color: #4e8ca5;
   }
