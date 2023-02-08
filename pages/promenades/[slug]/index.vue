@@ -106,6 +106,11 @@ export default {
     &_details {
       &_transition {
         color: var(--gray-color);
+        & h2 {
+          color: var(--gray-color);
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
         & p {
           margin: 1.5rem 0;
         }
