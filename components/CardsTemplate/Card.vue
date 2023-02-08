@@ -37,7 +37,7 @@
                   <img :src="avatar" alt="avatar" />
                 </div>
                 <div class="card-content-author gray-color text-xs italic">
-                  par : {{ author }}
+                  par : <span class="underline">{{ author }}</span>
                 </div>
               </div>
             </NuxtLink>
