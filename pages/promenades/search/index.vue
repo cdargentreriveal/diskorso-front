@@ -165,7 +165,7 @@ const filteredPromenades = computed(() => {
           la recherche <span class="text-lg italic">“effet de serre“</span>
         </p>
         <div v-if="loading" class="loading">Chargement</div>
-        <div v-else class="flex flex-wrap gap-6">
+        <div v-else class="flex flex-wrap gap-6 pt-4">
           <div
             v-for="(promenade, index) in filteredPromenades"
             :key="index"
