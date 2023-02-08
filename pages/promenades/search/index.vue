@@ -1,16 +1,44 @@
-<script lang="ts" setup>
+<script lang="ts">
 import { Promenade } from '@/types/Promenades'
 import { Category } from '~~/types/Categories'
-definePageMeta({
-  layout: 'page',
-})
-const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
-)
+export default {
+  setup() {
+    definePageMeta({
+      layout: 'page',
+    })
+    const { data: promenades } = useFetch<Promenade[]>(
+      'https://promenadesapi-production.up.railway.app/promenade/all'
+    )
 
-const { data: categories } = useFetch<Category[]>(
-  'https://promenadesapi-production.up.railway.app/category/all'
-)
+    const { data: categories } = useFetch<Category[]>(
+      'https://promenadesapi-production.up.railway.app/category/all'
+    )
+    const filteredCategories = computed(() => {
+      if (
+        !promenades ||
+        !promenades.value ||
+        !categories ||
+        !categories.value
+      ) {
+        return []
+      }
+      return categories.value.filter((categorie) => {
+        return (
+          promenades &&
+          promenades.value &&
+          promenades.value.some((promenade) => {
+            return categorie.title === promenade.categories[0].title
+          })
+        )
+      })
+    })
+    return {
+      filteredCategories,
+      promenades,
+      categories,
+    }
+  },
+}
 </script>
 
 <template>
@@ -57,7 +85,7 @@ const { data: categories } = useFetch<Category[]>(
             <div class="filter-title mb-5 font-semibold text-lg">
               <h3>Catégories</h3>
             </div>
-            <div v-for="(categorie, index) in categories" :key="index">
+            <div v-for="(categorie, index) in filteredCategories" :key="index">
               <div>
                 <input
                   id="scales"
