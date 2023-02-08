@@ -50,7 +50,7 @@ const { data: categories } = useFetch<Category[]>(
     <Separator />
     <div class="flex mt-10 mb-20">
       <div class="w-1/3 relative">
-        <div class="filter py-5 w-1/2">
+        <div class="filter py-5 w-1/2 sticky top-[15%]">
           <div class="filter-categories">
             <div class="filter-title mb-5 font-semibold text-lg">
               <h3>Catégories</h3>
