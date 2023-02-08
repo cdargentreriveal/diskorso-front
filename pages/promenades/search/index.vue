@@ -97,7 +97,7 @@ const { data: categories } = useFetch<Category[]>(
           <span class="text-xl font-bold purple-color">38</span> résultats pour
           la recherche <span class="text-lg italic">“effet de serre“</span>
         </p>
-        <div class="flex flex-wrap gap-6 justify-center">
+        <div class="flex flex-wrap gap-6">
           <div
             v-for="(promenade, index) in promenades"
             :key="index"
