@@ -76,17 +76,20 @@ const { data: categories } = useFetch<Category[]>(
             <div class="filter-title mb-5 font-semibold text-lg">
               <h3>Auteurs / Autrices</h3>
             </div>
-            <div v-for="(categorie, index) in categories" :key="index">
-              <div>
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="my-4 mx-2 text-sm"
-                />
-                <label for="scales"
-                  >{{ categorie.title }} <span class="text-sm">(5)</span></label
-                >
+            <div class="authors h-[200px] overflow-hidden">
+              <div v-for="(promenade, index) in promenades" :key="index">
+                <div>
+                  <input
+                    id="scales"
+                    type="checkbox"
+                    name="scales"
+                    class="my-4 mx-2 text-sm"
+                  />
+                  <label for="scales"
+                    >{{ promenade.user.username }}
+                    <span class="text-sm">(3)</span></label
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -150,5 +153,8 @@ const { data: categories } = useFetch<Category[]>(
 }
 fieldset {
   border: none;
+}
+.authors {
+  overflow-y: scroll;
 }
 </style>
