@@ -36,6 +36,7 @@ const filteredCategories = computed(() => {
   }))
 })
 const selectedCategories = ref<string[]>([])
+const loading = ref(false)
 
 const filteredPromenades = computed(() => {
   if (!promenades || !promenades.value) {
@@ -54,6 +55,19 @@ const filteredPromenades = computed(() => {
     })
   })
 })
+/* const updateSelectedCategories = (category: string) => {
+  if (selectedCategories.value.includes(category)) {
+    selectedCategories.value = selectedCategories.value.filter(
+      (selected) => selected !== category
+    )
+  } else {
+    selectedCategories.value = [...selectedCategories.value, category]
+  }
+  loading.value = true
+  setTimeout(() => {
+    loading.value = false
+  }, 1000)
+} */
 </script>
 
 <template>
@@ -150,7 +164,8 @@ const filteredPromenades = computed(() => {
           <span class="text-xl font-bold purple-color">38</span> résultats pour
           la recherche <span class="text-lg italic">“effet de serre“</span>
         </p>
-        <div class="flex flex-wrap gap-6">
+        <div v-if="loading" class="loading">Chargement</div>
+        <div v-else class="flex flex-wrap gap-6">
           <div
             v-for="(promenade, index) in filteredPromenades"
             :key="index"
