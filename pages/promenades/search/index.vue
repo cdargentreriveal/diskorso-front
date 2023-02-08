@@ -1,44 +1,38 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { Promenade } from '@/types/Promenades'
 import { Category } from '~~/types/Categories'
-export default {
-  setup() {
-    definePageMeta({
-      layout: 'page',
-    })
-    const { data: promenades } = useFetch<Promenade[]>(
-      'https://promenadesapi-production.up.railway.app/promenade/all'
-    )
+definePageMeta({
+  layout: 'page',
+})
+const { data: promenades } = useFetch<Promenade[]>(
+  'https://promenadesapi-production.up.railway.app/promenade/all'
+)
 
-    const { data: categories } = useFetch<Category[]>(
-      'https://promenadesapi-production.up.railway.app/category/all'
-    )
-    const filteredCategories = computed(() => {
-      if (
-        !promenades ||
-        !promenades.value ||
-        !categories ||
-        !categories.value
-      ) {
-        return []
+const { data: categories } = useFetch<Category[]>(
+  'https://promenadesapi-production.up.railway.app/category/all'
+)
+const filteredCategories = computed(() => {
+  if (!promenades || !promenades.value || !categories || !categories.value) {
+    return []
+  }
+  const categoryCounts: { [key: string]: number } = {}
+  promenades.value.forEach((promenade) => {
+    promenade.categories.forEach((category) => {
+      if (!categoryCounts[category.title]) {
+        categoryCounts[category.title] = 1
+      } else {
+        categoryCounts[category.title] += 1
       }
-      return categories.value.filter((categorie) => {
-        return (
-          promenades &&
-          promenades.value &&
-          promenades.value.some((promenade) => {
-            return categorie.title === promenade.categories[0].title
-          })
-        )
-      })
     })
-    return {
-      filteredCategories,
-      promenades,
-      categories,
-    }
-  },
-}
+  })
+  const filteredCategories = categories.value.filter((category) => {
+    return categoryCounts[category.title]
+  })
+  return filteredCategories.map((category) => ({
+    ...category,
+    count: categoryCounts[category.title],
+  }))
+})
 </script>
 
 <template>
@@ -94,7 +88,8 @@ export default {
                   class="my-4 mx-2 text-sm"
                 />
                 <label for="scales"
-                  >{{ categorie.title }} <span class="text-sm">(5)</span></label
+                  >{{ categorie.title }}
+                  <span class="text-sm">({{ categorie.count }})</span></label
                 >
               </div>
             </div>
