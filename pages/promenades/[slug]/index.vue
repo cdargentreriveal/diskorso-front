@@ -51,8 +51,8 @@
         <div class="promenade_page_content_details_image">
           <div class="px-20 py-10">
             <img
-              src="@/assets/images/test-banner-card.jpg"
-              class="rounded-xl"
+              :src="filteredPromenades[0].main_image"
+              class="rounded-xl w-full"
               alt=""
             />
             <p class="py-4 text-right text-sm">Crédit : @unsplash</p>
