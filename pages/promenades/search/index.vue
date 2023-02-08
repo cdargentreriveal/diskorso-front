@@ -11,6 +11,7 @@ const { data: promenades } = useFetch<Promenade[]>(
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
 )
+
 const filteredCategories = computed(() => {
   if (!promenades || !promenades.value || !categories || !categories.value) {
     return []
@@ -31,7 +32,27 @@ const filteredCategories = computed(() => {
   return filteredCategories.map((category) => ({
     ...category,
     count: categoryCounts[category.title],
+    selected: false,
   }))
+})
+const selectedCategories = ref<string[]>([])
+
+const filteredPromenades = computed(() => {
+  if (!promenades || !promenades.value) {
+    return []
+  }
+
+  if (!selectedCategories.value.length) {
+    return promenades.value
+  }
+
+  return promenades.value.filter((promenade) => {
+    return selectedCategories.value.some((selectedCategory) => {
+      return promenade.categories.some((category) => {
+        return category.title === selectedCategory
+      })
+    })
+  })
 })
 </script>
 
@@ -83,7 +104,9 @@ const filteredCategories = computed(() => {
               <div>
                 <input
                   id="scales"
+                  v-model="selectedCategories"
                   type="checkbox"
+                  :value="categorie.title"
                   name="scales"
                   class="my-4 mx-2 text-sm"
                 />
@@ -129,7 +152,7 @@ const filteredCategories = computed(() => {
         </p>
         <div class="flex flex-wrap gap-6">
           <div
-            v-for="(promenade, index) in promenades"
+            v-for="(promenade, index) in filteredPromenades"
             :key="index"
             class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
           >
