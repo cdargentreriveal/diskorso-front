@@ -100,10 +100,6 @@ const propsCard = defineProps({
     type: [String, Object],
     default: undefined,
   },
-  slug: {
-    type: String,
-    default: '',
-  },
 })
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')

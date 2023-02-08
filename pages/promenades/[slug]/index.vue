@@ -37,8 +37,7 @@
             >
               <button
                 :class="
-                  cat.color + ' category-btn px-5 py-2 rounded-full text-sm'
-                "
+                  cat.color + ' category-btn px-5 py-2 rounded-full text-sm'"
               >
                 {{ cat.title }}
               </button>
