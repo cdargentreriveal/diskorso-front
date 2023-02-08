@@ -6,6 +6,8 @@ interface ExtractsPourPromenade {
 
 interface User {
   username: string
+  picture: string
+  id: number
 }
 export interface Promenade {
   user: User

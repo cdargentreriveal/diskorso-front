@@ -29,16 +29,18 @@
       <div class="card-content-bottom pt-8 pb-2">
         <div class="flex items-center">
           <div class="card-content-author w-1/2">
-            <div class="flex gap-3 items-center">
-              <div
-                class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black"
-              >
-                <img src="@/assets/images/test-avatar.jpg" alt="avatar" />
+            <NuxtLink :to="`/auteur/${iduser}`">
+              <div class="flex gap-3 items-center">
+                <div
+                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black"
+                >
+                  <img :src="avatar" alt="avatar" />
+                </div>
+                <div class="card-content-author gray-color text-xs italic">
+                  par : {{ author }}
+                </div>
               </div>
-              <div class="card-content-author gray-color text-xs italic">
-                par : {{ author }}
-              </div>
-            </div>
+            </NuxtLink>
           </div>
           <div class="card-content-link text-right w-1/2">
             <NuxtLink :to="`/promenades/${slug}`">
@@ -92,6 +94,14 @@ const propsCard = defineProps({
     type: String,
     default: '',
   },
+  avatar: {
+    type: String,
+    default: '',
+  },
+  iduser: {
+    type: Number,
+    default: 0,
+  },
   size: {
     type: String,
     default: 'md',
@@ -99,10 +109,6 @@ const propsCard = defineProps({
   to: {
     type: [String, Object],
     default: undefined,
-  },
-  slug: {
-    type: String,
-    default: '',
   },
 })
 onMounted(() => {

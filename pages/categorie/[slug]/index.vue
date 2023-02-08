@@ -5,9 +5,6 @@ definePageMeta({
   layout: 'page',
 })
 
-// const { data: promenadesFromCategory } = useFetch<CategoryNested[]>(
-//   'https://promenadesapi-production.up.railway.app/category/categorie/histoire'
-// )
 const route = useRoute()
 
 const categorySelected = await fetch(
@@ -70,10 +67,13 @@ const { data: categories } = useFetch<Category[]>(
           :image="promenade.main_image"
           :alt="promenade.title"
           :title="promenade.title"
-          date="01/03/2023"
+          :date="getDate(promenade.createdAt)"
           :categories="promenade.categories"
           :text="promenade.summary"
           :author="promenade.user.username"
+          :avatar="promenade.user.picture"
+          :slug="promenade.slug"
+          :iduser="promenade.userId"
         />
       </div>
     </div>

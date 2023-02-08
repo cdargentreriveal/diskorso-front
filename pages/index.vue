@@ -46,11 +46,13 @@ onUnmounted(() => {
           :image="promenade.main_image"
           :alt="promenade.title"
           :title="promenade.title"
-          date="01/03/2023"
+          :date="getDate(promenade.createdAt)"
           :categories="promenade.categories"
           :text="promenade.summary"
           :author="promenade.user.username"
+          :avatar="promenade.user.picture"
           :slug="promenade.slug"
+          :iduser="promenade.userId"
         />
       </div>
     </div>
