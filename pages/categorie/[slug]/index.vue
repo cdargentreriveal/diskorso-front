@@ -47,9 +47,11 @@ const { data: categories } = useFetch<Category[]>(
           />
         </div>
         <div class="search-bar-button text-white text-sm h-full">
-          <button class="px-8 w-full h-full uppercase">
-            <span class="flex items-center">Rechercher</span>
-          </button>
+          <NuxtLink to="/promenades/search">
+            <button class="px-8 w-full h-full uppercase">
+              <span class="flex items-center">Rechercher</span>
+            </button>
+          </NuxtLink>
         </div>
       </div>
     </div>
