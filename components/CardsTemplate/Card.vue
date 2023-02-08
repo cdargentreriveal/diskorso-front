@@ -32,7 +32,7 @@
             <NuxtLink :to="`/auteur/${iduser}`">
               <div class="flex gap-3 items-center">
                 <div
-                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black"
+                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
                 >
                   <img :src="avatar" alt="avatar" />
                 </div>
