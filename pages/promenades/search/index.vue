@@ -74,7 +74,11 @@ const { data: categories } = useFetch<Category[]>(
           <Separator />
           <div class="filter-author">
             <div class="filter-title mb-5 font-semibold text-lg">
-              <h3>Auteurs / Autrices</h3>
+              <h3>
+                Auteurs / Autrices<sup class="ml-2 font-medium purple-color"
+                  >5</sup
+                >
+              </h3>
             </div>
             <div class="authors h-[200px] overflow-hidden">
               <div v-for="(promenade, index) in promenades" :key="index">
