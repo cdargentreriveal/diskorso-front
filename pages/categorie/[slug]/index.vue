@@ -23,8 +23,7 @@ const { data: categories } = useFetch<Category[]>(
 </script>
 
 <template>
-
-<div class="container mx-auto">
+  <div class="container mx-auto">
     <div class="btns-categories w-9/12 mx-auto">
       <div class="flex items-center justify-center">
         <div v-for="(categorie, index) in categories" :key="index">

@@ -243,7 +243,7 @@ const filteredPromenadesByUser = computed(() => {
               :key="index"
               class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
             >
-             <CardsTemplateCard :promenade="promenade" />
+              <CardsTemplateCard :promenade="promenade" />
             </div>
           </div>
         </div>

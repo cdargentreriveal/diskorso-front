@@ -38,7 +38,7 @@ const { data: promenade } = useFetch<Promenade>(
             <div
               class="promenade_page_content_created flex gap-2 italic text-sm py-4"
             >
-              <p>{{ getDate(promenade.createdAt) }}</p>
+              <p>Créee le : {{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
               <p>par : {{ promenade.user.username }}</p>
             </div>
@@ -48,13 +48,15 @@ const { data: promenade } = useFetch<Promenade>(
                 :key="index"
                 class="category"
               >
-                <button
-                  :class="
-                    cat.color + ' category-btn px-5 py-2 rounded-full text-sm'
-                  "
-                >
-                  {{ cat.title }}
-                </button>
+                <NuxtLink :to="`/categorie/${cat.slug}`">
+                  <button
+                    :class="
+                      cat.color + ' category-btn px-5 py-2 rounded-full text-sm'
+                    "
+                  >
+                    {{ cat.title }}
+                  </button>
+                </NuxtLink>
               </div>
             </div>
             <Separator />
