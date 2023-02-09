@@ -46,12 +46,13 @@
             >
               <div class="flex gap-3 items-center">
                 <div
-                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black"
+                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
                 >
                   <img :src="promenade.user.picture" alt="avatar" />
                 </div>
                 <div class="card-content-author gray-color text-xs italic">
-                  par : {{ promenade.user.username }}
+
+                  par : <span class="underline">{{ promenade.user.username }}</span>
                 </div>
               </div>
             </NuxtLink>

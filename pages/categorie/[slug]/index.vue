@@ -7,7 +7,10 @@ definePageMeta({
 })
 
 const route = useRoute()
-
+const searchTag = ref('')
+const search = () => {
+  return navigateTo(`/promenades/search/${searchTag.value}`)
+}
 const categorySelected = await fetch(
   `https://promenadesapi-production.up.railway.app/category/categorie/${route.params.slug}`
 ).then((res) => res.json())
@@ -40,14 +43,15 @@ const { data: categories } = useFetch<Category[]>(
       >
         <div class="search-bar-input w-full h-full">
           <input
+            v-model="searchTag"
             type="search"
-            value=""
             placeholder="Recherche par mots clés"
             class="py-4 px-8 w-full h-full border-gray border text-sm italic"
+            @keyup.enter="search"
           />
         </div>
         <div class="search-bar-button text-white text-sm h-full">
-          <NuxtLink to="/promenades/search">
+          <NuxtLink :to="`/promenades/search/${searchTag}`">
             <button class="px-8 w-full h-full uppercase">
               <span class="flex items-center">Rechercher</span>
             </button>

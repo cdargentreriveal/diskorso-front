@@ -10,7 +10,7 @@ const search = () => {
   return navigateTo(`/promenades/search/${searchTag.value}`)
 }
 const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
+  `https://promenadesapi-production.up.railway.app/promenade/search/${route.params.slug}`
 )
 
 const { data: categories } = useFetch<Category[]>(
@@ -227,13 +227,12 @@ const filteredPromenadesByUser = computed(() => {
             </div>
           </div>
         </div>
-
         <div class="w-2/3">
           <p class="py-5">
             <span class="text-xl font-bold purple-color">{{
               promenades.length
             }}</span>
-            <span v-if="promenades.length == 1"> résultat </span>
+            <span v-if="promenades.length <= 1"> résultat </span>
             <span v-else> résultats </span>pour la recherche
             <span class="text-lg italic">“{{ route.params.slug }}“</span>
           </p>
@@ -243,7 +242,18 @@ const filteredPromenadesByUser = computed(() => {
               :key="index"
               class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
             >
-             <CardsTemplateCard :promenade="promenade" />
+              <CardsTemplateCard
+                :image="promenade.main_image"
+                :alt="promenade.title"
+                :title="promenade.title"
+                :date="getDate(promenade.createdAt)"
+                :categories="promenade.categories"
+                :text="promenade.summary"
+                :author="promenade.user.username"
+                :avatar="promenade.user.picture"
+                :slug="promenade.slug"
+                :iduser="promenade.userId"
+              />
             </div>
           </div>
         </div>
