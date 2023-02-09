@@ -224,4 +224,7 @@ fieldset {
 .authors {
   overflow-y: scroll;
 }
+input[type='checkbox'] {
+  cursor: pointer;
+}
 </style>
