@@ -38,7 +38,6 @@ const { data: promenade } = useFetch<Promenade>(
             <div
               class="promenade_page_content_created flex gap-2 italic text-sm py-4"
             >
-
               <p>{{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
               <p>par : {{ promenade.user.username }}</p>
@@ -48,7 +47,6 @@ const { data: promenade } = useFetch<Promenade>(
                 v-for="(cat, index) in promenade.categories"
                 :key="index"
                 class="category"
-
               >
                 <button
                   :class="
