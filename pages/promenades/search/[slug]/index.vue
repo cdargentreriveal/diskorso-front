@@ -68,23 +68,26 @@ const filteredPromenades = computed(() => {
   return filteredPromenades
 })
 
-const usernameCounts: { [key: string]: number } = {}
-
-filteredPromenades.value.forEach((promenade) => {
-  const username = promenade.user.username
-  if (!usernameCounts[username]) {
-    usernameCounts[username] = 1
-  } else {
-    usernameCounts[username] += 1
+const usernamesWithCounts = computed(() => {
+  if (!filteredPromenades.value) {
+    return []
   }
-})
 
-const usernamesWithCounts = Object.entries(usernameCounts).map(
-  ([username, count]) => ({
+  const usernameCounts: { [key: string]: number } = {}
+  filteredPromenades.value.forEach((promenade) => {
+    const username = promenade.user.username
+    if (!usernameCounts[username]) {
+      usernameCounts[username] = 1
+    } else {
+      usernameCounts[username] += 1
+    }
+  })
+
+  return Object.entries(usernameCounts).map(([username, count]) => ({
     username,
     count,
-  })
-)
+  }))
+})
 
 const users = computed(() => {
   if (!promenades || !promenades.value) {
@@ -120,7 +123,7 @@ const filteredPromenadesByUser = computed(() => {
 
 <template>
   <client-only>
-    <div v-if="promenades && promenades.length > 0" class="container mx-auto">
+    <div class="container mx-auto">
       <div class="btns-categories w-9/12 mx-auto">
         <div class="flex items-center justify-center">
           <div v-for="(categorie, index) in categories" :key="index">
