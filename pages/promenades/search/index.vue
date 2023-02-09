@@ -55,6 +55,22 @@ const filteredPromenades = computed(() => {
     })
   })
 })
+const usernameCounts: { [key: string]: number } = {}
+
+filteredPromenades.value.forEach((promenade) => {
+  const username = promenade.user.username
+  if (!usernameCounts[username]) {
+    usernameCounts[username] = 1
+  } else {
+    usernameCounts[username] += 1
+  }
+})
+const usernamesWithCounts = Object.entries(usernameCounts).map(
+  ([username, count]) => ({
+    username,
+    count,
+  })
+)
 /* const updateSelectedCategories = (category: string) => {
   if (selectedCategories.value.includes(category)) {
     selectedCategories.value = selectedCategories.value.filter(
@@ -135,13 +151,13 @@ const filteredPromenades = computed(() => {
           <div class="filter-author">
             <div class="filter-title mb-5 font-semibold text-lg">
               <h3>
-                Auteurs / Autrices<sup class="ml-2 font-medium purple-color"
-                  >5</sup
-                >
+                Auteurs / Autrices<sup class="ml-2 font-medium purple-color">{{
+                  usernamesWithCounts.length
+                }}</sup>
               </h3>
             </div>
             <div class="authors h-[200px] overflow-hidden">
-              <div v-for="(promenade, index) in promenades" :key="index">
+              <div v-for="(user, index) in usernamesWithCounts" :key="index">
                 <div>
                   <input
                     id="scales"
@@ -150,8 +166,8 @@ const filteredPromenades = computed(() => {
                     class="my-4 mx-2 text-sm"
                   />
                   <label for="scales"
-                    >{{ promenade.user.username }}
-                    <span class="text-sm">(3)</span></label
+                    >{{ user.username }}
+                    <span class="text-sm">({{ user.count }})</span></label
                   >
                 </div>
               </div>
