@@ -4,8 +4,10 @@ import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'page',
 })
+const route = useRoute()
+const searchTag = ref('')
 const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
+  `https://promenadesapi-production.up.railway.app/promenade/search/${route.params.slug}`
 )
 
 const { data: categories } = useFetch<Category[]>(
@@ -137,14 +139,14 @@ const filteredPromenadesByUser = computed(() => {
       >
         <div class="search-bar-input w-full h-full">
           <input
+            v-model="searchTag"
             type="search"
-            value=""
             placeholder="Recherche par mots clés"
             class="py-4 px-8 w-full h-full border-gray border text-sm italic"
           />
         </div>
         <div class="search-bar-button text-white text-sm h-full">
-          <NuxtLink to="/promenades/search">
+          <NuxtLink :to="`/promenades/search/${searchTag}`">
             <button class="px-8 w-full h-full uppercase">
               <span class="flex items-center">Rechercher</span>
             </button>
@@ -210,7 +212,8 @@ const filteredPromenadesByUser = computed(() => {
       <div class="w-2/3">
         <p class="py-5">
           <span class="text-xl font-bold purple-color">38</span> résultats pour
-          la recherche <span class="text-lg italic">“effet de serre“</span>
+          la recherche
+          <span class="text-lg italic">“{{ route.params.slug }}“</span>
         </p>
         <div class="flex flex-wrap gap-6 pt-4">
           <div

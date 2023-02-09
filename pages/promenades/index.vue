@@ -11,6 +11,15 @@ const { data: promenades } = useFetch<Promenade[]>(
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
 )
+const searchTag = ref('')
+/*
+
+async function search() {
+  const response = await fetch(
+    `https://promenadesapi-production.up.railway.app/promenade/search/${searchTag.value}`
+  )
+  const result = await response.json()
+} */
 </script>
 
 <template>
@@ -34,14 +43,14 @@ const { data: categories } = useFetch<Category[]>(
       >
         <div class="search-bar-input w-full h-full">
           <input
+            v-model="searchTag"
             type="search"
-            value=""
             placeholder="Recherche par mots clés"
             class="py-4 px-8 w-full h-full border-gray border text-sm italic"
           />
         </div>
         <div class="search-bar-button text-white text-sm h-full">
-          <NuxtLink to="/promenades/search">
+          <NuxtLink :to="`/promenades/search/${searchTag}`">
             <button class="px-8 w-full h-full uppercase">
               <span class="flex items-center">Rechercher</span>
             </button>
