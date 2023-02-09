@@ -230,9 +230,9 @@ const filteredPromenadesByUser = computed(() => {
         <div v-if="promenades" class="w-2/3">
           <p class="py-5">
             <span class="text-xl font-bold purple-color">{{
-              promenades.length
+              filteredPromenades.length
             }}</span>
-            <span v-if="promenades.length <= 1"> résultat </span>
+            <span v-if="filteredPromenades.length <= 1"> résultat </span>
             <span v-else> résultats </span>pour la recherche
             <span class="text-lg italic">“{{ route.params.slug }}“</span>
           </p>
