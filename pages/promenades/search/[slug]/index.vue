@@ -196,7 +196,13 @@ const filteredPromenadesByUser = computed(() => {
                   >
                 </h3>
               </div>
-              <div class="authors h-[200px] overflow-hidden">
+              <div
+                :class="
+                  usernamesWithCounts.length > 5
+                    ? 'authors h-[200px] overflow-hidden'
+                    : ''
+                "
+              >
                 <div v-for="(user, index) in usernamesWithCounts" :key="index">
                   <div>
                     <input
