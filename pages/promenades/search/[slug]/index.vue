@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Promenade } from '@/types/Promenades'
+import { Promenade } from '~~/types/Promenades'
 import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'page',
@@ -119,128 +119,137 @@ const filteredPromenadesByUser = computed(() => {
 </script>
 
 <template>
-  <div class="container mx-auto">
-    <div class="btns-categories w-9/12 mx-auto">
-      <div class="flex items-center justify-center">
-        <div v-for="(categorie, index) in categories" :key="index">
-          <NuxtLink :to="`/categorie/${categorie.slug}`"
-            ><button
-              :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie.color} uppercase`"
-            >
-              {{ categorie.title }}
-            </button>
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
-    <div class="search-bar-container">
-      <div
-        class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
-      >
-        <div class="search-bar-input w-full h-full">
-          <input
-            v-model="searchTag"
-            type="search"
-            placeholder="Recherche par mots clés"
-            class="py-4 px-8 w-full h-full border-gray border text-sm italic"
-          />
-        </div>
-        <div class="search-bar-button text-white text-sm h-full">
-          <NuxtLink :to="`/promenades/search/${searchTag}`">
-            <button class="px-8 w-full h-full uppercase">
-              <span class="flex items-center">Rechercher</span>
-            </button>
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
-    <Separator />
-    <div class="flex mt-10 mb-20">
-      <div class="w-1/3 relative">
-        <div class="filter py-5 w-1/2 sticky top-[15%]">
-          <div class="filter-categories">
-            <div class="filter-title mb-5 font-semibold text-lg">
-              <h3>Catégories</h3>
-            </div>
-            <div v-for="(categorie, index) in filteredCategories" :key="index">
-              <div>
-                <input
-                  id="scales"
-                  v-model="selectedCategories"
-                  type="checkbox"
-                  :value="categorie.title"
-                  name="scales"
-                  class="my-4 mx-2 text-sm"
-                />
-                <label for="scales"
-                  >{{ categorie.title }}
-                  <span class="text-sm">({{ categorie.count }})</span></label
-                >
-              </div>
-            </div>
+  <client-only>
+    <div v-if="promenades && promenades.length > 0" class="container mx-auto">
+      <div class="btns-categories w-9/12 mx-auto">
+        <div class="flex items-center justify-center">
+          <div v-for="(categorie, index) in categories" :key="index">
+            <NuxtLink :to="`/categorie/${categorie.slug}`"
+              ><button
+                :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie.color} uppercase`"
+              >
+                {{ categorie.title }}
+              </button>
+            </NuxtLink>
           </div>
-          <Separator />
-          <div class="filter-author">
-            <div class="filter-title mb-5 font-semibold text-lg">
-              <h3>
-                Auteurs / Autrices<sup class="ml-2 font-medium purple-color">{{
-                  usernamesWithCounts.length
-                }}</sup>
-              </h3>
-            </div>
-            <div class="authors h-[200px] overflow-hidden">
-              <div v-for="(user, index) in usernamesWithCounts" :key="index">
+        </div>
+      </div>
+      <div class="search-bar-container">
+        <div
+          class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
+        >
+          <div class="search-bar-input w-full h-full">
+            <input
+              v-model="searchTag"
+              type="search"
+              placeholder="Recherche par mots clés"
+              class="py-4 px-8 w-full h-full border-gray border text-sm italic"
+            />
+          </div>
+          <div class="search-bar-button text-white text-sm h-full">
+            <NuxtLink :to="`/promenades/search/${searchTag}`">
+              <button class="px-8 w-full h-full uppercase">
+                <span class="flex items-center">Rechercher</span>
+              </button>
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+      <Separator />
+      <div class="flex mt-10 mb-20">
+        <div class="w-1/3 relative">
+          <div class="filter py-5 w-1/2 sticky top-[15%]">
+            <div class="filter-categories">
+              <div class="filter-title mb-5 font-semibold text-lg">
+                <h3>Catégories</h3>
+              </div>
+              <div
+                v-for="(categorie, index) in filteredCategories"
+                :key="index"
+              >
                 <div>
                   <input
                     id="scales"
-                    v-model="selectedUsers"
+                    v-model="selectedCategories"
                     type="checkbox"
+                    :value="categorie.title"
                     name="scales"
-                    :value="user.username"
                     class="my-4 mx-2 text-sm"
                   />
                   <label for="scales"
-                    >{{ user.username }}
-                    <span class="text-sm">({{ user.count }})</span></label
+                    >{{ categorie.title }}
+                    <span class="text-sm">({{ categorie.count }})</span></label
                   >
+                </div>
+              </div>
+            </div>
+            <Separator />
+            <div class="filter-author">
+              <div class="filter-title mb-5 font-semibold text-lg">
+                <h3>
+                  Auteurs / Autrices<sup
+                    class="ml-2 font-medium purple-color"
+                    >{{ usernamesWithCounts.length }}</sup
+                  >
+                </h3>
+              </div>
+              <div class="authors h-[200px] overflow-hidden">
+                <div v-for="(user, index) in usernamesWithCounts" :key="index">
+                  <div>
+                    <input
+                      id="scales"
+                      v-model="selectedUsers"
+                      type="checkbox"
+                      name="scales"
+                      :value="user.username"
+                      class="my-4 mx-2 text-sm"
+                    />
+                    <label for="scales"
+                      >{{ user.username }}
+                      <span class="text-sm">({{ user.count }})</span></label
+                    >
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="w-2/3">
-        <p class="py-5">
-          <span class="text-xl font-bold purple-color">38</span> résultats pour
-          la recherche
-          <span class="text-lg italic">“{{ route.params.slug }}“</span>
-        </p>
-        <div class="flex flex-wrap gap-6 pt-4">
-          <div
-            v-for="(promenade, index) in filteredPromenades"
-            :key="index"
-            class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
-          >
-            <CardsTemplateCard
-              :image="promenade.main_image"
-              :alt="promenade.title"
-              :title="promenade.title"
-              :date="getDate(promenade.createdAt)"
-              :categories="promenade.categories"
-              :text="promenade.summary"
-              :author="promenade.user.username"
-              :avatar="promenade.user.picture"
-              :slug="promenade.slug"
-              :iduser="promenade.userId"
-            />
+        <div class="w-2/3">
+          <p class="py-5">
+            <span class="text-xl font-bold purple-color">{{
+              promenades.length
+            }}</span>
+            <span v-if="promenades.length == 1"> résultat </span>
+            <span v-else> résultats </span>pour la recherche
+            <span class="text-lg italic">“{{ route.params.slug }}“</span>
+          </p>
+          <div class="flex flex-wrap gap-6 pt-4">
+            <div
+              v-for="(promenade, index) in filteredPromenades"
+              :key="index"
+              class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
+            >
+              <CardsTemplateCard
+                :image="promenade.main_image"
+                :alt="promenade.title"
+                :title="promenade.title"
+                :date="getDate(promenade.createdAt)"
+                :categories="promenade.categories"
+                :text="promenade.summary"
+                :author="promenade.user.username"
+                :avatar="promenade.user.picture"
+                :slug="promenade.slug"
+                :iduser="promenade.userId"
+              />
+            </div>
           </div>
         </div>
       </div>
+      <div class="py-5">
+        <Pagination />
+      </div>
     </div>
-    <div class="py-5">
-      <Pagination />
-    </div>
-  </div>
+  </client-only>
 </template>
 <style lang="scss" scoped>
 .search-bar-input input {
