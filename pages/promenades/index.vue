@@ -12,14 +12,9 @@ const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
 )
 const searchTag = ref('')
-/*
-
-async function search() {
-  const response = await fetch(
-    `https://promenadesapi-production.up.railway.app/promenade/search/${searchTag.value}`
-  )
-  const result = await response.json()
-} */
+const search = () => {
+  return navigateTo(`/promenades/search/${searchTag.value}`)
+}
 </script>
 
 <template>
@@ -47,6 +42,7 @@ async function search() {
             type="search"
             placeholder="Recherche par mots clés"
             class="py-4 px-8 w-full h-full border-gray border text-sm italic"
+            @keyup.enter="search"
           />
         </div>
         <div class="search-bar-button text-white text-sm h-full">

@@ -6,6 +6,9 @@ definePageMeta({
 })
 const route = useRoute()
 const searchTag = ref('')
+const search = () => {
+  return navigateTo(`/promenades/search/${searchTag.value}`)
+}
 const { data: promenades } = useFetch<Promenade[]>(
   `https://promenadesapi-production.up.railway.app/promenade/search/${route.params.slug}`
 )
@@ -147,6 +150,7 @@ const filteredPromenadesByUser = computed(() => {
               type="search"
               placeholder="Recherche par mots clés"
               class="py-4 px-8 w-full h-full border-gray border text-sm italic"
+              @keyup.enter="search"
             />
           </div>
           <div class="search-bar-button text-white text-sm h-full">
