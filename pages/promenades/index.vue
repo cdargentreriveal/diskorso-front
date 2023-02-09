@@ -4,6 +4,7 @@ import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'page',
 })
+
 const { data: promenades } = useFetch<Promenade[]>(
   'https://promenadesapi-production.up.railway.app/promenade/all'
 )
