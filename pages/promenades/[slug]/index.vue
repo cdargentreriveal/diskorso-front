@@ -15,7 +15,13 @@ const { data: promenade } = useFetch<Promenade>(
 <template>
   <client-only>
     <div class="promenade_page">
-      <div v-if="promenade === null">Il n'existe pas de promenade</div>
+      <div v-if="promenade === null">
+        <div class="container mx-auto">
+          <div class="h-[70vh] flex justify-center items-center">
+            <p class="text-2xl">Il n'existe pas de promenade</p>
+          </div>
+        </div>
+      </div>
       <div v-else>
         <div
           class="promenade_page_banner h-[55vh] w-full"
