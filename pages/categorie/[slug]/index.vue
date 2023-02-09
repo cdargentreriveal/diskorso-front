@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { Category, CategoryNested } from '../../../types/Categories/'
+import { Category } from '../../../types/Categories/'
+import { Promenade } from '~~/types/Promenades'
 
 definePageMeta({
   layout: 'page',
@@ -13,6 +14,8 @@ const search = () => {
 const categorySelected = await fetch(
   `https://promenadesapi-production.up.railway.app/category/categorie/${route.params.slug}`
 ).then((res) => res.json())
+
+const promenades: Promenade[] = categorySelected[0]
 
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
@@ -65,22 +68,11 @@ const { data: categories } = useFetch<Category[]>(
     </div>
     <div class="flex mt-10 mb-20 gap-6 flex-wrap">
       <div
-        v-for="(promenade, index) in categorySelected[0].promenades"
+        v-for="(promenade, index) in promenades"
         :key="index"
         class="card rounded bg-white box-shaddow w-[32%] -md:w-full"
       >
-        <CardsTemplateCard
-          :image="promenade.main_image"
-          :alt="promenade.title"
-          :title="promenade.title"
-          :date="getDate(promenade.createdAt)"
-          :categories="promenade.categories"
-          :text="promenade.summary"
-          :author="promenade.user.username"
-          :avatar="promenade.user.picture"
-          :slug="promenade.slug"
-          :iduser="promenade.userId"
-        />
+        <CardsTemplateCard :promenade="promenade" />
       </div>
     </div>
     <div class="py-5">
