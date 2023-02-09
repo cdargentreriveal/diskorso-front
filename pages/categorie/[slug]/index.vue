@@ -15,7 +15,7 @@ const categorySelected = await fetch(
   `https://promenadesapi-production.up.railway.app/category/categorie/${route.params.slug}`
 ).then((res) => res.json())
 
-const promenades: Promenade[] = categorySelected[0]
+const promenades: Promenade[] = categorySelected[0].promenades
 
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
@@ -23,7 +23,8 @@ const { data: categories } = useFetch<Category[]>(
 </script>
 
 <template>
-  <div class="container mx-auto">
+
+<div class="container mx-auto">
     <div class="btns-categories w-9/12 mx-auto">
       <div class="flex items-center justify-center">
         <div v-for="(categorie, index) in categories" :key="index">

@@ -51,8 +51,8 @@
                   <img :src="promenade.user.picture" alt="avatar" />
                 </div>
                 <div class="card-content-author gray-color text-xs italic">
-
-                  par : <span class="underline">{{ promenade.user.username }}</span>
+                  par :
+                  <span class="underline">{{ promenade.user.username }}</span>
                 </div>
               </div>
             </NuxtLink>
