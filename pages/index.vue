@@ -42,18 +42,7 @@ onUnmounted(() => {
         :key="index"
         class="card rounded bg-white box-shaddow w-[32%] -md:w-full"
       >
-        <CardsTemplateCard
-          :image="promenade.main_image"
-          :alt="promenade.title"
-          :title="promenade.title"
-          :date="getDate(promenade.createdAt)"
-          :categories="promenade.categories"
-          :text="promenade.summary"
-          :author="promenade.user.username"
-          :avatar="promenade.user.picture"
-          :slug="promenade.slug"
-          :iduser="promenade.userId"
-        />
+        <CardsTemplateCard :promenade="promenade" />
       </div>
     </div>
     <div class="text-center">

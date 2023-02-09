@@ -1,19 +1,27 @@
 <template>
   <div class="card">
-    <NuxtLink :to="`/promenades/${slug}`">
+    <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">
-        <img class="w-full" :src="image" :alt="alt" />
+        <img
+          class="w-full"
+          :src="promenade.main_image"
+          :alt="promenade.title"
+        />
       </div>
     </NuxtLink>
     <div class="card-content p-8">
       <div class="card-content-title font-bold text-2xl my-1">
-        <h2>{{ title }}</h2>
+        <h2>{{ promenade.title }}</h2>
       </div>
       <div class="card-content-date text-sm gray-color">
-        Crée le : {{ date }}
+        Crée le : {{ getDate(promenade.createdAt) }}
       </div>
       <div class="card-content-categories flex gap-4 py-5">
-        <div v-for="(cat, index) in categories" :key="index" class="category">
+        <div
+          v-for="(cat, index) in promenade.categories"
+          :key="index"
+          class="category"
+        >
           <NuxtLink :to="`/categorie/${cat.slug}`">
             <button
               :class="
@@ -25,25 +33,31 @@
           </NuxtLink>
         </div>
       </div>
-      <p class="text-sm gray-color card-content-description">{{ text }}</p>
+      <p class="text-sm gray-color card-content-description">
+        {{ promenade.summary }}
+      </p>
       <div class="card-content-bottom pt-8 pb-2">
         <div class="flex items-center">
           <div class="card-content-author w-1/2">
-            <NuxtLink :to="`/auteur/${iduser}`">
+            <NuxtLink
+              :to="`/contributor/${
+                promenade.user.username + '_' + promenade.user.id
+              }`"
+            >
               <div class="flex gap-3 items-center">
                 <div
                   class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black"
                 >
-                  <img :src="avatar" alt="avatar" />
+                  <img :src="promenade.user.picture" alt="avatar" />
                 </div>
                 <div class="card-content-author gray-color text-xs italic">
-                  par : {{ author }}
+                  par : {{ promenade.user.username }}
                 </div>
               </div>
             </NuxtLink>
           </div>
           <div class="card-content-link text-right w-1/2">
-            <NuxtLink :to="`/promenades/${slug}`">
+            <NuxtLink :to="`/promenades/${promenade.slug}`">
               <button class="font-semibold underline text-sm">
                 Lire la promenade >
               </button>
@@ -57,50 +71,12 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue'
-import { Category } from '~~/types/Categories'
+import { Promenade } from '~~/types/Promenades'
 
 const propsCard = defineProps({
-  image: {
-    type: String,
-    default: '',
-  },
-  alt: {
-    type: String,
-    default: '',
-  },
-  title: {
-    type: String,
-    default: '',
-  },
-  date: {
-    type: String,
-    default: '',
-  },
-  slug: {
-    type: String,
-    default: '',
-  },
-  categories: {
-    type: Array as PropType<Category[]>,
-    default() {
-      return []
-    },
-  },
-  text: {
-    type: String,
-    default: '',
-  },
-  author: {
-    type: String,
-    default: '',
-  },
-  avatar: {
-    type: String,
-    default: '',
-  },
-  iduser: {
-    type: Number,
-    default: 0,
+  promenade: {
+    type: Object as PropType<Promenade>,
+    default: null,
   },
   size: {
     type: String,

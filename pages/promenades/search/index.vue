@@ -110,16 +110,7 @@ const { data: categories } = useFetch<Category[]>(
             :key="index"
             class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
           >
-            <CardsTemplateCard
-              :image="promenade.main_image"
-              :alt="promenade.title"
-              :title="promenade.title"
-              date="01/03/2023"
-              :categories="promenade.categories"
-              :text="promenade.summary"
-              :author="promenade.user.username"
-              :slug="promenade.slug"
-            />
+            <CardsTemplateCard :promenade="promenade" />
           </div>
         </div>
       </div>
