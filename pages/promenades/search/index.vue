@@ -35,7 +35,9 @@ const filteredCategories = computed(() => {
     selected: false,
   }))
 })
+
 const selectedCategories = ref<string[]>([])
+const selectedUsers = ref<string[]>([])
 const loading = ref(false)
 
 const filteredPromenades = computed(() => {
@@ -43,18 +45,27 @@ const filteredPromenades = computed(() => {
     return []
   }
 
-  if (!selectedCategories.value.length) {
-    return promenades.value
-  }
+  let filteredPromenades = promenades.value
 
-  return promenades.value.filter((promenade) => {
-    return selectedCategories.value.some((selectedCategory) => {
-      return promenade.categories.some((category) => {
-        return category.title === selectedCategory
+  if (selectedCategories.value.length) {
+    filteredPromenades = filteredPromenades.filter((promenade) => {
+      return selectedCategories.value.some((selectedCategory) => {
+        return promenade.categories.some((category) => {
+          return category.title === selectedCategory
+        })
       })
     })
-  })
+  }
+
+  if (selectedUsers.value.length) {
+    filteredPromenades = filteredPromenades.filter((promenade) => {
+      return selectedUsers.value.includes(promenade.user.username)
+    })
+  }
+
+  return filteredPromenades
 })
+
 const usernameCounts: { [key: string]: number } = {}
 
 filteredPromenades.value.forEach((promenade) => {
@@ -65,12 +76,31 @@ filteredPromenades.value.forEach((promenade) => {
     usernameCounts[username] += 1
   }
 })
+
 const usernamesWithCounts = Object.entries(usernameCounts).map(
   ([username, count]) => ({
     username,
     count,
   })
 )
+
+const users = computed(() => {
+  if (!promenades || !promenades.value) {
+    return []
+  }
+  const usernames = promenades.value.map((promenade) => promenade.user.username)
+  return [...new Set(usernames)]
+})
+
+const filteredPromenadesByUser = computed(() => {
+  if (!promenades.value || !selectedUsers.value.length) {
+    return promenades.value
+  }
+
+  return promenades.value.filter((promenade) => {
+    return selectedUsers.value.includes(promenade.user.username)
+  })
+})
 /* const updateSelectedCategories = (category: string) => {
   if (selectedCategories.value.includes(category)) {
     selectedCategories.value = selectedCategories.value.filter(
@@ -161,8 +191,10 @@ const usernamesWithCounts = Object.entries(usernameCounts).map(
                 <div>
                   <input
                     id="scales"
+                    v-model="selectedUsers"
                     type="checkbox"
                     name="scales"
+                    :value="user.username"
                     class="my-4 mx-2 text-sm"
                   />
                   <label for="scales"
