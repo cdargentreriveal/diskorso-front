@@ -102,6 +102,11 @@ const { data: categories } = useFetch<Category[]>(
   }
 }
 .search-bar-button {
+  a {
+    display: inline-block;
+    height: 100%;
+    border-radius: 0 9999px 9999px 0;
+  }
   & :hover {
     background-color: #4e8ca5;
   }
