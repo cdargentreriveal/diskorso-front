@@ -18,7 +18,7 @@ const { data: promenade } = useFetch<Promenade>(
       <div v-if="promenade === null">
         <div class="container mx-auto">
           <div class="h-[70vh] flex justify-center items-center">
-            <p class="text-2xl">Il n'existe pas de promenade</p>
+            <p class="text-2xl">Il n'existe pas de promenades</p>
           </div>
         </div>
       </div>
