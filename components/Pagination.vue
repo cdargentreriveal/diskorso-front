@@ -1,3 +1,5 @@
+<script lang="ts" setup></script>
+
 <template>
   <div
     class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
@@ -87,34 +89,32 @@
             class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
             >10</a
           >
-          <a
-            href="#"
-            class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-          >
-            <span class="sr-only">Next</span>
-            <!-- Heroicon name: mini/chevron-right -->
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
+          <button>
+            <a
+              href="#"
+              class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
             >
-              <path
-                fill-rule="evenodd"
-                d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </a>
+              <span class="sr-only">Next</span>
+              <!-- Heroicon name: mini/chevron-right -->
+              <svg
+                class="h-5 w-5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+          </button>
         </nav>
       </div>
     </div>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
 
 <style></style>

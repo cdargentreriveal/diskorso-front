@@ -1,13 +1,52 @@
 <script lang="ts" setup>
 import { Promenade } from '../../types/Promenades'
 import { Category } from '~~/types/Categories'
+import { usePromenadeStore } from '@/store/promenades'
+
 definePageMeta({
   layout: 'page',
 })
 
-const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
+const numberOfPromenade = usePromenadeStore()
+const query = ref('latest')
+
+const url = computed(
+  () =>
+    `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
 )
+const { data: promenades, refresh } = useAsyncData<Promenade[]>(
+  'promenades',
+  () => $fetch(url.value)
+)
+
+const lastId = computed(() => {
+  if (promenades.value === null) {
+    return null
+  }
+  return promenades.value[1].id
+})
+
+const firstId = computed(() => {
+  if (promenades.value === null) {
+    return 0
+  }
+  return promenades.value[0].id
+})
+
+function next() {
+  query.value = `promenade-cursor/${numberOfPromenade.count}/${lastId.value}`
+  refresh()
+}
+
+function previous() {
+  query.value = `promenade-cursor/${-numberOfPromenade.count}/${firstId.value}`
+  refresh()
+}
+
+function first() {
+  query.value = 'latest'
+  refresh()
+}
 
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
@@ -68,6 +107,9 @@ const search = () => {
         <CardsTemplateCard :promenade="promenade" />
       </div>
     </div>
+    <button class="p-8" @click="first">First Page</button>
+    <button class="p-8" @click="previous">Previous</button>
+    <button class="p-8" @click="next">Next</button>
     <div class="py-5">
       <Pagination />
     </div>
