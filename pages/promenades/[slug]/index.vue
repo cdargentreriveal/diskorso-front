@@ -29,7 +29,13 @@ const { data: promenade } = useFetch<Promenade>(
           <div
             class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17"
           >
-            <img src="@/assets/images/test-avatar.jpg" alt="avatar auteur" />
+            <NuxtLink
+              :to="`/contributor/${
+                promenade.user.username + '_' + promenade.userId
+              }`"
+            >
+              <img :src="promenade.user.picture" alt="avatar auteur" />
+            </NuxtLink>
           </div>
           <div class="promenade_page_content_header px-20">
             <div class="promenade_page_content_title text-4xl font-bold">
@@ -40,7 +46,13 @@ const { data: promenade } = useFetch<Promenade>(
             >
               <p>{{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
-              <p>par : {{ promenade.user.username }}</p>
+              <NuxtLink
+                :to="`/contributor/${
+                  promenade.user.username + '_' + promenade.userId
+                }`"
+              >
+                <p>par : {{ promenade.user.username }}</p>
+              </NuxtLink>
             </div>
             <div class="card-content-categories flex gap-4 py-5">
               <div
@@ -48,13 +60,15 @@ const { data: promenade } = useFetch<Promenade>(
                 :key="index"
                 class="category"
               >
-                <button
-                  :class="
-                    cat.color + ' category-btn px-5 py-2 rounded-full text-sm'
-                  "
-                >
-                  {{ cat.title }}
-                </button>
+                <NuxtLink :to="`/categorie/${cat.slug}`">
+                  <button
+                    :class="
+                      cat.color + ' category-btn px-5 py-2 rounded-full text-sm'
+                    "
+                  >
+                    {{ cat.title }}
+                  </button>
+                </NuxtLink>
               </div>
             </div>
             <Separator />

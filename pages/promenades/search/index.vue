@@ -229,7 +229,8 @@ const filteredPromenadesByUser = computed(() => {
         </div>
 
         <div class="w-2/3">
-          <p class="py-5">
+          <p v-if="promenades === null">Pas de promenades</p>
+          <p v-else class="py-5">
             <span class="text-xl font-bold purple-color">{{
               promenades.length
             }}</span>
@@ -243,7 +244,7 @@ const filteredPromenadesByUser = computed(() => {
               :key="index"
               class="card rounded bg-white box-shaddow w-[48%] -md:w-full"
             >
-             <CardsTemplateCard :promenade="promenade" />
+              <CardsTemplateCard :promenade="promenade" />
             </div>
           </div>
         </div>
