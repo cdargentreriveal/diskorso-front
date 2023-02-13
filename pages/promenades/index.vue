@@ -10,9 +10,18 @@ definePageMeta({
 const numberOfPromenade = usePromenadeStore()
 const query = ref('latest')
 
+const { data: lastNumberData } = await useFetch<number>(
+  'https://promenadesapi-production.up.railway.app/promenade/findLastPromenade'
+)
+
+onMounted(() => {
+  query.value = `2/${lastNumberData.value}/0`
+  refresh()
+})
+
 const url = computed(
   () =>
-    `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
+    `https://promenadesapi-production.up.railway.app/promenade/promenade-cursor/${query.value}`
 )
 const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   'promenades',
@@ -34,12 +43,12 @@ const firstId = computed(() => {
 })
 
 function next() {
-  query.value = `promenade-cursor/${numberOfPromenade.count}/${lastId.value}`
+  query.value = `${numberOfPromenade.count}/${lastId.value}/1`
   refresh()
 }
 
 function previous() {
-  query.value = `promenade-cursor/${-numberOfPromenade.count}/${firstId.value}`
+  query.value = `${-numberOfPromenade.count}/${firstId.value}/1`
   refresh()
 }
 
