@@ -25,6 +25,12 @@ const filteredCategories = computed(() => {
   }
   const categoryCounts: { [key: string]: number } = {}
   promenades.value.forEach((promenade) => {
+    if (
+      selectedUsers.value.length &&
+      !selectedUsers.value.includes(promenade.user.username)
+    ) {
+      return // Ignore les promenades d'utilisateurs non sélectionnés
+    }
     promenade.categories.forEach((category) => {
       if (!categoryCounts[category.title]) {
         categoryCounts[category.title] = 1
@@ -39,7 +45,6 @@ const filteredCategories = computed(() => {
   return filteredCategories.map((category) => ({
     ...category,
     count: categoryCounts[category.title],
-    selected: false,
   }))
 })
 
