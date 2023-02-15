@@ -23,18 +23,8 @@ const { data: promenades, refresh } = useAsyncData<Promenade[]>(
     return data.sort((a, b) => b.id - a.id)
   }
 )
-// next
-function next() {
-  if (lastId.value === null || promenades.value === null) {
-    query.value = `findLastPromenades/${numberOfPromenade.value}`
-  } else if (promenades.value?.length < numberOfPromenade.value) {
-    return 'no more promenade'
-  } else {
-    query.value = `promenade-cursor/${numberOfPromenade.value}/${lastId.value}/1/desc`
-    refresh()
-  }
-}
-// previous
+
+//* Naviguation : previous - next - first
 const lastId = computed(() => {
   if (promenades.value === null) {
     return null
@@ -51,13 +41,33 @@ const firstId = computed(() => {
 const { data: lastNumberData } = await useFetch<number>(
   'https://promenadesapi-production.up.railway.app/promenade/findLastPromenade'
 )
+const { data: firstNumberData } = await useFetch<number>(
+  'https://promenadesapi-production.up.railway.app/promenade/findFirstPromenade'
+)
+// next
+function next() {
+  if (
+    lastId.value === null ||
+    promenades.value === null ||
+    firstNumberData.value === null
+  ) {
+    query.value = `findLastPromenades/${numberOfPromenade.value}`
+  } else if (lastId.value === +firstNumberData.value) {
+    return 'no more promenade'
+  } else {
+    query.value = `promenade-cursor/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    refresh()
+  }
+}
+// previous
 function previous() {
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
     query.value = `findLastPromenades/${numberOfPromenade.value}`
   } else if (firstId.value === +lastNumberData.value) {
-    refresh()
-    query.value = `findLastPromenades/${numberOfPromenade.value}`
+    // refresh()
+    // query.value = `findLastPromenades/${numberOfPromenade.value}`
+    return 'no more promenade'
   } else {
     query.value = `promenade-cursor/${numberOfPromenade.value}/${firstId.value}/1/asc`
     refresh()
@@ -73,7 +83,7 @@ function first() {
 const { data: totalPromenades } = await useFetch<number>(
   'https://promenadesapi-production.up.railway.app/promenade/countAll'
 )
-let totalPages = null
+let totalPages = 0
 if (totalPromenades.value === null) {
   totalPages = 0
 } else {
@@ -138,11 +148,15 @@ const search = () => {
         <CardsTemplateCard :promenade="promenade" />
       </div>
     </div>
-    <button class="p-8" @click="first">First Page</button>
-    <button class="p-8" @click="previous">Previous</button>
-    <button class="p-8" @click="next">Next</button>
     <div class="py-5">
-      <Pagination />
+      <Pagination
+        v-if="totalPromenades !== null"
+        :first="first"
+        :previous="previous"
+        :next="next"
+        :total-promenade="+totalPromenades"
+        :totalpage="+totalPages"
+      />
     </div>
   </div>
 </template>

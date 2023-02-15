@@ -10,7 +10,7 @@ const search = () => {
   return navigateTo(`/promenades/search/${searchTag.value}`)
 }
 const { data: promenades } = useFetch<Promenade[]>(
-  `https://promenadesapi-production.up.railway.app/promenade/search/${route.params.slug}`
+  `https://promenadesapi-production.up.railway.app/promenade/tag/search/${route.params.slug}`
 )
 
 const { data: categories } = useFetch<Category[]>(
