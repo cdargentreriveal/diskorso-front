@@ -2,18 +2,16 @@
 definePageMeta({
   layout: 'userconnected',
 })
+onMounted(() => {
+  const body = document.querySelector('body')
+  if (body) {
+    body.style.backgroundColor = '#F8F8F8'
+  }
+})
 </script>
 
 <template>
-  <div class="menu fixed left-0 top-[200px] h-[100vh] bg-white w-[250px]">
-    <div class="menu-admin">
-      <ul>
-        <li class="p-8">Tutoriel</li>
-        <li class="p-8">Mes promenades</li>
-        <li class="p-8">Créer une promenade</li>
-      </ul>
-    </div>
-  </div>
+  <AdminMenu />
   <div class="container mx-auto">
     <div class="w-4/12 mx-auto my-10 -md:w-full">
       <div class="py-8 text-center">

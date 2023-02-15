@@ -1,31 +1,8 @@
 <script lang="ts">
-import { IMenuItem } from '../../types/MenuItems'
 export default {
   setup() {
     const menuOpen = ref(false)
     const windowWidth = ref(process.client ? window.innerWidth : 0)
-    const menus = computed((): IMenuItem[] => [
-      {
-        type: 'link',
-        text: 'Accueil',
-        route: { name: 'index' },
-      },
-      {
-        type: 'link',
-        text: 'Les Promenades',
-        route: { name: 'promenades' },
-      },
-      {
-        type: 'button',
-        text: 'Connexion',
-        route: { name: 'login' },
-      },
-      {
-        type: 'button',
-        text: 'Inscription',
-        route: { name: 'sign_in' },
-      },
-    ])
 
     const handleResize = () => {
       windowWidth.value = window.innerWidth
@@ -46,7 +23,6 @@ export default {
     return {
       menuOpen,
       windowWidth,
-      menus,
       displayMobileMenu,
     }
   },
@@ -62,7 +38,7 @@ export default {
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 bg-white z-10">
-      <div class="container mx-auto py-10 relative">
+      <div class="container mx-auto py-8 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2">
             <div class="logo">
@@ -80,22 +56,9 @@ export default {
                 v-if="windowWidth > 768"
                 class="flex justify-end items-center"
               >
-                <li v-for="(item, i) in menus" :key="i">
-                  <Anchor
-                    v-if="item.type === 'link'"
-                    :to="item.route ? item.route : undefined"
-                    :href="item.href ? item.href : undefined"
-                    class="hover:no-underline mx-7"
-                    >{{ item.text }}
-                  </Anchor>
-                  <Button
-                    v-else-if="item.type === 'button'"
-                    :text="item.text"
-                    size="xs"
-                    :class="item.text + ' font-bold p-5 capitalize mx-3 '"
-                    :to="item.route ? item.route : undefined"
-                    :href="item.href ? item.href : undefined"
-                  />
+                <li class="user_connected">
+                  <span class="font-semibold">Bienvenue </span>
+                  <span class="purple-color">Florian Bridoux</span>
                 </li>
               </ul>
               <!-- Menu burger mobile -->
