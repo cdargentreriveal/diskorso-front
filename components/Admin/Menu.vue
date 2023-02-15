@@ -49,13 +49,23 @@
 export default {}
 </script>
 
-<style>
+<style scoped lang="scss">
 .menu-admin {
   display: flex;
   flex-direction: column;
 }
 li {
+  cursor: pointer;
   color: var(--gray-color);
+  & :hover {
+    color: var(--purple-color);
+  }
+}
+li img {
+  color: var(--gray-color);
+  & :hover {
+    fill: var(--purple-color);
+  }
 }
 ul:first-child {
   flex-grow: 1;
