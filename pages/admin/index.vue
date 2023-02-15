@@ -13,7 +13,7 @@ onMounted(() => {
 <template>
   <AdminMenu />
   <div class="container mx-auto">
-    <div class="w-4/12 mx-auto my-10 -md:w-full">
+    <div class="w-full pt-[150px]">
       <div class="py-8 text-center">
         <div class="title uppercase font-bold text-4xl -md:text-3xl">
           <h2>

@@ -1,14 +1,45 @@
 <template>
-  <div class="menu fixed left-0 top-0 h-[100vh] bg-white w-[260px] box-shaddow">
+  <div class="menu fixed left-0 top-0 h-[100vh] bg-white w-[300px] box-shaddow">
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
-      <ul>
-        <li class="p-8">Tutoriel</li>
-        <li class="p-8">Mes promenades</li>
-        <li class="p-8">Créer une promenade</li>
+      <ul class="divide-y divide-slate-300">
+        <li class="p-8 flex items-center gap-2">
+          <span
+            ><img src="@/assets/images/icons/menu-admin/eye.svg" alt=""
+          /></span>
+          <span>Tutoriel</span>
+        </li>
+        <li class="p-8 flex items-center gap-2">
+          <span
+            ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
+          /></span>
+          <span>Mes promenades</span>
+        </li>
+        <li class="p-8 flex items-center gap-2">
+          <span
+            ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
+          /></span>
+          <span>Créer une promenade</span>
+        </li>
+        <li class="p-8 flex items-center gap-2">
+          <span
+            ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
+          /></span>
+          <span>Mes extraits</span>
+        </li>
       </ul>
-      <ul class="bottom-menu">
-        <li class="px-8 py-4">Mon compte</li>
-        <li class="px-8 py-4">Déconnexion</li>
+      <ul class="divide-y divide-slate-300">
+        <li class="p-8 flex items-center gap-2">
+          <span
+            ><img src="@/assets/images/icons/menu-admin/compte.svg" alt=""
+          /></span>
+          <span>Mon compte</span>
+        </li>
+        <li class="p-8 flex items-center gap-2">
+          <span
+            ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
+          /></span>
+          <span>Déconnexion</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -23,7 +54,9 @@ export default {}
   display: flex;
   flex-direction: column;
 }
-
+li {
+  color: var(--gray-color);
+}
 ul:first-child {
   flex-grow: 1;
 }
