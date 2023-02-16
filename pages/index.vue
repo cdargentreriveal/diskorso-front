@@ -1,11 +1,14 @@
 <script lang="ts" setup>
 import { Promenade } from '../types/Promenades'
+
 definePageMeta({
   layout: 'page',
 })
-const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/latest'
+
+const { data: promenades } = await useFetch<Promenade[]>(
+  'https://promenadesapi-production.up.railway.app/promenade/findLastPromenades/3'
 )
+
 onMounted(() => {
   const navbar = document.querySelector('.navbar')
   if (navbar) {

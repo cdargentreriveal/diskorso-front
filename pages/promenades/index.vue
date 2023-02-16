@@ -1,18 +1,98 @@
 <script lang="ts" setup>
 import { Promenade } from '../../types/Promenades'
 import { Category } from '~~/types/Categories'
+
 definePageMeta({
   layout: 'page',
 })
 
-const { data: promenades } = useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/all'
+//* state
+const numberOfPromenade = ref(2)
+const query = ref(`findLastPromenades/${numberOfPromenade.value}`)
+const searchTag = ref('')
+
+//* Requêtes pour pagination
+const url = computed(
+  () =>
+    `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
 )
+const { data: promenades, refresh } = useAsyncData<Promenade[]>(
+  'promenades',
+  async () => {
+    const data = await $fetch<Promenade[]>(url.value)
+    return data.sort((a, b) => b.id - a.id)
+  }
+)
+
+//* Naviguation : previous - next - first
+const lastId = computed(() => {
+  if (promenades.value === null) {
+    return null
+  }
+  return promenades.value[promenades.value.length - 1].id
+})
+const firstId = computed(() => {
+  if (promenades.value === null) {
+    return 0
+  } else {
+    return promenades.value[0].id
+  }
+})
+const { data: lastNumberData } = await useFetch<number>(
+  'https://promenadesapi-production.up.railway.app/promenade/findLastPromenade'
+)
+const { data: firstNumberData } = await useFetch<number>(
+  'https://promenadesapi-production.up.railway.app/promenade/findFirstPromenade'
+)
+// next
+function next() {
+  if (
+    lastId.value === null ||
+    promenades.value === null ||
+    firstNumberData.value === null
+  ) {
+    query.value = `findLastPromenades/${numberOfPromenade.value}`
+  } else if (lastId.value === +firstNumberData.value) {
+    return 'no more promenade'
+  } else {
+    query.value = `promenade-cursor/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    refresh()
+  }
+}
+// previous
+function previous() {
+  if (lastId.value === null || lastNumberData.value === null) {
+    refresh()
+    query.value = `findLastPromenades/${numberOfPromenade.value}`
+  } else if (firstId.value === +lastNumberData.value) {
+    // refresh()
+    // query.value = `findLastPromenades/${numberOfPromenade.value}`
+    return 'no more promenade'
+  } else {
+    query.value = `promenade-cursor/${numberOfPromenade.value}/${firstId.value}/1/asc`
+    refresh()
+  }
+}
+// return first
+function first() {
+  query.value = `findLastPromenades/${numberOfPromenade.value}`
+  refresh()
+}
+
+//* Détermine le nombre de page
+const { data: totalPromenades } = await useFetch<number>(
+  'https://promenadesapi-production.up.railway.app/promenade/countAll'
+)
+let totalPages = 0
+if (totalPromenades.value === null) {
+  totalPages = 0
+} else {
+  totalPages = Math.ceil(+totalPromenades.value / numberOfPromenade.value)
+}
 
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
 )
-const searchTag = ref('')
 const search = () => {
   if (searchTag.value !== '') {
     return navigateTo(`/promenades/search/${searchTag.value}`)
@@ -83,7 +163,14 @@ const search = () => {
       </div>
     </div>
     <div class="py-5">
-      <Pagination />
+      <Pagination
+        v-if="totalPromenades !== null"
+        :first="first"
+        :previous="previous"
+        :next="next"
+        :total-promenade="+totalPromenades"
+        :totalpage="+totalPages"
+      />
     </div>
   </div>
 </template>

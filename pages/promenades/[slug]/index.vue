@@ -38,7 +38,15 @@ const { data: promenade } = useFetch<Promenade>(
           <div
             class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 border border-black border-2"
           >
-            <img :src="promenade.user.picture" alt="avatar" />
+
+            <NuxtLink
+              :to="`/contributor/${
+                promenade.user.username + '_' + promenade.userId
+              }`"
+            >
+              <img :src="promenade.user.picture" alt="avatar auteur" />
+            </NuxtLink>
+
           </div>
           <div class="promenade_page_content_header px-20">
             <div class="promenade_page_content_title text-4xl font-bold">
@@ -49,7 +57,13 @@ const { data: promenade } = useFetch<Promenade>(
             >
               <p>Créee le : {{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
-              <p>par : {{ promenade.user.username }}</p>
+              <NuxtLink
+                :to="`/contributor/${
+                  promenade.user.username + '_' + promenade.userId
+                }`"
+              >
+                <p>par : {{ promenade.user.username }}</p>
+              </NuxtLink>
             </div>
             <div class="card-content-categories flex gap-4 py-5">
               <div
