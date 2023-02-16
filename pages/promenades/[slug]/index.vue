@@ -38,7 +38,6 @@ const { data: promenade } = useFetch<Promenade>(
           <div
             class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 border border-black border-2"
           >
-
             <NuxtLink
               :to="`/contributor/${
                 promenade.user.username + '_' + promenade.userId
@@ -46,7 +45,6 @@ const { data: promenade } = useFetch<Promenade>(
             >
               <img :src="promenade.user.picture" alt="avatar auteur" />
             </NuxtLink>
-
           </div>
           <div class="promenade_page_content_header px-20">
             <div class="promenade_page_content_title text-4xl font-bold">

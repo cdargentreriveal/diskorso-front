@@ -1,17 +1,19 @@
 <script lang="ts" setup>
 import { Promenade } from '../../types/Promenades'
-import { Category } from '~~/types/Categories'
 
 definePageMeta({
   layout: 'page',
 })
 
+// ________________________________________________________________________________________
 //* state
+// ________________________________________________________________________________________
 const numberOfPromenade = ref(2)
 const query = ref(`findLastPromenades/${numberOfPromenade.value}`)
-const searchTag = ref('')
 
-//* Requêtes pour pagination
+// ________________________________________________________________________________________
+//* Methods pour mettre à jour promenades en fonction de la navigation
+// ________________________________________________________________________________________
 const url = computed(
   () =>
     `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
@@ -24,7 +26,9 @@ const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   }
 )
 
-//* Naviguation : previous - next - first
+// ________________________________________________________________________________________
+//* Methods pour navigation : previous - next - first
+// ________________________________________________________________________________________
 const lastId = computed(() => {
   if (promenades.value === null) {
     return null
@@ -79,7 +83,9 @@ function first() {
   refresh()
 }
 
-//* Détermine le nombre de page
+// ________________________________________________________________________________________
+//* Methods pour metadata : nombre total de promenades et de pages
+// ________________________________________________________________________________________
 const { data: totalPromenades } = await useFetch<number>(
   'https://promenadesapi-production.up.railway.app/promenade/countAll'
 )
@@ -89,66 +95,12 @@ if (totalPromenades.value === null) {
 } else {
   totalPages = Math.ceil(+totalPromenades.value / numberOfPromenade.value)
 }
-
-const { data: categories } = useFetch<Category[]>(
-  'https://promenadesapi-production.up.railway.app/category/all'
-)
-const search = () => {
-  if (searchTag.value !== '') {
-    return navigateTo(`/promenades/search/${searchTag.value}`)
-  }
-}
 </script>
 
 <template>
   <div class="container mx-auto">
-    <div class="btns-categories w-9/12 mx-auto">
-      <div class="flex items-center justify-center">
-        <div v-for="(categorie, index) in categories" :key="index">
-          <NuxtLink :to="`/categorie/${categorie.slug}`"
-            ><button
-              :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie.color} uppercase`"
-            >
-              {{ categorie.title }}
-            </button>
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
-    <div class="search-bar-container">
-      <div
-        class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
-      >
-        <div class="search-bar-input w-full h-full">
-          <input
-            v-model="searchTag"
-            type="search"
-            placeholder="Rentrer un mot clé pour lancer la recherche..."
-            class="py-4 px-8 w-full h-full border-gray border text-sm italic"
-            @keyup.enter="search"
-          />
-        </div>
-        <div
-          v-if="searchTag == ''"
-          :class="
-            searchTag == ''
-              ? 'disabled search-bar-button text-white text-sm h-full'
-              : ''
-          "
-        >
-          <button class="px-8 w-full h-full uppercase">
-            <span class="flex items-center">Rechercher</span>
-          </button>
-        </div>
-        <div v-else class="search-bar-button text-white text-sm h-full">
-          <NuxtLink :to="`/promenades/search/${searchTag}`">
-            <button class="px-8 w-full h-full uppercase">
-              <span class="flex items-center">Rechercher</span>
-            </button>
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
+    <DisplayPromenadesCategorieSection />
+    <DisplayPromenadesSearchSection />
     <Separator />
     <div class="">
       <TitleSection title-black="Toutes les" title-purple="Promenades" />
@@ -163,7 +115,7 @@ const search = () => {
       </div>
     </div>
     <div class="py-5">
-      <Pagination
+      <DisplayPromenadesPagination
         v-if="totalPromenades !== null"
         :first="first"
         :previous="previous"
@@ -174,45 +126,3 @@ const search = () => {
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-.search-bar-input input {
-  border-radius: 9999px 0 0 9999px;
-  color: var(--gray-color);
-  &:focus {
-    outline: none;
-  }
-}
-.search-bar-button button {
-  background-color: var(--blue-color);
-  border-radius: 0 9999px 9999px 0;
-  border: none;
-  & :before {
-    content: '';
-    height: 20px;
-    width: 20px;
-    background-image: url('@/assets/images/icons/Icon-search.svg');
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-}
-.search-bar-button {
-  a {
-    display: inline-block;
-    height: 100%;
-    border-radius: 0 9999px 9999px 0;
-  }
-  & :hover {
-    background-color: #4e8ca5;
-  }
-}
-fieldset {
-  border: none;
-}
-.disabled {
-  pointer-events: none;
-  button {
-    cursor: not-allowed;
-    background-color: var(--gray-light-color);
-  }
-}
-</style>

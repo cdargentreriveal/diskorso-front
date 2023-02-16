@@ -1,19 +1,22 @@
 <script lang="ts" setup>
-import { Category } from '../../../types/Categories/'
 import { Promenade } from '~~/types/Promenades'
 
 definePageMeta({
   layout: 'page',
 })
 
+// ________________________________________________________________________________________
 //* state
+// ________________________________________________________________________________________
 const route = useRoute()
 const params = route.params.slug_id as String
 const [slug, id] = params.split('_')
 const numberOfPromenade = ref(1)
 const query = ref(`user/findLastPromenades/${id}/${numberOfPromenade.value}`)
 
-//* Requêtes pour pagination
+// ________________________________________________________________________________________
+//* Methods pour mettre à jour promenades en fonction de la navigation
+// ________________________________________________________________________________________
 const url = computed(
   () =>
     `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
@@ -25,7 +28,10 @@ const { data: promenades, refresh } = useAsyncData<Promenade[]>(
     return data.sort((a, b) => b.id - a.id)
   }
 )
-//* Naviguation : previous - next - first
+
+// ________________________________________________________________________________________
+//* Methods pour navigation : previous - next - first
+// ________________________________________________________________________________________
 const lastId = computed(() => {
   if (promenades.value === null) {
     return null
@@ -80,7 +86,9 @@ function first() {
   refresh()
 }
 
-//* Détermine le nombre de page
+// ________________________________________________________________________________________
+//* Methods pour metadata : nombre total de promenades et de pages
+// ________________________________________________________________________________________
 const { data: totalPromenades } = await useFetch<number>(
   `https://promenadesapi-production.up.railway.app/promenade/user/${id}/count`
 )
@@ -90,45 +98,12 @@ if (totalPromenades.value === null) {
 } else {
   totalPages = Math.ceil(+totalPromenades.value / numberOfPromenade.value)
 }
-const { data: categories } = useFetch<Category[]>(
-  'https://promenadesapi-production.up.railway.app/category/all'
-)
 </script>
 
 <template>
   <div class="container mx-auto">
-    <div class="btns-categories w-9/12 mx-auto">
-      <div class="flex items-center justify-center">
-        <div v-for="(categorie, index) in categories" :key="index">
-          <NuxtLink :to="`/categorie/${categorie.slug}`"
-            ><button
-              :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie.color} uppercase`"
-            >
-              {{ categorie.title }}
-            </button>
-          </NuxtLink>
-        </div>
-      </div>
-    </div>
-    <div class="search-bar-container">
-      <div
-        class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
-      >
-        <div class="search-bar-input w-full h-full">
-          <input
-            type="search"
-            value=""
-            placeholder="Recherche par mots clés"
-            class="py-4 px-8 w-full h-full border-gray border text-sm italic"
-          />
-        </div>
-        <div class="search-bar-button text-white text-sm h-full">
-          <button class="px-8 w-full h-full uppercase">
-            <span class="flex items-center">Rechercher</span>
-          </button>
-        </div>
-      </div>
-    </div>
+    <DisplayPromenadesCategorieSection />
+    <DisplayPromenadesSearchSection />
     <Separator />
     <div class="">
       <TitleSection title-black="Les promenades de" :title-purple="slug" />
@@ -143,7 +118,7 @@ const { data: categories } = useFetch<Category[]>(
       </div>
     </div>
     <div class="py-5">
-      <Pagination
+      <DisplayPromenadesPagination
         v-if="totalPromenades !== null"
         :first="first"
         :previous="previous"
@@ -154,33 +129,3 @@ const { data: categories } = useFetch<Category[]>(
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-.search-bar-input input {
-  border-radius: 9999px 0 0 9999px;
-  color: var(--gray-color);
-  &:focus {
-    outline: none;
-  }
-}
-.search-bar-button button {
-  background-color: var(--blue-color);
-  border-radius: 0 9999px 9999px 0;
-  border: none;
-  & :before {
-    content: '';
-    height: 20px;
-    width: 20px;
-    background-image: url('@/assets/images/icons/Icon-search.svg');
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-}
-.search-bar-button {
-  & :hover {
-    background-color: #4e8ca5;
-  }
-}
-fieldset {
-  border: none;
-}
-</style>

@@ -3,3 +3,4 @@
 1. Obliger la saisie d'au moins 3 caractères dans la barre de rechreche
 2. Ne pas appeler sur chaque page les catégories mais les mettre dans le store
 3. Factoriser le code : barre de recherche, pagination
+4. A quoi sert la fonction sleep dans utils/index => jms appelée : à supprimer? Sinon renommer fichier, ne pas laisser index.ts (être plus spécifique)

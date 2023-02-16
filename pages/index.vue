@@ -29,7 +29,6 @@ onUnmounted(() => {
   <HomeHeroHeader />
   <HomeAboutDiskorso class="-md:px-5" />
   <Separator />
-
   <section class="container mx-auto promenades">
     <div class="py-8 text-center">
       <div class="title uppercase font-bold text-4xl">

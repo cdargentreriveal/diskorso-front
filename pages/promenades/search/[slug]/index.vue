@@ -4,21 +4,26 @@ import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'page',
 })
+
+// ________________________________________________________________________________________
+//* state
+// ________________________________________________________________________________________
 const route = useRoute()
-const searchTag = ref('')
-const search = () => {
-  if (searchTag.value !== '') {
-    return navigateTo(`/promenades/search/${searchTag.value}`)
-  }
-}
+const loading = ref(false)
+
+// ________________________________________________________________________________________
+//* Methods pour récupérer promenades et catégorie en fonction du slug
+// ________________________________________________________________________________________
 const { data: promenades } = useFetch<Promenade[]>(
   `https://promenadesapi-production.up.railway.app/promenade/tag/search/${route.params.slug}`
 )
-
 const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
 )
 
+// ________________________________________________________________________________________
+//* Methods pour filtrer
+// ________________________________________________________________________________________
 const filteredCategories = computed(() => {
   if (!promenades || !promenades.value || !categories || !categories.value) {
     return []
@@ -47,18 +52,14 @@ const filteredCategories = computed(() => {
     count: categoryCounts[category.title],
   }))
 })
-
 const selectedCategories = ref<string[]>([])
 const selectedUsers = ref<string[]>([])
-const loading = ref(false)
 
 const filteredPromenades = computed(() => {
   if (!promenades || !promenades.value) {
     return []
   }
-
   let filteredPromenades = promenades.value
-
   if (selectedCategories.value.length) {
     filteredPromenades = filteredPromenades.filter((promenade) => {
       return selectedCategories.value.some((selectedCategory) => {
@@ -68,21 +69,21 @@ const filteredPromenades = computed(() => {
       })
     })
   }
-
   if (selectedUsers.value.length) {
     filteredPromenades = filteredPromenades.filter((promenade) => {
       return selectedUsers.value.includes(promenade.user.username)
     })
   }
-
   return filteredPromenades
 })
 
+// ________________________________________________________________________________________
+//* Methods pour metadata : nombre de promenades par auteur
+// ________________________________________________________________________________________
 const usernamesWithCounts = computed(() => {
   if (!filteredPromenades.value) {
     return []
   }
-
   const usernameCounts: { [key: string]: number } = {}
   filteredPromenades.value.forEach((promenade) => {
     const username = promenade.user.username
@@ -92,95 +93,18 @@ const usernamesWithCounts = computed(() => {
       usernameCounts[username] += 1
     }
   })
-
   return Object.entries(usernameCounts).map(([username, count]) => ({
     username,
     count,
   }))
 })
-
-const users = computed(() => {
-  if (!promenades || !promenades.value) {
-    return []
-  }
-  const usernames = promenades.value.map((promenade) => promenade.user.username)
-  return [...new Set(usernames)]
-})
-
-const filteredPromenadesByUser = computed(() => {
-  if (!promenades.value || !selectedUsers.value.length) {
-    return promenades.value
-  }
-
-  return promenades.value.filter((promenade) => {
-    return selectedUsers.value.includes(promenade.user.username)
-  })
-})
-/* const updateSelectedCategories = (category: string) => {
-  if (selectedCategories.value.includes(category)) {
-    selectedCategories.value = selectedCategories.value.filter(
-      (selected) => selected !== category
-    )
-  } else {
-    selectedCategories.value = [...selectedCategories.value, category]
-  }
-  loading.value = true
-  setTimeout(() => {
-    loading.value = false
-  }, 1000)
-} */
 </script>
 
 <template>
   <client-only>
     <div class="container mx-auto">
-      <div class="btns-categories w-9/12 mx-auto">
-        <div class="flex items-center justify-center">
-          <div v-for="(categorie, index) in categories" :key="index">
-            <NuxtLink :to="`/categorie/${categorie.slug}`"
-              ><button
-                :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie.color} uppercase`"
-              >
-                {{ categorie.title }}
-              </button>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-      <div class="search-bar-container">
-        <div
-          class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
-        >
-          <div class="search-bar-input w-full h-full">
-            <input
-              v-model="searchTag"
-              type="search"
-              placeholder="Rentrer un mot clé pour lancer la recherche..."
-              class="py-4 px-8 w-full h-full border-gray border text-sm italic"
-              @keyup.enter="search"
-            />
-          </div>
-          <div
-            v-if="searchTag == ''"
-            :class="
-              searchTag == ''
-                ? 'disabled search-bar-button text-white text-sm h-full'
-                : ''
-            "
-          >
-            <button class="px-8 w-full h-full uppercase">
-              <span class="flex items-center">Rechercher</span>
-            </button>
-          </div>
-          <div v-else class="search-bar-button text-white text-sm h-full">
-            <NuxtLink :to="`/promenades/search/${searchTag}`">
-              <button class="px-8 w-full h-full uppercase">
-                <span class="flex items-center">Rechercher</span>
-              </button>
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
+      <DisplayPromenadesCategorieSection />
+      <DisplayPromenadesSearchSection />
       <Separator />
       <div class="flex mt-10 mb-20">
         <div class="w-1/3 relative">
@@ -266,57 +190,14 @@ const filteredPromenadesByUser = computed(() => {
           </div>
         </div>
       </div>
-      <div class="py-5">
-        <Pagination />
-      </div>
     </div>
   </client-only>
 </template>
 <style lang="scss" scoped>
-.search-bar-input input {
-  border-radius: 9999px 0 0 9999px;
-  color: var(--gray-color);
-  &:focus {
-    outline: none;
-  }
-}
-.search-bar-button button {
-  background-color: var(--blue-color);
-  border-radius: 0 9999px 9999px 0;
-  border: none;
-  & :before {
-    content: '';
-    height: 20px;
-    width: 20px;
-    background-image: url('@/assets/images/icons/Icon-search.svg');
-    display: inline-block;
-    margin-right: 0.5rem;
-  }
-}
-.search-bar-button {
-  a {
-    display: inline-block;
-    height: 100%;
-    border-radius: 0 9999px 9999px 0;
-  }
-  & :hover {
-    background-color: #4e8ca5;
-  }
-}
-fieldset {
-  border: none;
-}
 .authors {
   overflow-y: scroll;
 }
 input[type='checkbox'] {
   cursor: pointer;
-}
-.disabled {
-  pointer-events: none;
-  button {
-    cursor: not-allowed;
-    background-color: var(--gray-light-color);
-  }
 }
 </style>
