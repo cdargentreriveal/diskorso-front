@@ -7,7 +7,9 @@ definePageMeta({
 const route = useRoute()
 const searchTag = ref('')
 const search = () => {
-  return navigateTo(`/promenades/search/${searchTag.value}`)
+  if (searchTag.value !== '') {
+    return navigateTo(`/promenades/search/${searchTag.value}`)
+  }
 }
 const { data: promenades } = useFetch<Promenade[]>(
   `https://promenadesapi-production.up.railway.app/promenade/tag/search/${route.params.slug}`
@@ -23,6 +25,12 @@ const filteredCategories = computed(() => {
   }
   const categoryCounts: { [key: string]: number } = {}
   promenades.value.forEach((promenade) => {
+    if (
+      selectedUsers.value.length &&
+      !selectedUsers.value.includes(promenade.user.username)
+    ) {
+      return // Ignore les promenades d'utilisateurs non sélectionnés
+    }
     promenade.categories.forEach((category) => {
       if (!categoryCounts[category.title]) {
         categoryCounts[category.title] = 1
@@ -37,7 +45,6 @@ const filteredCategories = computed(() => {
   return filteredCategories.map((category) => ({
     ...category,
     count: categoryCounts[category.title],
-    selected: false,
   }))
 })
 
@@ -148,12 +155,24 @@ const filteredPromenadesByUser = computed(() => {
             <input
               v-model="searchTag"
               type="search"
-              placeholder="Recherche par mots clés"
+              placeholder="Rentrer un mot clé pour lancer la recherche..."
               class="py-4 px-8 w-full h-full border-gray border text-sm italic"
               @keyup.enter="search"
             />
           </div>
-          <div class="search-bar-button text-white text-sm h-full">
+          <div
+            v-if="searchTag == ''"
+            :class="
+              searchTag == ''
+                ? 'disabled search-bar-button text-white text-sm h-full'
+                : ''
+            "
+          >
+            <button class="px-8 w-full h-full uppercase">
+              <span class="flex items-center">Rechercher</span>
+            </button>
+          </div>
+          <div v-else class="search-bar-button text-white text-sm h-full">
             <NuxtLink :to="`/promenades/search/${searchTag}`">
               <button class="px-8 w-full h-full uppercase">
                 <span class="flex items-center">Rechercher</span>
@@ -230,9 +249,9 @@ const filteredPromenadesByUser = computed(() => {
         <div v-if="promenades" class="w-2/3">
           <p class="py-5">
             <span class="text-xl font-bold purple-color">{{
-              promenades.length
+              filteredPromenades.length
             }}</span>
-            <span v-if="promenades.length <= 1"> résultat </span>
+            <span v-if="filteredPromenades.length <= 1"> résultat </span>
             <span v-else> résultats </span>pour la recherche
             <span class="text-lg italic">“{{ route.params.slug }}“</span>
           </p>
@@ -292,5 +311,12 @@ fieldset {
 }
 input[type='checkbox'] {
   cursor: pointer;
+}
+.disabled {
+  pointer-events: none;
+  button {
+    cursor: not-allowed;
+    background-color: var(--gray-light-color);
+  }
 }
 </style>

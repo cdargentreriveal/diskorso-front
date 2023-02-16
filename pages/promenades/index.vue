@@ -94,7 +94,9 @@ const { data: categories } = useFetch<Category[]>(
   'https://promenadesapi-production.up.railway.app/category/all'
 )
 const search = () => {
-  return navigateTo(`/promenades/search/${searchTag.value}`)
+  if (searchTag.value !== '') {
+    return navigateTo(`/promenades/search/${searchTag.value}`)
+  }
 }
 </script>
 
@@ -121,12 +123,24 @@ const search = () => {
           <input
             v-model="searchTag"
             type="search"
-            placeholder="Recherche par mots clés"
+            placeholder="Rentrer un mot clé pour lancer la recherche..."
             class="py-4 px-8 w-full h-full border-gray border text-sm italic"
             @keyup.enter="search"
           />
         </div>
-        <div class="search-bar-button text-white text-sm h-full">
+        <div
+          v-if="searchTag == ''"
+          :class="
+            searchTag == ''
+              ? 'disabled search-bar-button text-white text-sm h-full'
+              : ''
+          "
+        >
+          <button class="px-8 w-full h-full uppercase">
+            <span class="flex items-center">Rechercher</span>
+          </button>
+        </div>
+        <div v-else class="search-bar-button text-white text-sm h-full">
           <NuxtLink :to="`/promenades/search/${searchTag}`">
             <button class="px-8 w-full h-full uppercase">
               <span class="flex items-center">Rechercher</span>
@@ -193,5 +207,12 @@ const search = () => {
 }
 fieldset {
   border: none;
+}
+.disabled {
+  pointer-events: none;
+  button {
+    cursor: not-allowed;
+    background-color: var(--gray-light-color);
+  }
 }
 </style>
