@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
-const { data: categories } = useFetch<Category[]>(
-  'https://promenadesapi-production.up.railway.app/category/all'
-)
+const { data: categories } = useDiskorso<Category[]>('category/all')
 </script>
 
 <template>

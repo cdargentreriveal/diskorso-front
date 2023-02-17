@@ -31,6 +31,12 @@ export default defineNuxtConfig({
       ],
     },
   },
+
+  runtimeConfig: {
+    public: {
+      baseURL: 'https://promenadesapi-production.up.railway.app/',
+    },
+  },
   // css
 
   css: [

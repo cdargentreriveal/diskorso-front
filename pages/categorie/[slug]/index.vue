@@ -9,9 +9,10 @@ definePageMeta({
 //* state
 // ________________________________________________________________________________________
 const numberOfPromenade = ref(1)
+const config = useRuntimeConfig()
 const route = useRoute()
 const query = ref(
-  `category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
+  `promenade/category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
 )
 
 const slug: string | any = route.params.slug
@@ -19,10 +20,7 @@ const slug: string | any = route.params.slug
 // ________________________________________________________________________________________
 //* Methods pour mettre à jour promenades en fonction de la navigation
 // ________________________________________________________________________________________
-const url = computed(
-  () =>
-    `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
-)
+const url = computed(() => `${config.public.baseURL}${query.value}`)
 const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   'promenades',
   async () => {
@@ -47,11 +45,11 @@ const firstId = computed(() => {
     return promenades.value[0].id
   }
 })
-const { data: lastNumberData } = await useFetch<number>(
-  `https://promenadesapi-production.up.railway.app/promenade/category/last-promenade/${route.params.slug}`
+const { data: lastNumberData } = await useDiskorso<number>(
+  `promenade/category/last-promenade/${route.params.slug}`
 )
-const { data: firstNumberData } = await useFetch<number>(
-  `https://promenadesapi-production.up.railway.app/promenade/category/first-promenade/${route.params.slug}`
+const { data: firstNumberData } = await useDiskorso<number>(
+  `promenade/category/first-promenade/${route.params.slug}`
 )
 // next
 function next() {
@@ -60,11 +58,11 @@ function next() {
     promenades.value === null ||
     firstNumberData.value === null
   ) {
-    query.value = `category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
+    query.value = `promenade/category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
   } else if (lastId.value === +firstNumberData.value) {
     return 'no more promenade'
   } else {
-    query.value = `category/promenade-cursor/${route.params.slug}/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    query.value = `promenade/category/promenade-cursor/${route.params.slug}/${numberOfPromenade.value}/${lastId.value}/1/desc`
     refresh()
   }
 }
@@ -72,27 +70,27 @@ function next() {
 function previous() {
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
-    query.value = `category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
+    query.value = `promenade/category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
   } else if (firstId.value === +lastNumberData.value) {
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
     return 'no more promenade'
   } else {
-    query.value = `category/promenade-cursor/${route.params.slug}/${numberOfPromenade.value}/${firstId.value}/1/asc`
+    query.value = `promenade/category/promenade-cursor/${route.params.slug}/${numberOfPromenade.value}/${firstId.value}/1/asc`
     refresh()
   }
 }
 // return first
 function first() {
-  query.value = `category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
+  query.value = `promenade/category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
   refresh()
 }
 
 // ________________________________________________________________________________________
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
-const { data: totalPromenades } = await useFetch<number>(
-  `https://promenadesapi-production.up.railway.app/promenade/category/${route.params.slug}/count`
+const { data: totalPromenades } = await useDiskorso<number>(
+  `promenade/category/${route.params.slug}/count`
 )
 let totalPages = 0
 if (totalPromenades.value === null) {

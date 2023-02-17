@@ -5,8 +5,10 @@ definePageMeta({
   layout: 'page',
 })
 
-const { data: promenades } = await useFetch<Promenade[]>(
-  'https://promenadesapi-production.up.railway.app/promenade/findLastPromenades/3'
+const numberOfPromenade = ref(3)
+
+const { data: promenades } = await useDiskorso<Promenade[]>(
+  `promenade/findLastPromenades/${numberOfPromenade.value}`
 )
 
 onMounted(() => {

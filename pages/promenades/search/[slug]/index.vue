@@ -14,12 +14,10 @@ const loading = ref(false)
 // ________________________________________________________________________________________
 //* Methods pour récupérer promenades et catégorie en fonction du slug
 // ________________________________________________________________________________________
-const { data: promenades } = useFetch<Promenade[]>(
-  `https://promenadesapi-production.up.railway.app/promenade/tag/search/${route.params.slug}`
+const { data: promenades } = useDiskorso<Promenade[]>(
+  `promenade/tag/search/${route.params.slug}`
 )
-const { data: categories } = useFetch<Category[]>(
-  'https://promenadesapi-production.up.railway.app/category/all'
-)
+const { data: categories } = useDiskorso<Category[]>('category/all')
 
 // ________________________________________________________________________________________
 //* Methods pour filtrer

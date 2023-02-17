@@ -7,8 +7,8 @@ definePageMeta({
 })
 const route = useRoute()
 
-const { data: promenade } = useFetch<Promenade>(
-  `https://promenadesapi-production.up.railway.app/promenade/${route.params.slug}`
+const { data: promenade } = useDiskorso<Promenade>(
+  `promenade/${route.params.slug}`
 )
 </script>
 

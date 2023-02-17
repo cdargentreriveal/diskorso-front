@@ -9,18 +9,18 @@ definePageMeta({
 //* state
 // ________________________________________________________________________________________
 const route = useRoute()
+const config = useRuntimeConfig()
 const params = route.params.slug_id as String
 const [slug, id] = params.split('_')
 const numberOfPromenade = ref(1)
-const query = ref(`user/findLastPromenades/${id}/${numberOfPromenade.value}`)
+const query = ref(
+  `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
+)
 
 // ________________________________________________________________________________________
 //* Methods pour mettre à jour promenades en fonction de la navigation
 // ________________________________________________________________________________________
-const url = computed(
-  () =>
-    `https://promenadesapi-production.up.railway.app/promenade/${query.value}`
-)
+const url = computed(() => `${config.public.baseURL}${query.value}`)
 const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   'promenades',
   async () => {
@@ -45,11 +45,11 @@ const firstId = computed(() => {
     return promenades.value[0].id
   }
 })
-const { data: lastNumberData } = await useFetch<number>(
-  `https://promenadesapi-production.up.railway.app/promenade/user/${id}/last-promenade`
+const { data: lastNumberData } = await useDiskorso<number>(
+  `promenade/user/${id}/last-promenade`
 )
-const { data: firstNumberData } = await useFetch<number>(
-  `https://promenadesapi-production.up.railway.app/promenade/category/${id}/first-promenade`
+const { data: firstNumberData } = await useDiskorso<number>(
+  `promenade/user/${id}/first-promenade`
 )
 // next
 function next() {
@@ -62,7 +62,7 @@ function next() {
   } else if (lastId.value === +firstNumberData.value) {
     return 'no more promenade'
   } else {
-    query.value = `user/promenade-cursor/${id}/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    query.value = `promenade/user/promenade-cursor/${id}/${numberOfPromenade.value}/${lastId.value}/1/desc`
     refresh()
   }
 }
@@ -70,27 +70,27 @@ function next() {
 function previous() {
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
-    query.value = `user/findLastPromenades/${id}/${numberOfPromenade.value}`
+    query.value = `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
   } else if (firstId.value === +lastNumberData.value) {
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
     return 'no more promenade'
   } else {
-    query.value = `user/promenade-cursor/${id}/${numberOfPromenade.value}/${firstId.value}/1/asc`
+    query.value = `promenade/user/promenade-cursor/${id}/${numberOfPromenade.value}/${firstId.value}/1/asc`
     refresh()
   }
 }
 // return first
 function first() {
-  query.value = `user/findLastPromenades/${id}/${numberOfPromenade.value}`
+  query.value = `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
   refresh()
 }
 
 // ________________________________________________________________________________________
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
-const { data: totalPromenades } = await useFetch<number>(
-  `https://promenadesapi-production.up.railway.app/promenade/user/${id}/count`
+const { data: totalPromenades } = await useDiskorso<number>(
+  `promenade/user/${id}/count`
 )
 let totalPages = 0
 if (totalPromenades.value === null) {
