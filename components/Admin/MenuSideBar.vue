@@ -7,7 +7,7 @@
         <div
           class="preview w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md border border-black"
         >
-          <button>Previsualiser</button>
+          <button>Prévisualiser</button>
         </div>
         <Separator />
         <div class="categories">
@@ -73,7 +73,7 @@
         <div
           class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white"
         >
-          <button class="font-semibold">Publier</button>
+          <button class="font-semibold">Enregistrer</button>
         </div>
       </div>
     </div>
