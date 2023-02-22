@@ -12,7 +12,7 @@
         <Separator />
         <div class="categories">
           <div class="categories_title text-lg font-semibold mb-5">
-            <h4>Categories<sup>*</sup></h4>
+            <h4>Catégories<sup>*</sup></h4>
           </div>
           <div class="categories_list">
             <ul>

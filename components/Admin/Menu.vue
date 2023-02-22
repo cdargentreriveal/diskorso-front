@@ -65,7 +65,8 @@ export default {}
   display: flex;
   flex-direction: column;
 }
-a {
+a,
+li {
   cursor: pointer;
   color: var(--gray-color);
   &:hover {
