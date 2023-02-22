@@ -3,7 +3,7 @@
     class="menu fixed right-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow"
   >
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
-      <div class="px-5 py-7">
+      <div class="px-5 py-7 grow">
         <div
           class="preview w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md border border-black"
         >
@@ -16,32 +16,32 @@
           </div>
           <div class="categories_list">
             <ul>
-              <li>
+              <li class="flex my-2">
                 <input
                   id="scales"
                   type="checkbox"
                   name="scales"
-                  class="my-4 mx-2 text-sm"
-                  value="Société"
-                /><label for="scales">Société</label>
-              </li>
-              <li>
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="my-4 mx-2 text-sm"
+                  class="mx-2"
                   value="Histoire"
-                /><label for="scales">Histoire</label>
+                /><label for="scales" class="text-sm">Histoire</label>
               </li>
-              <li>
+              <li class="flex my-2">
                 <input
                   id="scales"
                   type="checkbox"
                   name="scales"
-                  class="my-4 mx-2 text-sm"
+                  class="mx-2"
                   value="Science"
-                /><label for="scales">Science</label>
+                /><label for="scales" class="text-sm">Science</label>
+              </li>
+              <li class="flex my-2">
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="mx-2"
+                  value="Société"
+                /><label for="scales" class="text-sm">Société</label>
               </li>
             </ul>
           </div>
@@ -69,6 +69,13 @@
           </div>
         </div>
       </div>
+      <div class="published px-5 py-7">
+        <div
+          class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white"
+        >
+          <button class="font-semibold">Publier</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -78,31 +85,15 @@ export default {}
 </script>
 
 <style scoped lang="scss">
-.router-link-active {
-  color: var(--purple-color);
-  img {
-    filter: invert(30%) sepia(100%) saturate(2878%) hue-rotate(230deg)
-      brightness(110%) contrast(100%);
-  }
-}
-
 .menu-admin {
   display: flex;
   flex-direction: column;
 }
-a {
-  cursor: pointer;
-  color: var(--gray-color);
-  &:hover {
-    color: var(--purple-color);
-    img {
-      filter: invert(30%) sepia(100%) saturate(2878%) hue-rotate(230deg)
-        brightness(110%) contrast(100%);
-    }
-  }
-}
 
-ul:first-child {
+.grow {
   flex-grow: 1;
+}
+.published_btn {
+  background-color: #50D6B7;
 }
 </style>
