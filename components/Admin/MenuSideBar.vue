@@ -96,4 +96,7 @@ export default {}
 .published_btn {
   background-color: #50D6B7;
 }
+sup {
+  color: #F55A78;
+}
 </style>
