@@ -60,7 +60,10 @@ const { data: promenade } = useDiskorso<Promenade>(
                   promenade.user.username + '_' + promenade.userId
                 }`"
               >
-                <p>par : {{ promenade.user.username }}</p>
+                <p>
+                  par :
+                  <span class="underline">{{ promenade.user.username }}</span>
+                </p>
               </NuxtLink>
             </div>
             <div class="card-content-categories flex gap-4 py-5">

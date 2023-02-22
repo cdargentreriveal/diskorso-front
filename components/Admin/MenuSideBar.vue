@@ -51,20 +51,20 @@
           <div class="seo_title text-lg font-semibold mb-5">
             <h4>SEO</h4>
           </div>
-          <div class="seo_meta_title">
+          <div class="seo_meta_title mb-4">
             <label class="font-medium">Meta title</label>
             <input
               type="text"
               name="scales"
-              class="my-4 text-sm border border-slate-300 rounded w-full h-[30px]"
+              class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[30px]"
             />
           </div>
           <div class="seo_meta_description">
             <label class="font-medium">Meta description</label>
-            <input
+            <textarea
               type="text"
               name="scales"
-              class="my-4 text-sm border border-slate-300 rounded w-full h-[70px]"
+              class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
             />
           </div>
         </div>
