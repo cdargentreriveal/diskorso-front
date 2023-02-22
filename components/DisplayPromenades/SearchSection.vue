@@ -13,13 +13,13 @@ const searchTag = ref('')
           type="search"
           placeholder="Rentrer un mot clé pour lancer la recherche..."
           class="py-4 px-8 w-full h-full border-gray border text-sm italic"
-          @keyup.enter="searchByTag(searchTag)"
+          @keyup.enter="searchTag.length >= 3 && searchByTag(searchTag)"
         />
       </div>
       <div
-        v-if="searchTag == ''"
+        v-if="searchTag === '' || searchTag.length < 3"
         :class="
-          searchTag == ''
+          searchTag === '' || searchTag.length < 3
             ? 'disabled search-bar-button text-white text-sm h-full'
             : ''
         "
