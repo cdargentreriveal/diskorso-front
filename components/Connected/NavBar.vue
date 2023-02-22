@@ -38,7 +38,7 @@ export default {
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 bg-white z-10">
-      <div class="container mx-auto py-8 relative">
+      <div class="container mx-auto py-5 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2">
             <div class="logo">
@@ -54,11 +54,16 @@ export default {
             <div class="w-1/2">
               <ul
                 v-if="windowWidth > 768"
-                class="flex justify-end items-center"
+                class="flex justify-end items-center gap-4"
               >
                 <li class="user_connected">
                   <span class="font-semibold">Bienvenue </span>
                   <span class="purple-color">Florian Bridoux</span>
+                </li>
+                <li
+                  class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
+                >
+                  <img src="@/assets/images/test-avatar.jpg" alt="avatar" />
                 </li>
               </ul>
               <!-- Menu burger mobile -->

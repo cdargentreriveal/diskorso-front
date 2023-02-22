@@ -8,12 +8,12 @@
           /></span>
           <span>Tutoriel</span>
         </li>
-        <li class="p-8 flex items-center gap-2 text-sm">
+        <NuxtLink to="/admin" class="p-8 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
           /></span>
           <span>Mes promenades</span>
-        </li>
+        </NuxtLink>
         <li class="p-8 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
@@ -50,6 +50,14 @@ export default {}
 </script>
 
 <style scoped lang="scss">
+.router-link-active {
+  color: var(--purple-color);
+  img {
+    filter: invert(30%) sepia(100%) saturate(2878%) hue-rotate(230deg)
+      brightness(110%) contrast(100%);
+  }
+}
+
 .menu-admin {
   display: flex;
   flex-direction: column;
