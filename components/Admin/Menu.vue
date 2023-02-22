@@ -57,16 +57,15 @@ export default {}
 li {
   cursor: pointer;
   color: var(--gray-color);
-  & :hover {
+  &:hover {
     color: var(--purple-color);
+    img {
+      filter: invert(30%) sepia(100%) saturate(2878%) hue-rotate(230deg)
+        brightness(110%) contrast(100%);
+    }
   }
 }
-li img {
-  color: var(--gray-color);
-  & :hover {
-    fill: var(--purple-color);
-  }
-}
+
 ul:first-child {
   flex-grow: 1;
 }

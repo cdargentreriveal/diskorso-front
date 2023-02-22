@@ -65,7 +65,6 @@ const propsNavigation = defineProps({
       </div>
       <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
       <div
-        aria-current="page"
         class="click relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"
         @click="first()"
       >
