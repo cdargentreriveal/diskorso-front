@@ -14,12 +14,15 @@
           /></span>
           <span>Mes promenades</span>
         </NuxtLink>
-        <li class="p-8 flex items-center gap-2 text-sm">
+        <NuxtLink
+          to="/admin/creer-une-promenade"
+          class="p-8 flex items-center gap-2 text-sm"
+        >
           <span
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
           /></span>
           <span>Créer une promenade</span>
-        </li>
+        </NuxtLink>
         <li class="p-8 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
@@ -62,7 +65,7 @@ export default {}
   display: flex;
   flex-direction: column;
 }
-li {
+a {
   cursor: pointer;
   color: var(--gray-color);
   &:hover {
