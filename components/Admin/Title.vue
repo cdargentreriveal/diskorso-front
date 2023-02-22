@@ -1,6 +1,6 @@
 <template>
   <div class="w-9/12 mx-auto pt-[150px]">
-    <div class="pt-8 flex items-center justify-between">
+    <div class="pt-7 flex items-center justify-between">
       <div class="title uppercase font-bold text-3xl -md:text-3xl">
         <h2>
           {{ titleBlack }}

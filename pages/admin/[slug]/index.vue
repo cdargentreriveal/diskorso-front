@@ -25,6 +25,7 @@ onBeforeUnmount(() => {
       action-btn="Publier"
     />
   </div>
+  <AdminMenuSideBar />
 </template>
 <style scoped lang="scss">
 .action-button {

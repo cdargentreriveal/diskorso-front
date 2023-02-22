@@ -1,14 +1,14 @@
 <template>
-  <div class="menu fixed left-0 top-0 h-[100vh] bg-white w-[280px] box-shaddow">
-    <div class="menu-admin pt-[150px] pb-[25px] h-full">
+  <div class="menu fixed left-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow">
+    <div class="menu-admin pt-[160px] pb-[15px] h-full">
       <ul class="divide-y divide-slate-300">
-        <li class="p-8 flex items-center gap-2 text-sm">
+        <li class="px-5 py-7 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/eye.svg" alt=""
           /></span>
           <span>Tutoriel</span>
         </li>
-        <NuxtLink to="/admin" class="p-8 flex items-center gap-2 text-sm">
+        <NuxtLink to="/admin" class="px-5 py-7 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
           /></span>
@@ -16,14 +16,14 @@
         </NuxtLink>
         <NuxtLink
           to="/admin/creer-une-promenade"
-          class="p-8 flex items-center gap-2 text-sm"
+          class="px-5 py-7 flex items-center gap-2 text-sm"
         >
           <span
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
           /></span>
           <span>Créer une promenade</span>
         </NuxtLink>
-        <li class="p-8 flex items-center gap-2 text-sm">
+        <li class="px-5 py-7 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
           /></span>
@@ -31,13 +31,13 @@
         </li>
       </ul>
       <ul class="divide-y divide-slate-300">
-        <li class="p-8 flex items-center gap-2 text-sm">
+        <li class="px-5 py-7 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/compte.svg" alt=""
           /></span>
           <span>Mon compte</span>
         </li>
-        <li class="p-8 flex items-center gap-2 text-sm">
+        <li class="px-5 py-7 flex items-center gap-2 text-sm">
           <span
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
