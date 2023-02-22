@@ -8,6 +8,12 @@ onMounted(() => {
     body.style.backgroundColor = '#F8F8F8'
   }
 })
+onBeforeUnmount(() => {
+  const body = document.querySelector('body')
+  if (body) {
+    body.style.backgroundColor = ''
+  }
+})
 </script>
 
 <template>
