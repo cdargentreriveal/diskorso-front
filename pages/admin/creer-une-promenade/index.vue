@@ -26,7 +26,7 @@ onBeforeUnmount(() => {
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12">Mes extraits</div>
-      <div class="w-8/12">
+      <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
           <h2>Titre de la promenade<sup>*</sup></h2>
           <div class="my-2">
@@ -63,6 +63,21 @@ onBeforeUnmount(() => {
             Ajouter un extrait, une transition ou une image
           </div>
         </div>
+        <!-- bouton ajouter une image et / ou une transition -->
+        <div class="promenade_btns sticky left-0 py-8 w-full">
+          <div class="promenade_btns_add flex gap-12 justify-end items-center">
+            <div
+              class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
+            >
+              <button>Ajouter une image</button>
+            </div>
+            <div
+              class="promenade_btn_transition px-4 py-3 text-sm rounded text-white"
+            >
+              <button>Ajouter une transition</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -74,5 +89,14 @@ onBeforeUnmount(() => {
 }
 sup {
   color: #f55a78;
+}
+.promenade_btns {
+  background-color: #f8f8f8;
+}
+.promenade_btn_image {
+  background-color: var(--blue-color);
+}
+.promenade_btn_transition {
+  background-color: var(--purple-color);
 }
 </style>
