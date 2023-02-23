@@ -24,6 +24,10 @@ onBeforeUnmount(() => {
       title-purple="promenade"
       action-btn="Publier"
     />
+    <div class="container_promenade w-9/12 mx-auto flex gap-8">
+      <div class="w-4/12">Mes extraits</div>
+      <div class="w-8/12">Ma construction de promenade</div>
+    </div>
   </div>
   <AdminMenuSideBar />
 </template>
