@@ -64,17 +64,19 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <!-- bouton ajouter une image et / ou une transition -->
-        <div class="promenade_btns sticky left-0 py-8 w-full">
-          <div class="promenade_btns_add flex gap-12 justify-end items-center">
-            <div
-              class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
-            >
-              <button>Ajouter une image</button>
-            </div>
-            <div
-              class="promenade_btn_transition px-4 py-3 text-sm rounded text-white"
-            >
-              <button>Ajouter une transition</button>
+        <div class="promenade_btns fixed bottom-[21px] left-0 py-8 w-full">
+          <div class="promenade_btns_add container mx-auto">
+            <div class="flex gap-12 justify-end items-center w-9/12 mx-auto">
+              <div
+                class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
+              >
+                <button>Ajouter une image</button>
+              </div>
+              <div
+                class="promenade_btn_transition px-4 py-3 text-sm rounded text-white"
+              >
+                <button>Ajouter une transition</button>
+              </div>
             </div>
           </div>
         </div>

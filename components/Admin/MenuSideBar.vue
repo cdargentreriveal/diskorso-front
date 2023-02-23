@@ -1,6 +1,6 @@
 <template>
   <div
-    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow"
+    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow z-10"
   >
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
       <div class="px-5 py-7 grow">

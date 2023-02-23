@@ -1,5 +1,7 @@
 <template>
-  <div class="menu fixed left-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow">
+  <div
+    class="menu fixed left-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow z-10"
+  >
     <div class="menu-admin pt-[160px] pb-[15px] h-full">
       <ul class="divide-y divide-slate-300">
         <li class="px-5 py-7 flex items-center gap-2 text-sm">
