@@ -49,7 +49,7 @@ onBeforeUnmount(() => {
                 <div
                   class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 >
-                  Ajouter l'extrait
+                  <button>Ajouter l'extrait</button>
                 </div>
               </div>
             </div>
