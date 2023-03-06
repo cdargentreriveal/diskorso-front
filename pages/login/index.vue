@@ -2,6 +2,53 @@
 definePageMeta({
   layout: 'page',
 })
+
+interface GetAnswerLogin {
+  success?: boolean
+  message: string
+  data: any
+  // accessTokenExpiresIn: string
+  // refreshTokenExpiresIn: string
+  // xsrfToken: string
+}
+
+const email = ref('')
+const password = ref('')
+
+const login = async (email: string, password: string) => {
+  const response = await fetch('http://localhost:4000/auth/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // withCredntials: true,
+    credentials: 'include',
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  })
+
+  console.log(response.headers.get('set-cookie'))
+  const data = await response.json()
+  console.log(data)
+  if (data.message !== 'LOGIN.SUCCEED') {
+    console.log(data.message)
+  } else {
+    await localStorage.setItem('xsrfToken', data.data.xsrfToken)
+    const user = await fetch('http://localhost:4000/users/authenticated', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${data.data.xsrfToken}`,
+      },
+      credentials: 'include',
+    })
+    const userConnected = await user.json()
+    console.log(user)
+    await navigateTo(`/admin`)
+  }
+}
 </script>
 
 <template>
@@ -14,16 +61,16 @@ definePageMeta({
             <span class="font-medium">sur Diskorso</span>
           </h2>
         </div>
-        <form action="" class="my-8">
+        <form action="" class="my-8" @submit.prevent="login(email, password)">
           <input
+            v-model="email"
             type="mail"
-            value=""
             placeholder="Email"
             class="rounded-md border border-gray w-full p-4 my-2"
           />
           <input
+            v-model="password"
             type="password"
-            value=""
             placeholder="Mot de passe"
             class="rounded-md border border-gray w-full p-4 my-2"
           />

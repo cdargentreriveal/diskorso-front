@@ -84,30 +84,6 @@ export default {
                   >
                     Fermer
                   </div>
-                  <ul class="py-10 text-xl mt-15">
-                    <li v-for="(item, i) in menus" :key="i" class="py-3">
-                      <Anchor
-                        v-if="item.type === 'link'"
-                        :to="item.route ? item.route : undefined"
-                        :href="item.href ? item.href : undefined"
-                        class="hover:no-underline mx-3"
-                        @click="menuOpen = false"
-                        >{{ item.text }}
-                      </Anchor>
-                      <Button
-                        v-if="item.type === 'button'"
-                        :text="item.text"
-                        size="xs"
-                        :class="
-                          item.text +
-                          ' font-bold p-5 capitalize mx-3 -md:py-7 -md:text-base'
-                        "
-                        :to="item.route ? item.route : undefined"
-                        :href="item.href ? item.href : undefined"
-                        @click="menuOpen = false"
-                      />
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
