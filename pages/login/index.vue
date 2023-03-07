@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import { useUserStore } from '~~/store/user'
+const userToStore = useUserStore()
+
+const { $swal } = useNuxtApp()
+
 definePageMeta({
   layout: 'page',
 })
@@ -7,9 +12,6 @@ interface GetAnswerLogin {
   success?: boolean
   message: string
   data: any
-  // accessTokenExpiresIn: string
-  // refreshTokenExpiresIn: string
-  // xsrfToken: string
 }
 
 const email = ref('')
@@ -29,11 +31,15 @@ const login = async (email: string, password: string) => {
     }),
   })
 
-  console.log(response.headers.get('set-cookie'))
   const data = await response.json()
-  console.log(data)
+
   if (data.message !== 'LOGIN.SUCCEED') {
-    console.log(data.message)
+    $swal.fire({
+      title: 'Error!',
+      text: data.message,
+      icon: 'error',
+      confirmButtonText: 'Ok',
+    })
   } else {
     await localStorage.setItem('xsrfToken', data.data.xsrfToken)
     const user = await fetch('http://localhost:4000/users/authenticated', {
@@ -45,9 +51,33 @@ const login = async (email: string, password: string) => {
       credentials: 'include',
     })
     const userConnected = await user.json()
-    console.log(user)
+    await userToStore.setUser(userConnected.data)
     await navigateTo(`/admin`)
   }
+}
+
+const sendResetPassword = async (email: string) => {
+  const response = await fetch(
+    'http://localhost:4000/auth/email/forgot-password',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      // withCredntials: true,
+      // credentials: 'include',
+      body: JSON.stringify({
+        email,
+      }),
+    }
+  )
+  const data = await response.json()
+  $swal.fire({
+    title: 'Error!',
+    text: data.message,
+    icon: 'error',
+    confirmButtonText: 'Ok',
+  })
 }
 </script>
 
@@ -83,7 +113,13 @@ const login = async (email: string, password: string) => {
         </form>
         <p class="text-left font-medium">
           Mot de passe perdu ?
-          <a href="#" class="underline"> Recevoir un nouveau mot de passe</a>
+          <NuxtLink to="/reset-password" class="underline">
+            Recevoir un nouveau mot de passe
+          </NuxtLink>
+        </p>
+        <p class="text-left font-medium">
+          Mot de passe perdu ?
+          <NuxtLink to="/reset-password/fer" class="underline"> test</NuxtLink>
         </p>
       </div>
     </div>

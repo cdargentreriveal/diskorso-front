@@ -1,3 +1,9 @@
+<script lang="ts" setup>
+import { useUserStore } from '~~/store/user'
+
+const user = useUserStore()
+</script>
+
 <template>
   <div
     class="menu fixed left-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow z-10"
@@ -49,10 +55,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
 
 <style scoped lang="scss">
 .router-link-active {

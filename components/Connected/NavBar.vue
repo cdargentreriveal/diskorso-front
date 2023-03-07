@@ -1,8 +1,10 @@
 <script lang="ts">
+import { useUserStore } from '~~/store/user'
 export default {
   setup() {
     const menuOpen = ref(false)
     const windowWidth = ref(process.client ? window.innerWidth : 0)
+    const user = useUserStore()
 
     const handleResize = () => {
       windowWidth.value = window.innerWidth
@@ -21,6 +23,7 @@ export default {
     }
 
     return {
+      user,
       menuOpen,
       windowWidth,
       displayMobileMenu,
@@ -58,7 +61,9 @@ export default {
               >
                 <li class="user_connected">
                   <span class="font-semibold">Bienvenue </span>
-                  <span class="purple-color">Florian Bridoux</span>
+                  <span class="purple-color">{{
+                    user.currentUser?.username
+                  }}</span>
                 </li>
                 <li
                   class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
