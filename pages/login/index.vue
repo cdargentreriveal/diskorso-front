@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
 const userToStore = useUserStore()
-
-const { $swal } = useNuxtApp()
+const config = useRuntimeConfig()
 
 definePageMeta({
   layout: 'page',
@@ -16,14 +15,27 @@ interface GetAnswerLogin {
 
 const email = ref('')
 const password = ref('')
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
 
 const login = async (email: string, password: string) => {
-  const response = await fetch('http://localhost:4000/auth/signin', {
+  const response = await fetch(`${config.public.baseURL}/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    // withCredntials: true,
     credentials: 'include',
     body: JSON.stringify({
       email,
@@ -34,15 +46,10 @@ const login = async (email: string, password: string) => {
   const data = await response.json()
 
   if (data.message !== 'LOGIN.SUCCEED') {
-    $swal.fire({
-      title: 'Error!',
-      text: data.message,
-      icon: 'error',
-      confirmButtonText: 'Ok',
-    })
+    displaySwal('Error!', data.message, 'error', 'Ok')
   } else {
     await localStorage.setItem('xsrfToken', data.data.xsrfToken)
-    const user = await fetch('http://localhost:4000/users/authenticated', {
+    const user = await fetch(`${config.public.baseURL}/users/authenticated`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -51,33 +58,13 @@ const login = async (email: string, password: string) => {
       credentials: 'include',
     })
     const userConnected = await user.json()
-    await userToStore.setUser(userConnected.data)
-    await navigateTo(`/admin`)
-  }
-}
-
-const sendResetPassword = async (email: string) => {
-  const response = await fetch(
-    'http://localhost:4000/auth/email/forgot-password',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      // withCredntials: true,
-      // credentials: 'include',
-      body: JSON.stringify({
-        email,
-      }),
+    if (userConnected.success) {
+      await userToStore.setUser(userConnected.data)
+      await navigateTo(`/admin`)
+    } else {
+      displaySwal('Error!', 'Echec de la connexion', 'error', 'Ok')
     }
-  )
-  const data = await response.json()
-  $swal.fire({
-    title: 'Error!',
-    text: data.message,
-    icon: 'error',
-    confirmButtonText: 'Ok',
-  })
+  }
 }
 </script>
 
@@ -116,10 +103,6 @@ const sendResetPassword = async (email: string) => {
           <NuxtLink to="/reset-password" class="underline">
             Recevoir un nouveau mot de passe
           </NuxtLink>
-        </p>
-        <p class="text-left font-medium">
-          Mot de passe perdu ?
-          <NuxtLink to="/reset-password/fer" class="underline"> test</NuxtLink>
         </p>
       </div>
     </div>

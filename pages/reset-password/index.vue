@@ -1,9 +1,4 @@
 <script lang="ts" setup>
-import { useUserStore } from '~~/store/user'
-const userToStore = useUserStore()
-
-const { $swal } = useNuxtApp()
-
 definePageMeta({
   layout: 'page',
 })
@@ -14,18 +9,31 @@ interface GetAnswerLogin {
   data: any
 }
 
+const config = useRuntimeConfig()
 const email = ref('')
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
 
 const sendResetPassword = async (email: string) => {
   const response = await fetch(
-    'http://localhost:4000/auth/email/forgot-password',
+    `${config.public.baseURL}/auth/email/forgot-password`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      // withCredntials: true,
-      // credentials: 'include',
       body: JSON.stringify({
         email,
       }),
@@ -33,29 +41,12 @@ const sendResetPassword = async (email: string) => {
   )
   const data = await response.json()
 
-  console.log(data)
-
   if (data.error) {
-    $swal.fire({
-      title: 'Error!',
-      text: data.message,
-      icon: 'error',
-      confirmButtonText: 'Ok',
-    })
+    displaySwal('Error!', data.message, 'error', 'Ok')
   } else if (!data.success) {
-    $swal.fire({
-      title: 'Error!',
-      text: data.data.message,
-      icon: 'error',
-      confirmButtonText: 'Ok',
-    })
+    displaySwal('Error!', data.data.message, 'error', 'Ok')
   } else {
-    $swal.fire({
-      title: 'E-Mail trouvé!',
-      text: data.data.message,
-      icon: 'success',
-      confirmButtonText: 'Ok',
-    })
+    displaySwal('E-Mail trouvé!', data.data.message, 'success', 'Ok')
   }
 }
 </script>

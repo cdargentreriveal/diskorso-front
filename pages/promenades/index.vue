@@ -15,7 +15,7 @@ const config = useRuntimeConfig()
 // ________________________________________________________________________________________
 //* Methods pour mettre à jour promenades en fonction de la navigation
 // ________________________________________________________________________________________
-const url = computed(() => `${config.public.baseURL}${query.value}`)
+const url = computed(() => `${config.public.baseURL}/${query.value}`)
 const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   'promenades',
   async () => {
