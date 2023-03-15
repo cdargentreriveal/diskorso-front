@@ -1,10 +1,7 @@
 <script lang="ts" setup>
-import { useUserStore } from '~~/store/user'
-
-const user = useUserStore()
-
 definePageMeta({
   layout: 'userconnected',
+  middleware: ['is-logged'],
 })
 onMounted(() => {
   const body = document.querySelector('body')
@@ -24,13 +21,11 @@ onBeforeUnmount(() => {
   <AdminMenu />
 
   <div class="container mx-auto">
-    {{ user.currentUser?.email }}
     <AdminTitle
       title-black="Mes"
       title-purple="promenades"
       action-btn="Créer une promenade"
     />
-    {{ user.currentUser?.email }}
   </div>
 </template>
 <style scoped lang="scss">

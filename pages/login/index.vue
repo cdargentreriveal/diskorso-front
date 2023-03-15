@@ -104,6 +104,7 @@ const login = async (email: string, password: string) => {
             Recevoir un nouveau mot de passe
           </NuxtLink>
         </p>
+        <NuxtLink to="/admin" class="underline"> admin </NuxtLink>
       </div>
     </div>
   </div>

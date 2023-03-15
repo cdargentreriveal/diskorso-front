@@ -25,29 +25,66 @@ const displaySwal = (
 }
 
 const newPassword = async (token: any, email: any, password: string) => {
-  const response = await fetch(
-    `${config.public.baseURL}/auth/email/reset-password`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        email_token: token,
-      }),
-    }
-  )
-  const data = await response.json()
-
-  if (data.statusCode === 403) {
-    displaySwal('Error!', data.message, 'error', 'Ok')
-  } else if (data.success) {
-    await displaySwal("C'est bien noté!", data.message, 'success', 'Ok')
-    await navigateTo(`/login`)
+  if (email === '' || password === '') {
+    await displaySwal(
+      'Error',
+      'Merci de remplir tous les champs',
+      'error',
+      'Ok'
+    )
+  } else if (password.length < 8) {
+    await displaySwal(
+      'Error',
+      'Le mot de passe doit comporter au moins 8 caractères',
+      'error',
+      'Ok'
+    )
+  } else if (password.search(/[a-z]/) < 0) {
+    await displaySwal(
+      'Error',
+      'Le mot de passe doit comporter au moins une minuscule',
+      'error',
+      'Ok'
+    )
+  } else if (password.search(/[A-Z]/) < 0) {
+    await displaySwal(
+      'Error',
+      'Le mot de passe doit comporter au moins une majuscule',
+      'error',
+      'Ok'
+    )
+  } else if (password.search(/[0-9]/) < 0) {
+    await displaySwal(
+      'Error',
+      'Le mot de passe doit comporter au moins un chiffre',
+      'error',
+      'Ok'
+    )
   } else {
-    displaySwal('Error!', data.message, 'error', 'Ok')
+    const response = await fetch(
+      `${config.public.baseURL}/auth/email/reset-password`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          email_token: token,
+        }),
+      }
+    )
+    const data = await response.json()
+
+    if (data.statusCode === 403) {
+      displaySwal('Error!', data.message, 'error', 'Ok')
+    } else if (data.success) {
+      await displaySwal("C'est bien noté!", data.message, 'success', 'Ok')
+      await navigateTo(`/login`)
+    } else {
+      displaySwal('Error!', data.message, 'error', 'Ok')
+    }
   }
 }
 </script>
