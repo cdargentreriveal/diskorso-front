@@ -1,63 +1,6 @@
 <script lang="ts" setup>
-import { useUserStore } from '~~/store/user'
-
-const config = useRuntimeConfig()
-const user = useUserStore()
-
-const xsrfToken = localStorage.getItem('xsrfToken')
-
-const getUsers = async () => {
-  const listUsers = await fetch(`${config.public.baseURL}/users/all`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${xsrfToken}`,
-    },
-    credentials: 'include',
-  })
-
-  const response = await listUsers.json()
-
-  if (response.statusCode === 401) {
-    await localStorage.removeItem('xsrfToken')
-    const request = await fetch(`${config.public.baseURL}/auth/refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${xsrfToken}`,
-      },
-      credentials: 'include',
-    })
-    const response = await request.json()
-    await localStorage.setItem('xsrfToken', response.data.xsrfToken)
-    const newXsrfToken = localStorage.getItem('xsrfToken')
-    await fetch(`${config.public.baseURL}/users/all`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${newXsrfToken}`,
-      },
-      credentials: 'include',
-    })
-  }
-}
-
-const signOut = async () => {
-  // Envoyer une requête POST à /auth/logout pour se déconnecter et vider les cookies
-  await fetch(`${config.public.baseURL}/auth/logout`, {
-    method: 'POST',
-    credentials: 'include',
-  })
-
-  // Vider le token de localstorage et rediriger l'utilisateur vers la page de connexion
-  localStorage.removeItem('xsrfToken')
-
-  // Vider le store
-  user.setUser(null)
-
-  // Rediriger vers login
-  await navigateTo(`/login`)
-}
+import { getUsers } from '~~/utils/superadmin/getUsers'
+import { logOut } from '~~/utils/connected/logOut'
 </script>
 
 <template>
@@ -105,7 +48,7 @@ const signOut = async () => {
           <span
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
-          <button @click="signOut()">Déconnexion</button>
+          <button @click="logOut()">Déconnexion</button>
         </li>
       </ul>
       <button @click="getUsers()">Get all</button>
