@@ -1,6 +1,6 @@
 <template>
   <div
-    class="menu fixed left-0 top-0 h-[100vh] bg-white w-[220px] box-shaddow z-10"
+    class="menu fixed left-0 top-0 h-[100vh] bg-white w-[220px] z-10 border-r-1 border-slate-300"
   >
     <div class="menu-admin pt-[150px] pb-[10px] h-full">
       <ul class="divide-y divide-slate-300 text-xs">

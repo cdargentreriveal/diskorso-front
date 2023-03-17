@@ -1,6 +1,6 @@
 <template>
   <div
-    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[220px] box-shaddow z-10"
+    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[220px] border-l-1 border-slate-300 z-10"
   >
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
       <div class="px-5 py-7 grow">
@@ -94,9 +94,9 @@ export default {}
   flex-grow: 1;
 }
 .published_btn {
-  background-color: #50D6B7;
+  background-color: #50d6b7;
 }
 sup {
-  color: #F55A78;
+  color: #f55a78;
 }
 </style>
