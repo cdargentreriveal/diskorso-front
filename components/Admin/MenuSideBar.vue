@@ -1,21 +1,21 @@
 <template>
   <div
-    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow z-10"
+    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[220px] box-shaddow z-10"
   >
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
       <div class="px-5 py-7 grow">
         <div
-          class="preview w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md border border-black"
+          class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black"
         >
           <button>Prévisualiser</button>
         </div>
         <Separator />
         <div class="categories">
-          <div class="categories_title text-lg font-semibold mb-5">
+          <div class="categories_title text-base font-semibold mb-5">
             <h4>Catégories<sup>*</sup></h4>
           </div>
           <div class="categories_list">
-            <ul>
+            <ul class="text-sm">
               <li class="flex my-2">
                 <input
                   id="scales"
@@ -23,7 +23,7 @@
                   name="scales"
                   class="mx-2"
                   value="Histoire"
-                /><label for="scales" class="text-sm">Histoire</label>
+                /><label for="scales">Histoire</label>
               </li>
               <li class="flex my-2">
                 <input
@@ -32,7 +32,7 @@
                   name="scales"
                   class="mx-2"
                   value="Science"
-                /><label for="scales" class="text-sm">Science</label>
+                /><label for="scales">Science</label>
               </li>
               <li class="flex my-2">
                 <input
@@ -41,17 +41,17 @@
                   name="scales"
                   class="mx-2"
                   value="Société"
-                /><label for="scales" class="text-sm">Société</label>
+                /><label for="scales">Société</label>
               </li>
             </ul>
           </div>
         </div>
         <Separator />
         <div class="seo">
-          <div class="seo_title text-lg font-semibold mb-5">
+          <div class="seo_title text-base font-semibold mb-5">
             <h4>SEO</h4>
           </div>
-          <div class="seo_meta_title mb-4">
+          <div class="seo_meta_title mb-4 text-sm">
             <label class="font-medium">Meta title</label>
             <input
               type="text"
@@ -59,7 +59,7 @@
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[30px]"
             />
           </div>
-          <div class="seo_meta_description">
+          <div class="seo_meta_description text-sm">
             <label class="font-medium">Meta description</label>
             <textarea
               type="text"

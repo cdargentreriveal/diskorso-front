@@ -1,46 +1,86 @@
 <template>
   <div
-    class="menu fixed left-0 top-0 h-[100vh] bg-white w-[250px] box-shaddow z-10"
+    class="menu fixed left-0 top-0 h-[100vh] bg-white w-[220px] box-shaddow z-10"
   >
-    <div class="menu-admin pt-[160px] pb-[15px] h-full">
-      <ul class="divide-y divide-slate-300">
-        <li class="px-5 py-7 flex items-center gap-2 text-sm">
-          <span
+    <div class="menu-admin pt-[150px] pb-[10px] h-full">
+      <ul class="divide-y divide-slate-300 text-xs">
+        <li class="px-5 py-7 flex items-center gap-2">
+          <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/eye.svg" alt=""
           /></span>
           <span>Tutoriel</span>
         </li>
-        <NuxtLink to="/admin" class="px-5 py-7 flex items-center gap-2 text-sm">
-          <span
+        <NuxtLink to="/admin" class="px-5 py-7 flex items-center gap-2">
+          <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
           /></span>
           <span>Mes promenades</span>
         </NuxtLink>
         <NuxtLink
           to="/admin/creer-une-promenade"
-          class="px-5 py-7 flex items-center gap-2 text-sm"
+          class="px-5 py-7 flex items-center gap-2"
         >
-          <span
+          <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
           /></span>
           <span>Créer une promenade</span>
         </NuxtLink>
-        <li class="px-5 py-7 flex items-center gap-2 text-sm">
-          <span
+        <NuxtLink
+          to="/admin/mes-extraits"
+          class="px-5 py-7 flex items-center gap-2"
+        >
+          <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
           /></span>
           <span>Mes extraits</span>
-        </li>
+        </NuxtLink>
+        <!-- Super Admin Menu -->
+        <div class="super_admin divide-y divide-slate-300">
+          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
+            <span class="w-[16px]"
+              ><img src="@/assets/images/icons/menu-admin/user.svg" alt=""
+            /></span>
+            <span>Gérer les utilisateurs</span>
+            <span class="-mt-[1rem]"
+              ><img
+                src="@/assets/images/icons/menu-admin/super-admin-star.svg"
+                alt=""
+            /></span>
+          </li>
+          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
+            <span class="w-[16px]"
+              ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
+            /></span>
+            <span>Gérer les promenades</span>
+            <span class="-mt-[1rem]"
+              ><img
+                src="@/assets/images/icons/menu-admin/super-admin-star.svg"
+                alt=""
+            /></span>
+          </li>
+          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
+            <span
+              ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
+            /></span>
+            <span>Gérer les extraits</span>
+            <span class="-mt-[1rem]"
+              ><img
+                src="@/assets/images/icons/menu-admin/super-admin-star.svg"
+                alt=""
+            /></span>
+          </li>
+        </div>
+        <!-- Super Admin Menu-->
       </ul>
-      <ul class="divide-y divide-slate-300">
-        <li class="px-5 py-7 flex items-center gap-2 text-sm">
-          <span
+      <ul class="divide-y divide-slate-300 text-xs">
+        <li class="px-5 py-7 flex items-center gap-2">
+          <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/compte.svg" alt=""
           /></span>
           <span>Mon compte</span>
         </li>
-        <li class="px-5 py-7 flex items-center gap-2 text-sm">
-          <span
+        <li class="px-5 py-7 flex items-center gap-2">
+          <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
           <span>Déconnexion</span>
