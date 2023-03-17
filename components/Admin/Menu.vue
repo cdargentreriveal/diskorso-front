@@ -36,7 +36,10 @@
         </NuxtLink>
         <!-- Super Admin Menu -->
         <div class="super_admin divide-y divide-slate-300">
-          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
+          <NuxtLink
+            to="/admin/gestion-utilisateurs"
+            class="px-5 py-7 flex items-center gap-2 bg-slate-100"
+          >
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/user.svg" alt=""
             /></span>
@@ -46,7 +49,7 @@
                 src="@/assets/images/icons/menu-admin/super-admin-star.svg"
                 alt=""
             /></span>
-          </li>
+          </NuxtLink>
           <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
