@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
             >
-              bridoux.florian@gmail.comccddcdcdcdfffffffd
+              bridoux.florian@gmail.com
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
@@ -113,7 +113,8 @@ onBeforeUnmount(() => {
                   >
                     {{ selectedOption }}
                     <svg
-                      class="-mr-1 ml-2 h-5 w-5"
+                      :class="showMenu ? 'rotate' : ''"
+                      class="-mr-1 ml-2 h-5 w-5 arrow"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
@@ -135,27 +136,30 @@ onBeforeUnmount(() => {
                   >
                     <a
                       href="#"
-                      class="block items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 actif"
+                      class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 actif"
                       role="menuitem"
                       @click.prevent="selectOption('Actif')"
                     >
-                      Actif
+                      <span>Actif</span>
                     </a>
                     <a
                       href="#"
-                      class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 bannir"
+                      class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 bannir"
                       role="menuitem"
                       @click.prevent="selectOption('Bannir')"
                     >
-                      Bannir
+                      <span>Bannir</span>
                     </a>
                     <a
                       href="#"
-                      class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 delete"
+                      class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 delete"
                       role="menuitem"
                       @click.prevent="selectOption('Supprimer')"
                     >
-                      Supprimer
+                      <span>Supprimer</span>
+                      <span class="ml-2"
+                        ><img src="@/assets/images/icons/corbeille.svg" alt=""
+                      /></span>
                     </a>
                   </div>
                 </div>
@@ -178,6 +182,12 @@ onBeforeUnmount(() => {
     margin-left: 8px;
   }
 }
+.arrow {
+  transform: translateY(0.1rem);
+}
+.rotate {
+  transform: translateY(-0.1rem) rotate(-180deg);
+}
 ::-webkit-scrollbar {
   display: none;
 }
@@ -185,25 +195,17 @@ onBeforeUnmount(() => {
   color: #50d6b7;
 }
 .dropdown .bannir {
-  color: #FBB369;
+  color: #fbb369;
   &:after {
     content: '';
     width: 8px;
     height: 8px;
     border-radius: 5rem;
-    background-color: #50d6b7;
+    background-color: #fbb369;
     margin-left: 8px;
   }
 }
 .dropdown .delete {
   color: #f55a78;
-  &:after {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 5rem;
-    background-color: #50d6b7;
-    margin-left: 8px;
-  }
 }
 </style>
