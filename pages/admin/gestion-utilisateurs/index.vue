@@ -6,7 +6,22 @@ const selectOption = (option: string) => {
   selectedOption.value = option
   showMenu.value = false
 }
-
+const users = [
+  {
+    name: 'Bridoux',
+    firstName: 'Florian',
+    userName: 'FB0305',
+    mail: 'bridoux.florian@gmail.com',
+    status: 'Actif',
+  },
+  {
+    name: "D'argentré",
+    firstName: 'Charles',
+    userName: 'CD0305',
+    mail: 'cdargentre@gmail.com',
+    status: 'Actif',
+  },
+]
 definePageMeta({
   layout: 'userconnected',
 })
@@ -61,9 +76,12 @@ onBeforeUnmount(() => {
               Email
             </div>
             <div
-              class="bg-white w-full border border-slate-300 text-center p-1"
+              class="bg-white w-full border border-slate-300 text-center relative p-1"
             >
-              Status
+              <span>Status</span>
+              <span class="absolute right-[20px] top-[50%] filter"
+                ><img src="@/assets/images/icons/icon-filter.svg" alt=""
+              /></span>
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1"
@@ -73,7 +91,11 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <!--  users -->
-        <div class="flex items-center text-xs my-5 text-slate-500">
+        <div
+          v-for="(user, i) in users"
+          :key="i"
+          class="flex items-center text-xs my-5 text-slate-500"
+        >
           <div class="checkbox mr-10 flex">
             <input type="checkbox" class="h-[25px] w-[25px]" />
           </div>
@@ -81,27 +103,29 @@ onBeforeUnmount(() => {
             <div
               class="bg-white w-full border border-slate-300 text-center py-1 flex items-center justify-center"
             >
-              Bridoux
+              {{ user.name }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
-              Florian
+              {{ user.firstName }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
-              FB0305
+              {{ user.userName }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
             >
-              bridoux.florian@gmail.com
+              {{ user.mail }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
-              <span class="actif inline-flex items-center">Actif</span>
+              <span class="actif inline-flex items-center">{{
+                user.status
+              }}</span>
             </div>
             <div class="bg-white w-full border border-slate-300 p-1">
               <div>
@@ -158,7 +182,9 @@ onBeforeUnmount(() => {
                     >
                       <span>Supprimer</span>
                       <span class="ml-2"
-                        ><img src="@/assets/images/icons/corbeille.svg" alt=""
+                        ><img
+                          src="@/assets/images/icons/corbeille.svg"
+                          alt="icone corbeille"
                       /></span>
                     </a>
                   </div>
@@ -207,5 +233,8 @@ onBeforeUnmount(() => {
 }
 .dropdown .delete {
   color: #f55a78;
+}
+.filter {
+  transform: translateY(-50%);
 }
 </style>
