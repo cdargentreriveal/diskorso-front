@@ -13,6 +13,7 @@ const users = [
     userName: 'FB0305',
     mail: 'bridoux.florian@gmail.com',
     status: 'Actif',
+    selectedStatus: 'Selectionner',
   },
   {
     name: "D'argentré",
@@ -20,6 +21,7 @@ const users = [
     userName: 'CD0305',
     mail: 'cdargentre@gmail.com',
     status: 'Actif',
+    selectedStatus: 'Selectionner',
   },
 ]
 definePageMeta({
