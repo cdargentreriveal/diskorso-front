@@ -1,4 +1,13 @@
 <script lang="ts" setup>
+import { BtnAdminPage } from '@/types/AdminTitlePage'
+const datasTitle = computed((): BtnAdminPage[] => [
+  {
+    type: 'button',
+    titleBlack: 'Créer une',
+    titlePurple: 'promenade',
+    actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
+  },
+])
 definePageMeta({
   layout: 'userconnected',
 })
@@ -20,9 +29,11 @@ onBeforeUnmount(() => {
   <AdminMenu />
   <div class="container mx-auto">
     <AdminTitle
-      title-black="Créer une"
-      title-purple="promenade"
-      action-btn="Publier"
+      v-if="datasTitle[0].type === 'button'"
+      :title-black="datasTitle[0].titleBlack"
+      :title-purple="datasTitle[0].titlePurple"
+      :data="datasTitle[0].data"
+      :action-btn="datasTitle[0].actionBtn"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12">

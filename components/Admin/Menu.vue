@@ -76,12 +76,12 @@
         <!-- Super Admin Menu-->
       </ul>
       <ul class="divide-y divide-slate-300 text-xs">
-        <li class="px-5 py-7 flex items-center gap-2">
+        <NuxtLink to="/admin/account" class="px-5 py-7 flex items-center gap-2">
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/compte.svg" alt=""
           /></span>
           <span>Mon compte</span>
-        </li>
+        </NuxtLink>
         <li class="px-5 py-7 flex items-center gap-2">
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""

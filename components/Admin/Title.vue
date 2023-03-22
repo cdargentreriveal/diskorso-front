@@ -17,7 +17,7 @@
       </div>
       <div
         v-if="actionBtn.length > 1"
-        class="px-4 py-3 text-sm rounded-md text-white relative"
+        class="px-4 py-3 text-sm rounded-md text-white relative w-[200px]"
         :class="actionBtn.length > 0 ? 'action-button ' : 'link-button '"
       >
         <div class="w-full p-1">
@@ -28,7 +28,7 @@
                 class="flex items-center mx-auto"
                 @click="toggleMenu()"
               >
-                Actions groupées
+                {{ selectedOption }}
                 <svg
                   :class="btnActionsOpen ? 'rotate' : ''"
                   class="-mr-1 ml-2 h-5 w-5 arrow"
@@ -81,8 +81,13 @@
 </template>
 
 <script lang="ts" setup>
+const selectedOption = ref('Actions groupées')
 const btnActionsOpen = ref(false)
 const toggleMenu = () => {
+  btnActionsOpen.value = !btnActionsOpen.value
+}
+const selectOption = (option: string) => {
+  selectedOption.value = option
   btnActionsOpen.value = !btnActionsOpen.value
 }
 const propsAdminTitle = defineProps({
