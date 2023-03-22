@@ -34,7 +34,10 @@ const users = reactive<User[]>([
 const toggleMenu = (user: User) => {
   user.showMenu = !user.showMenu
 }
-
+const selectOption = (option: string, user: User) => {
+  user.selectedStatus = option
+  user.showMenu = !user.showMenu
+}
 definePageMeta({
   layout: 'userconnected',
 })
@@ -149,7 +152,7 @@ onBeforeUnmount(() => {
                     class="flex items-center mx-auto"
                     @click="toggleMenu(user)"
                   >
-                    {{ selectedOption }}
+                    {{ user.selectedStatus }}
                     <svg
                       :class="user.showMenu ? 'rotate' : ''"
                       class="-mr-1 ml-2 h-5 w-5 arrow"
@@ -176,7 +179,7 @@ onBeforeUnmount(() => {
                       href="#"
                       class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 actif"
                       role="menuitem"
-                      @click.prevent="selectOption(user, 'Actif')"
+                      @click.prevent="selectOption('Actif', user)"
                     >
                       <span>Actif</span>
                     </a>
@@ -184,7 +187,7 @@ onBeforeUnmount(() => {
                       href="#"
                       class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 bannir"
                       role="menuitem"
-                      @click.prevent="selectOption('Bannir')"
+                      @click.prevent="selectOption('Bannir', user)"
                     >
                       <span>Bannir</span>
                     </a>
@@ -192,7 +195,7 @@ onBeforeUnmount(() => {
                       href="#"
                       class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 delete"
                       role="menuitem"
-                      @click.prevent="selectOption('Supprimer')"
+                      @click.prevent="selectOption('Supprimer', user)"
                     >
                       <span>Supprimer</span>
                       <span class="ml-2"
