@@ -1,12 +1,16 @@
 <script lang="ts" setup>
 const selectedOption = ref('Selectionner')
-const showMenu = ref(false)
-
-const selectOption = (option: string) => {
-  selectedOption.value = option
-  showMenu.value = false
+type User = {
+  name: string
+  firstName: string
+  userName: string
+  mail: string
+  status: string
+  selectedStatus: string
+  showMenu: boolean
 }
-const users = [
+
+const users = reactive<User[]>([
   {
     name: 'Bridoux',
     firstName: 'Florian',
@@ -14,6 +18,7 @@ const users = [
     mail: 'bridoux.florian@gmail.com',
     status: 'Actif',
     selectedStatus: 'Selectionner',
+    showMenu: false,
   },
   {
     name: "D'argentré",
@@ -22,11 +27,18 @@ const users = [
     mail: 'cdargentre@gmail.com',
     status: 'Actif',
     selectedStatus: 'Selectionner',
+    showMenu: false,
   },
-]
+])
+
+const toggleMenu = (user: User) => {
+  user.showMenu = !user.showMenu
+}
+
 definePageMeta({
   layout: 'userconnected',
 })
+
 onMounted(() => {
   const body = document.querySelector('body')
   if (body) {
@@ -135,11 +147,11 @@ onBeforeUnmount(() => {
                   <button
                     type="button"
                     class="flex items-center mx-auto"
-                    @click="showMenu = !showMenu"
+                    @click="toggleMenu(user)"
                   >
                     {{ selectedOption }}
                     <svg
-                      :class="showMenu ? 'rotate' : ''"
+                      :class="user.showMenu ? 'rotate' : ''"
                       class="-mr-1 ml-2 h-5 w-5 arrow"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
@@ -154,7 +166,7 @@ onBeforeUnmount(() => {
                     </svg>
                   </button>
                   <div
-                    v-if="showMenu"
+                    v-if="user.showMenu"
                     class="divide-y divide-slate-300 absolute z-50 top-full py-2 -left-2 mt-2 bg-white rounded-md shadow-lg w-48 ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu"
                     aria-orientation="vertical"
@@ -164,7 +176,7 @@ onBeforeUnmount(() => {
                       href="#"
                       class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 actif"
                       role="menuitem"
-                      @click.prevent="selectOption('Actif')"
+                      @click.prevent="selectOption(user, 'Actif')"
                     >
                       <span>Actif</span>
                     </a>
