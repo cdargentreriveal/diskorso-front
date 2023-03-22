@@ -1,4 +1,18 @@
 <script lang="ts" setup>
+import { BtnAdminPage } from '@/types/AdminTitlePage'
+const datasTitle = computed((): BtnAdminPage[] => [
+  {
+    type: 'button',
+    titleBlack: 'Gérer les',
+    titlePurple: 'utilisateurs',
+    data: [{ number: users.length }, { value: 'utilisateurs inscrits' }],
+    actionBtn: [
+      { action: 'Actif' },
+      { action: 'Bannir' },
+      { action: 'Supprimer' },
+    ],
+  },
+])
 const selectedOption = ref('Selectionner')
 const masterCheckbox = ref(false)
 type User = {
@@ -75,9 +89,11 @@ onBeforeUnmount(() => {
   <AdminMenu />
   <div class="container mx-auto">
     <AdminTitle
-      title-black="Gérer les"
-      title-purple="utilisateurs"
-      action-btn="Publier"
+      v-if="datasTitle[0].type === 'button'"
+      :title-black="datasTitle[0].titleBlack"
+      :title-purple="datasTitle[0].titlePurple"
+      :data="datasTitle[0].data"
+      :action-btn="datasTitle[0].actionBtn"
     />
     <div class="container_promenade w-9/12 mx-auto">
       <AdminSearchBar />
@@ -216,7 +232,7 @@ onBeforeUnmount(() => {
                     </a>
                     <a
                       href="#"
-                      class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 delete"
+                      class="flex items-center px-4 py-2 text-xs text-gray-700 hover:bg-gray-100 hover:text-gray-900 Supprimer"
                       role="menuitem"
                       @click.prevent="selectOption('Supprimer', user)"
                     >
@@ -271,7 +287,7 @@ onBeforeUnmount(() => {
     margin-left: 8px;
   }
 }
-.dropdown .delete {
+.dropdown .Supprimer {
   color: #f55a78;
 }
 .filter {
