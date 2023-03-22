@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 const selectedOption = ref('Selectionner')
+const masterCheckbox = ref(false)
 type User = {
   name: string
   firstName: string
   userName: string
   mail: string
   status: string
+  isChecked: boolean
   selectedStatus: string
   showMenu: boolean
 }
@@ -17,6 +19,7 @@ const users = reactive<User[]>([
     userName: 'FB0305',
     mail: 'bridoux.florian@gmail.com',
     status: 'Actif',
+    isChecked: false,
     selectedStatus: 'Selectionner',
     showMenu: false,
   },
@@ -26,6 +29,7 @@ const users = reactive<User[]>([
     userName: 'CD0305',
     mail: 'cdargentre@gmail.com',
     status: 'Actif',
+    isChecked: false,
     selectedStatus: 'Selectionner',
     showMenu: false,
   },
@@ -38,6 +42,17 @@ const selectOption = (option: string, user: User) => {
   user.selectedStatus = option
   user.showMenu = !user.showMenu
 }
+watchEffect(() => {
+  if (masterCheckbox.value) {
+    users.forEach((user) => {
+      user.isChecked = true
+    })
+  } else {
+    users.forEach((user) => {
+      user.isChecked = false
+    })
+  }
+})
 definePageMeta({
   layout: 'userconnected',
 })
@@ -69,7 +84,11 @@ onBeforeUnmount(() => {
       <div class="users-tab my-10">
         <div class="flex items-center text-sm">
           <div class="checkbox mr-10 flex">
-            <input type="checkbox" class="h-[25px] w-[25px]" />
+            <input
+              v-model="masterCheckbox"
+              type="checkbox"
+              class="h-[25px] w-[25px]"
+            />
           </div>
           <div class="justify-around flex w-full">
             <div
@@ -114,7 +133,11 @@ onBeforeUnmount(() => {
           class="flex items-center text-xs my-5 text-slate-500"
         >
           <div class="checkbox mr-10 flex">
-            <input type="checkbox" class="h-[25px] w-[25px]" />
+            <input
+              v-model="user.isChecked"
+              type="checkbox"
+              class="h-[25px] w-[25px]"
+            />
           </div>
           <div class="justify-around flex w-full">
             <div
@@ -253,5 +276,8 @@ onBeforeUnmount(() => {
 }
 .filter {
   transform: translateY(-50%);
+}
+input[type='checkbox'] {
+  cursor: pointer;
 }
 </style>
