@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+import { BtnAdminPage } from '@/types/AdminTitlePage'
+const datasTitle = computed((): BtnAdminPage[] => [
+  {
+    type: 'link',
+    titleBlack: 'Gérer les',
+    titlePurple: 'utilisateurs',
+    actionBtn: [{ action: 'Créer une promenade' }],
+    route: { name: 'creer-une-promenade' },
+  },
+])
 definePageMeta({
   layout: 'userconnected',
 })
@@ -20,9 +30,11 @@ onBeforeUnmount(() => {
   <AdminMenu />
   <div class="container mx-auto">
     <AdminTitle
-      title-black="Mes"
-      title-purple="promenades"
-      action-btn="Créer une promenade"
+      v-if="datasTitle[0].type === 'link'"
+      :title-black="datasTitle[0].titleBlack"
+      :title-purple="datasTitle[0].titlePurple"
+      :action-btn="datasTitle[0].actionBtn"
+      :route="datasTitle[0].route.name"
     />
   </div>
 </template>

@@ -7,7 +7,7 @@
           <span class="font-medium purple-color">{{ titlePurple }}</span>
         </h2>
       </div>
-      <div class="data px-4 py-3 text-sm">
+      <div v-if="data.length > 0" class="data px-4 py-3 text-sm">
         <span v-for="(item, i) in data" :key="i"
           ><span class="text-base font-bold number mr-1">{{
             item.number
@@ -16,8 +16,9 @@
         >
       </div>
       <div
+        v-if="actionBtn.length > 1"
         class="px-4 py-3 text-sm rounded-md text-white relative"
-        :class="actionBtn.length !== null ? 'action-button ' : 'link-button '"
+        :class="actionBtn.length > 0 ? 'action-button ' : 'link-button '"
       >
         <div class="w-full p-1">
           <div>
@@ -65,6 +66,15 @@
           </div>
         </div>
       </div>
+      <div v-else>
+        <NuxtLink
+          :to="'admin/' + route"
+          class="px-4 py-3 text-sm rounded-md text-white"
+          :class="actionBtn.length > 1 ? 'action-button ' : 'link-button '"
+        >
+          {{ actionBtn[0].action }}
+        </NuxtLink>
+      </div>
     </div>
     <Separator />
   </div>
@@ -88,9 +98,15 @@ const propsAdminTitle = defineProps({
     type: String,
     default: '',
   },
+  route: {
+    type: String,
+    default: '',
+  },
   actionBtn: {
     type: Object,
-    required: true,
+    default() {
+      return {}
+    },
   },
 })
 </script>
