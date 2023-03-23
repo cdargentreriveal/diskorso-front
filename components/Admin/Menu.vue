@@ -22,7 +22,7 @@ import { logOut } from '~~/utils/connected/logOut'
           <span>Mes promenades</span>
         </NuxtLink>
         <NuxtLink
-          to="/admin/creer-une-promenade"
+          to="/dashboard/creer-une-promenade"
           class="px-5 py-7 flex items-center gap-2 text-sm"
         >
           <span

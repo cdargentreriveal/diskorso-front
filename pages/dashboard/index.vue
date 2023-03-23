@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'userconnected',
+  layout: 'page',
   middleware: ['is-logged'],
 })
 onMounted(() => {

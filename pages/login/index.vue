@@ -49,7 +49,7 @@ const login = async (email: string, password: string) => {
     displaySwal('Error!', data.message, 'error', 'Ok')
   } else {
     await localStorage.setItem('xsrfToken', data.data.xsrfToken)
-    const user = await fetch(`${config.public.baseURL}/users/authenticated`, {
+    const user = await fetch(`${config.public.baseURL}/users/user-connected`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const login = async (email: string, password: string) => {
     const userConnected = await user.json()
     if (userConnected.success) {
       await userToStore.setUser(userConnected.data)
-      await navigateTo(`/admin`)
+      await navigateTo(`/dashboard`)
     } else {
       displaySwal('Error!', 'Echec de la connexion', 'error', 'Ok')
     }
@@ -104,7 +104,6 @@ const login = async (email: string, password: string) => {
             Recevoir un nouveau mot de passe
           </NuxtLink>
         </p>
-        <NuxtLink to="/admin" class="underline"> admin </NuxtLink>
       </div>
     </div>
   </div>
