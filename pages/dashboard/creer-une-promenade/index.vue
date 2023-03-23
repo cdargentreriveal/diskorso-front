@@ -1,4 +1,15 @@
 <script lang="ts" setup>
+
+import { BtnAdminPage } from '@/types/AdminTitlePage'
+const datasTitle = computed((): BtnAdminPage[] => [
+  {
+    type: 'button',
+    titleBlack: 'Créer une',
+    titlePurple: 'promenade',
+    actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
+  },
+])
+
 definePageMeta({
   layout: 'userconnected',
 })
@@ -20,12 +31,45 @@ onBeforeUnmount(() => {
   <AdminMenu />
   <div class="container mx-auto">
     <AdminTitle
-      title-black="Créer une"
-      title-purple="promenade"
-      action-btn="Publier"
+      v-if="datasTitle[0].type === 'button'"
+      :title-black="datasTitle[0].titleBlack"
+      :title-purple="datasTitle[0].titlePurple"
+      :data="datasTitle[0].data"
+      :action-btn="datasTitle[0].actionBtn"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
-      <div class="w-4/12">Mes extraits</div>
+      <div class="w-4/12">
+        <div class="extraits w-11/12 bg-white rounded p-5 text-xs mb-3">
+          <div class="extraits_item">
+            <div class="extraits_item_title text-sm font-semibold mb-2">
+              <h3>Titre 1</h3>
+            </div>
+            <div class="extraits_item_cats flex gap-2 flex-wrap">
+              <div
+                class="cats category-btn px-4 py-2 rounded-full cat-purple inline mb-1"
+              >
+                Science
+              </div>
+            </div>
+            <div class="extraits_item_text my-3">
+              <p>fkdjkdfjdfjkdfj</p>
+            </div>
+            <div class="btns mt-4">
+              <div class="flex items-center justify-between">
+                <div class="extraits_view underline font-semibold">
+                  Voir l'extrait
+                </div>
+                <div
+                  class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
+                >
+                  <button>Ajouter l'extrait</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
           <h2>Titre de la promenade<sup>*</sup></h2>
@@ -40,7 +84,8 @@ onBeforeUnmount(() => {
         <div class="promenade_image font-semibold text-lg mb-8">
           <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
           <div class="my-2">
-            <input type="file" name="files" class="my-2 p-2 text-sm w-full" />
+            <input type="file" name="files" class="my-2 p-2 text-sm" />
+
           </div>
         </div>
         <div class="promenade_description font-semibold text-lg mb-8">
@@ -98,7 +143,9 @@ sup {
 .promenade_btn_image {
   background-color: var(--blue-color);
 }
-.promenade_btn_transition {
+
+.promenade_btn_transition,
+.extrait_btn {
   background-color: var(--purple-color);
 }
 </style>

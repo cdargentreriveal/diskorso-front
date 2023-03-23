@@ -53,14 +53,16 @@ export default {
 </script>
 
 <template>
-  <div class="navbar fixed w-full top-0 left-0 box-shaddow z-20">
+  <div class="navbar fixed w-full top-0 left-0 z-20">
     <div class="w-full mx-auto py-3 text-center top-banner relative">
       <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm">
         La plateforme collaborative
         <span class="purple-color">100% gratuite</span>
       </p>
     </div>
-    <div class="main-nav w-full top-12 left-0 right-0 bg-white z-10">
+    <div
+      class="main-nav w-full top-12 left-0 right-0 bg-white z-10 border-b-1 border-slate-300"
+    >
       <div class="container mx-auto py-5 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2">
