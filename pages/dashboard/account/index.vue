@@ -105,8 +105,10 @@ onBeforeUnmount(() => {
           </form>
         </div>
       </div>
-      <div class="statitiques bg-white my-5 p-6 rounded-md">
-        <div class="header flex items-center justify-between">
+      <div
+        class="statitiques bg-white my-5 p-6 rounded-md divide-y divide-slate-300"
+      >
+        <div class="header flex items-center justify-between pt-3 py-6">
           <div class="header-title flex items-center">
             <span class="w-[40px] mr-2"
               ><img src="@/assets/images/icons/rocket.svg" alt="icone rocket"
@@ -118,6 +120,32 @@ onBeforeUnmount(() => {
               Inscrit(e) depuis le :
               <span class="purple-color">12/02/2023</span>
             </p>
+          </div>
+        </div>
+        <div class="flex items-center divide-x divide-slate-300">
+          <div class="w-3/12 text-center py-6">
+            <div class="promenades-number text-2xl purple-color font-bold">
+              14
+            </div>
+            <div class="promenades-published">Promenades créées</div>
+          </div>
+          <div class="w-3/12 text-center py-6">
+            <div class="promenades-number text-2xl purple-color font-bold">
+              8
+            </div>
+            <div class="promenades-archived">Promenades archivées</div>
+          </div>
+          <div class="w-3/12 text-center py-6">
+            <div class="promenades-number text-2xl purple-color font-bold">
+              225
+            </div>
+            <div class="extraits-used">Extraits utilisés</div>
+          </div>
+          <div class="w-3/12 text-center py-6">
+            <div class="promenades-number text-2xl purple-color font-bold">
+              53
+            </div>
+            <div class="extraits-archived">Extraits archivés</div>
           </div>
         </div>
       </div>
