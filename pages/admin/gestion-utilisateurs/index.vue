@@ -16,10 +16,10 @@ const datasTitle = computed((): BtnAdminPage[] => [
 const selectedOption = ref('Selectionner')
 const masterCheckbox = ref(false)
 type User = {
-  name: string
-  firstName: string
   userName: string
   mail: string
+  role: string
+  validateEmail: boolean
   status: string
   isChecked: boolean
   selectedStatus: string
@@ -28,20 +28,10 @@ type User = {
 
 const users = reactive<User[]>([
   {
-    name: 'Bridoux',
-    firstName: 'Florian',
     userName: 'FB0305',
     mail: 'bridoux.florian@gmail.com',
-    status: 'Actif',
-    isChecked: false,
-    selectedStatus: 'Selectionner',
-    showMenu: false,
-  },
-  {
-    name: "D'argentré",
-    firstName: 'Charles',
-    userName: 'CD0305',
-    mail: 'cdargentre@gmail.com',
+    role: 'Admin',
+    validateEmail: true,
     status: 'Actif',
     isChecked: false,
     selectedStatus: 'Selectionner',
@@ -108,16 +98,6 @@ onBeforeUnmount(() => {
           </div>
           <div class="justify-around flex w-full">
             <div
-              class="bg-white w-full border border-slate-300 text-center py-1"
-            >
-              Nom
-            </div>
-            <div
-              class="bg-white w-full border border-slate-300 text-center p-1"
-            >
-              Prénom
-            </div>
-            <div
               class="bg-white w-full border border-slate-300 text-center p-1"
             >
               Username
@@ -126,6 +106,16 @@ onBeforeUnmount(() => {
               class="bg-white w-full border border-slate-300 text-center p-1"
             >
               Email
+            </div>
+            <div
+              class="bg-white w-full border border-slate-300 text-center py-1"
+            >
+              Role
+            </div>
+            <div
+              class="bg-white w-full border border-slate-300 text-center p-1"
+            >
+              Compte validé
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center relative p-1"
@@ -138,7 +128,7 @@ onBeforeUnmount(() => {
             <div
               class="bg-white w-full border border-slate-300 text-center p-1"
             >
-              Actif
+              Actions
             </div>
           </div>
         </div>
@@ -157,16 +147,6 @@ onBeforeUnmount(() => {
           </div>
           <div class="justify-around flex w-full">
             <div
-              class="bg-white w-full border border-slate-300 text-center py-1 flex items-center justify-center"
-            >
-              {{ user.name }}
-            </div>
-            <div
-              class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
-            >
-              {{ user.firstName }}
-            </div>
-            <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
               {{ user.userName }}
@@ -175,6 +155,16 @@ onBeforeUnmount(() => {
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
             >
               {{ user.mail }}
+            </div>
+            <div
+              class="bg-white w-full border border-slate-300 text-center py-1 flex items-center justify-center"
+            >
+              {{ user.role }}
+            </div>
+            <div
+              class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
+            >
+              {{ user.validateEmail }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
