@@ -8,12 +8,23 @@ const datasTitle = computed((): BtnAdminPage[] => [
     titleBlack: 'Mon',
     titlePurple: 'compte',
     actionBtn: [{ action: 'Supprimer' }],
-    route: { name: 'creer-une-promenade' },
+    route: { name: '' },
   },
 ])
+
 definePageMeta({
   layout: 'page',
 })
+const editMode = ref(true)
+function onEditClick() {
+  /*   if (editMode.value) {
+    editMode.value = true
+  } else {
+    editMode.value = false
+  } */
+  editMode.value = !editMode.value
+}
+
 onMounted(() => {
   const body = document.querySelector('body')
   if (body) {
@@ -39,7 +50,7 @@ onBeforeUnmount(() => {
       :route="datasTitle[0].route.name"
     />
     <div class="container_promenade w-9/12 mx-auto">
-      <div class="flex gap-6 justify-between">
+      <div class="flex gap-6 justify-between items-center">
         <div class="w-2/12 rounded-md">
           <form class="form">
             <div class="form-user pb-2 flex">
@@ -47,60 +58,57 @@ onBeforeUnmount(() => {
                 <img src="@/assets/images/test-avatar.jpg" alt="" />
               </div>
             </div>
-            <div
+            <!--             <div
               class="saved_btn w-8/12 mx-auto mt-2 text-center px-4 py-3 text-xs rounded-md text-white"
             >
               <button class="font-semibold">Enregistrer</button>
-            </div>
+            </div> -->
           </form>
         </div>
         <div class="w-5/12 bg-white p-6 rounded-md">
-          <form class="form">
-            <div class="form-user py-4 flex">
-              <label class="w-4/12">Username :</label>
+          <form class="form flex items-end gap-10">
+            <div class="form-user py-4 w-7/12">
+              <label class="w-2/12">Username :</label>
               <input
-                type="text"
-                class="ml-2 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none w-8/12"
-                placeholder="Votre Username"
+                id="my-input"
+                ref="usernameInput"
+                class="py-3 border-b-1 block border-slate-300 text-sm focus:outline-none w-full disabled:bg-white"
+                :class="editMode ? 'text-slate-400' : 'text-black '"
                 :value="user.currentUser?.username"
+                type="text"
+                :disabled="editMode"
+                placeholder="Votre username"
               />
             </div>
-            <div class="flex items-center gap-4">
-              <div
-                class="w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-black border-black border-1"
-              >
-                <button class="font-semibold">Editer</button>
-              </div>
-              <div
-                class="saved_btn w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-white"
-              >
-                <button class="font-semibold">Enregistrer</button>
-              </div>
+            <div
+              class="w-4/12 my-5 text-center px-4 py-3 text-xs rounded-md"
+              :class="
+                editMode
+                  ? 'text-black border-black border-1'
+                  : 'saved_btn  text-white'
+              "
+            >
+              <button class="font-semibold" @click.prevent="onEditClick">
+                {{ editMode ? 'Modifier' : 'Enregistrer' }}
+              </button>
             </div>
           </form>
         </div>
         <div class="w-5/12 bg-white p-6 rounded-md">
-          <form class="form">
-            <div class="form-user py-4 flex">
+          <form class="form flex items-end gap-10">
+            <div class="form-user py-4 w-7/12">
               <label class="w-2/12">Email :</label>
               <input
                 type="mail"
-                class="ml-2 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none w-10/12"
+                class="py-3 border-b-1 block border-slate-300 text-slate-400 text-sm focus:outline-none w-full"
                 :value="user.currentUser?.email"
                 placeholder="Votre email"
               />
             </div>
-            <div class="flex items-center gap-4">
-              <div
-                class="w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-black border-black border-1"
-              >
-                <button class="font-semibold">Editer</button>
-              </div>
-              <div
-                class="saved_btn w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-white"
-              >
-                <button class="font-semibold">Enregistrer</button>
-              </div>
+            <div
+              class="w-4/12 my-5 text-center px-4 py-3 text-xs rounded-md text-black border-black border-1"
+            >
+              <button class="font-semibold">Modifier</button>
             </div>
           </form>
         </div>
