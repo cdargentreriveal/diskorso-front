@@ -10,14 +10,14 @@
           /></span>
           <span>Tutoriel</span>
         </li>
-        <NuxtLink to="/admin" class="px-5 py-7 flex items-center gap-2">
+        <NuxtLink to="/dashboard" class="px-5 py-7 flex items-center gap-2">
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
           /></span>
           <span>Mes promenades</span>
         </NuxtLink>
         <NuxtLink
-          to="/admin/creer-une-promenade"
+          to="/dashboard/creer-une-promenade"
           class="px-5 py-7 flex items-center gap-2"
         >
           <span class="w-[16px]"
@@ -26,7 +26,7 @@
           <span>Créer une promenade</span>
         </NuxtLink>
         <NuxtLink
-          to="/admin/mes-extraits"
+          to="/dashboard/mes-extraits"
           class="px-5 py-7 flex items-center gap-2"
         >
           <span class="w-[16px]"
@@ -37,7 +37,7 @@
         <!-- Super Admin Menu -->
         <div class="super_admin divide-y divide-slate-300">
           <NuxtLink
-            to="/admin/gestion-utilisateurs"
+            to="/dashboard/gestion-utilisateurs"
             class="px-5 py-7 flex items-center gap-2 bg-slate-100"
           >
             <span class="w-[16px]"
@@ -76,7 +76,7 @@
         <!-- Super Admin Menu-->
       </ul>
       <ul class="divide-y divide-slate-300 text-xs">
-        <NuxtLink to="/admin/account" class="px-5 py-7 flex items-center gap-2">
+        <NuxtLink to="/dashboard/account" class="px-5 py-7 flex items-center gap-2">
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/compte.svg" alt=""
           /></span>
