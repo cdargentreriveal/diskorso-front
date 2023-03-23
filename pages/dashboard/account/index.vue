@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+const user = useUserStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -37,46 +39,68 @@ onBeforeUnmount(() => {
       :route="datasTitle[0].route.name"
     />
     <div class="container_promenade w-9/12 mx-auto">
-      <div class="flex gap-8">
-        <div class="w-4/12 bg-white p-6 rounded-md">
+      <div class="flex gap-6 justify-between">
+        <div class="w-2/12 rounded-md">
           <form class="form">
-            <div class="form-user py-4">
-              <label>Username :</label>
-              <input
-                type="text"
-                class="ml-2 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none"
-                placeholder="Votre Username"
-              />
-            </div>
-            <div class="form-user py-4">
-              <label>Email :</label>
-              <input
-                type="mail"
-                class="ml-2 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none"
-                placeholder="Votre email"
-              />
+            <div class="form-user pb-2 flex">
+              <div class="avatar mx-auto w-8/12 rounded-full overflow-hidden">
+                <img src="@/assets/images/test-avatar.jpg" alt="" />
+              </div>
             </div>
             <div
-              class="saved_btn w-8/12 my-5 text-center px-4 py-3 text-sm rounded-md text-white"
+              class="saved_btn w-8/12 mx-auto mt-2 text-center px-4 py-3 text-xs rounded-md text-white"
             >
               <button class="font-semibold">Enregistrer</button>
             </div>
           </form>
         </div>
-        <div class="w-4/12 bg-white p-6 rounded-md">
+        <div class="w-5/12 bg-white p-6 rounded-md">
           <form class="form">
-            <div class="form-user py-4">
-              <label>Changer mon mot de passe</label>
+            <div class="form-user py-4 flex">
+              <label class="w-4/12">Username :</label>
               <input
-                type="password"
-                class="my-5 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none"
-                placeholder="Votre mot de passe"
+                type="text"
+                class="ml-2 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none w-8/12"
+                placeholder="Votre Username"
+                :value="user.currentUser?.username"
               />
             </div>
-            <div
-              class="saved_btn w-8/12 my-5 text-center px-4 py-3 text-sm rounded-md text-white"
-            >
-              <button class="font-semibold">Changer</button>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-black border-black border-1"
+              >
+                <button class="font-semibold">Editer</button>
+              </div>
+              <div
+                class="saved_btn w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-white"
+              >
+                <button class="font-semibold">Enregistrer</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="w-5/12 bg-white p-6 rounded-md">
+          <form class="form">
+            <div class="form-user py-4 flex">
+              <label class="w-2/12">Email :</label>
+              <input
+                type="mail"
+                class="ml-2 pb-1 border-b-1 border-slate-300 text-slate-400 text-sm focus:outline-none w-10/12"
+                :value="user.currentUser?.email"
+                placeholder="Votre email"
+              />
+            </div>
+            <div class="flex items-center gap-4">
+              <div
+                class="w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-black border-black border-1"
+              >
+                <button class="font-semibold">Editer</button>
+              </div>
+              <div
+                class="saved_btn w-6/12 my-5 text-center px-4 py-3 text-xs rounded-md text-white"
+              >
+                <button class="font-semibold">Enregistrer</button>
+              </div>
             </div>
           </form>
         </div>
@@ -87,10 +111,13 @@ onBeforeUnmount(() => {
             <span class="w-[40px] mr-2"
               ><img src="@/assets/images/icons/rocket.svg" alt="icone rocket"
             /></span>
-            <h2 class="font-semibold text-xl">Mes statitiques</h2>
+            <h2 class="font-semibold text-xl">Mes statistiques</h2>
           </div>
-          <div class="created_at">
-            <p>Inscrit depuis le 12/02/2023</p>
+          <div class="created_at text-sm">
+            <p>
+              Inscrit(e) depuis le :
+              <span class="purple-color">12/02/2023</span>
+            </p>
           </div>
         </div>
       </div>
