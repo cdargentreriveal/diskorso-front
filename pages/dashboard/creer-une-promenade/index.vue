@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -11,7 +10,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
 ])
 
 definePageMeta({
-  layout: 'userconnected',
+  layout: 'page',
 })
 onMounted(() => {
   const body = document.querySelector('body')
@@ -85,7 +84,6 @@ onBeforeUnmount(() => {
           <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
           <div class="my-2">
             <input type="file" name="files" class="my-2 p-2 text-sm" />
-
           </div>
         </div>
         <div class="promenade_description font-semibold text-lg mb-8">

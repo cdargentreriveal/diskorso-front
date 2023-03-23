@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -14,7 +13,6 @@ const datasTitle = computed((): BtnAdminPage[] => [
 definePageMeta({
   layout: 'page',
   middleware: ['is-logged'],
-
 })
 onMounted(() => {
   const body = document.querySelector('body')
@@ -40,7 +38,6 @@ onBeforeUnmount(() => {
       :title-purple="datasTitle[0].titlePurple"
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
-
     />
   </div>
 </template>

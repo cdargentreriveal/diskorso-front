@@ -100,8 +100,10 @@ const propsAdminTitle = defineProps({
     default: '',
   },
   data: {
-    type: String,
-    default: '',
+    type: Object,
+    default() {
+      return {}
+    },
   },
   route: {
     type: String,
