@@ -23,7 +23,7 @@ import { logOut } from '~~/utils/connected/logOut'
         </NuxtLink>
         <NuxtLink
           to="/dashboard/creer-une-promenade"
-          class="px-5 py-7 flex items-center gap-2 text-sm"
+          class="px-5 py-7 flex items-center gap-2"
         >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
@@ -97,7 +97,6 @@ import { logOut } from '~~/utils/connected/logOut'
           <button @click="logOut()">Déconnexion</button>
         </li>
       </ul>
-      <button @click="getUsers()">Get all</button>
     </div>
   </div>
 </template>

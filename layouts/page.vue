@@ -21,6 +21,6 @@ const user = useUserStore()
     </div>
     <slot name="app-after" />
     <div id="app-after"></div>
-    <Footer />
+    <Footer v-if="$route.path.indexOf('dashboard') === -1" />
   </div>
 </template>

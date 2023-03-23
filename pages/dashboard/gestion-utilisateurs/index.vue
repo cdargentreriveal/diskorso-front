@@ -58,7 +58,7 @@ watchEffect(() => {
   }
 })
 definePageMeta({
-  layout: 'userconnected',
+  layout: 'page',
 })
 
 onMounted(() => {
