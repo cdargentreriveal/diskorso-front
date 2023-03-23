@@ -31,14 +31,11 @@ export default defineNuxtConfig({
       ],
     },
   },
-
   runtimeConfig: {
     public: {
-      baseURL: 'https://promenadesapi-production.up.railway.app/',
+      baseURL: 'https://promenadesapi-production.up.railway.app',
     },
   },
-  // css
-
   css: [
     'virtual:windi-base.css',
     'virtual:windi-components.css',

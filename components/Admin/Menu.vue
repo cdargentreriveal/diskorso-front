@@ -1,3 +1,8 @@
+<script lang="ts" setup>
+import { getUsers } from '~~/utils/superadmin/getUsers'
+import { logOut } from '~~/utils/connected/logOut'
+</script>
+
 <template>
   <div
     class="menu fixed left-0 top-0 h-[100vh] bg-white w-[220px] z-10 border-r-1 border-slate-300"
@@ -18,7 +23,7 @@
         </NuxtLink>
         <NuxtLink
           to="/dashboard/creer-une-promenade"
-          class="px-5 py-7 flex items-center gap-2"
+          class="px-5 py-7 flex items-center gap-2 text-sm"
         >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
@@ -86,16 +91,13 @@
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
-          <span>Déconnexion</span>
+          <button @click="logOut()">Déconnexion</button>
         </li>
       </ul>
+      <button @click="getUsers()">Get all</button>
     </div>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
 
 <style scoped lang="scss">
 .router-link-active {

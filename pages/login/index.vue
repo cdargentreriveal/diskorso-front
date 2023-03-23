@@ -1,7 +1,71 @@
 <script lang="ts" setup>
+import { useUserStore } from '~~/store/user'
+const userToStore = useUserStore()
+const config = useRuntimeConfig()
+
 definePageMeta({
   layout: 'page',
 })
+
+interface GetAnswerLogin {
+  success?: boolean
+  message: string
+  data: any
+}
+
+const email = ref('')
+const password = ref('')
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
+
+const login = async (email: string, password: string) => {
+  const response = await fetch(`${config.public.baseURL}/auth/signin`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  })
+
+  const data = await response.json()
+
+  if (data.message !== 'LOGIN.SUCCEED') {
+    displaySwal('Error!', data.message, 'error', 'Ok')
+  } else {
+    await localStorage.setItem('xsrfToken', data.data.xsrfToken)
+    const user = await fetch(`${config.public.baseURL}/users/user-connected`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${data.data.xsrfToken}`,
+      },
+      credentials: 'include',
+    })
+    const userConnected = await user.json()
+    if (userConnected.success) {
+      await userToStore.setUser(userConnected.data)
+      await navigateTo(`/dashboard`)
+    } else {
+      displaySwal('Error!', 'Echec de la connexion', 'error', 'Ok')
+    }
+  }
+}
 </script>
 
 <template>
@@ -14,16 +78,16 @@ definePageMeta({
             <span class="font-medium">sur Diskorso</span>
           </h2>
         </div>
-        <form action="" class="my-8">
+        <form action="" class="my-8" @submit.prevent="login(email, password)">
           <input
+            v-model="email"
             type="mail"
-            value=""
             placeholder="Email"
             class="rounded-md border border-gray w-full p-4 my-2"
           />
           <input
+            v-model="password"
             type="password"
-            value=""
             placeholder="Mot de passe"
             class="rounded-md border border-gray w-full p-4 my-2"
           />
@@ -36,7 +100,9 @@ definePageMeta({
         </form>
         <p class="text-left font-medium">
           Mot de passe perdu ?
-          <a href="#" class="underline"> Recevoir un nouveau mot de passe</a>
+          <NuxtLink to="/reset-password" class="underline">
+            Recevoir un nouveau mot de passe
+          </NuxtLink>
         </p>
       </div>
     </div>

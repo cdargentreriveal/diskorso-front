@@ -1,8 +1,29 @@
 <script lang="ts">
+import { useUserStore } from '~~/store/user'
+import { IMenuItem } from '~~/types/MenuItems'
 export default {
   setup() {
     const menuOpen = ref(false)
     const windowWidth = ref(process.client ? window.innerWidth : 0)
+    const user = useUserStore()
+
+    const menus = computed((): IMenuItem[] => [
+      {
+        type: 'link',
+        text: 'Accueil',
+        route: { name: 'index' },
+      },
+      {
+        type: 'link',
+        text: 'Les Promenades',
+        route: { name: 'promenades' },
+      },
+      {
+        type: 'link',
+        text: 'Mon Dashboard',
+        route: { name: 'dashboard' },
+      },
+    ])
 
     const handleResize = () => {
       windowWidth.value = window.innerWidth
@@ -21,6 +42,8 @@ export default {
     }
 
     return {
+      user,
+      menus,
       menuOpen,
       windowWidth,
       displayMobileMenu,
@@ -58,9 +81,28 @@ export default {
                 v-if="windowWidth > 768"
                 class="flex justify-end items-center gap-4"
               >
+                <li v-for="(item, i) in menus" :key="i">
+                  <Anchor
+                    v-if="item.type === 'link'"
+                    :to="item.route ? item.route : undefined"
+                    :href="item.href ? item.href : undefined"
+                    class="hover:no-underline mx-7"
+                    >{{ item.text }}
+                  </Anchor>
+                  <Button
+                    v-else-if="item.type === 'button'"
+                    :text="item.text"
+                    size="xs"
+                    :class="item.text + ' font-bold p-5 capitalize mx-3 '"
+                    :to="item.route ? item.route : undefined"
+                    :href="item.href ? item.href : undefined"
+                  />
+                </li>
                 <li class="user_connected">
                   <span class="font-semibold">Bienvenue </span>
-                  <span class="purple-color">Florian Bridoux</span>
+                  <span class="purple-color">{{
+                    user.currentUser?.username
+                  }}</span>
                 </li>
                 <li
                   class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
@@ -86,30 +128,6 @@ export default {
                   >
                     Fermer
                   </div>
-                  <ul class="py-10 text-xl mt-15">
-                    <li v-for="(item, i) in menus" :key="i" class="py-3">
-                      <Anchor
-                        v-if="item.type === 'link'"
-                        :to="item.route ? item.route : undefined"
-                        :href="item.href ? item.href : undefined"
-                        class="hover:no-underline mx-3"
-                        @click="menuOpen = false"
-                        >{{ item.text }}
-                      </Anchor>
-                      <Button
-                        v-if="item.type === 'button'"
-                        :text="item.text"
-                        size="xs"
-                        :class="
-                          item.text +
-                          ' font-bold p-5 capitalize mx-3 -md:py-7 -md:text-base'
-                        "
-                        :to="item.route ? item.route : undefined"
-                        :href="item.href ? item.href : undefined"
-                        @click="menuOpen = false"
-                      />
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
@@ -153,9 +171,9 @@ li .Inscription {
   .logo {
     filter: invert(0);
   }
-  ul {
-    color: white;
-  }
+  // ul {
+  //  color: white;
+  // }
   .menu-burger-line {
     color: white;
   }

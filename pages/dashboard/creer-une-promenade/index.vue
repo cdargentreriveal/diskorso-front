@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -8,6 +9,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
     actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
   },
 ])
+
 definePageMeta({
   layout: 'userconnected',
 })
@@ -67,6 +69,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </div>
+
       <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
           <h2>Titre de la promenade<sup>*</sup></h2>
@@ -82,6 +85,7 @@ onBeforeUnmount(() => {
           <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
           <div class="my-2">
             <input type="file" name="files" class="my-2 p-2 text-sm" />
+
           </div>
         </div>
         <div class="promenade_description font-semibold text-lg mb-8">
@@ -139,6 +143,7 @@ sup {
 .promenade_btn_image {
   background-color: var(--blue-color);
 }
+
 .promenade_btn_transition,
 .extrait_btn {
   background-color: var(--purple-color);
