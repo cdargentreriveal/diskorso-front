@@ -3,8 +3,8 @@ import { BtnAdminPage } from '@/types/AdminTitlePage'
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
-    titleBlack: 'Gérer les',
-    titlePurple: 'utilisateurs',
+    titleBlack: 'Mes',
+    titlePurple: 'promenades',
     actionBtn: [{ action: 'Créer une promenade' }],
     route: { name: 'creer-une-promenade' },
   },
