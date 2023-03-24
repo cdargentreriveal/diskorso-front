@@ -80,11 +80,11 @@ onBeforeUnmount(() => {
       <div class="flex gap-6 justify-between items-center">
         <div class="w-2/12 rounded-md">
           <form class="form">
-            <div class="form-user pb-2 flex items-center">
+            <div class="form-user pb-2 flex items-center relative">
               <div
                 class="avatar mx-auto w-[140px] h-[140px] rounded-full overflow-hidden"
               >
-                <label for="avatar-upload ">
+                <label for="avatar-upload">
                   <input
                     id="avatar-upload"
                     type="file"
@@ -95,12 +95,36 @@ onBeforeUnmount(() => {
                   <img :src="AvatarUrl" alt="" />
                 </label>
               </div>
+              <div
+                v-if="AvatarUrl !== avatarImage"
+                class="saved_btn w-[30px] h-[30px] mx-auto text-center p-2 text-xs rounded-md text-white absolute bottom-0 right-0"
+              >
+                <button>
+                  <img
+                    src="@/assets/images/icons/save.svg"
+                    alt="icone enregistrer"
+                  />
+                </button>
+              </div>
+              <div
+                v-else
+                class="edit_btn w-[30px] h-[30px] mx-auto text-center p-2 text-xs rounded-md text-white absolute bottom-0 right-0"
+              >
+                <label for="avatar-upload">
+                  <input
+                    id="avatar-upload-edit"
+                    type="file"
+                    accept="image/*"
+                    style="display: none"
+                    @change="handleFileUpload"
+                  />
+                  <img
+                    src="@/assets/images/icons/edit.svg"
+                    alt="icone enregistrer"
+                  />
+                </label>
+              </div>
             </div>
-            <!--             <div
-              class="saved_btn w-8/12 mx-auto mt-2 text-center px-4 py-3 text-xs rounded-md text-white"
-            >
-              <button class="font-semibold">Enregistrer</button>
-            </div> -->
           </form>
         </div>
         <div class="w-5/12 bg-white p-6 rounded-md">
@@ -232,5 +256,10 @@ sup {
   &:hover {
     opacity: 0.8;
   }
+}
+.edit_btn,
+.edit_btn img {
+  cursor: pointer;
+  background-color: #69b8d9;
 }
 </style>
