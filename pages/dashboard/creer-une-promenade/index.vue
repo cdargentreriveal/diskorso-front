@@ -254,15 +254,31 @@ onBeforeUnmount(() => {
         <div ref="promenadeContainer" class="promenadeContainer">
           <div v-for="(item, index) in items" :key="index">
             <!-- Image input -->
-            <div v-if="item.type === 'image'">
+            <div v-if="item.type === 'image'" class="flex justify-between py-5">
               <input type="file" @change="handleImageUpload($event, index)" />
-              <button @click="removeItem(index)">Supprimer</button>
+              <button @click="removeItem(index)">
+                <img
+                  src="@/assets/images/icons/corbeille.svg"
+                  alt=""
+                  class="w-[15px]"
+                />
+              </button>
             </div>
 
             <!-- Transition input -->
-            <div v-if="item.type === 'transition'">
+            <div
+              v-if="item.type === 'transition'"
+              class="flex justify-between py-5"
+            >
               <!-- TODO: Ajouter le wiziwig ici -->
-              <button @click="removeItem(index)">Supprimer</button>
+              <div class="wiziwig">WYZIWIG {{ index }}</div>
+              <button @click="removeItem(index)">
+                <img
+                  src="@/assets/images/icons/corbeille.svg"
+                  alt=""
+                  class="w-[15px]"
+                />
+              </button>
             </div>
 
             <!-- Excerpt block -->
@@ -274,7 +290,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <!-- bloc encart vide pour stipuler qu'il faut ajouter un élément -->
-        <div class="promenade_bloc_empty text-center mb-[120px]">
+        <div class="promenade_bloc_empty text-center mt-10 mb-[120px]">
           <div
             class="promenade_bloc_empty_el p-8 border-dashed border border-slate-300 text-slate-300"
           >
