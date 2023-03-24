@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
         <div class="w-5/12 bg-white p-6 rounded-md">
           <form class="form flex items-end gap-10">
             <div class="form-user py-4 w-7/12">
-              <label class="w-2/12">Username :</label>
+              <label class="w-2/12">Usernames :</label>
               <input
                 id="my-input"
                 ref="usernameInput"
