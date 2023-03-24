@@ -36,7 +36,81 @@ function deletePicturesBanner() {
     fileInput.value.style.display = 'inherit'
   }
 }
+// Ajouter image
+interface ImageItem {
+  type: 'image'
+  file: File | null
+}
 
+interface TransitionItem {
+  type: 'transition'
+  content: string
+}
+
+interface ExcerptItem {
+  type: 'excerpt'
+  title: string
+  content: string
+}
+
+type ItemType = ImageItem | TransitionItem | ExcerptItem
+
+const items = ref<ItemType[]>([])
+const imageCount = ref<number>(0)
+const transitionCount = ref<number>(0)
+const excerptCount = ref<number>(0)
+
+function addImageInput(): void {
+  if (imageCount.value < 4) {
+    items.value.push({ type: 'image', file: null })
+    imageCount.value++
+  }
+}
+
+function addTransitionInput(): void {
+  if (transitionCount.value < 4) {
+    items.value.push({ type: 'transition', content: '' })
+    transitionCount.value++
+  }
+}
+
+function addExcerptBlock(): void {
+  // TODO: Récupérer les données de l'extrait et les ajouter à l'array
+  if (excerptCount.value < 4) {
+    items.value.push({
+      type: 'excerpt',
+      title: "Titre de l'extrait",
+      content: "Contenu de l'extrait",
+    })
+    excerptCount.value++
+  }
+}
+
+function removeItem(index: number): void {
+  const type = items.value[index].type
+
+  if (type === 'image') {
+    imageCount.value--
+  } else if (type === 'transition') {
+    transitionCount.value--
+  } else if (type === 'excerpt') {
+    excerptCount.value--
+  }
+
+  items.value.splice(index, 1)
+}
+
+function handleImageUpload(event: Event, index: number): void {
+  const file = (event.target as HTMLInputElement).files?.[0]
+
+  if (!file) return
+
+  // TODO: Envoyer le fichier sur le serveur et récupérer l'URL
+  const imageUrl = URL.createObjectURL(file)
+
+  // Mettre à jour l'objet correspondant à l'input
+  items.value[index].file = file
+}
 // Calculer si une photo est sélectionnée
 const hasAvatar = computed(() => !!avatarUrl.value)
 definePageMeta({
@@ -87,7 +161,10 @@ onBeforeUnmount(() => {
             </div>
             <div class="btns mt-4">
               <div class="flex items-center justify-between">
-                <div class="extraits_view underline font-semibold">
+                <div
+                  class="extraits_view underline font-semibold"
+                  @click="addExcerptBlock"
+                >
                   Voir l'extrait
                 </div>
                 <div
@@ -154,7 +231,7 @@ onBeforeUnmount(() => {
               >
                 <label class="text-sm pr-5">Source : <sup>*</sup></label
                 ><input
-                  class="p-3 border-b-1 border-slate-300 text-sm focus:outline-none w-6/12 bg-transparent text-slate-400"
+                  class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
                   type="text"
                   placeholder="Le nom de la source"
                 />
@@ -173,7 +250,29 @@ onBeforeUnmount(() => {
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
           />
         </div>
+        <!-- blocs construction promenade -->
+        <div ref="promenadeContainer" class="promenadeContainer">
+          <div v-for="(item, index) in items" :key="index">
+            <!-- Image input -->
+            <div v-if="item.type === 'image'">
+              <input type="file" @change="handleImageUpload($event, index)" />
+              <button @click="removeItem(index)">Supprimer</button>
+            </div>
 
+            <!-- Transition input -->
+            <div v-if="item.type === 'transition'">
+              <!-- TODO: Ajouter le wiziwig ici -->
+              <button @click="removeItem(index)">Supprimer</button>
+            </div>
+
+            <!-- Excerpt block -->
+            <div v-if="item.type === 'excerpt'">
+              <div>{{ item.title }}</div>
+              <div>{{ item.content }}</div>
+              <button @click="removeItem(index)">Supprimer</button>
+            </div>
+          </div>
+        </div>
         <!-- bloc encart vide pour stipuler qu'il faut ajouter un élément -->
         <div class="promenade_bloc_empty text-center mb-[120px]">
           <div
@@ -188,11 +287,13 @@ onBeforeUnmount(() => {
             <div class="flex gap-12 justify-end items-center w-9/12 mx-auto">
               <div
                 class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
+                @click="addImageInput"
               >
                 <button>Ajouter une image</button>
               </div>
               <div
                 class="promenade_btn_transition px-4 py-3 text-sm rounded text-white"
+                @click="addTransitionInput"
               >
                 <button>Ajouter une transition</button>
               </div>
