@@ -135,7 +135,7 @@ onBeforeUnmount(() => {
                   class="object-cover h-full w-full rounded-lg"
                   alt=""
                 />
-                <div class="delete ml-2 w-[15px]" @click="deletePicturesBanner">
+                <div class="delete ml-2 w-[15px] cursor-pointer" @click="deletePicturesBanner">
                   <img
                     src="@/assets/images/icons/corbeille.svg"
                     alt=""

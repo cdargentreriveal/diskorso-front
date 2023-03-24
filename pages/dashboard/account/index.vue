@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
               </div>
               <div
                 v-if="AvatarUrl !== avatarImage"
-                class="saved_btn w-[30px] h-[30px] mx-auto text-center p-2 text-xs rounded-md text-white absolute bottom-0 right-0"
+                class="saved_btn w-[25px] h-[25px] mx-auto text-center p-[6px] flex items-center text-xs rounded-md text-white absolute bottom-0 right-0"
               >
                 <button>
                   <img
@@ -108,7 +108,7 @@ onBeforeUnmount(() => {
               </div>
               <div
                 v-else
-                class="edit_btn w-[30px] h-[30px] mx-auto text-center p-2 text-xs rounded-md text-white absolute bottom-0 right-0"
+                class="edit_btn w-[25px] h-[25px] mx-auto text-center p-[6px] text-xs rounded-md text-white absolute bottom-0 right-0"
               >
                 <label for="avatar-upload">
                   <input
