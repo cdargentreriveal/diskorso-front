@@ -126,22 +126,38 @@ onBeforeUnmount(() => {
               />
               <div
                 v-if="hasAvatar"
-                class="banner h-[300px] w-full overflow-hidden flex items-start my-2 p-2"
+                class="banner h-[300px] w-full overflow-hidden"
               >
-                <img
-                  :src="avatarUrl"
-                  type="file"
-                  name="files"
-                  class="object-cover h-full w-full rounded-lg"
-                  alt=""
-                />
-                <div class="delete ml-2 w-[15px] cursor-pointer" @click="deletePicturesBanner">
+                <div class="flex h-full w-full items-start my-2 p-2">
                   <img
-                    src="@/assets/images/icons/corbeille.svg"
+                    :src="avatarUrl"
+                    type="file"
+                    name="files"
+                    class="object-cover h-full w-full rounded-lg block"
                     alt=""
-                    class="w-full"
                   />
+                  <div
+                    class="delete ml-2 w-[15px] cursor-pointer"
+                    @click="deletePicturesBanner"
+                  >
+                    <img
+                      src="@/assets/images/icons/corbeille.svg"
+                      alt=""
+                      class="w-full"
+                    />
+                  </div>
                 </div>
+              </div>
+              <div
+                v-if="hasAvatar"
+                class="source py-4 w-full flex items-center"
+              >
+                <label class="text-sm pr-5">Source : <sup>*</sup></label
+                ><input
+                  class="p-3 border-b-1 border-slate-300 text-sm focus:outline-none w-6/12 bg-transparent text-slate-400"
+                  type="text"
+                  placeholder="Le nom de la source"
+                />
               </div>
             </label>
           </div>
