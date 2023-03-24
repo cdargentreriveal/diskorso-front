@@ -8,7 +8,37 @@ const datasTitle = computed((): BtnAdminPage[] => [
     actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
   },
 ])
+const avatarUrl = ref('')
+const fileInput = ref<HTMLInputElement>()
 
+function handleFileUpload(event: Event) {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+
+  const reader = new FileReader()
+  reader.onload = () => {
+    const image = new Image()
+    image.onload = () => {
+      avatarUrl.value = reader.result as string
+      if (fileInput.value) {
+        fileInput.value.style.display = 'none'
+      }
+    }
+    image.src = reader.result as string
+  }
+  reader.readAsDataURL(file)
+}
+
+function deletePicturesBanner() {
+  avatarUrl.value = ''
+  if (fileInput.value) {
+    fileInput.value.value = ''
+    fileInput.value.style.display = 'inherit'
+  }
+}
+
+// Calculer si une photo est sélectionnée
+const hasAvatar = computed(() => !!avatarUrl.value)
 definePageMeta({
   layout: 'page',
 })
@@ -83,7 +113,35 @@ onBeforeUnmount(() => {
         <div class="promenade_image font-semibold text-lg mb-8">
           <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
           <div class="my-2">
-            <input type="file" name="files" class="my-2 p-2 text-sm" />
+            <label for="avatar-upload text-sm">
+              <input
+                id="avatar-upload"
+                ref="fileInput"
+                type="file"
+                accept="image/*"
+                class="text-sm"
+                @change="handleFileUpload"
+              />
+              <div
+                v-if="hasAvatar"
+                class="banner h-[300px] w-full overflow-hidden flex items-start my-2 p-2"
+              >
+                <img
+                  :src="avatarUrl"
+                  type="file"
+                  name="files"
+                  class="object-cover h-full w-full rounded-lg"
+                  alt=""
+                />
+                <div class="delete ml-2 w-[15px]" @click="deletePicturesBanner">
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-full"
+                  />
+                </div>
+              </div>
+            </label>
           </div>
         </div>
         <div class="promenade_description font-semibold text-lg mb-8">
@@ -107,7 +165,7 @@ onBeforeUnmount(() => {
           </div>
         </div>
         <!-- bouton ajouter une image et / ou une transition -->
-        <div class="promenade_btns fixed bottom-[21px] left-0 py-8 w-full">
+        <div class="promenade_btns fixed bottom-0 left-0 py-8 w-full">
           <div class="promenade_btns_add container mx-auto">
             <div class="flex gap-12 justify-end items-center w-9/12 mx-auto">
               <div
