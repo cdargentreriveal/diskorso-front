@@ -67,8 +67,10 @@ onBeforeUnmount(() => {
       :action-btn="datasTitle[0].actionBtn"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
-      <div class="w-4/12">
-        <div class="extraits w-11/12 bg-white rounded p-5 text-xs mb-3">
+      <div class="w-4/12 relative">
+        <div
+          class="extraits w-11/12 bg-white rounded p-5 text-xs mb-3 sticky top-[22%]"
+        >
           <div class="extraits_item">
             <div class="extraits_item_title text-sm font-semibold mb-2">
               <h3>Titre 1</h3>
@@ -157,7 +159,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- bloc encart vide pour stipuler qu'il faut ajouter un élément -->
-        <div class="promenade_bloc_empty text-center mb-8">
+        <div class="promenade_bloc_empty text-center mb-[120px]">
           <div
             class="promenade_bloc_empty_el p-8 border-dashed border border-slate-300 text-slate-300"
           >

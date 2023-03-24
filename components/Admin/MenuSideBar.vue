@@ -69,7 +69,7 @@
           </div>
         </div>
       </div>
-      <div class="published px-5 py-7">
+      <div class="published px-5 pt-7 pb-[7px]">
         <div
           class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white"
         >
