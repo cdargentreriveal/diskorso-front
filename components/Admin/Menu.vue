@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getUsers } from '~~/utils/superadmin/getUsers'
-import { logOut } from '~~/utils/connected/logOut'
+/* import { logOut } from '~~/utils/connected/logOut' */
 </script>
 
 <template>
@@ -94,7 +94,7 @@ import { logOut } from '~~/utils/connected/logOut'
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
-          <button @click="logOut()">Déconnexion</button>
+          <button @click.prevent="logOut()">Déconnexion</button>
         </li>
       </ul>
     </div>

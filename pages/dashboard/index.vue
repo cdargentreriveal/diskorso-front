@@ -30,7 +30,6 @@ onBeforeUnmount(() => {
 
 <template>
   <AdminMenu />
-
   <div class="container mx-auto">
     <AdminTitle
       v-if="datasTitle[0].type === 'link'"
