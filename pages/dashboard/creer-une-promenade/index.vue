@@ -209,7 +209,7 @@ onBeforeUnmount(() => {
         </div>
         <div class="promenade_image font-semibold text-lg mb-8">
           <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
-          <div class="my-2">
+          <div class="my-5">
             <label for="avatar-upload text-sm">
               <input
                 id="avatar-upload"
@@ -224,7 +224,7 @@ onBeforeUnmount(() => {
                 v-if="hasAvatar"
                 class="banner h-[300px] w-full overflow-hidden"
               >
-                <div class="flex h-full w-full items-start my-2 p-2">
+                <div class="flex h-full w-full items-start p-2">
                   <img
                     :src="avatarUrl"
                     type="file"
@@ -246,7 +246,7 @@ onBeforeUnmount(() => {
               </div>
               <div
                 v-if="hasAvatar"
-                class="source py-4 w-full flex items-center"
+                class="source py-2 w-full flex items-center"
               >
                 <label class="text-sm pr-5">Source : <sup>*</sup></label
                 ><input
