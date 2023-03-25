@@ -7,3 +7,13 @@ export interface User {
   role: string
   promenades?: Promenade[]
 }
+
+export interface UserToEdit {
+  id: number
+  createdAt: string
+  userName: string
+  email: string
+  role: string
+  validateEmail: boolean
+  blocked: string
+}

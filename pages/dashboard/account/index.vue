@@ -10,7 +10,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
   },
 ])
 definePageMeta({
-  layout: 'userconnected',
+  layout: 'page',
 })
 onMounted(() => {
   const body = document.querySelector('body')

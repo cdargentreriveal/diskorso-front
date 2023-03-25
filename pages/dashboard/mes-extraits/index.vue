@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
-  layout: 'userconnected',
+  layout: 'page',
 })
 onMounted(() => {
   const body = document.querySelector('body')
@@ -19,11 +19,7 @@ onBeforeUnmount(() => {
 <template>
   <AdminMenu />
   <div class="container mx-auto">
-    <AdminTitle
-      title-black="Mes"
-      title-purple="Extraits"
-      action-btn="Publier"
-    />
+    <AdminTitle title-black="Mes" title-purple="Extraits" />
     <div class="container_promenade w-9/12 mx-auto flex gap-8"></div>
   </div>
 </template>

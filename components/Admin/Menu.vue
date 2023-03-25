@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { getUsers } from '~~/utils/superadmin/getUsers'
 import { logOut } from '~~/utils/connected/logOut'
+import { useUserStore } from '~~/store/user'
+const user = useUserStore()
 </script>
 
 <template>
@@ -40,7 +42,10 @@ import { logOut } from '~~/utils/connected/logOut'
           <span>Mes extraits</span>
         </NuxtLink>
         <!-- Super Admin Menu -->
-        <div class="super_admin divide-y divide-slate-300">
+        <div
+          v-if="user.currentUser?.role === 'admin'"
+          class="super_admin divide-y divide-slate-300"
+        >
           <NuxtLink
             to="/dashboard/gestion-utilisateurs"
             class="px-5 py-7 flex items-center gap-2 bg-slate-100"

@@ -1,11 +1,15 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import { useUserStore } from '~~/store/user'
+const config = useRuntimeConfig()
+const userStore = useUserStore()
+const listUser = userStore.listUser
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
     titleBlack: 'Gérer les',
     titlePurple: 'utilisateurs',
-    data: [{ number: users.length }, { value: 'utilisateurs inscrits' }],
+    data: [{ number: 3 }, { value: 'utilisateurs inscrits' }],
     actionBtn: [
       { action: 'Actif' },
       { action: 'Bannir' },
@@ -13,52 +17,93 @@ const datasTitle = computed((): BtnAdminPage[] => [
     ],
   },
 ])
+
+const xsrfToken = localStorage.getItem('xsrfToken')
 const selectedOption = ref('Selectionner')
 const masterCheckbox = ref(false)
 type User = {
-  userName: string
-  mail: string
+  id: number
+  createdAt: string
+  username: string
+  email: string
   role: string
-  validateEmail: boolean
-  status: string
-  isChecked: boolean
-  selectedStatus: string
-  showMenu: boolean
+  validate_email: boolean
+  blocked: boolean
+  isChecked: boolean | null
+  showMenu: boolean | null
+  action: string
 }
 
-const users = reactive<User[]>([
-  {
-    userName: 'FB0305',
-    mail: 'bridoux.florian@gmail.com',
-    role: 'Admin',
-    validateEmail: true,
-    status: 'Actif',
-    isChecked: false,
-    selectedStatus: 'Selectionner',
-    showMenu: false,
-  },
-])
-
-const toggleMenu = (user: User) => {
-  user.showMenu = !user.showMenu
+type UserFetched = {
+  id: number
+  createdAt: string
+  username: string
+  email: string
+  role: string
+  validate_email: boolean
+  blocked: boolean
 }
+
+type Response = {
+  data: UserFetched[]
+  message: string
+  success: boolean
+}
+
+const { data: users, error } = await useAsyncData<Response>('users', () =>
+  $fetch(`${config.public.baseURL}/users/admin/all-users`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${xsrfToken}`,
+    },
+    credentials: 'include',
+  })
+)
+
+const usersData = computed(() => {
+  if (users.value === null) {
+    return []
+  } else {
+    return users.value.data.map((user) => ({
+      ...user,
+      isChecked: false,
+      showMenu: false,
+      action: '',
+    }))
+  }
+})
+
+const toggleShowMenu = (user: User) => {
+  const newUsersData = usersData.value.map((u: User) => {
+    if (u.id === user.id) {
+      u.showMenu = !u.showMenu
+    }
+    return u;
+  });
+  if (users.value === null) {
+    return null
+  } else {
+    users.value.data = newUsersData;
+  }
+};
 const selectOption = (option: string, user: User) => {
-  user.selectedStatus = option
+  user.action = option
   user.showMenu = !user.showMenu
 }
 watchEffect(() => {
   if (masterCheckbox.value) {
-    users.forEach((user) => {
+    usersData.value.forEach((user) => {
       user.isChecked = true
     })
   } else {
-    users.forEach((user) => {
+    usersData.value.forEach((user) => {
       user.isChecked = false
     })
   }
 })
 definePageMeta({
-  layout: 'userconnected',
+  layout: 'page',
 })
 
 onMounted(() => {
@@ -68,6 +113,7 @@ onMounted(() => {
   }
 })
 onBeforeUnmount(() => {
+  // userStore.setListUserToEdit(await fetchUsers())
   const body = document.querySelector('body')
   if (body) {
     body.style.backgroundColor = ''
@@ -118,6 +164,11 @@ onBeforeUnmount(() => {
               Compte validé
             </div>
             <div
+              class="bg-white w-full border border-slate-300 text-center p-1"
+            >
+              Créé le
+            </div>
+            <div
               class="bg-white w-full border border-slate-300 text-center relative p-1"
             >
               <span>Status</span>
@@ -132,9 +183,8 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
-        <!--  users -->
         <div
-          v-for="(user, i) in users"
+          v-for="(user, i) in usersData"
           :key="i"
           class="flex items-center text-xs my-5 text-slate-500"
         >
@@ -149,12 +199,13 @@ onBeforeUnmount(() => {
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
-              {{ user.userName }}
+              {{ user.username }}
+              {{ user.showMenu.value }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
             >
-              {{ user.mail }}
+              {{ user.email }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center py-1 flex items-center justify-center"
@@ -164,14 +215,20 @@ onBeforeUnmount(() => {
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
-              {{ user.validateEmail }}
+              {{ user.validate_email }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
-              <span class="actif inline-flex items-center">{{
-                user.status
-              }}</span>
+              {{ getDate(user.createdAt) }}
+            </div>
+            <div
+              class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
+            >
+              <span v-if="!user.blocked" class="actif inline-flex items-center"
+                >Actif</span
+              >
+              <span v-else class="bannir inline-flex items-center">Banni</span>
             </div>
             <div class="bg-white w-full border border-slate-300 p-1">
               <div>
@@ -179,9 +236,9 @@ onBeforeUnmount(() => {
                   <button
                     type="button"
                     class="flex items-center mx-auto"
-                    @click="toggleMenu(user)"
+                    @click="toggleShowMenu(user)"
                   >
-                    {{ user.selectedStatus }}
+                    <!-- {{ user.action }} -->
                     <svg
                       :class="user.showMenu ? 'rotate' : ''"
                       class="-mr-1 ml-2 h-5 w-5 arrow"
@@ -251,6 +308,17 @@ onBeforeUnmount(() => {
     height: 8px;
     border-radius: 5rem;
     background-color: #50d6b7;
+    margin-left: 8px;
+  }
+}
+
+.bannir {
+  &:after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 5rem;
+    background-color: #fbb369;
     margin-left: 8px;
   }
 }
