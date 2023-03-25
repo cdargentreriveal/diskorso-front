@@ -310,7 +310,10 @@ onBeforeUnmount(() => {
               class="flex justify-between py-5 mb-10 items-start"
             >
               <div class="w-full h-[300px] mr-5">
-                <WysiwygEditor v-model="item.content" />
+                <WysiwygEditor
+                  v-model="item.content"
+                  @update:value="(content) => (item.content = content)"
+                />
               </div>
               <button @click="removeItem(index)">
                 <img

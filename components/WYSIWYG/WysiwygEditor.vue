@@ -5,7 +5,6 @@
 <script lang="ts">
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css' // Ajouter cette ligne
-
 export default defineComponent({
   name: 'WysiwygEditor',
   props: {
@@ -16,11 +15,20 @@ export default defineComponent({
   },
   emits: ['update:value'],
   setup(props, { emit }) {
-    const editorRef = ref<HTMLElement | null>(null)
+    const editorRef = ref<HTMLDivElement | null>(null)
+    let quillInstance: Quill | null = null
+
+    const updateValue = () => {
+      if (quillInstance) {
+        const html =
+          editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
+        emit('update:value', html)
+      }
+    }
 
     onMounted(() => {
-      if (editorRef.value && editorRef.value.parentNode) {
-        const quill = new Quill(editorRef.value, {
+      if (editorRef.value) {
+        quillInstance = new Quill(editorRef.value, {
           modules: {
             toolbar: [
               [{ header: [1, 2, false] }],
@@ -34,16 +42,29 @@ export default defineComponent({
           theme: 'snow',
         })
 
-        // Initialiser la valeur de l'éditeur avec la prop value
-        quill.setContents(quill.clipboard.convert({ text: props.value }))
+        quillInstance.on('text-change', updateValue)
 
-        // Écouter les changements de l'éditeur et émettre l'événement input
-        quill.on('text-change', () => {
-          const content = quill.getContents()
-          emit('update:value', JSON.stringify(content))
-        })
-      } else {
-        console.error('Invalid Quill container')
+        watch(
+          () => props.value,
+          (newValue) => {
+            if (quillInstance) {
+              quillInstance.setContents(
+                quillInstance.clipboard.convert({ text: newValue })
+              )
+            }
+          }
+        )
+
+        quillInstance.setContents(
+          quillInstance.clipboard.convert({ text: props.value })
+        )
+      }
+    })
+
+    onUnmounted(() => {
+      if (quillInstance) {
+        quillInstance.off('text-change', updateValue)
+        quillInstance = null
       }
     })
 
