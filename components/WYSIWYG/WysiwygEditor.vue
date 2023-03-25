@@ -33,8 +33,10 @@ export default defineComponent({
             toolbar: [
               [{ header: [2, 3, 4, false] }],
               ['bold', 'italic', 'underline'],
+              [{ color: [] }],
               [{ list: 'ordered' }, { list: 'bullet' }],
               [{ align: [] }],
+              ['link'],
             ],
           },
           theme: 'snow',

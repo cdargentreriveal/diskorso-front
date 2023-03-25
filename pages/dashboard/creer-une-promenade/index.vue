@@ -319,9 +319,12 @@ onBeforeUnmount(() => {
               v-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
-              <div class="w-full h-[300px] mr-5 cursor-move">
-                <WysiwygEditor
+              <div class="w-full h-[300px] mr-5 cursor-move wisiwig">
+                <!--                 <WysiwygEditor
                   v-model="item.content"
+                  @update:value="(content) => (item.content = content)"
+                /> -->
+                <WysiwygEditor
                   @update:value="(content) => (item.content = content)"
                 />
               </div>
@@ -408,4 +411,5 @@ sup {
 .extrait_btn {
   background-color: var(--purple-color);
 }
+
 </style>
