@@ -31,12 +31,10 @@ export default defineComponent({
         quillInstance = new Quill(editorRef.value, {
           modules: {
             toolbar: [
-              [{ header: [1, 2, false] }],
+              [{ header: [2, 3, 4, false] }],
               ['bold', 'italic', 'underline'],
-              ['image', 'video'],
               [{ list: 'ordered' }, { list: 'bullet' }],
               [{ align: [] }],
-              ['clean'],
             ],
           },
           theme: 'snow',
