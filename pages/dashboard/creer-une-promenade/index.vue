@@ -177,7 +177,7 @@ onBeforeUnmount(() => {
               </div>
             </div>
             <div class="extraits_item_text my-3">
-              <p>fkdjkdfjdfjkdfj</p>
+              <p>Ceci est un texte de l'extrait</p>
             </div>
             <div class="btns mt-4">
               <div class="flex items-center justify-between">
