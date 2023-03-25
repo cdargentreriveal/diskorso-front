@@ -32,6 +32,9 @@ function handleFileUpload(event: Event) {
 
 function deletePicturesBanner() {
   avatarUrl.value = ''
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
 }
 // Ajouter image
 interface ImageItem {
@@ -66,7 +69,7 @@ function addImageInput(): void {
 }
 
 function addTransitionInput(): void {
-  if (transitionCount.value < 4) {
+  if (transitionCount.value < 10) {
     items.value.push({ type: 'transition', content: '' })
     transitionCount.value++
   }
@@ -168,14 +171,12 @@ onBeforeUnmount(() => {
             </div>
             <div class="btns mt-4">
               <div class="flex items-center justify-between">
-                <div
-                  class="extraits_view underline font-semibold"
-                  @click="addExcerptBlock"
-                >
+                <div class="extraits_view underline font-semibold">
                   Voir l'extrait
                 </div>
                 <div
                   class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
+                  @click="addExcerptBlock"
                 >
                   <button>Ajouter l'extrait</button>
                 </div>
@@ -321,10 +322,21 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- Excerpt block -->
-            <div v-if="item.type === 'excerpt'">
-              <div>{{ item.title }}</div>
-              <div>{{ item.content }}</div>
-              <button @click="removeItem(index)">Supprimer</button>
+            <div
+              v-if="item.type === 'excerpt'"
+              class="flex justify-between py-5 items-start"
+            >
+              <div class="bg-white rounded-md p-5 w-full mr-5">
+                <h3 class="mb-4 font-semibold text-lg">{{ item.title }}</h3>
+                <div>{{ item.content }}</div>
+              </div>
+              <button @click="removeItem(index)">
+                <img
+                  src="@/assets/images/icons/corbeille.svg"
+                  alt=""
+                  class="w-[15px]"
+                />
+              </button>
             </div>
           </div>
         </div>
