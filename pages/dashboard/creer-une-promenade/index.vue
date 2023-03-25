@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+definePageMeta({
+  layout: 'page',
+})
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
@@ -40,6 +43,7 @@ function deletePicturesBanner() {
 interface ImageItem {
   type: 'image'
   file: File | null
+  imageUrl: string | null
 }
 
 interface TransitionItem {
@@ -62,7 +66,7 @@ const excerptCount = ref<number>(0)
 
 function addImageInput(): void {
   if (imageCount.value < 4) {
-    items.value.push({ type: 'image', file: null })
+    items.value.push({ type: 'image', file: null, imageUrl: null })
     imageCount.value++
   }
 }
@@ -105,30 +109,26 @@ function handleImageUpload(event: Event, index: number): void {
 
   if (!file) return
 
-  // TODO: Envoyer le fichier sur le serveur et récupérer l'URL
-  const imageUrl = URL.createObjectURL(file)
-
   const reader = new FileReader()
   reader.onload = () => {
+    const imageUrl = reader.result as string // Récupérer l'URL de l'image depuis le reader
+
     const image = new Image()
     image.onload = () => {
       // Mettre à jour l'objet correspondant à l'input
       const item = items.value[index]
       if (item.type === 'image') {
         item.file = file
+        item.imageUrl = imageUrl // Mettre à jour l'URL de l'image dans l'objet
       }
-
-      // Mettre à jour la source de l'image avec l'URL créé
-      image.src = imageUrl
     }
+    image.src = imageUrl // Charger l'image avec l'URL
   }
   reader.readAsDataURL(file)
 }
 // Calculer si une photo est sélectionnée
 const hasAvatar = computed(() => !!avatarUrl.value)
-definePageMeta({
-  layout: 'page',
-})
+
 onMounted(() => {
   const body = document.querySelector('body')
   if (body) {
@@ -263,12 +263,16 @@ onBeforeUnmount(() => {
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
           />
         </div>
+
         <!-- blocs construction promenade -->
         <div ref="promenadeContainer" class="promenadeContainer">
           <div v-for="(item, index) in items" :key="index">
             <!-- Image input -->
-            <div v-if="item.type === 'image'" class="flex justify-between py-5">
-              <div class="my-2">
+            <div
+              v-if="item.type === 'image'"
+              class="flex justify-between py-5 items-start"
+            >
+              <div class="my-2 w-full">
                 <label for="avatar-upload text-sm">
                   <input
                     id="avatar-upload"
@@ -276,46 +280,26 @@ onBeforeUnmount(() => {
                     type="file"
                     accept="image/*"
                     class="text-sm"
+                    :class="!item.imageUrl ? 'inherit' : 'hidden'"
                     @change="handleImageUpload($event, index)"
                   />
                   <div
-                    v-if="hasAvatar"
+                    v-if="item.imageUrl"
                     class="banner h-[300px] w-full overflow-hidden"
                   >
-                    <div class="flex h-full w-full items-start my-2 p-2">
+                    <div class="flex h-full w-full items-start p-2">
                       <img
-                        :src="imageUrl"
+                        :src="item.imageUrl"
                         type="file"
                         name="files"
                         class="object-cover h-full w-full rounded-lg block"
                         alt=""
                       />
-                      <div
-                        class="delete ml-2 w-[15px] cursor-pointer"
-                        @click="deletePicturesBanner"
-                      >
-                        <img
-                          src="@/assets/images/icons/corbeille.svg"
-                          alt=""
-                          class="w-full"
-                        />
-                      </div>
                     </div>
-                  </div>
-                  <div
-                    v-if="hasAvatar"
-                    class="source py-4 w-full flex items-center"
-                  >
-                    <label class="text-sm pr-5">Source : <sup>*</sup></label
-                    ><input
-                      class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
-                      type="text"
-                      placeholder="Le nom de la source"
-                    />
                   </div>
                 </label>
               </div>
-              <button @click="removeItem(index)">
+              <button @click="removeItem(index)" class="mt-4">
                 <img
                   src="@/assets/images/icons/corbeille.svg"
                   alt=""
