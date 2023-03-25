@@ -23,9 +23,6 @@ function handleFileUpload(event: Event) {
     const image = new Image()
     image.onload = () => {
       avatarUrl.value = reader.result as string
-      if (fileInput.value) {
-        fileInput.value.style.display = 'none'
-      }
     }
     image.src = reader.result as string
   }
@@ -34,10 +31,6 @@ function handleFileUpload(event: Event) {
 
 function deletePicturesBanner() {
   avatarUrl.value = ''
-  if (fileInput.value) {
-    fileInput.value.value = ''
-    fileInput.value.style.display = 'inherit'
-  }
 }
 // Ajouter image
 interface ImageItem {
@@ -212,6 +205,7 @@ onBeforeUnmount(() => {
                 type="file"
                 accept="image/*"
                 class="text-sm"
+                :class="!hasAvatar ? 'inherit' : 'hidden'"
                 @change="handleFileUpload"
               />
               <div
@@ -299,7 +293,7 @@ onBeforeUnmount(() => {
                   </div>
                 </label>
               </div>
-              <button @click="removeItem(index)" class="mt-4">
+              <button class="mt-4" @click="removeItem(index)">
                 <img
                   src="@/assets/images/icons/corbeille.svg"
                   alt=""
@@ -346,9 +340,12 @@ onBeforeUnmount(() => {
             <div class="flex gap-12 justify-end items-center w-9/12 mx-auto">
               <div
                 class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
+                :class="imageCount === 4 ? 'cursor-not-allowed disabled' : ''"
                 @click="addImageInput"
               >
-                <button>Ajouter une image</button>
+                <button :class="imageCount === 4 ? 'cursor-not-allowed' : ''">
+                  Ajouter une image
+                </button>
               </div>
               <div
                 class="promenade_btn_transition px-4 py-3 text-sm rounded text-white"
@@ -377,7 +374,9 @@ sup {
 .promenade_btn_image {
   background-color: var(--blue-color);
 }
-
+.promenade_btn_image.disabled {
+  background-color: rgb(209 213 219);
+}
 .promenade_btn_transition,
 .extrait_btn {
   background-color: var(--purple-color);
