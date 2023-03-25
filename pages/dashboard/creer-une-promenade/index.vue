@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 definePageMeta({
@@ -126,7 +127,16 @@ function handleImageUpload(event: Event, index: number): void {
 // Calculer si une photo est sélectionnée
 const hasAvatar = computed(() => !!avatarUrl.value)
 
+const blocTransition = ref<HTMLElement | null>(null)
+
 onMounted(() => {
+  if (blocTransition.value) {
+    const sortableTransition = Sortable.create(blocTransition.value, {
+      group: 'bloc',
+      animation: 250,
+    })
+  }
+
   const body = document.querySelector('body')
   if (body) {
     body.style.backgroundColor = '#F8F8F8'
@@ -261,7 +271,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- blocs construction promenade -->
-        <div ref="promenadeContainer" class="promenadeContainer">
+        <div ref="blocTransition" class="promenadeContainer">
           <div v-for="(item, index) in items" :key="index">
             <!-- Image input -->
             <div
@@ -281,7 +291,7 @@ onBeforeUnmount(() => {
                   />
                   <div
                     v-if="item.imageUrl"
-                    class="banner h-[300px] w-full overflow-hidden"
+                    class="banner h-[300px] w-full overflow-hidden cursor-move"
                   >
                     <div class="flex h-full w-full items-start p-2">
                       <img
@@ -309,7 +319,7 @@ onBeforeUnmount(() => {
               v-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
-              <div class="w-full h-[300px] mr-5">
+              <div class="w-full h-[300px] mr-5 cursor-move">
                 <WysiwygEditor
                   v-model="item.content"
                   @update:value="(content) => (item.content = content)"
@@ -329,7 +339,7 @@ onBeforeUnmount(() => {
               v-if="item.type === 'excerpt'"
               class="flex justify-between py-5 items-start"
             >
-              <div class="bg-white rounded-md p-5 w-full mr-5">
+              <div class="bg-white rounded-md p-5 w-full mr-5 cursor-move">
                 <h3 class="mb-4 font-semibold text-lg">{{ item.title }}</h3>
                 <div>{{ item.content }}</div>
               </div>
