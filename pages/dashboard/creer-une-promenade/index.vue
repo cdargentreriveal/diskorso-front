@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 definePageMeta({
   layout: 'page',
 })
@@ -305,10 +306,11 @@ onBeforeUnmount(() => {
             <!-- Transition input -->
             <div
               v-if="item.type === 'transition'"
-              class="flex justify-between py-5"
+              class="flex justify-between py-5 mb-10 items-start"
             >
-              <!-- TODO: Ajouter le wiziwig ici -->
-              <div class="wiziwig">WYZIWIG {{ index }}</div>
+              <div class="w-full h-[300px] mr-5">
+                <WysiwygEditor v-model="item.content" />
+              </div>
               <button @click="removeItem(index)">
                 <img
                   src="@/assets/images/icons/corbeille.svg"
