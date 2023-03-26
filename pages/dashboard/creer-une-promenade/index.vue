@@ -2,6 +2,7 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
+import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'page',
 })
@@ -37,7 +38,21 @@ function deletePicturesBanner() {
     fileInput.value.value = ''
   }
 }
-// Ajouter image
+
+// Ajouter catégories
+const categoriesCount = ref<number>(0)
+interface CategoryItem {
+  type: 'categories'
+  content: string
+}
+
+function addCategories(): void {
+  if (categoriesCount.value < 3) {
+    items.value.push({ type: 'categories', content: '' })
+    categoriesCount.value++
+  }
+}
+// Ajouter blocs à la volée
 interface ImageItem {
   type: 'image'
   file: File | null
@@ -55,7 +70,7 @@ interface ExcerptItem {
   content: string
 }
 
-type ItemType = ImageItem | TransitionItem | ExcerptItem
+type ItemType = ImageItem | TransitionItem | ExcerptItem | CategoryItem
 
 const items = ref<ItemType[]>([])
 const imageCount = ref<number>(0)
@@ -204,6 +219,7 @@ onBeforeUnmount(() => {
               type="text"
               name="scales"
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
+              maxlength="40"
             />
           </div>
         </div>
@@ -261,12 +277,15 @@ onBeforeUnmount(() => {
         <div class="promenade_description font-semibold text-lg mb-8">
           <div class="flex items-center justify-between">
             <h2>Ajouter une description<sup>*</sup></h2>
-            <div class="max_words font-normal text-xs italic">110 mots max</div>
+            <div class="max_words font-normal text-xs italic">
+              350 caractères max
+            </div>
           </div>
           <textarea
             type="text"
             name="scales"
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
+            maxlength="350"
           />
         </div>
 
@@ -411,5 +430,4 @@ sup {
 .extrait_btn {
   background-color: var(--purple-color);
 }
-
 </style>

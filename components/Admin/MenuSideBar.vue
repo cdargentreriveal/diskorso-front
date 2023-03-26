@@ -1,3 +1,43 @@
+<script lang="ts" setup>
+import { Category } from '~~/types/Categories'
+definePageMeta({
+  layout: 'page',
+})
+
+// Ajouter catégories
+const categoriesCount = ref<number>(0)
+
+interface CategoryItem {
+  type: 'categories'
+  content: string
+}
+interface MetaTitleItem {
+  type: 'metaTitle'
+  content: string
+}
+interface MetaDescriptionItem {
+  type: 'metaDescription'
+  content: string
+}
+type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
+const items = ref<ItemType[]>([])
+
+function addCategories(event: Event): void {
+  const value = (event.target as HTMLInputElement).value
+  if (categoriesCount.value < 3) {
+    items.value.push({ type: 'categories', content: value })
+    categoriesCount.value++
+  }
+}
+function addMetaTitle(event: Event): void {
+  const value = (event.target as HTMLInputElement).value
+  items.value.push({ type: 'metaTitle', content: value })
+}
+function addMetaDescription(event: Event): void {
+  const value = (event.target as HTMLInputElement).value
+  items.value.push({ type: 'metaDescription', content: value })
+}
+</script>
 <template>
   <div
     class="menu fixed right-0 top-0 h-[100vh] bg-white w-[220px] border-l-1 border-slate-300 z-10"
@@ -14,7 +54,7 @@
           <div class="categories_title text-base font-semibold mb-5">
             <h4>Catégories<sup>*</sup></h4>
           </div>
-          <div class="categories_list">
+          <div class="categories_list h-[150px] overflow-auto">
             <ul class="text-sm">
               <li class="flex my-2">
                 <input
@@ -23,6 +63,7 @@
                   name="scales"
                   class="mx-2"
                   value="Histoire"
+                  @change="addCategories($event)"
                 /><label for="scales">Histoire</label>
               </li>
               <li class="flex my-2">
@@ -32,6 +73,7 @@
                   name="scales"
                   class="mx-2"
                   value="Science"
+                  @change="addCategories($event)"
                 /><label for="scales">Science</label>
               </li>
               <li class="flex my-2">
@@ -41,6 +83,57 @@
                   name="scales"
                   class="mx-2"
                   value="Société"
+                  @change="addCategories($event)"
+                /><label for="scales">Société</label>
+              </li>
+              <li class="flex my-2">
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="mx-2"
+                  value="Société"
+                  @change="addCategories($event)"
+                /><label for="scales">Littérature</label>
+              </li>
+              <li class="flex my-2">
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="mx-2"
+                  value="Société"
+                  @change="addCategories($event)"
+                /><label for="scales">Sport</label>
+              </li>
+              <li class="flex my-2">
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="mx-2"
+                  value="Société"
+                  @change="addCategories($event)"
+                /><label for="scales">Culture</label>
+              </li>
+              <li class="flex my-2">
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="mx-2"
+                  value="Société"
+                  @change="addCategories($event)"
+                /><label for="scales">Nature</label>
+              </li>
+              <li class="flex my-2">
+                <input
+                  id="scales"
+                  type="checkbox"
+                  name="scales"
+                  class="mx-2"
+                  value="Société"
+                  @change="addCategories($event)"
                 /><label for="scales">Société</label>
               </li>
             </ul>
@@ -56,7 +149,9 @@
             <input
               type="text"
               name="scales"
-              class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[30px]"
+              class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-[30px]"
+              maxlength="30"
+              @change="addMetaTitle($event)"
             />
           </div>
           <div class="seo_meta_description text-sm">
@@ -64,7 +159,9 @@
             <textarea
               type="text"
               name="scales"
-              class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
+              class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-full max-h-[75px]"
+              maxlength="120"
+              @change="addMetaDescription($event)"
             />
           </div>
         </div>
@@ -79,11 +176,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {}
-</script>
-
 <style scoped lang="scss">
 .menu-admin {
   display: flex;

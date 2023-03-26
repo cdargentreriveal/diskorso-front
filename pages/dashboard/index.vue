@@ -38,6 +38,11 @@ onBeforeUnmount(() => {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
+    <div class="w-9/12 mx-auto flex items-center">
+      <div class="w-4/12">
+        <!-- <CardsTemplateCard /> -->
+      </div>
+    </div>
   </div>
 </template>
 <style scoped lang="scss">
