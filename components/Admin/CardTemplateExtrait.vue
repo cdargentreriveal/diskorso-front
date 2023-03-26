@@ -29,11 +29,21 @@
       </p>
       <div class="card-content-view text-xs mt-5">
         <div class="flex items-center justify-between">
-          <div class="card-content-number">+6</div>
+          <div class="card-content-number flex items-center">
+            <div class="card-content-number-list flex items-center">
+              <div
+                class="rounded-full bg-amber-600 h-[25px] w-[25px] border border-white"
+              ></div>
+              <div
+                class="rounded-full bg-red-600 h-[25px] w-[25px] border border-white -ml-3"
+              ></div>
+            </div>
+            <div class="card-content-number-check ml-1">+6</div>
+          </div>
           <div class="card-content-view-btn underline">Voir l'extrait ></div>
         </div>
       </div>
-      <hr class="my-6">
+      <hr class="my-6" />
       <div class="card-content-bottom pb-2">
         <div class="flex items-center justify-between">
           <div class="card-content-author w-1/2">
