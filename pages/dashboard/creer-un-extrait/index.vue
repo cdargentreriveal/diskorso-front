@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 definePageMeta({
   layout: 'admin',
 })
@@ -53,16 +54,15 @@ const datasTitle = computed((): BtnAdminPage[] => [
         </div>
       </div>
       <div class="extrait-content">
-        <label class="font-semibold"
-          >Collez votre contenu <sup>*</sup>
-          <div class="my-2">
-            <textarea
-              type="text"
-              name="scales"
-              class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[30vh] max-h-[30vh]"
-            />
-          </div>
-        </label>
+        <div class="font-semibold mb-4">Collez votre contenu <sup>*</sup></div>
+        <div class="my-2 w-full h-[30vh] max-h-[30vh]">
+          <WysiwygEditor
+            ref="quillEditor"
+            class="h-full bg-white"
+            :modules="{ toolbar: false }"
+            @update:value="(content) => (item.content = content)"
+          />
+        </div>
       </div>
     </div>
   </div>
