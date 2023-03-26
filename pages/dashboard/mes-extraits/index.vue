@@ -35,17 +35,4 @@ const datasTitle = computed((): BtnAdminPage[] => [
 .action-button {
   background-color: var(--purple-color);
 }
-sup {
-  color: #f55a78;
-}
-.promenade_btns {
-  background-color: #f8f8f8;
-}
-.promenade_btn_image {
-  background-color: var(--blue-color);
-}
-.promenade_btn_transition,
-.extrait_btn {
-  background-color: var(--purple-color);
-}
 </style>

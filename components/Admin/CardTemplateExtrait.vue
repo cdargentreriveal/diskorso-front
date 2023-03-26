@@ -25,7 +25,7 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
         consectetur nibh dolor, eget porttitor neque tempus vel. Pellentesque
         gravida rhoncus justo eget lacinia. Fusce at molestie quam. Proin orci
-        ligula, finibus tempor volutpat
+        ligula, finibus tempor volutpat...
       </p>
       <div class="card-content-view text-xs mt-5">
         <div class="flex items-center justify-between">
@@ -89,23 +89,6 @@
 </template>
 
 <script lang="ts" setup>
-import { PropType } from 'vue'
-import { Promenade } from '~~/types/Promenades'
-
-const propsCard = defineProps({
-  promenade: {
-    type: Object as PropType<Promenade>,
-    default: null,
-  },
-  size: {
-    type: String,
-    default: 'md',
-  },
-  to: {
-    type: [String, Object],
-    default: undefined,
-  },
-})
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
