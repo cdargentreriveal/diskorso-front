@@ -53,7 +53,10 @@ export default {
 </script>
 
 <template>
-  <div class="navbar fixed w-full top-0 left-0 z-20">
+  <div
+    class="navbar w-full top-0 left-0 z-20"
+    :class="$route.path.indexOf('dashboard') === -1 ? '' : 'fixed'"
+  >
     <div class="w-full mx-auto py-3 text-center top-banner relative">
       <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm">
         La plateforme collaborative
@@ -61,11 +64,16 @@ export default {
       </p>
     </div>
     <div
-      class="main-nav w-full top-12 left-0 right-0 bg-white z-10 border-b-1 border-slate-300"
+      class="main-nav w-full top-12 left-0 right-0"
+      :class="
+        $route.path.indexOf('dashboard') === -1
+          ? ''
+          : 'bg-white z-10 border-b-1 border-slate-300'
+      "
     >
       <div class="container mx-auto py-5 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
-          <div class="w-1/2">
+          <div class="w-4/12">
             <div class="logo">
               <NuxtLink to="/">
                 <img
@@ -76,7 +84,7 @@ export default {
             </div>
           </div>
           <client-only>
-            <div class="w-1/2">
+            <div class="w-8/12">
               <ul
                 v-if="windowWidth > 768"
                 class="flex justify-end items-center gap-4"
@@ -86,19 +94,19 @@ export default {
                     v-if="item.type === 'link'"
                     :to="item.route ? item.route : undefined"
                     :href="item.href ? item.href : undefined"
-                    class="hover:no-underline mx-7"
+                    class="hover:no-underline mx-4"
                     >{{ item.text }}
                   </Anchor>
                   <Button
                     v-else-if="item.type === 'button'"
                     :text="item.text"
                     size="xs"
-                    :class="item.text + ' font-bold p-5 capitalize mx-3 '"
+                    :class="item.text + ' font-bold p-5 capitalize mx-7 '"
                     :to="item.route ? item.route : undefined"
                     :href="item.href ? item.href : undefined"
                   />
                 </li>
-                <li class="user_connected">
+                <li class="user_connected ml-3">
                   <span class="font-semibold">Bienvenue </span>
                   <span class="purple-color">{{
                     user.currentUser?.username
@@ -165,15 +173,18 @@ li .Inscription {
   .top-banner {
     background-color: white;
   }
+  .user_connected .purple-color {
+    color: #e8deff;
+  }
   .main-nav {
     position: absolute;
   }
   .logo {
     filter: invert(0);
   }
-  // ul {
-  //  color: white;
-  // }
+  ul {
+    color: white;
+  }
   .menu-burger-line {
     color: white;
   }

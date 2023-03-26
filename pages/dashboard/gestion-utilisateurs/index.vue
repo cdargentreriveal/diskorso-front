@@ -120,22 +120,10 @@ watchEffect(() => {
   }
 })
 definePageMeta({
-  layout: 'page',
+  layout: 'admin',
 })
 
-onMounted(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = '#F8F8F8'
-  }
-})
-onBeforeUnmount(() => {
-  // userStore.setListUserToEdit(await fetchUsers())
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = ''
-  }
-})
+
 </script>
 
 <template>

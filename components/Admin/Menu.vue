@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { getUsers } from '~~/utils/superadmin/getUsers'
+
 import { logOut } from '~~/utils/connected/logOut'
 import { useUserStore } from '~~/store/user'
 const user = useUserStore()
+
 </script>
 
 <template>
@@ -25,7 +27,7 @@ const user = useUserStore()
         </NuxtLink>
         <NuxtLink
           to="/dashboard/creer-une-promenade"
-          class="px-5 py-7 flex items-center gap-2 text-sm"
+          class="px-5 py-7 flex items-center gap-2"
         >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
@@ -99,10 +101,9 @@ const user = useUserStore()
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
-          <button @click="logOut()">Déconnexion</button>
+          <button @click.prevent="logOut()">Déconnexion</button>
         </li>
       </ul>
-      <button @click="getUsers()">Get all</button>
     </div>
   </div>
 </template>

@@ -10,12 +10,16 @@
 /* colors */
 :root {
   --purple-color:#986FFC;
+  --red-color:#F55A78;
   --gray-color :#525252;
   --gray-light-color: #E2E2E2;
   --blue-color: #69B8D9;
 }
 .purple-color{
   color: var(--purple-color);
+}
+.red-color{
+  color: var(--red-color);
 }
 .gray-color{
   color: var(--gray-color);
@@ -76,7 +80,16 @@ html.dark {
     background-color: theme('colors.slate.400');
   }
 }
-
+//WIZIWIG
+.wisiwig {
+  & h2 {
+    font-weight: 600;
+  }
+  & h3 {
+    font-weight: 600;
+    color: #525252
+  }
+}
 // animations
 @import 'animations/transitions';
 
