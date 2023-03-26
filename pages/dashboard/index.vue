@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+const user = useUserStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -11,20 +13,8 @@ const datasTitle = computed((): BtnAdminPage[] => [
 ])
 
 definePageMeta({
-  layout: 'page',
+  layout: 'admin',
   middleware: ['is-logged'],
-})
-onMounted(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = '#F8F8F8'
-  }
-})
-onBeforeUnmount(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = ''
-  }
 })
 </script>
 
@@ -39,8 +29,12 @@ onBeforeUnmount(() => {
       :route="datasTitle[0].route.name"
     />
     <div class="w-9/12 mx-auto flex items-center">
-      <div class="w-4/12">
-        <!-- <CardsTemplateCard /> -->
+      <div
+        v-for="(promenades, index) in user.currentUser.promenades"
+        :key="index"
+        class="w-4/12"
+      >
+        <AdminCardTemplate :promenade="promenades" />
       </div>
     </div>
   </div>

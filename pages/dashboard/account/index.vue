@@ -14,7 +14,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
 ])
 
 definePageMeta({
-  layout: 'page',
+  layout: 'admin',
 })
 const editModeUsername = ref(true)
 function onEditUsernameClick() {
@@ -52,18 +52,6 @@ function handleFileUpload(event: Event) {
   }
   reader.readAsDataURL(file)
 }
-onMounted(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = '#F8F8F8'
-  }
-})
-onBeforeUnmount(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = ''
-  }
-})
 </script>
 
 <template>

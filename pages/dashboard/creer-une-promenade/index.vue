@@ -4,7 +4,7 @@ import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 import { Category } from '~~/types/Categories'
 definePageMeta({
-  layout: 'page',
+  layout: 'admin',
 })
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -150,17 +150,6 @@ onMounted(() => {
       group: 'bloc',
       animation: 250,
     })
-  }
-
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = '#F8F8F8'
-  }
-})
-onBeforeUnmount(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = ''
   }
 })
 </script>
