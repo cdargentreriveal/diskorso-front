@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 definePageMeta({
+
   layout: 'admin',
+
 })
+
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -29,6 +32,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
         <AdminCardTemplateExtrait />
       </div>
     </div>
+
   </div>
 </template>
 <style scoped lang="scss">

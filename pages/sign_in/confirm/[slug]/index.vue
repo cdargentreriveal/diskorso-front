@@ -1,7 +1,3 @@
-// const url =
-`http://localhost:4000/auth/email/verify?token=${token}&email=${encodeURIComponent(
-// user.email, // )}`;
-
 <script lang="ts" setup>
 definePageMeta({
   layout: 'page',
