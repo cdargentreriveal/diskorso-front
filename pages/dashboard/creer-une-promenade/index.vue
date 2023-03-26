@@ -39,19 +39,6 @@ function deletePicturesBanner() {
   }
 }
 
-// Ajouter catégories
-const categoriesCount = ref<number>(0)
-interface CategoryItem {
-  type: 'categories'
-  content: string
-}
-
-function addCategories(): void {
-  if (categoriesCount.value < 3) {
-    items.value.push({ type: 'categories', content: '' })
-    categoriesCount.value++
-  }
-}
 // Ajouter blocs à la volée
 interface ImageItem {
   type: 'image'
@@ -70,7 +57,7 @@ interface ExcerptItem {
   content: string
 }
 
-type ItemType = ImageItem | TransitionItem | ExcerptItem | CategoryItem
+type ItemType = ImageItem | TransitionItem | ExcerptItem
 
 const items = ref<ItemType[]>([])
 const imageCount = ref<number>(0)
@@ -149,6 +136,13 @@ onMounted(() => {
     const sortableTransition = Sortable.create(blocTransition.value, {
       group: 'bloc',
       animation: 250,
+/*       onEnd: (event: any) => {
+        const newIndex = event.newIndex
+        const oldIndex = event.oldIndex
+
+        const item = items.value.splice(oldIndex, 1)[0]
+        items.value.splice(newIndex, 0, item)
+      }, */
     })
   }
 })
