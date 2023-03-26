@@ -21,6 +21,9 @@ const datasTitle = computed((): BtnAdminPage[] => [
 const xsrfToken = localStorage.getItem('xsrfToken')
 const selectedOption = ref('Selectionner')
 const masterCheckbox = ref(false)
+
+const allusers = ref()
+
 type User = {
   id: number
   createdAt: string
@@ -50,7 +53,7 @@ type Response = {
   success: boolean
 }
 
-const { data: users, error } = await useAsyncData<Response>('users', () =>
+const { data: users } = await useAsyncData<Response>('users', () =>
   $fetch(`${config.public.baseURL}/users/admin/all-users`, {
     method: 'GET',
     headers: {
@@ -60,6 +63,20 @@ const { data: users, error } = await useAsyncData<Response>('users', () =>
     credentials: 'include',
   })
 )
+
+// const fetchAllUsers = async () => {
+//   const allUsersFetched = await $fetch(
+//     `${config.public.baseURL}/users/admin/all-users`,
+//     {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         Authorization: `Bearer ${xsrfToken}`,
+//       },
+//       credentials: 'include',
+//     }
+//   )
+// }
 
 const usersData = computed(() => {
   if (users.value === null) {
@@ -79,14 +96,14 @@ const toggleShowMenu = (user: User) => {
     if (u.id === user.id) {
       u.showMenu = !u.showMenu
     }
-    return u;
-  });
+    return u
+  })
   if (users.value === null) {
     return null
   } else {
-    users.value.data = newUsersData;
+    users.value.data = newUsersData
   }
-};
+}
 const selectOption = (option: string, user: User) => {
   user.action = option
   user.showMenu = !user.showMenu
@@ -200,7 +217,7 @@ onBeforeUnmount(() => {
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
               {{ user.username }}
-              {{ user.showMenu.value }}
+              {{ user.showMenu }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
