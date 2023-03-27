@@ -1,9 +1,7 @@
-const config = useRuntimeConfig()
-
-export async function refreshToken() {
+export async function refreshToken(baseUrl: string) {
   const xsrfToken = localStorage.getItem('xsrfToken')
   await localStorage.removeItem('xsrfToken')
-  const request = await fetch(`${config.public.baseURL}/auth/refresh`, {
+  const request = await fetch(`${baseUrl}/auth/refresh`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

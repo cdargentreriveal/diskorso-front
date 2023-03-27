@@ -1,8 +1,17 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
-import avatarImage from '@/assets/images/test-avatar.jpg'
+import { modifyAvatar, modifyUsername } from '~~/utils/connected'
+
+definePageMeta({ layout: 'admin' })
+const config = useRuntimeConfig()
 const user = useUserStore()
+
+const currentUsername = ref<string>(user.currentUser!.username)
+const displayedUsername = ref<string>(user.currentUser!.username)
+const AvatarUrl = ref<string>(user.currentUser!.picture)
+const editModeUsername = ref(true)
+const editModeEmail = ref(true)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -12,20 +21,55 @@ const datasTitle = computed((): BtnAdminPage[] => [
     route: { name: '' },
   },
 ])
-
-definePageMeta({
-  layout: 'admin',
-})
-const editModeUsername = ref(true)
-function onEditUsernameClick() {
-  /*   if (editModeUsername.value) {
-    editModeUsername.value = true
-  } else {
-    editModeUsername.value = false
-  } */
-  editModeUsername.value = !editModeUsername.value
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
 }
-const editModeEmail = ref(true)
+
+const mounted = () => {
+  // Initialise la valeur affichée dans l'input
+  displayedUsername.value = currentUsername.value
+}
+onMounted(mounted)
+
+const onUsernameInput = (event: Event) => {
+  displayedUsername.value = (event.target as HTMLInputElement).value
+}
+
+async function onEditUsernameClick() {
+  if (editModeUsername.value) {
+    editModeUsername.value = false
+  } else {
+    try {
+      await modifyUsername(config.public.baseURL, displayedUsername.value)
+      displaySwal(
+        'Modification réussie',
+        `Votre nouveau username est ${displayedUsername.value}`,
+        'success',
+        'Ok'
+      )
+      editModeUsername.value = true
+    } catch (error) {
+      displaySwal(
+        'Erreur lors de la modification',
+        'Une erreur est survenue lors de la modification de votre username. Veuillez réessayer plus tard.',
+        'error',
+        'Ok'
+      )
+    }
+  }
+}
+
 function onEditEmailClick() {
   /*   if (editModeEmail.value) {
     editModeEmail.value = true
@@ -34,8 +78,6 @@ function onEditEmailClick() {
   } */
   editModeEmail.value = !editModeEmail.value
 }
-
-const AvatarUrl = ref<string>(avatarImage)
 
 // Définissez le type de l'argument event comme de type Event
 function handleFileUpload(event: Event) {
@@ -51,6 +93,31 @@ function handleFileUpload(event: Event) {
     image.src = reader.result as string
   }
   reader.readAsDataURL(file)
+}
+
+async function changeAvatar() {
+  event.preventDefault()
+  try {
+    const file = (document.getElementById('avatar-upload') as HTMLInputElement)
+      .files?.[0]
+    if (!file) return
+    const formData = new FormData()
+    formData.append('file', file)
+    const response = await modifyAvatar(config.public.baseURL, formData)
+    if (!response.success) {
+      displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
+    } else {
+      displaySwal(
+        'Modification réussie!',
+        'Votre image de profile a bien été mise à jour',
+        'success',
+        'ok'
+      )
+    }
+    AvatarUrl.value = user.currentUser!.picture
+  } catch (error) {
+    return error
+  }
 }
 </script>
 
@@ -80,14 +147,14 @@ function handleFileUpload(event: Event) {
                     style="display: none"
                     @change="handleFileUpload"
                   />
-                  <img :src="AvatarUrl" alt="" />
+                  <img :src="AvatarUrl" alt="photo de profil" />
                 </label>
               </div>
               <div
-                v-if="AvatarUrl !== avatarImage"
+                v-if="AvatarUrl !== user.currentUser!.picture"
                 class="saved_btn w-[25px] h-[25px] mx-auto text-center p-[6px] flex items-center text-xs rounded-md text-white absolute bottom-0 right-0"
               >
-                <button>
+                <button @click="changeAvatar()">
                   <img
                     src="@/assets/images/icons/save.svg"
                     alt="icone enregistrer"
@@ -114,6 +181,10 @@ function handleFileUpload(event: Event) {
               </div>
             </div>
           </form>
+          <p class="text-xs text-justify pt-5">
+            L'image ne doit pas faire plus de 500ko. Les formats acceptés sont :
+            jpeg, png et svg
+          </p>
         </div>
         <div class="w-5/12 bg-white p-6 rounded-md">
           <form class="form flex items-end gap-10">
@@ -123,10 +194,11 @@ function handleFileUpload(event: Event) {
                 ref="usernameInput"
                 class="py-3 border-b-1 block border-slate-300 text-sm focus:outline-none w-full disabled:bg-white"
                 :class="editModeUsername ? 'text-slate-400' : 'text-black '"
-                :value="user.currentUser?.username"
+                :value="displayedUsername"
                 type="text"
                 :disabled="editModeUsername"
                 placeholder="Votre username"
+                @input="onUsernameInput"
               />
             </div>
             <div

@@ -122,8 +122,6 @@ watchEffect(() => {
 definePageMeta({
   layout: 'admin',
 })
-
-
 </script>
 
 <template>

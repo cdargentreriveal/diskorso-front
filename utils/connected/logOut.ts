@@ -1,11 +1,10 @@
 import { refreshToken } from '../connected/refreshToken'
 import { useUserStore } from '~~/store/user'
-const config = useRuntimeConfig()
 const user = useUserStore()
 
-export async function logOut() {
+export async function logOut(baseUrl: string) {
   // Envoyer une requête POST à /auth/logout pour se déconnecter et vider les cookies
-  await fetch(`${config.public.baseURL}/auth/logout`, {
+  await fetch(`${baseUrl}/auth/logout`, {
     method: 'POST',
     credentials: 'include',
   })

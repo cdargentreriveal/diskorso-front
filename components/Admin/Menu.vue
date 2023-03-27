@@ -1,10 +1,9 @@
 <script lang="ts" setup>
 import { getUsers } from '~~/utils/superadmin/getUsers'
-
 import { logOut } from '~~/utils/connected/logOut'
 import { useUserStore } from '~~/store/user'
 const user = useUserStore()
-
+const config = useRuntimeConfig()
 </script>
 
 <template>
@@ -101,7 +100,9 @@ const user = useUserStore()
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>
-          <button @click.prevent="logOut()">Déconnexion</button>
+          <button @click.prevent="logOut(config.public.baseURL)">
+            Déconnexion
+          </button>
         </li>
       </ul>
     </div>

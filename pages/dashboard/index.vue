@@ -30,7 +30,7 @@ definePageMeta({
     />
     <div class="w-9/12 mx-auto flex items-center">
       <div
-        v-for="(promenades, index) in user.currentUser.promenades"
+        v-for="(promenades, index) in user.currentUser?.promenades"
         :key="index"
         class="w-4/12"
       >

@@ -107,15 +107,23 @@ export default {
                   />
                 </li>
                 <li class="user_connected ml-3">
-                  <span class="font-semibold">Bienvenue </span>
-                  <span class="purple-color">{{
+                  <span class="purple-color font-semibold">{{
                     user.currentUser?.username
                   }}</span>
                 </li>
                 <li
                   class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
                 >
-                  <img src="@/assets/images/test-avatar.jpg" alt="avatar" />
+                  <img
+                    v-if="user.currentUser?.picture === null"
+                    src="@/assets/images/test-avatar.jpg"
+                    alt="Photo de profil"
+                  />
+                  <img
+                    v-else
+                    :src="user.currentUser?.picture"
+                    alt="Photo de profil"
+                  />
                 </li>
               </ul>
               <!-- Menu burger mobile -->
