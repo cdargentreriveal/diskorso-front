@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
-import { modifyAvatar, modifyUsername } from '~~/utils/connected'
+import { modifyAvatar, modifyEmail, modifyUsername } from '~~/utils/connected'
 
 definePageMeta({ layout: 'admin' })
 const config = useRuntimeConfig()
@@ -9,6 +9,8 @@ const user = useUserStore()
 
 const currentUsername = ref<string>(user.currentUser!.username)
 const displayedUsername = ref<string>(user.currentUser!.username)
+const currentEmail = ref<string>(user.currentUser!.email)
+const displayedEmail = ref<string>(user.currentUser!.email)
 const AvatarUrl = ref<string>(user.currentUser!.picture)
 const editModeUsername = ref(true)
 const editModeEmail = ref(true)
@@ -39,11 +41,16 @@ const displaySwal = (
 const mounted = () => {
   // Initialise la valeur affichée dans l'input
   displayedUsername.value = currentUsername.value
+  displayedEmail.value = currentEmail.value
 }
 onMounted(mounted)
 
 const onUsernameInput = (event: Event) => {
   displayedUsername.value = (event.target as HTMLInputElement).value
+}
+
+const onEmailInput = (event: Event) => {
+  displayedEmail.value = (event.target as HTMLInputElement).value
 }
 
 async function onEditUsernameClick() {
@@ -70,14 +77,45 @@ async function onEditUsernameClick() {
   }
 }
 
-function onEditEmailClick() {
-  /*   if (editModeEmail.value) {
-    editModeEmail.value = true
-  } else {
+async function onEditEmailClick() {
+  if (editModeEmail.value) {
     editModeEmail.value = false
-  } */
-  editModeEmail.value = !editModeEmail.value
+  } else {
+    try {
+      const response = await modifyEmail(
+        config.public.baseURL,
+        displayedEmail.value
+      )
+      if (!response.success) {
+        displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
+      } else {
+        displaySwal(
+          'Modification réussie!',
+          `${response.data.message}`,
+          'success',
+          'ok'
+        )
+        editModeEmail.value = true
+      }
+    } catch (error) {
+      displaySwal(
+        'Erreur lors de la modification',
+        'Une erreur est survenue lors de la modification de votre email. Veuillez réessayer plus tard.',
+        'error',
+        'Ok'
+      )
+    }
+  }
 }
+
+// function onEditEmailClick() {
+//   /*   if (editModeEmail.value) {
+//     editModeEmail.value = true
+//   } else {
+//     editModeEmail.value = false
+//   } */
+//   editModeEmail.value = !editModeEmail.value
+// }
 
 // Définissez le type de l'argument event comme de type Event
 function handleFileUpload(event: Event) {
@@ -95,7 +133,7 @@ function handleFileUpload(event: Event) {
   reader.readAsDataURL(file)
 }
 
-async function changeAvatar() {
+async function changeAvatar(event: Event) {
   event.preventDefault()
   try {
     const file = (document.getElementById('avatar-upload') as HTMLInputElement)
@@ -147,14 +185,23 @@ async function changeAvatar() {
                     style="display: none"
                     @change="handleFileUpload"
                   />
-                  <img :src="AvatarUrl" alt="photo de profil" />
+                  <img
+                    v-if="AvatarUrl !== null"
+                    :src="AvatarUrl"
+                    alt="photo de profil"
+                  />
+                  <img
+                    v-else
+                    src="../../../assets/images/test-avatar.jpg"
+                    alt="photo de profil"
+                  />
                 </label>
               </div>
               <div
                 v-if="AvatarUrl !== user.currentUser!.picture"
                 class="saved_btn w-[25px] h-[25px] mx-auto text-center p-[6px] flex items-center text-xs rounded-md text-white absolute bottom-0 right-0"
               >
-                <button @click="changeAvatar()">
+                <button @click="changeAvatar($event)">
                   <img
                     src="@/assets/images/icons/save.svg"
                     alt="icone enregistrer"
@@ -223,13 +270,14 @@ async function changeAvatar() {
             <div class="form-user py-4 w-7/12">
               <label class="w-2/12">Email :</label>
               <input
-                ref="usernameInput"
+                ref="emailInput"
                 class="py-3 border-b-1 block border-slate-300 text-sm focus:outline-none w-full disabled:bg-white"
                 :class="editModeEmail ? 'text-slate-400' : 'text-black '"
-                :value="user.currentUser?.email"
+                :value="displayedEmail"
                 type="text"
                 :disabled="editModeEmail"
                 placeholder="Votre email"
+                @input="onEmailInput"
               />
             </div>
             <div

@@ -1,8 +1,6 @@
 import { refreshToken } from '../connected/refreshToken'
 
-const config = useRuntimeConfig()
-
-export async function deleteUser(id: number) {
+export async function deleteUser(baseUrl: string, id: number) {
   const xsrfToken = localStorage.getItem('xsrfToken')
   const options = {
     method: 'DELETE',
@@ -12,10 +10,10 @@ export async function deleteUser(id: number) {
     },
     credentials: 'include' as RequestCredentials,
   }
-  const listUsers = await fetch(`${config.public.baseURL}/users/${id}`, options)
+  const listUsers = await fetch(`${baseUrl}/users/${id}`, options)
   const response = await listUsers.json()
   if (response.statusCode === 401) {
-    await refreshToken()
-    await fetch(`${config.public.baseURL}/users/${id}`, options)
+    await refreshToken(baseUrl)
+    await fetch(`${baseUrl}/users/${id}`, options)
   }
 }

@@ -98,24 +98,6 @@ const signup = async (email: string, password: string, username: string) => {
           class="my-8"
           @submit.prevent="signup(email, password, username)"
         >
-          <!-- <div class="flex items-center gap-4">
-            <div class="w-1/2">
-              <input
-                type="text"
-                value=""
-                placeholder="Nom"
-                class="rounded-md border border-gray w-full p-4 my-2"
-              />
-            </div>
-            <div class="w-1/2">
-              <input
-                type="text"
-                value=""
-                placeholder="Prénom"
-                class="rounded-md border border-gray w-full p-4 my-2"
-              />
-            </div>
-          </div> -->
           <input
             v-model="username"
             type="text"

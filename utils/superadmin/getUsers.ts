@@ -1,8 +1,6 @@
 import { refreshToken } from '../connected/refreshToken'
 
-const config = useRuntimeConfig()
-
-export async function getUsers() {
+export async function getUsers(baseUrl: string) {
   const xsrfToken = localStorage.getItem('xsrfToken')
   const options = {
     method: 'GET',
@@ -12,10 +10,10 @@ export async function getUsers() {
     },
     credentials: 'include' as RequestCredentials,
   }
-  const listUsers = await fetch(`${config.public.baseURL}/users/all`, options)
+  const listUsers = await fetch(`${baseUrl}/users/all`, options)
   const response = await listUsers.json()
   if (response.statusCode === 401) {
-    await refreshToken()
-    await fetch(`${config.public.baseURL}/users/all`, options)
+    await refreshToken(baseUrl)
+    await fetch(`${baseUrl}/users/all`, options)
   }
 }

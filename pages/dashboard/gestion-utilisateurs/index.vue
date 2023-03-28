@@ -64,20 +64,6 @@ const { data: users } = await useAsyncData<Response>('users', () =>
   })
 )
 
-// const fetchAllUsers = async () => {
-//   const allUsersFetched = await $fetch(
-//     `${config.public.baseURL}/users/admin/all-users`,
-//     {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         Authorization: `Bearer ${xsrfToken}`,
-//       },
-//       credentials: 'include',
-//     }
-//   )
-// }
-
 const usersData = computed(() => {
   if (users.value === null) {
     return []
