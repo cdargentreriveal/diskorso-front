@@ -3,6 +3,14 @@
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">
         <img
+          v-if="promenade.main_image === 'string'"
+          class="w-full"
+          src="../../assets/images/diskorso-line-card.png"
+          :alt="promenade.title"
+        />
+
+        <img
+          v-else
           class="w-full"
           :src="promenade.main_image"
           :alt="promenade.title"
@@ -48,7 +56,16 @@
                 <div
                   class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
                 >
-                  <img :src="promenade.user.picture" alt="avatar" />
+                  <img
+                    v-if="promenade.user.picture === null"
+                    src="../../assets/images/test-avatar.jpg"
+                    alt="image de profil"
+                  />
+                  <img
+                    v-else
+                    :src="promenade.user.picture"
+                    alt="image de profil"
+                  />
                 </div>
                 <div class="card-content-author gray-color text-xs italic">
                   par :

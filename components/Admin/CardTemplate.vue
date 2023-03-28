@@ -3,6 +3,14 @@
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">
         <img
+          v-if="promenade.main_image === 'string'"
+          class="w-full"
+          src="../../assets/images/diskorso-line-card.png"
+          :alt="promenade.title"
+        />
+
+        <img
+          v-else
           class="w-full"
           :src="promenade.main_image"
           :alt="promenade.title"

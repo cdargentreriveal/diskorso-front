@@ -1,31 +1,47 @@
+<script lang="ts" setup>
+import { PropType } from 'vue'
+import { ExtractFetched } from '~~/types/Extracts'
+
+const propsCard = defineProps({
+  extract: {
+    type: Object as PropType<ExtractFetched>,
+    default: null,
+  },
+})
+onMounted(() => {
+  const descriptionCard = document.querySelectorAll('.card-content-description')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 170) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
+})
+</script>
+
 <template>
   <div class="card-extrait rounded-md overflow-hidden bg-white box-shaddow">
     <div class="card-content p-6">
       <div class="card-content-title font-bold text-xl my-1 mb-3">
-        <h2>Titre 1</h2>
+        <h2>{{ extract.name }}</h2>
       </div>
-      <!--       <div class="card-content-categories flex gap-4 py-5">
+      <div class="card-content-categories flex gap-4 py-5">
         <div
-          v-for="(cat, index) in promenade.categories"
+          v-for="(cat, index) in extract.categories"
           :key="index"
           class="category"
         >
           <NuxtLink :to="`/categorie/${cat.slug}`">
             <button
-              :class="
-                cat.color + ' category-btn px-5 py-2 rounded-full text-xs'
-              "
+              :class="`${cat.color} category-btn px-5 py-2 rounded-full text-xs`"
             >
               {{ cat.title }}
             </button>
           </NuxtLink>
         </div>
-      </div> -->
+      </div>
       <p class="text-xs gray-color card-content-description">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-        consectetur nibh dolor, eget porttitor neque tempus vel. Pellentesque
-        gravida rhoncus justo eget lacinia. Fusce at molestie quam. Proin orci
-        ligula, finibus tempor volutpat...
+        {{ extract.description }}
       </p>
       <div class="card-content-view text-xs mt-5">
         <div class="flex items-center justify-between">
@@ -87,18 +103,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
-</script>
 
 <style lang="scss" scoped>
 .card {

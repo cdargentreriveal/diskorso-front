@@ -1,9 +1,38 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import { ExtractFetched } from '~~/types/Extracts'
 definePageMeta({
-
   layout: 'admin',
+  middleware: ['is-logged'],
+})
+const config = useRuntimeConfig()
+const xsrfToken = localStorage.getItem('xsrfToken')
 
+type Response = {
+  data: ExtractFetched[]
+  message: string
+  success: boolean
+}
+
+const { data: response } = await useAsyncData<Response>('response', () =>
+  $fetch(`${config.public.baseURL}/extract/user-connected/all`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${xsrfToken}`,
+    },
+    credentials: 'include',
+  })
+)
+
+const extracts = computed(() => {
+  if (response.value === null) {
+    return []
+  } else {
+    return response.value.data.map((extract) => ({
+      ...extract,
+    }))
+  }
 })
 
 const datasTitle = computed((): BtnAdminPage[] => [
@@ -27,12 +56,15 @@ const datasTitle = computed((): BtnAdminPage[] => [
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <div class="container_promenade w-9/12 mx-auto flex items-center gap-8">
-      <div class="w-4/12">
-        <AdminCardTemplateExtrait />
+    <div
+      class="container_promenade w-9/12 mx-auto flex items-center gap-8 flex-wrap"
+    >
+      <div class="w-4/12 flex gap-8">
+        <div v-for="(extract, index) in extracts" :key="index">
+          <AdminCardTemplateExtrait :extract="extract" />
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 <style scoped lang="scss">

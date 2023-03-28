@@ -27,6 +27,11 @@ const { data: promenade } = useDiskorso<Promenade>(
       </div>
       <div v-else>
         <div
+          v-if="promenade.main_image === 'string'"
+          class="promenade_page_banner h-[55vh] w-full no-image"
+        ></div>
+        <div
+          v-else
           class="promenade_page_banner h-[55vh] w-full"
           :style="{
             backgroundImage: 'url(' + promenade.main_image + ')',
@@ -182,6 +187,10 @@ const { data: promenade } = useDiskorso<Promenade>(
     box-shadow: 30px 0 0 var(--purple-color);
     margin-top: 0;
   }
+}
+
+.no-image {
+  background-image: url(../../../assets/images/diskorso-line-card.png);
 }
 .promenade_page {
   &_banner {

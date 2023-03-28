@@ -106,24 +106,28 @@ export default {
                     :href="item.href ? item.href : undefined"
                   />
                 </li>
-                <li class="user_connected ml-3">
-                  <span class="purple-color font-semibold">{{
-                    user.currentUser?.username
-                  }}</span>
-                </li>
+                <nuxt-link to="/dashboard/account">
+                  <li class="user_connected ml-3">
+                    <span class="purple-color font-semibold">{{
+                      user.currentUser?.username
+                    }}</span>
+                  </li>
+                </nuxt-link>
                 <li
                   class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
                 >
-                  <img
-                    v-if="user.currentUser?.picture === null"
-                    src="@/assets/images/test-avatar.jpg"
-                    alt="Photo de profil"
-                  />
-                  <img
-                    v-else
-                    :src="user.currentUser?.picture"
-                    alt="Photo de profil"
-                  />
+                  <nuxt-link to="/dashboard/account">
+                    <img
+                      v-if="user.currentUser?.picture === null"
+                      src="@/assets/images/test-avatar.jpg"
+                      alt="Photo de profil"
+                    />
+                    <img
+                      v-else
+                      :src="user.currentUser?.picture"
+                      alt="Photo de profil"
+                    />
+                  </nuxt-link>
                 </li>
               </ul>
               <!-- Menu burger mobile -->

@@ -7,6 +7,11 @@ export interface User {
   role: string
   promenades?: Promenade[]
   picture: string
+  createdAt: string
+  publishedPromenadesCount: number
+  unpublishedPromenadesCount: number
+  usedExtractsCount: number
+  totalExtracts: number
 }
 
 export interface UserToEdit {

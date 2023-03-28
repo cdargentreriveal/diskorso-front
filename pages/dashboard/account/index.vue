@@ -308,34 +308,36 @@ async function changeAvatar(event: Event) {
           <div class="created_at text-sm">
             <p>
               Inscrit(e) depuis le :
-              <span class="purple-color">12/02/2023</span>
+              <span v-if="user.currentUser?.createdAt" class="purple-color">{{
+                getDate(user.currentUser?.createdAt)
+              }}</span>
             </p>
           </div>
         </div>
         <div class="flex items-center divide-x divide-slate-300">
           <div class="w-3/12 text-center py-6">
             <div class="promenades-number text-2xl purple-color font-bold">
-              14
+              {{ user.currentUser?.publishedPromenadesCount }}
             </div>
             <div class="promenades-published">Promenades créées</div>
           </div>
           <div class="w-3/12 text-center py-6">
             <div class="promenades-number text-2xl purple-color font-bold">
-              8
+              {{ user.currentUser?.unpublishedPromenadesCount }}
             </div>
-            <div class="promenades-archived">Promenades archivées</div>
+            <div class="promenades-archived">Promenades en brouillon</div>
           </div>
           <div class="w-3/12 text-center py-6">
             <div class="promenades-number text-2xl purple-color font-bold">
-              225
+              {{ user.currentUser?.totalExtracts }}
             </div>
-            <div class="extraits-used">Extraits utilisés</div>
+            <div class="extraits-used">Total extraits stockés</div>
           </div>
           <div class="w-3/12 text-center py-6">
             <div class="promenades-number text-2xl purple-color font-bold">
-              53
+              {{ user.currentUser?.usedExtractsCount }}
             </div>
-            <div class="extraits-archived">Extraits archivés</div>
+            <div class="extraits-archived">Extraits utilisés</div>
           </div>
         </div>
       </div>

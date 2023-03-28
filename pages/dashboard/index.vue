@@ -1,7 +1,11 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import { Promenade } from '~~/types/Promenades'
 const user = useUserStore()
+const config = useRuntimeConfig()
+const xsrfToken = localStorage.getItem('xsrfToken')
+
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -16,6 +20,32 @@ definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
+
+type Response = {
+  data: Promenade[]
+  message: string
+  success: boolean
+}
+const { data: response } = await useAsyncData<Response>('response', () =>
+  $fetch(`${config.public.baseURL}/promenadeditor/getpromenades`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${xsrfToken}`,
+    },
+    credentials: 'include',
+  })
+)
+
+const promenades = computed(() => {
+  if (response.value === null) {
+    return []
+  } else {
+    return response.value.data.map((promenade) => ({
+      ...promenade,
+    }))
+  }
+})
 </script>
 
 <template>
@@ -29,12 +59,8 @@ definePageMeta({
       :route="datasTitle[0].route.name"
     />
     <div class="w-9/12 mx-auto flex items-center">
-      <div
-        v-for="(promenades, index) in user.currentUser?.promenades"
-        :key="index"
-        class="w-4/12"
-      >
-        <AdminCardTemplate :promenade="promenades" />
+      <div v-for="(promenade, index) in promenades" :key="index" class="w-4/12">
+        <AdminCardTemplate :promenade="promenade" />
       </div>
     </div>
   </div>
