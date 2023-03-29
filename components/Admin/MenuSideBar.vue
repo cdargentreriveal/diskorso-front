@@ -3,7 +3,67 @@ import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'page',
 })
+const config = useRuntimeConfig()
+async function submitForm() {
+  const data = {
+    title: propsAdminMenuSideBar.title,
+    slug: propsAdminMenuSideBar.slug,
+    summary: 'Résumé de la promenade',
+    main_image: "url-de-l'image",
+    content: 'Contenu de la promenade',
+    meta_title: 'Titre pour le référencement',
+    meta_description: 'Description pour le référencement',
+    categoriesIds: [1, 2, 3],
+    extractsIds: [4, 5, 6],
+  }
 
+  try {
+    const response = await fetch(
+      `${config.public.baseURL}/promenadeditor/create-promenade`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }
+    )
+
+    if (response.ok) {
+      // Handle successful response
+    } else {
+      // Handle failed response
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+const propsAdminMenuSideBar = defineProps({
+  title: {
+    type: String,
+    default: '',
+  },
+  slug: {
+    type: String,
+    default: '',
+  },
+  main_image: {
+    type: String,
+    default: '',
+  },
+  data: {
+    type: Object,
+    default() {
+      return {}
+    },
+  },
+  actionBtn: {
+    type: Object,
+    default() {
+      return {}
+    },
+  },
+})
 // Ajouter catégories
 const categoriesCount = ref<number>(0)
 
@@ -167,11 +227,13 @@ function addMetaDescription(event: Event): void {
         </div>
       </div>
       <div class="published px-5 pt-7 pb-[7px]">
-        <div
-          class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white"
+        <button
+          type="submit"
+          class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
+          @click.prevent="submitForm"
         >
-          <button class="font-semibold">Enregistrer</button>
-        </div>
+          <span class="font-semibold">Enregistrer</span>
+        </button>
       </div>
     </div>
   </div>
