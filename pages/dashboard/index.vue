@@ -58,8 +58,12 @@ const promenades = computed(() => {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <div class="w-9/12 mx-auto flex items-center">
-      <div v-for="(promenade, index) in promenades" :key="index" class="w-4/12">
+    <div class="w-9/12 mx-auto flex items-center flex-wrap mb-10">
+      <div
+        v-for="(promenade, index) in promenades"
+        :key="index"
+        class="w-4/12 p-2"
+      >
         <AdminCardTemplate :promenade="promenade" />
       </div>
     </div>

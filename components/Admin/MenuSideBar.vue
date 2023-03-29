@@ -9,9 +9,9 @@ async function submitCreatedPromenade() {
   const data = {
     title: propsAdminMenuSideBar.title,
     slug: propsAdminMenuSideBar.slug,
-    summary: 'Résumé de la promenade',
-    main_image: "url-de-l'image",
-    content: 'Contenu de la promenade',
+    summary: propsAdminMenuSideBar.summary,
+    main_image: propsAdminMenuSideBar.mainImage,
+    content: propsAdminMenuSideBar.content,
     meta_title: 'Titre pour le référencement',
     meta_description: 'Description pour le référencement',
     categoriesIds: [1],
@@ -29,7 +29,7 @@ async function submitCreatedPromenade() {
   } catch (error) {
     displaySwal(
       'Erreur lors de la modification',
-      'Une erreur est survenue lors de la modification de votre username. Veuillez réessayer plus tard.',
+      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
       'error',
       'Ok'
     )
@@ -44,11 +44,15 @@ const propsAdminMenuSideBar = defineProps({
     type: String,
     default: '',
   },
-  main_image: {
+  mainImage: {
     type: String,
     default: '',
   },
-  data: {
+  summary: {
+    type: String,
+    default: '',
+  },
+  content: {
     type: Object,
     default() {
       return {}

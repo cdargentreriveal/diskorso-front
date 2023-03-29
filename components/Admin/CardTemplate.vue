@@ -1,5 +1,11 @@
 <template>
-  <div class="card rounded-md overflow-hidden bg-white box-shaddow">
+  <div class="card rounded-md overflow-hidden bg-white box-shaddow relative">
+    <div
+      v-if="!promenade.published"
+      class="draft absolute top-0 text-white right-0 text-xs p-2"
+    >
+      Archivée
+    </div>
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">
         <img
@@ -118,6 +124,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.draft {
+  background-color: var(--blue-color);
+  border-radius: 0 0 0 0.5rem;
+}
 .card {
   &-image {
     height: 240px;

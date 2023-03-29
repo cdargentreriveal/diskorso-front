@@ -41,6 +41,7 @@ function deletePicturesBanner() {
 }
 const titleInput = ref('')
 const slugTitleInput = ref('')
+const summaryPromenade = ref('')
 function setTitleInput(value: String) {
   slugTitleInput.value = value.replace(/ /g, '-')
 }
@@ -271,6 +272,7 @@ onMounted(() => {
             </div>
           </div>
           <textarea
+            v-model="summaryPromenade"
             type="text"
             name="scales"
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
@@ -399,8 +401,10 @@ onMounted(() => {
   </div>
   <AdminMenuSideBar
     :title="titleInput"
-    :main_image="avatarUrl"
     :slug="slugTitleInput"
+    :mainImage="avatarUrl"
+    :summary="summaryPromenade"
+    :content="items"
   />
 </template>
 <style scoped lang="scss">
