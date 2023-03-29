@@ -2,9 +2,14 @@
   <div class="card rounded-md overflow-hidden bg-white box-shaddow relative">
     <div
       v-if="!promenade.published"
-      class="draft absolute top-0 text-white right-0 text-xs p-2"
+      class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
     >
-      Archivée
+      <img
+        src="@/assets/images/icons/eye-off.svg"
+        alt="icone oeil caché"
+        class="w-full mr-2"
+      />
+      <span>Brouillon</span>
     </div>
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">

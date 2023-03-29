@@ -53,10 +53,8 @@ const propsAdminMenuSideBar = defineProps({
     default: '',
   },
   content: {
-    type: Object,
-    default() {
-      return {}
-    },
+    type: String,
+    default: '',
   },
   actionBtn: {
     type: Object,

@@ -228,10 +228,6 @@ async function changeAvatar(event: Event) {
               </div>
             </div>
           </form>
-          <p class="text-xs text-justify pt-5">
-            L'image ne doit pas faire plus de 500ko. Les formats acceptés sont :
-            jpeg, png et svg
-          </p>
         </div>
         <div class="w-5/12 bg-white p-6 rounded-md">
           <form class="form flex items-end gap-10">
@@ -296,7 +292,7 @@ async function changeAvatar(event: Event) {
         </div>
       </div>
       <div
-        class="statitiques bg-white my-5 p-6 rounded-md divide-y divide-slate-300"
+        class="statitiques bg-white my-8 p-6 rounded-md divide-y divide-slate-300"
       >
         <div class="header flex items-center justify-between pt-3 py-6">
           <div class="header-title flex items-center">
@@ -370,6 +366,9 @@ sup {
 .edit_btn,
 .edit_btn img {
   cursor: pointer;
+  background-color: #69b8d9;
+}
+.bg-blue {
   background-color: #69b8d9;
 }
 </style>

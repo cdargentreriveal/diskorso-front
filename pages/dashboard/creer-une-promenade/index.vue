@@ -46,6 +46,7 @@ function setTitleInput(value: String) {
   slugTitleInput.value = value.replace(/ /g, '-')
 }
 // Ajouter blocs à la volée
+
 interface ImageItem {
   type: 'image'
   file: File | null
@@ -404,7 +405,7 @@ onMounted(() => {
     :slug="slugTitleInput"
     :mainImage="avatarUrl"
     :summary="summaryPromenade"
-    :content="items"
+    :content="itemsString"
   />
 </template>
 <style scoped lang="scss">
