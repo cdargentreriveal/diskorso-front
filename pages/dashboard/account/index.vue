@@ -3,15 +3,15 @@ import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { modifyAvatar, modifyEmail, modifyUsername } from '~~/utils/connected'
 
-definePageMeta({ layout: 'admin' })
+definePageMeta({ layout: 'admin', middleware: ['is-logged'] })
 const config = useRuntimeConfig()
 const user = useUserStore()
 
-const currentUsername = ref<string>(user.currentUser!.username)
-const displayedUsername = ref<string>(user.currentUser!.username)
-const currentEmail = ref<string>(user.currentUser!.email)
-const displayedEmail = ref<string>(user.currentUser!.email)
-const AvatarUrl = ref<string>(user.currentUser!.picture)
+const currentUsername = ref<string>(user.currentUser?.username || '')
+const displayedUsername = ref<string>(user.currentUser?.username || '')
+const currentEmail = ref<string>(user.currentUser?.email || '')
+const displayedEmail = ref<string>(user.currentUser?.email || '')
+const AvatarUrl = ref<string>(user.currentUser?.picture || '')
 const editModeUsername = ref(true)
 const editModeEmail = ref(true)
 const datasTitle = computed((): BtnAdminPage[] => [

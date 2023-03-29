@@ -107,6 +107,7 @@ watchEffect(() => {
 })
 definePageMeta({
   layout: 'admin',
+  middleware: ['is-logged'],
 })
 </script>
 

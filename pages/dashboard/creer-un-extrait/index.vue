@@ -3,6 +3,7 @@ import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 definePageMeta({
   layout: 'admin',
+  middleware: ['is-logged'],
 })
 const datasTitle = computed((): BtnAdminPage[] => [
   {

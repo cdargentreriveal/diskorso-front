@@ -5,6 +5,7 @@ import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'admin',
+  middleware: ['is-logged'],
 })
 const datasTitle = computed((): BtnAdminPage[] => [
   {
