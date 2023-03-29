@@ -13,8 +13,8 @@ async function submitForm() {
     content: 'Contenu de la promenade',
     meta_title: 'Titre pour le référencement',
     meta_description: 'Description pour le référencement',
-    categoriesIds: [1, 2, 3],
-    extractsIds: [4, 5, 6],
+    categoriesIds: [1],
+    extractsIds: [],
   }
 
   try {
