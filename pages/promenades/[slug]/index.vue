@@ -48,7 +48,12 @@ const { data: promenade } = useDiskorso<Promenade>(
                 promenade.user.username + '_' + promenade.userId
               }`"
             >
-              <img :src="promenade.user.picture" alt="avatar auteur" />
+              <img
+                v-if="promenade.user.picture === null"
+                src="../../assets/images/test-avatar.jpg"
+                alt="image de profil"
+              />
+              <img v-else :src="promenade.user.picture" alt="image de profil" />
             </NuxtLink>
           </div>
           <div class="promenade_page_content_header px-20">
