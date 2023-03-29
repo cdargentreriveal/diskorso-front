@@ -38,7 +38,11 @@ function deletePicturesBanner() {
     fileInput.value.value = ''
   }
 }
-
+const titleInput = ref('')
+const slugTitleInput = ref('')
+function setTitleInput(value: String) {
+  slugTitleInput.value = value.replace(/ /g, '-')
+}
 // Ajouter blocs à la volée
 interface ImageItem {
   type: 'image'
@@ -198,10 +202,12 @@ onMounted(() => {
           <h2>Titre de la promenade<sup>*</sup></h2>
           <div class="my-2">
             <input
+              v-model="titleInput"
               type="text"
               name="scales"
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
               maxlength="40"
+              @input="setTitleInput($event.target.value)"
             />
           </div>
         </div>
@@ -390,7 +396,11 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <AdminMenuSideBar />
+  <AdminMenuSideBar
+    :title="titleInput"
+    :main_image="avatarUrl"
+    :slug="slugTitleInput"
+  />
 </template>
 <style scoped lang="scss">
 .action-button {
