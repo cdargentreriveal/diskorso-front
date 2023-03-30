@@ -124,7 +124,9 @@ function handleImageUpload(event: Event, index: number): void {
       const item = items.value[index]
       if (item.type === 'image') {
         item.file = file
-        item.imageUrl = imageUrl // Mettre à jour l'URL de l'image dans l'objet
+        // item.imageUrl = imageUrl // Mettre à jour l'URL de l'image dans l'objet
+        item.imageUrl =
+          'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_960_720.jpg'
       }
     }
     image.src = imageUrl // Charger l'image avec l'URL
@@ -208,6 +210,7 @@ onMounted(() => {
               name="scales"
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
               maxlength="40"
+              @change="setTitleInput(titleInput)"
             />
           </div>
         </div>

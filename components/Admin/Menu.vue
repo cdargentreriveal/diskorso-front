@@ -72,17 +72,6 @@ const config = useRuntimeConfig()
                 alt=""
             /></span>
           </li>
-          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
-            <span
-              ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
-            /></span>
-            <span>Gérer les extraits</span>
-            <span class="-mt-[1rem]"
-              ><img
-                src="@/assets/images/icons/menu-admin/super-admin-star.svg"
-                alt=""
-            /></span>
-          </li>
         </div>
         <!-- Super Admin Menu-->
       </ul>
