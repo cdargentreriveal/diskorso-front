@@ -6,7 +6,10 @@ definePageMeta({
   middleware: ['is-logged'],
 })
 const config = useRuntimeConfig()
-const xsrfToken = localStorage.getItem('xsrfToken')
+let xsrfToken: any = null
+if (process.client) {
+  xsrfToken = localStorage.getItem('xsrfToken')
+}
 
 type Response = {
   data: ExtractFetched[]
