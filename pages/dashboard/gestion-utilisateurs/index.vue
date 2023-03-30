@@ -3,13 +3,15 @@ import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { useUserStore } from '~~/store/user'
 const config = useRuntimeConfig()
 const userStore = useUserStore()
-const listUser = userStore.listUser
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
     titleBlack: 'Gérer les',
     titlePurple: 'utilisateurs',
-    data: [{ number: 3 }, { value: 'utilisateurs inscrits' }],
+    data: [
+      { number: usersData.value.length },
+      { value: 'utilisateurs inscrits' },
+    ],
     actionBtn: [
       { action: 'Actif' },
       { action: 'Bannir' },
@@ -19,11 +21,8 @@ const datasTitle = computed((): BtnAdminPage[] => [
 ])
 
 const xsrfToken = localStorage.getItem('xsrfToken')
-const selectedOption = ref('Selectionner')
 const masterCheckbox = ref(false)
-
-const allusers = ref()
-
+const selectedOption = ref('Selectionner')
 type User = {
   id: number
   createdAt: string
@@ -45,6 +44,9 @@ type UserFetched = {
   role: string
   validate_email: boolean
   blocked: boolean
+  isChecked: boolean | null
+  showMenu: boolean | null
+  action: string
 }
 
 type Response = {
@@ -70,9 +72,9 @@ const usersData = computed(() => {
   } else {
     return users.value.data.map((user) => ({
       ...user,
-      isChecked: false,
+      /*     isChecked: false,
       showMenu: false,
-      action: '',
+      action: '', */
     }))
   }
 })
@@ -90,9 +92,20 @@ const toggleShowMenu = (user: User) => {
     users.value.data = newUsersData
   }
 }
+
 const selectOption = (option: string, user: User) => {
-  user.action = option
-  user.showMenu = !user.showMenu
+  const newUsersData = usersData.value.map((u: User) => {
+    if (u.id === user.id) {
+      u.showMenu = !u.showMenu
+      u.action = option
+    }
+    return u
+  })
+  if (users.value === null) {
+    return null
+  } else {
+    users.value.data = newUsersData
+  }
 }
 watchEffect(() => {
   if (masterCheckbox.value) {
@@ -190,7 +203,6 @@ definePageMeta({
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center"
             >
               {{ user.username }}
-              {{ user.showMenu }}
             </div>
             <div
               class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
@@ -228,7 +240,10 @@ definePageMeta({
                     class="flex items-center mx-auto"
                     @click="toggleShowMenu(user)"
                   >
-                    <!-- {{ user.action }} -->
+                    <span v-if="user.action !== undifined">{{
+                      user.action
+                    }}</span>
+                    <span v-else>{{ selectedOption }}</span>
                     <svg
                       :class="user.showMenu ? 'rotate' : ''"
                       class="-mr-1 ml-2 h-5 w-5 arrow"
