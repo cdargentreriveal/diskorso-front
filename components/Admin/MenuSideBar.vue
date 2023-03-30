@@ -35,6 +35,7 @@ async function submitCreatedPromenade() {
     )
   }
 }
+
 const propsAdminMenuSideBar = defineProps({
   title: {
     type: String,
@@ -53,8 +54,8 @@ const propsAdminMenuSideBar = defineProps({
     default: '',
   },
   content: {
-    type: String,
-    default: '',
+    type: Array,
+    default: () => [],
   },
   actionBtn: {
     type: Object,

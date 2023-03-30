@@ -351,7 +351,6 @@ onMounted(() => {
               class="flex justify-between py-5 items-start"
             >
               <div class="bg-white rounded-md p-5 w-full mr-5 cursor-move">
-                <h3 class="mb-4 font-semibold text-lg">{{ item.title }}</h3>
                 <div>{{ item.content }}</div>
               </div>
               <button @click="removeItem(index)">
@@ -400,7 +399,7 @@ onMounted(() => {
   <AdminMenuSideBar
     :title="titleInput"
     :slug="slugTitleInput"
-    :mainImage="avatarUrl"
+    :main-image="avatarUrl"
     :summary="summaryPromenade"
     :content="items"
   />
