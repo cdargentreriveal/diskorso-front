@@ -20,13 +20,10 @@ const datasTitle = computed((): BtnAdminPage[] => [
   },
 ])
 
-
 let xsrfToken: any = null
 if (process.client) {
   xsrfToken = localStorage.getItem('xsrfToken')
 }
-
-const selectedOption = ref('Selectionner')
 
 const masterCheckbox = ref(false)
 const selectedOption = ref('Selectionner')
