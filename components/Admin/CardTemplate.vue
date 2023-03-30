@@ -14,15 +14,15 @@
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">
         <img
-          v-if="promenade.main_image === 'string'"
-          class="w-full"
-          src="../../assets/images/diskorso-line-card.png"
+          v-if="promenade.main_image === ''"
+          class="w-full h-full object-cover"
+          src="../../assets/images/banner-diskorso-promenade.jpg"
           :alt="promenade.title"
         />
 
         <img
           v-else
-          class="w-full"
+          class="w-full h-full object-cover"
           :src="promenade.main_image"
           :alt="promenade.title"
         />

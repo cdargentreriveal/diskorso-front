@@ -60,7 +60,6 @@ interface TransitionItem {
 
 interface ExcerptItem {
   type: 'excerpt'
-  title: string
   content: string
 }
 
@@ -90,7 +89,6 @@ function addExcerptBlock(): void {
   if (excerptCount.value < 4) {
     items.value.push({
       type: 'excerpt',
-      title: "Titre de l'extrait",
       content: "Contenu de l'extrait",
     })
     excerptCount.value++
@@ -405,7 +403,7 @@ onMounted(() => {
     :slug="slugTitleInput"
     :mainImage="avatarUrl"
     :summary="summaryPromenade"
-    :content="itemsString"
+    :content="items"
   />
 </template>
 <style scoped lang="scss">
