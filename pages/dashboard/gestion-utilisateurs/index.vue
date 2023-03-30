@@ -163,7 +163,7 @@ definePageMeta({
             >
               <span>Status</span>
               <span class="absolute right-[20px] top-[50%] filter"
-                ><img src="@/assets/images/icons/icon-filter.svg" alt=""
+                ><img src="@/assets/images/icons/Icon-filter.svg" alt=""
               /></span>
             </div>
             <div
