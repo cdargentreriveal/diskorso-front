@@ -9,7 +9,7 @@ const user = useUserStore()
     <div id="app-before"></div>
     <div class="flex flex-col min-h-screen">
       <slot v-if="user.currentUser === null" name="header">
-        <NoConnectedNavBar />
+        <!-- <NoConnectedNavBar /> -->
       </slot>
       <slot v-else name="header">
         <ConnectedNavBar />
