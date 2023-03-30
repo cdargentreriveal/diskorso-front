@@ -5,6 +5,20 @@ const config = useRuntimeConfig()
 definePageMeta({
   layout: 'page',
 })
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
 async function submitCreatedPromenade() {
   const data = {
     title: propsAdminMenuSideBar.title,
@@ -19,16 +33,20 @@ async function submitCreatedPromenade() {
   }
 
   try {
-    await createdPromenade(config.public.baseURL, data)
-    displaySwal(
-      'Promenade créee',
-      `Votre promenade ${data.title} a bien été créée`,
-      'success',
-      'Ok'
-    )
+    const response = await createdPromenade(config.public.baseURL, data)
+    if (response.error) {
+      displaySwal('Echec', `${response.message}`, 'error', 'ok')
+    } else {
+      displaySwal(
+        'Promenade créee',
+        `Votre promenade ${data.title} a bien été créée`,
+        'success',
+        'Ok'
+      )
+    }
   } catch (error) {
     displaySwal(
-      'Erreur lors de la modification',
+      'Erreur lors de la création',
       'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
       'error',
       'Ok'

@@ -1,3 +1,69 @@
+<script lang="ts" setup>
+import { PropType } from 'vue'
+import { Promenade } from '~~/types/Promenades'
+import { deletedPromenade } from '~~/utils/connected'
+const config = useRuntimeConfig()
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
+async function submitDeletedPromenade() {
+  const data = {
+    id: propsCard.promenade.id,
+  }
+
+  try {
+    await deletedPromenade(config.public.baseURL, data)
+    displaySwal(
+      'Promenade supprimée',
+      `Votre promenade a bien été supprimée`,
+      'success',
+      'Ok'
+    )
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la modification',
+      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
+const propsCard = defineProps({
+  promenade: {
+    type: Object as PropType<Promenade>,
+    default: null,
+  },
+  size: {
+    type: String,
+    default: 'md',
+  },
+  to: {
+    type: [String, Object],
+    default: undefined,
+  },
+})
+onMounted(() => {
+  const descriptionCard = document.querySelectorAll('.card-content-description')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 170) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
+})
+</script>
+
 <template>
   <div class="card rounded-md overflow-hidden bg-white box-shaddow relative">
     <div
@@ -99,58 +165,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { PropType } from 'vue'
-import { Promenade } from '~~/types/Promenades'
-import { deletedPromenade } from '~~/utils/connected'
-const config = useRuntimeConfig()
-async function submitDeletedPromenade() {
-  const data = {
-    id: propsCard.promenade.id,
-  }
-
-  try {
-    await deletedPromenade(config.public.baseURL, data)
-    displaySwal(
-      'Promenade supprimée',
-      `Votre promenade a bien été supprimée`,
-      'success',
-      'Ok'
-    )
-  } catch (error) {
-    displaySwal(
-      'Erreur lors de la modification',
-      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
-      'error',
-      'Ok'
-    )
-  }
-}
-const propsCard = defineProps({
-  promenade: {
-    type: Object as PropType<Promenade>,
-    default: null,
-  },
-  size: {
-    type: String,
-    default: 'md',
-  },
-  to: {
-    type: [String, Object],
-    default: undefined,
-  },
-})
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
-</script>
 
 <style lang="scss" scoped>
 .draft {
