@@ -6,7 +6,6 @@ definePageMeta({
   layout: 'page',
 })
 const route = useRoute()
-
 const { data: promenade } = useDiskorso<Promenade>(
   `promenade/${route.params.slug}`
 )
@@ -97,19 +96,21 @@ const { data: promenade } = useDiskorso<Promenade>(
           </div>
           <section class="promenade_page_content_details_transition">
             <!-- eslint-disable vue/no-v-html -->
-            <div
-              v-for="(blocsContent, i) in promenade.content"
-              :key="i"
-              class="px-20 py-10"
-            >
-              <div v-if="blocsContent.type === 'transition'">
-                <div v-html="blocsContent.content"></div>
-              </div>
-              <div v-if="blocsContent.type === 'excerpt'">
-                <div v-html="blocsContent.content"></div>
-              </div>
-              <div v-if="blocsContent.type === 'image'">
-                <img :src="blocsContent.imageUrl" alt="" />
+            <div v-if="promenade && promenade.content">
+              <div
+                v-for="(blocsContent, i) in promenade.content"
+                :key="i"
+                class="px-20 py-10"
+              >
+                <div v-if="blocsContent.type === 'transition'">
+                  <div v-html="blocsContent.content"></div>
+                </div>
+                <div v-if="blocsContent.type === 'excerpt'">
+                  <div v-html="blocsContent.content"></div>
+                </div>
+                <div v-if="blocsContent.type === 'image'">
+                  <img :src="blocsContent.imageUrl" alt="" />
+                </div>
               </div>
             </div>
             <!--eslint-enable-->

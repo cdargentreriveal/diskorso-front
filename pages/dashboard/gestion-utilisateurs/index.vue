@@ -196,7 +196,7 @@ definePageMeta({
             :key="i"
             class="flex items-center text-xs my-5 text-slate-500"
           >
-            <div class="checkbox mr-10 flex">
+            <div v-if="user.isChecked !== null" class="checkbox mr-10 flex">
               <input
                 v-model="user.isChecked"
                 type="checkbox"
