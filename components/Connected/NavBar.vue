@@ -83,75 +83,75 @@ export default {
               </NuxtLink>
             </div>
           </div>
-          <client-only>
-            <div class="w-8/12">
-              <ul
-                v-if="windowWidth > 768"
-                class="flex justify-end items-center gap-4"
+          <!-- <client-only> -->
+          <div class="w-8/12">
+            <ul
+              v-if="windowWidth > 768"
+              class="flex justify-end items-center gap-4"
+            >
+              <li v-for="(item, i) in menus" :key="i">
+                <Anchor
+                  v-if="item.type === 'link'"
+                  :to="item.route ? item.route : undefined"
+                  :href="item.href ? item.href : undefined"
+                  class="hover:no-underline mx-4"
+                  >{{ item.text }}
+                </Anchor>
+                <Button
+                  v-else-if="item.type === 'button'"
+                  :text="item.text"
+                  size="xs"
+                  :class="item.text + ' font-bold p-5 capitalize mx-7 '"
+                  :to="item.route ? item.route : undefined"
+                  :href="item.href ? item.href : undefined"
+                />
+              </li>
+              <nuxt-link to="/dashboard/account">
+                <li class="user_connected ml-3">
+                  <span class="purple-color font-semibold">{{
+                    user.currentUser?.username
+                  }}</span>
+                </li>
+              </nuxt-link>
+              <li
+                class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
               >
-                <li v-for="(item, i) in menus" :key="i">
-                  <Anchor
-                    v-if="item.type === 'link'"
-                    :to="item.route ? item.route : undefined"
-                    :href="item.href ? item.href : undefined"
-                    class="hover:no-underline mx-4"
-                    >{{ item.text }}
-                  </Anchor>
-                  <Button
-                    v-else-if="item.type === 'button'"
-                    :text="item.text"
-                    size="xs"
-                    :class="item.text + ' font-bold p-5 capitalize mx-7 '"
-                    :to="item.route ? item.route : undefined"
-                    :href="item.href ? item.href : undefined"
-                  />
-                </li>
                 <nuxt-link to="/dashboard/account">
-                  <li class="user_connected ml-3">
-                    <span class="purple-color font-semibold">{{
-                      user.currentUser?.username
-                    }}</span>
-                  </li>
+                  <img
+                    v-if="user.currentUser?.picture === null"
+                    src="@/assets/images/test-avatar.jpg"
+                    alt="Photo de profil"
+                  />
+                  <img
+                    v-else
+                    :src="user.currentUser?.picture"
+                    alt="Photo de profil"
+                  />
                 </nuxt-link>
-                <li
-                  class="rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
-                >
-                  <nuxt-link to="/dashboard/account">
-                    <img
-                      v-if="user.currentUser?.picture === null"
-                      src="@/assets/images/test-avatar.jpg"
-                      alt="Photo de profil"
-                    />
-                    <img
-                      v-else
-                      :src="user.currentUser?.picture"
-                      alt="Photo de profil"
-                    />
-                  </nuxt-link>
-                </li>
-              </ul>
-              <!-- Menu burger mobile -->
-              <div v-else class="menu-burger">
+              </li>
+            </ul>
+            <!-- Menu burger mobile -->
+            <div v-else class="menu-burger">
+              <div
+                class="menu-burger-line text-right"
+                @click="displayMobileMenu"
+              >
+                <span>Menu</span>
+              </div>
+              <div
+                v-if="menuOpen === true"
+                class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
+              >
                 <div
-                  class="menu-burger-line text-right"
+                  class="closed absolute right-10 top-10"
                   @click="displayMobileMenu"
                 >
-                  <span>Menu</span>
-                </div>
-                <div
-                  v-if="menuOpen === true"
-                  class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
-                >
-                  <div
-                    class="closed absolute right-10 top-10"
-                    @click="displayMobileMenu"
-                  >
-                    Fermer
-                  </div>
+                  Fermer
                 </div>
               </div>
             </div>
-          </client-only>
+          </div>
+          <!-- </client-only> -->
         </nav>
       </div>
     </div>

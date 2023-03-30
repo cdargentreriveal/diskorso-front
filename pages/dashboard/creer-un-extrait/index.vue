@@ -61,7 +61,6 @@ const datasTitle = computed((): BtnAdminPage[] => [
             ref="quillEditor"
             class="h-full bg-white"
             :modules="{ toolbar: false }"
-            @update:value="(content) => (item.content = content)"
           />
         </div>
       </div>

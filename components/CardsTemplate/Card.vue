@@ -58,7 +58,7 @@
                 >
                   <img
                     v-if="promenade.user.picture === null"
-                    src="../../assets/images/test-avatar.jpg"
+                    src="@/assets/images/test-avatar.jpg"
                     alt="image de profil"
                   />
                   <img

@@ -4,7 +4,11 @@ import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { Promenade } from '~~/types/Promenades'
 const user = useUserStore()
 const config = useRuntimeConfig()
-const xsrfToken = localStorage.getItem('xsrfToken')
+
+let xsrfToken: any = null
+if (process.client) {
+  xsrfToken = localStorage.getItem('xsrfToken')
+}
 
 const datasTitle = computed((): BtnAdminPage[] => [
   {

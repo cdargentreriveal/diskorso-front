@@ -7,11 +7,13 @@ definePageMeta({ layout: 'admin', middleware: ['is-logged'] })
 const config = useRuntimeConfig()
 const user = useUserStore()
 
-const currentUsername = ref<string>(user.currentUser!.username)
-const displayedUsername = ref<string>(user.currentUser!.username)
-const currentEmail = ref<string>(user.currentUser!.email)
-const displayedEmail = ref<string>(user.currentUser!.email)
-const AvatarUrl = ref<string>(user.currentUser!.picture)
+const currentUsername = ref<string>(user.currentUser?.username ?? '')
+const displayedUsername = ref<string>(user.currentUser?.username ?? '')
+const currentEmail = ref<string>(user.currentUser?.email ?? '')
+const displayedEmail = ref<string>(user.currentUser?.email ?? '')
+const AvatarUrl = ref<string>(
+  user.currentUser && user.currentUser.picture ? user.currentUser.picture : ''
+)
 const editModeUsername = ref(true)
 const editModeEmail = ref(true)
 const datasTitle = computed((): BtnAdminPage[] => [
@@ -172,7 +174,7 @@ async function changeAvatar(event: Event) {
     <div class="container_promenade w-9/12 mx-auto">
       <div class="flex gap-6 justify-between items-center">
         <div class="w-2/12 rounded-md">
-          <form class="form">
+          <form v-if="user.currentUser" class="form">
             <div class="form-user pb-2 flex items-center relative">
               <div
                 class="avatar mx-auto w-[140px] h-[140px] rounded-full overflow-hidden"
@@ -186,13 +188,13 @@ async function changeAvatar(event: Event) {
                     @change="handleFileUpload"
                   />
                   <img
-                    v-if="AvatarUrl !== null"
+                    v-if="AvatarUrl && AvatarUrl !== ''"
                     :src="AvatarUrl"
                     alt="photo de profil"
                   />
                   <img
                     v-else
-                    src="../../../assets/images/test-avatar.jpg"
+                    src="@/assets/images/test-avatar.jpg"
                     alt="photo de profil"
                   />
                 </label>

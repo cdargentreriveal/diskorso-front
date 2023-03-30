@@ -208,7 +208,6 @@ onMounted(() => {
               name="scales"
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
               maxlength="40"
-              @input="setTitleInput($event.target.value)"
             />
           </div>
         </div>
