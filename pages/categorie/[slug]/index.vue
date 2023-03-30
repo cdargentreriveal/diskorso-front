@@ -8,7 +8,7 @@ definePageMeta({
 // ________________________________________________________________________________________
 //* state
 // ________________________________________________________________________________________
-const numberOfPromenade = ref(1)
+const numberOfPromenade = ref(3)
 const config = useRuntimeConfig()
 const route = useRoute()
 const query = ref(
