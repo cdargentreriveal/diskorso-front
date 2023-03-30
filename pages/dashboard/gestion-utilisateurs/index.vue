@@ -108,12 +108,12 @@ const selectOption = (option: string, user: User) => {
   }
 }
 watchEffect(() => {
-  if (masterCheckbox.value) {
-    usersData.value.forEach((user) => {
+  if (masterCheckbox.value && users.value) {
+    users.value.data.forEach((user) => {
       user.isChecked = true
     })
-  } else {
-    usersData.value.forEach((user) => {
+  } else if (users.value) {
+    users.value.data.forEach((user) => {
       user.isChecked = false
     })
   }
@@ -187,7 +187,7 @@ definePageMeta({
           </div>
         </div>
         <div
-          v-for="(user, i) in usersData"
+          v-for="(user, i) in users.data"
           :key="i"
           class="flex items-center text-xs my-5 text-slate-500"
         >
@@ -240,9 +240,7 @@ definePageMeta({
                     class="flex items-center mx-auto"
                     @click="toggleShowMenu(user)"
                   >
-                    <span v-if="user.action !== undifined">{{
-                      user.action
-                    }}</span>
+                    <span v-if="user.action">{{ user.action }}</span>
                     <span v-else>{{ selectedOption }}</span>
                     <svg
                       :class="user.showMenu ? 'rotate' : ''"
