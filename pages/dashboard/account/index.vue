@@ -192,7 +192,7 @@ async function changeAvatar(event: Event) {
                   />
                   <img
                     v-else
-                    src="../../../assets/images/test-avatar.jpg"
+                    src="@/assets/images/test-avatar.jpg"
                     alt="photo de profil"
                   />
                 </label>
