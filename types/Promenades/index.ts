@@ -18,7 +18,11 @@ export interface Promenade {
   slug: string
   summary: string
   main_image: string
-  content: string
+  content: Array<{
+    type: string
+    content: string
+    imageUrl: string
+  }>
   meta_title?: string
   meta_description?: string
   published: boolean
