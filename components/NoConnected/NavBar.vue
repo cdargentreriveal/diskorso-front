@@ -74,7 +74,7 @@ export default {
               </NuxtLink>
             </div>
           </div>
-          <client-only>
+          <!-- <client-only> -->
             <div class="w-1/2">
               <ul
                 v-if="windowWidth > 768"
@@ -143,7 +143,7 @@ export default {
                 </div>
               </div>
             </div>
-          </client-only>
+          <!-- </client-only> -->
         </nav>
       </div>
     </div>
