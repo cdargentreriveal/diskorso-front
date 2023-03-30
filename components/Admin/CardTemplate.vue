@@ -82,9 +82,10 @@
             </NuxtLink> -->
           </div>
           <div
-            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color"
+            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color cursor-pointer"
+            @click.prevent="submitDeletedPromenade"
           >
-            <div class="delete ml-auto w-[12px] cursor-pointer">
+            <div class="delete ml-auto w-[12px]">
               <img
                 src="@/assets/images/icons/corbeille.svg"
                 alt=""
@@ -102,7 +103,30 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Promenade } from '~~/types/Promenades'
+import { deletedPromenade } from '~~/utils/connected'
+const config = useRuntimeConfig()
+async function submitDeletedPromenade() {
+  const data = {
+    id: propsCard.promenade.id,
+  }
 
+  try {
+    await deletedPromenade(config.public.baseURL, data)
+    displaySwal(
+      'Promenade supprimée',
+      `Votre promenade a bien été supprimée`,
+      'success',
+      'Ok'
+    )
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la modification',
+      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
 const propsCard = defineProps({
   promenade: {
     type: Object as PropType<Promenade>,
