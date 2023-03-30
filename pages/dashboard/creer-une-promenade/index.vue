@@ -41,10 +41,12 @@ function deletePicturesBanner() {
 }
 const titleInput = ref('')
 const slugTitleInput = ref('')
+const summaryPromenade = ref('')
 function setTitleInput(value: String) {
   slugTitleInput.value = value.replace(/ /g, '-')
 }
 // Ajouter blocs à la volée
+
 interface ImageItem {
   type: 'image'
   file: File | null
@@ -58,7 +60,6 @@ interface TransitionItem {
 
 interface ExcerptItem {
   type: 'excerpt'
-  title: string
   content: string
 }
 
@@ -88,7 +89,6 @@ function addExcerptBlock(): void {
   if (excerptCount.value < 4) {
     items.value.push({
       type: 'excerpt',
-      title: "Titre de l'extrait",
       content: "Contenu de l'extrait",
     })
     excerptCount.value++
@@ -270,6 +270,7 @@ onMounted(() => {
             </div>
           </div>
           <textarea
+            v-model="summaryPromenade"
             type="text"
             name="scales"
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
@@ -398,8 +399,10 @@ onMounted(() => {
   </div>
   <AdminMenuSideBar
     :title="titleInput"
-    :main_image="avatarUrl"
     :slug="slugTitleInput"
+    :mainImage="avatarUrl"
+    :summary="summaryPromenade"
+    :content="items"
   />
 </template>
 <style scoped lang="scss">

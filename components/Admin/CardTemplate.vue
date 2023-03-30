@@ -1,17 +1,28 @@
 <template>
-  <div class="card rounded-md overflow-hidden bg-white box-shaddow">
+  <div class="card rounded-md overflow-hidden bg-white box-shaddow relative">
+    <div
+      v-if="!promenade.published"
+      class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
+    >
+      <img
+        src="@/assets/images/icons/eye-off.svg"
+        alt="icone oeil caché"
+        class="w-full mr-2"
+      />
+      <span>Brouillon</span>
+    </div>
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image">
         <img
-          v-if="promenade.main_image === 'string'"
-          class="w-full"
-          src="../../assets/images/diskorso-line-card.png"
+          v-if="promenade.main_image === ''"
+          class="w-full h-full object-cover"
+          src="../../assets/images/banner-diskorso-promenade.jpg"
           :alt="promenade.title"
         />
 
         <img
           v-else
-          class="w-full"
+          class="w-full h-full object-cover"
           :src="promenade.main_image"
           :alt="promenade.title"
         />
@@ -71,9 +82,10 @@
             </NuxtLink> -->
           </div>
           <div
-            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color"
+            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color cursor-pointer"
+            @click.prevent="submitDeletedPromenade"
           >
-            <div class="delete ml-auto w-[12px] cursor-pointer">
+            <div class="delete ml-auto w-[12px]">
               <img
                 src="@/assets/images/icons/corbeille.svg"
                 alt=""
@@ -91,7 +103,30 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Promenade } from '~~/types/Promenades'
+import { deletedPromenade } from '~~/utils/connected'
+const config = useRuntimeConfig()
+async function submitDeletedPromenade() {
+  const data = {
+    id: propsCard.promenade.id,
+  }
 
+  try {
+    await deletedPromenade(config.public.baseURL, data)
+    displaySwal(
+      'Promenade supprimée',
+      `Votre promenade a bien été supprimée`,
+      'success',
+      'Ok'
+    )
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la modification',
+      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
 const propsCard = defineProps({
   promenade: {
     type: Object as PropType<Promenade>,
@@ -118,6 +153,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.draft {
+  background-color: var(--blue-color);
+  border-radius: 0 0 0 0.5rem;
+}
 .card {
   &-image {
     height: 240px;

@@ -27,12 +27,12 @@ const { data: promenade } = useDiskorso<Promenade>(
       </div>
       <div v-else>
         <div
-          v-if="promenade.main_image === 'string'"
-          class="promenade_page_banner h-[55vh] w-full no-image"
+          v-if="promenade.main_image === ' '"
+          class="h-[55vh] w-full no-image"
         ></div>
         <div
           v-else
-          class="promenade_page_banner h-[55vh] w-full"
+          class="promenade_page_banner h-[55vh] w-full bg-center bg-cover"
           :style="{
             backgroundImage: 'url(' + promenade.main_image + ')',
           }"
@@ -97,7 +97,21 @@ const { data: promenade } = useDiskorso<Promenade>(
           </div>
           <section class="promenade_page_content_details_transition">
             <!-- eslint-disable vue/no-v-html -->
-            <div class="px-20 py-10" v-html="promenade.content"></div>
+            <div
+              v-for="(blocsContent, i) in promenade.content"
+              :key="i"
+              class="px-20 py-10"
+            >
+              <div v-if="blocsContent.type === 'transition'">
+                <div v-html="blocsContent.content"></div>
+              </div>
+              <div v-if="blocsContent.type === 'excerpt'">
+                <div v-html="blocsContent.content"></div>
+              </div>
+              <div v-if="blocsContent.type === 'image'">
+                <img :src="blocsContent.imageUrl" alt="" />
+              </div>
+            </div>
             <!--eslint-enable-->
           </section>
           <div class="promenade_page_content_details_image">
@@ -195,7 +209,9 @@ const { data: promenade } = useDiskorso<Promenade>(
 }
 
 .no-image {
-  background-image: url(../../../assets/images/diskorso-line-card.png);
+  background-image: url('@/assets/images/banner-diskorso-promenade-2.jpg');
+  background-position: center;
+  background-size: cover;
 }
 .promenade_page {
   &_banner {

@@ -1,41 +1,38 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
+import { createdPromenade } from '~~/utils/connected'
+const config = useRuntimeConfig()
 definePageMeta({
   layout: 'page',
 })
-const config = useRuntimeConfig()
-async function submitForm() {
+async function submitCreatedPromenade() {
   const data = {
     title: propsAdminMenuSideBar.title,
     slug: propsAdminMenuSideBar.slug,
-    summary: 'Résumé de la promenade',
-    main_image: "url-de-l'image",
-    content: 'Contenu de la promenade',
+    summary: propsAdminMenuSideBar.summary,
+    main_image: propsAdminMenuSideBar.mainImage,
+    content: propsAdminMenuSideBar.content,
     meta_title: 'Titre pour le référencement',
     meta_description: 'Description pour le référencement',
-    categoriesIds: [1, 2, 3],
-    extractsIds: [4, 5, 6],
+    categoriesIds: [1],
+    extractsIds: [],
   }
 
   try {
-    const response = await fetch(
-      `${config.public.baseURL}/promenadeditor/create-promenade`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      }
+    await createdPromenade(config.public.baseURL, data)
+    displaySwal(
+      'Promenade créee',
+      `Votre promenade ${data.title} a bien été créée`,
+      'success',
+      'Ok'
     )
-
-    if (response.ok) {
-      // Handle successful response
-    } else {
-      // Handle failed response
-    }
   } catch (error) {
-    console.error(error)
+    displaySwal(
+      'Erreur lors de la modification',
+      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
   }
 }
 const propsAdminMenuSideBar = defineProps({
@@ -47,15 +44,17 @@ const propsAdminMenuSideBar = defineProps({
     type: String,
     default: '',
   },
-  main_image: {
+  mainImage: {
     type: String,
     default: '',
   },
-  data: {
-    type: Object,
-    default() {
-      return {}
-    },
+  summary: {
+    type: String,
+    default: '',
+  },
+  content: {
+    type: String,
+    default: '',
   },
   actionBtn: {
     type: Object,
@@ -230,7 +229,7 @@ function addMetaDescription(event: Event): void {
         <button
           type="submit"
           class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
-          @click.prevent="submitForm"
+          @click.prevent="submitCreatedPromenade"
         >
           <span class="font-semibold">Enregistrer</span>
         </button>
