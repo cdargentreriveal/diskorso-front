@@ -143,11 +143,13 @@ onMounted(() => {
     const sortableTransition = Sortable.create(blocTransition.value, {
       group: 'bloc',
       animation: 250,
-      /* onEnd: (event: any) => {
+/*       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
 
-        items.value.splice(newIndex, 0, items.value.splice(oldIndex, 1)[0])
+        const updatedItems = [...items.value]
+        updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
+        items.value = updatedItems
       }, */
     })
   }
@@ -283,7 +285,7 @@ onMounted(() => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="index">
+          <div v-for="(item, index) in items" :key="index" class="bloc">
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"

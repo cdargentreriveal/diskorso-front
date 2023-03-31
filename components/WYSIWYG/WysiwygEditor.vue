@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import Quill from 'quill'
+import MyQuill from 'quill'
 import 'quill/dist/quill.snow.css' // Ajouter cette ligne
 export default defineComponent({
   name: 'WysiwygEditor',
@@ -16,7 +16,7 @@ export default defineComponent({
   emits: ['update:value'],
   setup(props, { emit }) {
     const editorRef = ref<HTMLDivElement | null>(null)
-    let quillInstance: Quill | null = null
+    let quillInstance: MyQuill | null = null
 
     const updateValue = () => {
       if (quillInstance) {
@@ -29,7 +29,7 @@ export default defineComponent({
     onMounted(() => {
       if (typeof process !== 'undefined' && process.client) {
         if (editorRef.value) {
-          quillInstance = new Quill(editorRef.value, {
+          quillInstance = new MyQuill(editorRef.value, {
             modules: {
               toolbar: [
                 [{ header: [2, 3, 4, false] }],
