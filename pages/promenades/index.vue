@@ -8,7 +8,7 @@ definePageMeta({
 // ________________________________________________________________________________________
 //* state
 // ________________________________________________________________________________________
-const numberOfPromenade = ref(2)
+const numberOfPromenade = ref(6)
 const query = ref(`promenade/findLastPromenades/${numberOfPromenade.value}`)
 const config = useRuntimeConfig()
 

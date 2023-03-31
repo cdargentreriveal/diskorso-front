@@ -12,7 +12,7 @@ const route = useRoute()
 const config = useRuntimeConfig()
 const params = route.params.slug_id as String
 const [slug, id] = params.split('_')
-const numberOfPromenade = ref(3)
+const numberOfPromenade = ref(2)
 const query = ref(
   `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
 )
