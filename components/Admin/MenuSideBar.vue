@@ -21,7 +21,7 @@ const displaySwal = (
   })
 }
 async function submitCreatedPromenade() {
-  const data = {
+  const data = reactive({
     title: propsAdminMenuSideBar.title,
     slug: propsAdminMenuSideBar.slug,
     summary: propsAdminMenuSideBar.summary,
@@ -29,9 +29,9 @@ async function submitCreatedPromenade() {
     content: propsAdminMenuSideBar.content,
     meta_title: 'Titre pour le référencement',
     meta_description: 'Description pour le référencement',
-    categoriesIds: [1],
+    categoriesIds: selectedIds,
     extractsIds: [],
-  }
+  })
 
   try {
     const response = await createdPromenade(config.public.baseURL, data)
@@ -113,7 +113,9 @@ function isCheckboxDisabled(categorie: Category): boolean {
     selectedCategories.length === 3 && !selectedCategories.includes(categorie)
   )
 }
-
+const selectedIds = computed(() => {
+  return selectedCategories.map((category) => category.id)
+})
 function addMetaTitle(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaTitle', content: value })

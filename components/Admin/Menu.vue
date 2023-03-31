@@ -49,24 +49,24 @@ const config = useRuntimeConfig()
         >
           <NuxtLink
             to="/dashboard/gestion-utilisateurs"
-            class="px-5 py-7 flex items-center gap-2 bg-slate-100"
+            class="px-5 py-7 flex items-center gap-2 bg-slate-100 relative"
           >
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/user.svg" alt=""
             /></span>
             <span>Gérer les utilisateurs</span>
-            <span class="-mt-[1rem]"
+            <span class="absolute right-5 top-5"
               ><img
                 src="@/assets/images/icons/menu-admin/super-admin-star.svg"
                 alt=""
             /></span>
           </NuxtLink>
-          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
+          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100 relative">
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
             /></span>
             <span>Gérer les promenades</span>
-            <span class="-mt-[1rem]"
+            <span class="absolute right-5 top-5"
               ><img
                 src="@/assets/images/icons/menu-admin/super-admin-star.svg"
                 alt=""

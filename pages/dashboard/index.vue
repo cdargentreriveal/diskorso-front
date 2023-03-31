@@ -45,9 +45,13 @@ const promenades = computed(() => {
   if (response.value === null) {
     return []
   } else {
-    return response.value.data.map((promenade) => ({
-      ...promenade,
-    }))
+    const promenadesCopy = [...response.value.data] // create a copy of the array
+    promenadesCopy.sort((a, b) => {
+      const dateA = new Date(a.createdAt)
+      const dateB = new Date(b.createdAt)
+      return dateB.getTime() - dateA.getTime() // sort in descending order
+    })
+    return promenadesCopy
   }
 })
 onMounted(() => {
