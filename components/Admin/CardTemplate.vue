@@ -88,7 +88,7 @@ const propsCard = defineProps({
       </div>
     </NuxtLink>
     <div class="card-content p-6">
-      <div class="card-content-title font-bold text-xl my-1">
+      <div class="card-content-title font-bold text-xl my-1 h-[56px]">
         <h2>{{ promenade.title }}</h2>
       </div>
       <div class="card-content-date text-xs gray-color mt-2">
@@ -111,7 +111,7 @@ const propsCard = defineProps({
           </NuxtLink>
         </div>
       </div>
-      <p class="text-xs gray-color card-content-description">
+      <p class="text-xs gray-color card-content-description h-[32px]">
         {{ promenade.summary }}
       </p>
       <div class="card-content-bottom pt-8 pb-2">
@@ -166,7 +166,7 @@ const propsCard = defineProps({
 }
 .card {
   &-image {
-    height: 240px;
+    height: 200px;
     width: 100%;
     overflow: hidden;
     & img {

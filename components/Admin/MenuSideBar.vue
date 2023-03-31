@@ -2,6 +2,7 @@
 import { Category } from '~~/types/Categories'
 import { createdPromenade } from '~~/utils/connected'
 const config = useRuntimeConfig()
+const { data: categories } = useDiskorso<Category[]>('category/all')
 definePageMeta({
   layout: 'page',
 })
@@ -84,10 +85,9 @@ const propsAdminMenuSideBar = defineProps({
 })
 // Ajouter catégories
 const categoriesCount = ref<number>(0)
-
 interface CategoryItem {
   type: 'categories'
-  content: string
+  content: number
 }
 interface MetaTitleItem {
   type: 'metaTitle'
@@ -100,13 +100,21 @@ interface MetaDescriptionItem {
 type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
 const items = ref<ItemType[]>([])
 
-function addCategories(event: Event): void {
-  const value = (event.target as HTMLInputElement).value
+function addCategories(value: number) {
   if (categoriesCount.value < 3) {
     items.value.push({ type: 'categories', content: value })
     categoriesCount.value++
   }
 }
+function isCheckboxDisabled(id: number) {
+  return (
+    categoriesCount.value >= 3 &&
+    !items.value.some(
+      (item) => item.type === 'categories' && item.content === id
+    )
+  )
+}
+
 function addMetaTitle(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaTitle', content: value })
@@ -134,85 +142,20 @@ function addMetaDescription(event: Event): void {
           </div>
           <div class="categories_list h-[150px] overflow-auto">
             <ul class="text-sm">
-              <li class="flex my-2">
+              <li
+                v-for="(categorie, index) in categories"
+                :key="index"
+                class="flex my-2"
+              >
                 <input
-                  id="scales"
+                  :id="`checkbox-${categorie.id}`"
                   type="checkbox"
-                  name="scales"
+                  name="categories"
                   class="mx-2"
-                  value="Histoire"
-                  @change="addCategories($event)"
-                /><label for="scales">Histoire</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Science"
-                  @change="addCategories($event)"
-                /><label for="scales">Science</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Société"
-                  @change="addCategories($event)"
-                /><label for="scales">Société</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Société"
-                  @change="addCategories($event)"
-                /><label for="scales">Littérature</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Société"
-                  @change="addCategories($event)"
-                /><label for="scales">Sport</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Société"
-                  @change="addCategories($event)"
-                /><label for="scales">Culture</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Société"
-                  @change="addCategories($event)"
-                /><label for="scales">Nature</label>
-              </li>
-              <li class="flex my-2">
-                <input
-                  id="scales"
-                  type="checkbox"
-                  name="scales"
-                  class="mx-2"
-                  value="Société"
-                  @change="addCategories($event)"
-                /><label for="scales">Société</label>
+                  :disabled="isCheckboxDisabled(categorie.id)"
+                  :value="categorie.title"
+                  @change="addCategories(categorie.id)"
+                /><label for="scales"> {{ categorie.title }}</label>
               </li>
             </ul>
           </div>
