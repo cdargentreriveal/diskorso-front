@@ -99,19 +99,18 @@ interface MetaDescriptionItem {
 }
 type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
 const items = ref<ItemType[]>([])
+const selectedCategories = reactive<Category[]>([])
 
-function addCategories(value: number) {
-  if (categoriesCount.value < 3) {
-    items.value.push({ type: 'categories', content: value })
-    categoriesCount.value++
+function addCategories(value: any) {
+  if (selectedCategories.includes(value)) {
+    selectedCategories.splice(selectedCategories.indexOf(value), 1)
+  } else {
+    selectedCategories.push(value)
   }
 }
-function isCheckboxDisabled(id: number) {
+function isCheckboxDisabled(categorie: Category): boolean {
   return (
-    categoriesCount.value >= 3 &&
-    !items.value.some(
-      (item) => item.type === 'categories' && item.content === id
-    )
+    selectedCategories.length === 3 && !selectedCategories.includes(categorie)
   )
 }
 
@@ -152,9 +151,9 @@ function addMetaDescription(event: Event): void {
                   type="checkbox"
                   name="categories"
                   class="mx-2"
-                  :disabled="isCheckboxDisabled(categorie.id)"
+                  :disabled="isCheckboxDisabled(categorie)"
                   :value="categorie.title"
-                  @change="addCategories(categorie.id)"
+                  @change="addCategories(categorie)"
                 /><label for="scales"> {{ categorie.title }}</label>
               </li>
             </ul>
