@@ -102,14 +102,24 @@ const { data: promenade } = useDiskorso<Promenade>(
                 :key="i"
                 class="px-20 py-10"
               >
-                <div v-if="blocsContent.type === 'transition'">
+                <div
+                  v-if="blocsContent.type === 'transition'"
+                  class="transition"
+                >
                   <div v-html="blocsContent.content"></div>
                 </div>
-                <div v-if="blocsContent.type === 'excerpt'">
+                <div
+                  v-if="blocsContent.type === 'excerpt'"
+                  class="extrait bg-slate-100 relative py-3"
+                >
                   <div v-html="blocsContent.content"></div>
                 </div>
-                <div v-if="blocsContent.type === 'image'">
-                  <img :src="blocsContent.imageUrl" alt="" />
+                <div v-if="blocsContent.type === 'image'" class="image">
+                  <img
+                    :src="blocsContent.imageUrl"
+                    alt=""
+                    class="w-full rounded-xl"
+                  />
                 </div>
               </div>
             </div>
@@ -208,12 +218,32 @@ const { data: promenade } = useDiskorso<Promenade>(
     margin-top: 0;
   }
 }
-
+.extrait {
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    left: -5rem;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    right: -5rem;
+  }
+}
 .no-image {
   background-image: url('@/assets/images/banner-diskorso-promenade-2.jpg');
   background-position: center;
   background-size: cover;
 }
+
 .promenade_page {
   &_banner {
     background-size: cover;

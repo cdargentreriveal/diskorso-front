@@ -4,7 +4,7 @@ const { data: categories } = useDiskorso<Category[]>('category/all')
 </script>
 
 <template>
-  <div class="btns-categories w-9/12 mx-auto">
+  <div class="btns-categories w-9/12 mx-auto mt-5">
     <div class="flex items-center justify-center">
       <div v-for="(categorie, index) in categories" :key="index">
         <NuxtLink :to="`/categorie/${categorie.slug}`"

@@ -53,19 +53,12 @@ const propsCard = defineProps({
     default: undefined,
   },
 })
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
 </script>
 
 <template>
-  <div class="card rounded-md overflow-hidden bg-white box-shaddow relative">
+  <div
+    class="card rounded-md overflow-hidden bg-white box-shaddow relative h-full"
+  >
     <div
       v-if="!promenade.published"
       class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
@@ -98,10 +91,10 @@ onMounted(() => {
       <div class="card-content-title font-bold text-xl my-1">
         <h2>{{ promenade.title }}</h2>
       </div>
-      <div class="card-content-date text-xs gray-color">
+      <div class="card-content-date text-xs gray-color mt-2">
         Crée le : {{ getDate(promenade.createdAt) }}
       </div>
-      <div class="card-content-categories flex gap-4 py-5">
+      <div class="card-content-categories flex gap-2 py-5">
         <div
           v-for="(cat, index) in promenade.categories"
           :key="index"
@@ -110,7 +103,7 @@ onMounted(() => {
           <NuxtLink :to="`/categorie/${cat.slug}`">
             <button
               :class="
-                cat.color + ' category-btn px-5 py-2 rounded-full text-xs'
+                cat.color + ' category-btn px-4 py-2 rounded-full text-xs'
               "
             >
               {{ cat.title }}
