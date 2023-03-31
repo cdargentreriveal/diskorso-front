@@ -50,6 +50,15 @@ const promenades = computed(() => {
     }))
   }
 })
+onMounted(() => {
+  const descriptionCard = document.querySelectorAll('.card-content-description')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 90) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
+})
 </script>
 
 <template>
@@ -62,13 +71,13 @@ const promenades = computed(() => {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <div class="w-9/12 mx-auto flex items-center flex-wrap mb-10">
+    <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
-        class="w-4/12 p-2"
+        class="w-4/12 p-2 h-full"
       >
-        <AdminCardTemplate :promenade="promenade" />
+        <AdminCardTemplate :promenade="promenade" class="h-full" />
       </div>
     </div>
   </div>
