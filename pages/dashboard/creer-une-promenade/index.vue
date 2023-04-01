@@ -2,7 +2,6 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
-import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
@@ -143,14 +142,14 @@ onMounted(() => {
     const sortableTransition = Sortable.create(blocTransition.value, {
       group: 'bloc',
       animation: 250,
-      onEnd: (event: any) => {
+/*       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
 
         const updatedItems = [...items.value]
         updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
         items.value = updatedItems
-      },
+      }, */
     })
   }
 })
@@ -318,18 +317,11 @@ onMounted(() => {
                   </div>
                 </label>
               </div>
-              <button class="mt-4" @click="removeItem(index)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
             </div>
 
             <!-- Transition input -->
             <div
-              v-if="item.type === 'transition'"
+              v-else-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
               <div class="w-full h-[300px] mr-5 cursor-move wisiwig">
@@ -352,7 +344,7 @@ onMounted(() => {
 
             <!-- Excerpt block -->
             <div
-              v-if="item.type === 'excerpt'"
+              v-else-if="item.type === 'excerpt'"
               class="flex justify-between py-5 items-start"
             >
               <div class="bg-white rounded-md p-5 w-full mr-5 cursor-move">

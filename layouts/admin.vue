@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
+
 const user = useUserStore()
 onMounted(() => {
   const body = document.querySelector('body')
