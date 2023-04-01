@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts" setup>
-const selectedOption = ref('Actions groupées')
+const selectedOption = ref('Actions')
 const btnActionsOpen = ref(false)
 const toggleMenu = () => {
   btnActionsOpen.value = !btnActionsOpen.value
