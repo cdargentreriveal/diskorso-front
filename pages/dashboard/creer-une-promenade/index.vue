@@ -143,14 +143,14 @@ onMounted(() => {
     const sortableTransition = Sortable.create(blocTransition.value, {
       group: 'bloc',
       animation: 250,
-/*       onEnd: (event: any) => {
+      onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
 
         const updatedItems = [...items.value]
         updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
         items.value = updatedItems
-      }, */
+      },
     })
   }
 })
