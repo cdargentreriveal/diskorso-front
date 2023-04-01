@@ -317,6 +317,13 @@ onMounted(() => {
                   </div>
                 </label>
               </div>
+              <button class="mt-4" @click="removeItem(index)">
+                <img
+                  src="@/assets/images/icons/corbeille.svg"
+                  alt=""
+                  class="w-[15px]"
+                />
+              </button>
             </div>
 
             <!-- Transition input -->
