@@ -411,6 +411,7 @@ onMounted(() => {
     </div>
   </div>
   <AdminMenuSideBar
+    :display-elements="true"
     :title="titleInput"
     :slug="slugTitleInput"
     :main-image="avatarUrl"

@@ -312,6 +312,7 @@ definePageMeta({
       </div>
     </div>
   </div>
+  <AdminMenuSideBar :display-elements="false" />
 </template>
 <style scoped lang="scss">
 .actif {
