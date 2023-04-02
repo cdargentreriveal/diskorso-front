@@ -79,9 +79,9 @@ const propsCard = defineProps({
           <img
             src="@/assets/images/icons/eye-off.svg"
             alt="icone oeil caché"
-            class="w-full mr-2"
+            class="w-[15px] mr-2"
           />
-          <span>Brouillon</span>
+          <span>En brouillon</span>
         </div>
         <div
           v-if="!promenade.published"
