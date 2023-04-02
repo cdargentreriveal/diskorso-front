@@ -56,22 +56,9 @@ const propsCard = defineProps({
 </script>
 
 <template>
-  <div
-    class="card rounded-md overflow-hidden bg-white box-shaddow relative h-full"
-  >
-    <div
-      v-if="!promenade.published"
-      class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
-    >
-      <img
-        src="@/assets/images/icons/eye-off.svg"
-        alt="icone oeil caché"
-        class="w-full mr-2"
-      />
-      <span>Brouillon</span>
-    </div>
+  <div class="card rounded-md overflow-hidden bg-white box-shaddow h-full">
     <NuxtLink :to="`/promenades/${promenade.slug}`">
-      <div class="card-image">
+      <div class="card-image relative">
         <img
           v-if="promenade.main_image === ''"
           class="w-full h-full object-cover"
@@ -85,6 +72,23 @@ const propsCard = defineProps({
           :src="promenade.main_image"
           :alt="promenade.title"
         />
+        <div
+          v-if="!promenade.published"
+          class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
+        >
+          <img
+            src="@/assets/images/icons/eye-off.svg"
+            alt="icone oeil caché"
+            class="w-full mr-2"
+          />
+          <span>Brouillon</span>
+        </div>
+        <div
+          v-if="!promenade.published"
+          class="published absolute bottom-0 text-black right-0 text-xs p-3 flex items-center bg-white underline"
+        >
+          <span>Publier maintenant </span>
+        </div>
       </div>
     </NuxtLink>
     <div class="card-content p-6">
@@ -163,6 +167,13 @@ const propsCard = defineProps({
 .draft {
   background-color: var(--blue-color);
   border-radius: 0 0 0 0.5rem;
+}
+.published {
+  border-radius: 0.5rem 0 0 0;
+  &:after {
+    content: ' →';
+    white-space: break-spaces;
+  }
 }
 .card {
   &-image {
