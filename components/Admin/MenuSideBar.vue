@@ -31,6 +31,7 @@ async function submitCreatedPromenade() {
     meta_description: 'Description pour le référencement',
     categoriesIds: selectedIds,
     extractsIds: [],
+    published: propsAdminMenuSideBar.published,
   })
 
   try {
@@ -75,6 +76,10 @@ const propsAdminMenuSideBar = defineProps({
   content: {
     type: Array,
     default: () => [],
+  },
+  published: {
+    type: Boolean,
+    default: false,
   },
   actionBtn: {
     type: Object,

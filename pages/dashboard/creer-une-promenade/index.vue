@@ -11,9 +11,13 @@ const datasTitle = computed((): BtnAdminPage[] => [
     type: 'button',
     titleBlack: 'Créer une',
     titlePurple: 'promenade',
-    actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
+    actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
   },
 ])
+const publishedPromenade = ref<Boolean>(false)
+const handleMyEvent = (value: boolean) => {
+  publishedPromenade.value = value
+}
 const avatarUrl = ref('')
 const fileInput = ref<HTMLInputElement>()
 
@@ -142,7 +146,7 @@ onMounted(() => {
     const sortableTransition = Sortable.create(blocTransition.value, {
       group: 'bloc',
       animation: 250,
-/*       onEnd: (event: any) => {
+      /*       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
 
@@ -164,6 +168,7 @@ onMounted(() => {
       :title-purple="datasTitle[0].titlePurple"
       :data="datasTitle[0].data"
       :action-btn="datasTitle[0].actionBtn"
+      @my-event="handleMyEvent"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12 relative">
@@ -203,7 +208,12 @@ onMounted(() => {
 
       <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
-          <h2>Titre de la promenade<sup>*</sup></h2>
+          <div class="flex items-center justify-between">
+            <h2>Titre de la promenade<sup>*</sup></h2>
+            <div class="max_words font-normal text-xs italic">
+              40 caractères max
+            </div>
+          </div>
           <div class="my-2">
             <input
               v-model="titleInput"
@@ -215,8 +225,8 @@ onMounted(() => {
             />
           </div>
         </div>
-        <div class="promenade_image font-semibold text-lg mb-8">
-          <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
+        <div class="promenade_image font-semibold text-lg mb-10">
+          <h2>Ajouter la photo mise en avant</h2>
           <div class="my-5">
             <label for="avatar-upload text-sm">
               <input
@@ -406,6 +416,7 @@ onMounted(() => {
     :main-image="avatarUrl"
     :summary="summaryPromenade"
     :content="items"
+    :published="!!publishedPromenade"
   />
 </template>
 <style scoped lang="scss">
