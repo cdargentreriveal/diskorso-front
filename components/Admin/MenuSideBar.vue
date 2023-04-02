@@ -57,10 +57,6 @@ async function submitCreatedPromenade() {
 }
 
 const propsAdminMenuSideBar = defineProps({
-  displayElements: {
-    type: Boolean,
-    default: false,
-  },
   title: {
     type: String,
     default: '',
@@ -140,62 +136,60 @@ function addMetaDescription(event: Event): void {
   >
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
       <div class="px-5 py-7 grow">
-        <div v-if="displayElements">
-          <div
-            class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black"
-          >
-            <button>Prévisualiser</button>
+        <div
+          class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
+        >
+          <button>Prévisualiser</button>
+        </div>
+        <Separator />
+        <div class="categories">
+          <div class="categories_title text-base font-semibold mb-5">
+            <h4>Catégories<sup>*</sup></h4>
           </div>
-          <Separator />
-          <div class="categories">
-            <div class="categories_title text-base font-semibold mb-5">
-              <h4>Catégories<sup>*</sup></h4>
-            </div>
-            <div class="categories_list h-[150px] overflow-auto">
-              <ul class="text-sm">
-                <li
-                  v-for="(categorie, index) in categories"
-                  :key="index"
-                  class="flex my-2"
-                >
-                  <input
-                    :id="`checkbox-${categorie.id}`"
-                    type="checkbox"
-                    name="categories"
-                    class="mx-2"
-                    :disabled="isCheckboxDisabled(categorie)"
-                    :value="categorie.title"
-                    @change="addCategories(categorie)"
-                  /><label for="scales"> {{ categorie.title }}</label>
-                </li>
-              </ul>
-            </div>
+          <div class="categories_list h-[150px] overflow-auto">
+            <ul class="text-sm">
+              <li
+                v-for="(categorie, index) in categories"
+                :key="index"
+                class="flex my-2"
+              >
+                <input
+                  :id="`checkbox-${categorie.id}`"
+                  type="checkbox"
+                  name="categories"
+                  class="mx-2"
+                  :disabled="isCheckboxDisabled(categorie)"
+                  :value="categorie.title"
+                  @change="addCategories(categorie)"
+                /><label for="scales"> {{ categorie.title }}</label>
+              </li>
+            </ul>
           </div>
-          <Separator />
-          <div class="seo">
-            <div class="seo_title text-base font-semibold mb-5">
-              <h4>SEO</h4>
-            </div>
-            <div class="seo_meta_title mb-4 text-sm">
-              <label class="font-medium">Meta title</label>
-              <input
-                type="text"
-                name="scales"
-                class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-[30px]"
-                maxlength="30"
-                @change="addMetaTitle($event)"
-              />
-            </div>
-            <div class="seo_meta_description text-sm">
-              <label class="font-medium">Meta description</label>
-              <textarea
-                type="text"
-                name="scales"
-                class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-full max-h-[75px]"
-                maxlength="120"
-                @change="addMetaDescription($event)"
-              />
-            </div>
+        </div>
+        <Separator />
+        <div class="seo">
+          <div class="seo_title text-base font-semibold mb-5">
+            <h4>SEO</h4>
+          </div>
+          <div class="seo_meta_title mb-4 text-sm">
+            <label class="font-medium">Meta title</label>
+            <input
+              type="text"
+              name="scales"
+              class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-[30px]"
+              maxlength="30"
+              @change="addMetaTitle($event)"
+            />
+          </div>
+          <div class="seo_meta_description text-sm">
+            <label class="font-medium">Meta description</label>
+            <textarea
+              type="text"
+              name="scales"
+              class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-full max-h-[75px]"
+              maxlength="120"
+              @change="addMetaDescription($event)"
+            />
           </div>
         </div>
       </div>
