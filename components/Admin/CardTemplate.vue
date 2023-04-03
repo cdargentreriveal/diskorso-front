@@ -30,6 +30,7 @@ async function submitDeletedPromenade() {
       'success',
       'Ok'
     )
+    refreshNuxtData()
   } catch (error) {
     displaySwal(
       'Erreur lors de la modification',

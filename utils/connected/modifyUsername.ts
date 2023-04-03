@@ -28,4 +28,5 @@ export async function modifyUsername(baseUrl: string, username: string) {
   if (response.success) {
     userToStore.setUser(response.data)
   }
+  return response
 }

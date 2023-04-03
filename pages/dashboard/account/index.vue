@@ -60,14 +60,26 @@ async function onEditUsernameClick() {
     editModeUsername.value = false
   } else {
     try {
-      await modifyUsername(config.public.baseURL, displayedUsername.value)
-      displaySwal(
-        'Modification réussie',
-        `Votre nouveau username est ${displayedUsername.value}`,
-        'success',
-        'Ok'
+      const response = await modifyUsername(
+        config.public.baseURL,
+        displayedUsername.value
       )
-      editModeUsername.value = true
+      if (!response.success) {
+        displaySwal(
+          'Echec',
+          'Le pseudo que vous avez saisi est déjà associé à un compte utilisateur. Veuillez utiliser un pseudo différent.',
+          'error',
+          'ok'
+        )
+      } else {
+        displaySwal(
+          'Modification réussie',
+          `Votre nouveau username est ${displayedUsername.value}`,
+          'success',
+          'Ok'
+        )
+        editModeUsername.value = true
+      }
     } catch (error) {
       displaySwal(
         'Erreur lors de la modification',
@@ -191,7 +203,7 @@ async function changeAvatar(event: Event) {
                 </label>
               </div>
               <div
-                v-if="AvatarUrl !== user.currentUser!.picture"
+                v-if="AvatarUrl !== user.currentUser!.picture && AvatarUrl!==''"
                 class="saved_btn w-[25px] h-[25px] mx-auto text-center p-[6px] flex items-center text-xs rounded-md text-white absolute bottom-0 right-0"
               >
                 <button @click="changeAvatar($event)">
@@ -215,7 +227,7 @@ async function changeAvatar(event: Event) {
                   />
                   <img
                     src="@/assets/images/icons/edit.svg"
-                    alt="icone enregistrer"
+                    alt="icone modifier photo"
                   />
                 </label>
               </div>
