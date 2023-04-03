@@ -50,6 +50,7 @@ const promenades = computed(() => {
     }))
   }
 })
+
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {

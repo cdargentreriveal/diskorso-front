@@ -110,15 +110,6 @@ async function onEditEmailClick() {
   }
 }
 
-// function onEditEmailClick() {
-//   /*   if (editModeEmail.value) {
-//     editModeEmail.value = true
-//   } else {
-//     editModeEmail.value = false
-//   } */
-//   editModeEmail.value = !editModeEmail.value
-// }
-
 // Définissez le type de l'argument event comme de type Event
 function handleFileUpload(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0]
