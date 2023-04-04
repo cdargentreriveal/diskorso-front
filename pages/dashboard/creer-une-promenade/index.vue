@@ -7,6 +7,7 @@ definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
+
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
@@ -113,7 +114,6 @@ const items = ref<ItemType[]>([])
 const imageCount = ref<number>(0)
 const transitionCount = ref<number>(0)
 const excerptCount = ref<number>(0)
-
 function addImageInput(): void {
   if (imageCount.value < 4) {
     items.value.push({ type: 'image', file: null, imageUrl: null })
