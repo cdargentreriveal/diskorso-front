@@ -26,7 +26,7 @@ const { data: promenade } = useDiskorso<Promenade>(
       </div>
       <div v-else>
         <div
-          v-if="promenade.main_image === ' '"
+          v-if="promenade.main_image === ''"
           class="h-[55vh] w-full no-image"
         ></div>
         <div

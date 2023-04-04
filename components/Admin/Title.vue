@@ -81,7 +81,8 @@
 </template>
 
 <script lang="ts" setup>
-const selectedOption = ref('Actions groupées')
+const emit = defineEmits(['myEvent'])
+const selectedOption = ref('Actions')
 const btnActionsOpen = ref(false)
 const toggleMenu = () => {
   btnActionsOpen.value = !btnActionsOpen.value
@@ -89,6 +90,8 @@ const toggleMenu = () => {
 const selectOption = (option: string) => {
   selectedOption.value = option
   btnActionsOpen.value = !btnActionsOpen.value
+  const value = option === 'Publier'
+  emit('myEvent', value)
 }
 const propsAdminTitle = defineProps({
   titleBlack: {
@@ -99,6 +102,11 @@ const propsAdminTitle = defineProps({
     type: String,
     default: '',
   },
+  selectedOption: {
+    type: String,
+    default: 'publier',
+  },
+
   data: {
     type: Object,
     default() {

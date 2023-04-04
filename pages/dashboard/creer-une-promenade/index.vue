@@ -2,7 +2,6 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
-import { Category } from '~~/types/Categories'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
@@ -12,9 +11,13 @@ const datasTitle = computed((): BtnAdminPage[] => [
     type: 'button',
     titleBlack: 'Créer une',
     titlePurple: 'promenade',
-    actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
+    actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
   },
 ])
+const publishedPromenade = ref<Boolean>(false)
+const handleMyEvent = (value: boolean) => {
+  publishedPromenade.value = value
+}
 const avatarUrl = ref('')
 const fileInput = ref<HTMLInputElement>()
 
@@ -137,7 +140,6 @@ function handleImageUpload(event: Event, index: number): void {
 const hasAvatar = computed(() => !!avatarUrl.value)
 
 const blocTransition = ref<HTMLElement | null>(null)
-
 onMounted(() => {
   if (blocTransition.value) {
     const sortableTransition = Sortable.create(blocTransition.value, {
@@ -146,8 +148,9 @@ onMounted(() => {
       /* onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-
-        items.value.splice(newIndex, 0, items.value.splice(oldIndex, 1)[0])
+        const updatedItems = [...items.value]
+        updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
+        items.value = updatedItems
       }, */
     })
   }
@@ -163,6 +166,7 @@ onMounted(() => {
       :title-purple="datasTitle[0].titlePurple"
       :data="datasTitle[0].data"
       :action-btn="datasTitle[0].actionBtn"
+      @my-event="handleMyEvent"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12 relative">
@@ -202,7 +206,12 @@ onMounted(() => {
 
       <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
-          <h2>Titre de la promenade<sup>*</sup></h2>
+          <div class="flex items-center justify-between">
+            <h2>Titre de la promenade<sup>*</sup></h2>
+            <div class="max_words font-normal text-xs italic">
+              40 caractères max
+            </div>
+          </div>
           <div class="my-2">
             <input
               v-model="titleInput"
@@ -214,8 +223,8 @@ onMounted(() => {
             />
           </div>
         </div>
-        <div class="promenade_image font-semibold text-lg mb-8">
-          <h2>Ajouter la photo mise en avant<sup>*</sup></h2>
+        <div class="promenade_image font-semibold text-lg mb-10">
+          <h2>Ajouter la photo mise en avant</h2>
           <div class="my-5">
             <label for="avatar-upload text-sm">
               <input
@@ -283,7 +292,7 @@ onMounted(() => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="index">
+          <div v-for="(item, index) in items" :key="index" class="bloc">
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
@@ -327,7 +336,7 @@ onMounted(() => {
 
             <!-- Transition input -->
             <div
-              v-if="item.type === 'transition'"
+              v-else-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
               <div class="w-full h-[300px] mr-5 cursor-move wisiwig">
@@ -350,7 +359,7 @@ onMounted(() => {
 
             <!-- Excerpt block -->
             <div
-              v-if="item.type === 'excerpt'"
+              v-else-if="item.type === 'excerpt'"
               class="flex justify-between py-5 items-start"
             >
               <div class="bg-white rounded-md p-5 w-full mr-5 cursor-move">
@@ -405,6 +414,7 @@ onMounted(() => {
     :main-image="avatarUrl"
     :summary="summaryPromenade"
     :content="items"
+    :published="!!publishedPromenade"
   />
 </template>
 <style scoped lang="scss">

@@ -57,22 +57,9 @@ const propsCard = defineProps({
 </script>
 
 <template>
-  <div
-    class="card rounded-md overflow-hidden bg-white box-shaddow relative h-full"
-  >
-    <div
-      v-if="!promenade.published"
-      class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
-    >
-      <img
-        src="@/assets/images/icons/eye-off.svg"
-        alt="icone oeil caché"
-        class="w-full mr-2"
-      />
-      <span>Brouillon</span>
-    </div>
+  <div class="card rounded-md overflow-hidden bg-white box-shaddow h-full">
     <NuxtLink :to="`/promenades/${promenade.slug}`">
-      <div class="card-image">
+      <div class="card-image relative">
         <img
           v-if="promenade.main_image === ''"
           class="w-full h-full object-cover"
@@ -86,10 +73,27 @@ const propsCard = defineProps({
           :src="promenade.main_image"
           :alt="promenade.title"
         />
+        <div
+          v-if="!promenade.published"
+          class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
+        >
+          <img
+            src="@/assets/images/icons/eye-off.svg"
+            alt="icone oeil caché"
+            class="w-[15px] mr-2"
+          />
+          <span>En brouillon</span>
+        </div>
+        <div
+          v-if="!promenade.published"
+          class="published absolute bottom-0 text-black right-0 text-xs p-3 flex items-center bg-white underline"
+        >
+          <span>Publier maintenant </span>
+        </div>
       </div>
     </NuxtLink>
     <div class="card-content p-6">
-      <div class="card-content-title font-bold text-xl my-1">
+      <div class="card-content-title font-bold text-xl my-1 h-[56px]">
         <h2>{{ promenade.title }}</h2>
       </div>
       <div class="card-content-date text-xs gray-color mt-2">
@@ -112,7 +116,7 @@ const propsCard = defineProps({
           </NuxtLink>
         </div>
       </div>
-      <p class="text-xs gray-color card-content-description">
+      <p class="text-xs gray-color card-content-description h-[32px]">
         {{ promenade.summary }}
       </p>
       <div class="card-content-bottom pt-8 pb-2">
@@ -165,9 +169,16 @@ const propsCard = defineProps({
   background-color: var(--blue-color);
   border-radius: 0 0 0 0.5rem;
 }
+.published {
+  border-radius: 0.5rem 0 0 0;
+  &:after {
+    content: ' →';
+    white-space: break-spaces;
+  }
+}
 .card {
   &-image {
-    height: 240px;
+    height: 200px;
     width: 100%;
     overflow: hidden;
     & img {

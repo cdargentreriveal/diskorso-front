@@ -12,12 +12,15 @@ const config = useRuntimeConfig()
   >
     <div class="menu-admin pt-[150px] pb-[10px] h-full">
       <ul class="divide-y divide-slate-300 text-xs">
-        <li class="px-5 py-7 flex items-center gap-2">
+        <NuxtLink
+          to="/dashboard/tutoriel"
+          class="px-5 py-7 flex items-center gap-2"
+        >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/eye.svg" alt=""
           /></span>
           <span>Tutoriel</span>
-        </li>
+        </NuxtLink>
         <NuxtLink to="/dashboard" class="px-5 py-7 flex items-center gap-2">
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
@@ -49,29 +52,32 @@ const config = useRuntimeConfig()
         >
           <NuxtLink
             to="/dashboard/gestion-utilisateurs"
-            class="px-5 py-7 flex items-center gap-2 bg-slate-100"
+            class="px-5 py-7 flex items-center gap-2 bg-slate-100 relative"
           >
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/user.svg" alt=""
             /></span>
             <span>Gérer les utilisateurs</span>
-            <span class="-mt-[1rem]"
+            <span class="absolute right-5 top-5"
               ><img
                 src="@/assets/images/icons/menu-admin/super-admin-star.svg"
                 alt=""
             /></span>
           </NuxtLink>
-          <li class="px-5 py-7 flex items-center gap-2 bg-slate-100">
+          <NuxtLink
+            to="/dashboard/gestion-promenades"
+            class="px-5 py-7 flex items-center gap-2 bg-slate-100 relative"
+          >
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
             /></span>
             <span>Gérer les promenades</span>
-            <span class="-mt-[1rem]"
+            <span class="absolute right-5 top-5"
               ><img
                 src="@/assets/images/icons/menu-admin/super-admin-star.svg"
                 alt=""
             /></span>
-          </li>
+          </NuxtLink>
         </div>
         <!-- Super Admin Menu-->
       </ul>

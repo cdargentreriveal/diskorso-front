@@ -18,10 +18,10 @@
       </div>
     </NuxtLink>
     <div class="card-content p-8">
-      <div class="card-content-title font-bold text-2xl my-1">
+      <div class="card-content-title font-bold text-2xl my-1 h-[64px]">
         <h2>{{ promenade.title }}</h2>
       </div>
-      <div class="card-content-date text-sm gray-color">
+      <div class="card-content-date text-sm gray-color mt-2">
         Crée le : {{ getDate(promenade.createdAt) }}
       </div>
       <div class="card-content-categories flex gap-4 py-5">
@@ -41,7 +41,7 @@
           </NuxtLink>
         </div>
       </div>
-      <p class="text-sm gray-color card-content-description">
+      <p class="text-sm gray-color card-content-description h-[60px]">
         {{ promenade.summary }}
       </p>
       <div class="card-content-bottom pt-8 pb-2">
@@ -104,15 +104,6 @@ const propsCard = defineProps({
     type: [String, Object],
     default: undefined,
   },
-})
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
 })
 </script>
 
