@@ -10,11 +10,11 @@ definePageMeta({
 // ________________________________________________________________________________________
 const route = useRoute()
 const config = useRuntimeConfig()
-const params = route.params.slug_id as String
-const [slug, id] = params.split('_')
+const slug = route.params.slug as string
+// const [slug, id] = params.split('_')
 const numberOfPromenade = ref(2)
 const query = ref(
-  `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
+  `promenade/user/findLastPromenades/${slug}/${numberOfPromenade.value}`
 )
 
 // ________________________________________________________________________________________
@@ -46,10 +46,10 @@ const firstId = computed(() => {
   }
 })
 const { data: lastNumberData } = await useDiskorso<number>(
-  `promenade/user/${id}/last-promenade`
+  `promenade/user/${slug}/last-promenade`
 )
 const { data: firstNumberData } = await useDiskorso<number>(
-  `promenade/user/${id}/first-promenade`
+  `promenade/user/${slug}/first-promenade`
 )
 // next
 function next() {
@@ -58,11 +58,11 @@ function next() {
     promenades.value === null ||
     firstNumberData.value === null
   ) {
-    query.value = `user/findLastPromenades/${id}/${numberOfPromenade.value}`
+    query.value = `user/findLastPromenades/${slug}/${numberOfPromenade.value}`
   } else if (lastId.value === +firstNumberData.value) {
     return 'no more promenade'
   } else {
-    query.value = `promenade/user/promenade-cursor/${id}/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    query.value = `promenade/user/promenade-cursor/${slug}/${numberOfPromenade.value}/${lastId.value}/1/desc`
     refresh()
   }
 }
@@ -70,19 +70,19 @@ function next() {
 function previous() {
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
-    query.value = `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
+    query.value = `promenade/user/findLastPromenades/${slug}/${numberOfPromenade.value}`
   } else if (firstId.value === +lastNumberData.value) {
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
     return 'no more promenade'
   } else {
-    query.value = `promenade/user/promenade-cursor/${id}/${numberOfPromenade.value}/${firstId.value}/1/asc`
+    query.value = `promenade/user/promenade-cursor/${slug}/${numberOfPromenade.value}/${firstId.value}/1/asc`
     refresh()
   }
 }
 // return first
 function first() {
-  query.value = `promenade/user/findLastPromenades/${id}/${numberOfPromenade.value}`
+  query.value = `promenade/user/findLastPromenades/${slug}/${numberOfPromenade.value}`
   refresh()
 }
 
@@ -90,7 +90,7 @@ function first() {
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
 const { data: totalPromenades } = await useDiskorso<number>(
-  `promenade/user/${id}/count`
+  `promenade/user/${slug}/count`
 )
 let totalPages = 0
 if (totalPromenades.value === null) {
