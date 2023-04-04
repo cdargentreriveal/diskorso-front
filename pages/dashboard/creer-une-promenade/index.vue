@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import { ExtractFetched } from '~~/types/Extracts'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 definePageMeta({
   layout: 'admin',
@@ -14,6 +15,46 @@ const datasTitle = computed((): BtnAdminPage[] => [
     actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
   },
 ])
+const config = useRuntimeConfig()
+let xsrfToken: any = null
+if (process.client) {
+  xsrfToken = localStorage.getItem('xsrfToken')
+}
+
+type Response = {
+  data: ExtractFetched[]
+  message: string
+  success: boolean
+}
+
+const { data: response } = await useAsyncData<Response>('response', () =>
+  $fetch(`${config.public.baseURL}/extract/user-connected/all`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${xsrfToken}`,
+    },
+    credentials: 'include',
+  })
+)
+const extracts = computed(() => {
+  if (response.value === null) {
+    return []
+  } else {
+    return response.value.data.map((extract) => ({
+      ...extract,
+    }))
+  }
+})
+onMounted(() => {
+  const descriptionCard = document.querySelectorAll('.extraits_item_text')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 100) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
+})
 const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
@@ -87,12 +128,11 @@ function addTransitionInput(): void {
   }
 }
 
-function addExcerptBlock(): void {
-  // TODO: Récupérer les données de l'extrait et les ajouter à l'array
+function addExcerptBlock(content: string): void {
   if (excerptCount.value < 4) {
     items.value.push({
       type: 'excerpt',
-      content: "Contenu de l'extrait",
+      content,
     })
     excerptCount.value++
   }
@@ -174,19 +214,26 @@ onMounted(() => {
         <div
           class="extraits w-11/12 bg-white rounded p-5 text-xs mb-3 sticky top-[22%]"
         >
-          <div class="extraits_item">
+          <div
+            v-for="(extract, index) in extracts"
+            :key="index"
+            class="extraits_item"
+          >
             <div class="extraits_item_title text-sm font-semibold mb-2">
-              <h3>Titre 1</h3>
+              <h3>{{ extract.name }}</h3>
             </div>
             <div class="extraits_item_cats flex gap-2 flex-wrap">
               <div
-                class="cats category-btn px-4 py-2 rounded-full cat-purple inline mb-1"
+                v-for="(cat, indexCat) in extract.categories"
+                :key="indexCat"
+                class="cats category-btn px-4 py-2 rounded-full inline mb-1"
+                :class="cat.color"
               >
-                Science
+                {{ cat.title }}
               </div>
             </div>
             <div class="extraits_item_text my-3">
-              <p>Ceci est un texte de l'extrait</p>
+              <p>{{ extract.content }}</p>
             </div>
             <div class="btns mt-4">
               <div class="flex items-center justify-between">
@@ -194,10 +241,17 @@ onMounted(() => {
                   Voir l'extrait
                 </div>
                 <div
+                  :class="
+                    excerptCount === 4 ? 'cursor-not-allowed disabled' : ''
+                  "
                   class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
-                  @click="addExcerptBlock"
+                  @click="addExcerptBlock(extract.content)"
                 >
-                  <button>Ajouter l'extrait</button>
+                  <button
+                    :class="excerptCount === 4 ? 'cursor-not-allowed' : ''"
+                  >
+                    Ajouter l'extrait
+                  </button>
                 </div>
               </div>
             </div>
@@ -431,7 +485,8 @@ sup {
 .promenade_btn_image {
   background-color: var(--blue-color);
 }
-.promenade_btn_image.disabled {
+.promenade_btn_image.disabled,
+.btn_add_extrait.disabled {
   background-color: rgb(209 213 219);
 }
 .promenade_btn_transition,
