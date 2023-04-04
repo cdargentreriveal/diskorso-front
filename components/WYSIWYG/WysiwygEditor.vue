@@ -1,7 +1,5 @@
 <template>
-  <client-only>
-    <div ref="editorRef"></div>
-  </client-only>
+  <div ref="editorRef"></div>
 </template>
 
 <script lang="ts">
