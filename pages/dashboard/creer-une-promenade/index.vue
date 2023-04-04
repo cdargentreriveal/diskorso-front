@@ -138,20 +138,21 @@ function handleImageUpload(event: Event, index: number): void {
 }
 // Calculer si une photo est sélectionnée
 const hasAvatar = computed(() => !!avatarUrl.value)
-
-const blocTransition = ref<HTMLElement | null>(null)
+// mettre a jour le tableau ITEMS dans updatedItemsPublished pour envoyer les bonnes positions des elements au back
+const updatedItemsPublished = ref(items.value)
+const blocTransition = ref(null)
 onMounted(() => {
   if (blocTransition.value) {
     const sortableTransition = Sortable.create(blocTransition.value, {
       group: 'bloc',
       animation: 250,
-      /* onEnd: (event: any) => {
+      onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-        const updatedItems = [...items.value]
+        const updatedItems = [...updatedItemsPublished.value]
         updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
-        items.value = updatedItems
-      }, */
+        updatedItemsPublished.value = updatedItems
+      },
     })
   }
 })
@@ -336,7 +337,7 @@ onMounted(() => {
 
             <!-- Transition input -->
             <div
-              v-else-if="item.type === 'transition'"
+              v-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
               <div class="w-full h-[300px] mr-5 cursor-move wisiwig">
@@ -359,7 +360,7 @@ onMounted(() => {
 
             <!-- Excerpt block -->
             <div
-              v-else-if="item.type === 'excerpt'"
+              v-if="item.type === 'excerpt'"
               class="flex justify-between py-5 items-start"
             >
               <div class="bg-white rounded-md p-5 w-full mr-5 cursor-move">
@@ -413,7 +414,7 @@ onMounted(() => {
     :slug="slugTitleInput"
     :main-image="avatarUrl"
     :summary="summaryPromenade"
-    :content="items"
+    :content="updatedItemsPublished"
     :published="!!publishedPromenade"
   />
 </template>
