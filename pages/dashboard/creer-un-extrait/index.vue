@@ -58,7 +58,6 @@ const datasTitle = computed((): BtnAdminPage[] => [
         <div class="font-semibold mb-4">Collez votre contenu <sup>*</sup></div>
         <div class="my-2 w-full h-[30vh] max-h-[30vh]">
           <WysiwygEditor
-            ref="quillEditor"
             class="h-full bg-white"
             :modules="{ toolbar: false }"
           />

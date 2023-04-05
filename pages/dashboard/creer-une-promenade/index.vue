@@ -180,10 +180,10 @@ function handleImageUpload(event: Event, index: number): void {
 const hasAvatar = computed(() => !!avatarUrl.value)
 // mettre a jour le tableau ITEMS dans updatedItemsPublished pour envoyer les bonnes positions des elements au back
 const updatedItemsPublished = ref(items.value)
-const blocTransition = ref(null)
+const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
   if (blocTransition.value) {
-    const sortableTransition = Sortable.create(blocTransition.value, {
+    const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
       animation: 250,
       onEnd: (event: any) => {
@@ -394,12 +394,9 @@ onMounted(() => {
               v-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
-              <div class="w-full h-[300px] mr-5 cursor-move wisiwig">
-                <!--                 <WysiwygEditor
-                  v-model="item.content"
-                  @update:value="(content) => (item.content = content)"
-                /> -->
+              <div class="w-full h-[300px] mr-5">
                 <WysiwygEditor
+                  class="h-full"
                   @update:value="(content) => (item.content = content)"
                 />
               </div>
@@ -417,8 +414,10 @@ onMounted(() => {
               v-if="item.type === 'excerpt'"
               class="flex justify-between py-5 items-start"
             >
-              <div class="bg-white rounded-md p-5 w-full mr-5 cursor-move">
-                <div>{{ item.content }}</div>
+              <div
+                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm"
+              >
+                <div v-html="item.content"></div>
               </div>
               <button @click="removeItem(index)">
                 <img

@@ -312,6 +312,7 @@ definePageMeta({
       </div>
     </div>
   </div>
+  <AdminMenuSideBarManageUsers />
 </template>
 <style scoped lang="scss">
 .actif {

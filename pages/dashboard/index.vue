@@ -77,6 +77,7 @@ onMounted(() => {
       :route="datasTitle[0].route.name"
     />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
+      <AdminCatsFilter />
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
