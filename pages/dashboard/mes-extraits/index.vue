@@ -63,10 +63,12 @@ const datasTitle = computed((): BtnAdminPage[] => [
       class="container_promenade w-9/12 mx-auto flex items-center gap-8 flex-wrap"
     >
       <AdminCatsFilter />
-      <div class="w-4/12 flex gap-8">
-        <div v-for="(extract, index) in extracts" :key="index">
-          <AdminCardTemplateExtrait :extract="extract" />
-        </div>
+      <div
+        v-for="(extract, index) in extracts"
+        :key="index"
+        class="w-4/12 p-2 h-full"
+      >
+        <AdminCardTemplateExtrait :extract="extract" class="h-full" />
       </div>
     </div>
   </div>
