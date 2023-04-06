@@ -31,6 +31,7 @@ const propsCard = defineProps({
     required: true,
   },
 })
+
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
@@ -59,11 +60,21 @@ async function submitDeletedExtract() {
     )
   }
 }
+
 </script>
 
 <template>
   <div class="card-extrait rounded-md overflow-hidden bg-white box-shaddow">
     <div class="card-content p-6">
+      <!-- Rounded switch -->
+      <div class="switch-btn mb-4 flex items-center text-xs justify-end">
+        <div class="mr-2 visible">Mettre en avant</div>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <hr class="my-6" />
       <div class="card-content-title font-bold text-xl my-1 mb-3">
         <h2>{{ extract.name }}</h2>
       </div>
@@ -190,5 +201,67 @@ async function submitDeletedExtract() {
       font-style: italic;
     }
   }
+}
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 12px;
+  width: 12px;
+  left: 3px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(16px);
+  -ms-transform: translateX(16px);
+  transform: translateX(16px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 </style>

@@ -48,6 +48,15 @@ const datasTitle = computed((): BtnAdminPage[] => [
     route: { name: 'creer-un-extrait' },
   },
 ])
+onMounted(() => {
+  const descriptionCard = document.querySelectorAll('.card-content-description')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 170) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
+})
 </script>
 
 <template>
@@ -60,17 +69,16 @@ const datasTitle = computed((): BtnAdminPage[] => [
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <div
-      class="container_promenade w-9/12 mx-auto flex items-center gap-8 flex-wrap"
-    >
-      <div class="flex gap-8">
-        <div v-for="(extract, index) in extracts" :key="index">
+    <AdminCatsFilter />
+    <div class="container_promenade w-9/12 mx-auto flex items-center flex-wrap">
+
+        <div v-for="(extract, index) in extracts" :key="index" class="w-4/12 p-2 h-full">
           <AdminCardTemplateExtrait
             :extract="extract"
             :show-modal="extract.showModal"
             class="h-full w-70"
           />
-        </div>
+
       </div>
     </div>
   </div>

@@ -33,7 +33,7 @@ export default defineComponent({
             modules: {
               toolbar: [
                 [{ header: [2, 3, 4, false] }],
-                ['bold', 'italic', 'underline'],
+                ['bold', 'italic', 'underline', 'strike'],
                 [{ color: [] }],
                 [{ list: 'ordered' }, { list: 'bullet' }],
                 [{ align: [] }],
@@ -76,4 +76,4 @@ export default defineComponent({
   },
 })
 </script>
-<style scoped lnag="scss"></style>
+<style scoped lang="scss"></style>

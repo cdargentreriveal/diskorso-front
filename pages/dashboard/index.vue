@@ -76,6 +76,7 @@ onMounted(() => {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
+    <AdminCatsFilter />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in promenades"
