@@ -119,7 +119,8 @@ const propsCard = defineProps({
       <p class="text-xs gray-color card-content-description h-[32px]">
         {{ promenade.summary }}
       </p>
-      <div class="card-content-bottom pt-8 pb-2">
+      <hr class="my-6" />
+      <div class="card-content-bottom pb-2">
         <div class="flex items-center justify-between">
           <div class="card-content-author w-1/2">
             <div
