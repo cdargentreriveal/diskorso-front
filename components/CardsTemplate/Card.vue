@@ -47,11 +47,7 @@
       <div class="card-content-bottom pt-8 pb-2">
         <div class="flex items-center">
           <div class="card-content-author w-1/2">
-            <NuxtLink
-              :to="`/contributor/${
-                promenade.user.username + '_' + promenade.user.id
-              }`"
-            >
+            <NuxtLink :to="`/contributor/${promenade.user.username}`">
               <div class="flex gap-3 items-center">
                 <div
                   class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black h-[45px] w-[45px]"

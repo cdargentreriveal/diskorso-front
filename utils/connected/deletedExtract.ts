@@ -1,6 +1,6 @@
 import { refreshToken } from '../connected/refreshToken'
 
-export async function deletedPromenade(baseURL: string, data: object) {
+export async function deletedExtract(baseURL: string, data: object) {
   try {
     const xsrfToken = localStorage.getItem('xsrfToken')
     const options = {
@@ -12,11 +12,11 @@ export async function deletedPromenade(baseURL: string, data: object) {
       credentials: 'include' as RequestCredentials,
       body: JSON.stringify(data),
     }
-    const response = await fetch(`${baseURL}/promenadeditor/delete`, options)
+    const response = await fetch(`${baseURL}/extract/user-connected`, options)
     const res = await response.json()
     if (res.statusCode === 401) {
       await refreshToken(baseURL)
-      await fetch(`${baseURL}/promenadeditor/delete`, options)
+      await fetch(`${baseURL}/extract/user-connected`, options)
     }
     if (res.ok) {
       return res

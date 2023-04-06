@@ -34,6 +34,7 @@ const extracts = computed(() => {
   } else {
     return response.value.data.map((extract) => ({
       ...extract,
+      showModal: false,
     }))
   }
 })
@@ -70,12 +71,14 @@ onMounted(() => {
     />
     <AdminCatsFilter />
     <div class="container_promenade w-9/12 mx-auto flex items-center flex-wrap">
-      <div
-        v-for="(extract, index) in extracts"
-        :key="index"
-        class="w-4/12 p-2 h-full"
-      >
-        <AdminCardTemplateExtrait :extract="extract" class="h-full" />
+
+        <div v-for="(extract, index) in extracts" :key="index" class="w-4/12 p-2 h-full">
+          <AdminCardTemplateExtrait
+            :extract="extract"
+            :show-modal="extract.showModal"
+            class="h-full w-70"
+          />
+
       </div>
     </div>
   </div>
