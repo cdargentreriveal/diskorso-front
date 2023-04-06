@@ -212,12 +212,12 @@ onMounted(() => {
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12 relative">
         <div
-          class="extraits w-11/12 bg-white rounded p-5 text-xs mb-3 sticky top-[22%]"
+          class="extraits w-11/12 text-xs mb-3 sticky top-[22%] h-[80vh] overflow-auto"
         >
           <div
             v-for="(extract, index) in extracts"
             :key="index"
-            class="extraits_item"
+            class="extraits_item bg-white rounded mb-5 p-5"
           >
             <div class="extraits_item_title text-sm font-semibold mb-2">
               <h3>{{ extract.name }}</h3>
