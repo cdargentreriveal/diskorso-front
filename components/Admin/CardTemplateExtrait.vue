@@ -60,7 +60,6 @@ async function submitDeletedExtract() {
     )
   }
 }
-
 </script>
 
 <template>
