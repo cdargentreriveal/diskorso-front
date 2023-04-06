@@ -210,7 +210,7 @@ onMounted(() => {
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12 relative">
         <div
-          class="extraits w-11/12 text-xs mb-3 sticky top-[22%] h-[80vh] overflow-auto"
+          class="extraits w-11/12 text-xs mb-3 sticky top-[22%] h-[60vh] overflow-auto"
         >
           <div
             v-for="(extract, index) in extracts"
