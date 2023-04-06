@@ -47,15 +47,6 @@ const extracts = computed(() => {
     }))
   }
 })
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.extraits_item_text')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 100) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
 const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
@@ -193,6 +184,13 @@ onMounted(() => {
         updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
         updatedItemsPublished.value = updatedItems
       },
+    })
+  }
+  const descriptionCard = document.querySelectorAll('.extraits_item_text')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 100) ?? ''
+      element.textContent = shortDescription + '...'
     })
   }
 })
