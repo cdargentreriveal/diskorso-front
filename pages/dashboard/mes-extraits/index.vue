@@ -59,10 +59,8 @@ const datasTitle = computed((): BtnAdminPage[] => [
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <div
-      class="container_promenade w-9/12 mx-auto flex items-center gap-8 flex-wrap"
-    >
-      <AdminCatsFilter />
+    <AdminCatsFilter />
+    <div class="container_promenade w-9/12 mx-auto flex items-center flex-wrap">
       <div
         v-for="(extract, index) in extracts"
         :key="index"
