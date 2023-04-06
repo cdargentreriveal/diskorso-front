@@ -42,11 +42,7 @@ const { data: promenade } = useDiskorso<Promenade>(
           <div
             class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 border border-black border-2"
           >
-            <NuxtLink
-              :to="`/contributor/${
-                promenade.user.username + '_' + promenade.userId
-              }`"
-            >
+            <NuxtLink :to="`/contributor/${promenade.user.username}`">
               <img
                 v-if="promenade.user.picture === null"
                 src="@/assets/images/test-avatar.jpg"
@@ -64,11 +60,7 @@ const { data: promenade } = useDiskorso<Promenade>(
             >
               <p>Créee le : {{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
-              <NuxtLink
-                :to="`/contributor/${
-                  promenade.user.username + '_' + promenade.userId
-                }`"
-              >
+              <NuxtLink :to="`/contributor/${promenade.user.username}`">
                 <p>
                   par :
                   <span class="underline">{{ promenade.user.username }}</span>

@@ -1,11 +1,34 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { ExtractFetched } from '~~/types/Extracts'
+import { deletedExtract } from '~~/utils/connected/deletedExtract'
+
+// const showModal = ref(false)
+const showModal = useState<boolean>('showModal', () => false)
+const config = useRuntimeConfig()
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
 
 const propsCard = defineProps({
   extract: {
     type: Object as PropType<ExtractFetched>,
     default: null,
+  },
+  showModal: {
+    type: Boolean,
+    required: true,
   },
 })
 onMounted(() => {
@@ -17,6 +40,25 @@ onMounted(() => {
     })
   }
 })
+
+async function submitDeletedExtract() {
+  const data = {
+    ids: [propsCard.extract.id],
+  }
+
+  try {
+    await deletedExtract(config.public.baseURL, data)
+    displaySwal('Extrait(s) supprimé(s)', ``, 'success', 'Ok')
+    refreshNuxtData()
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la modification',
+      'Une erreur est survenue. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
 </script>
 
 <template>
@@ -56,7 +98,52 @@ onMounted(() => {
             </div>
             <div class="card-content-number-check ml-1">+6</div>
           </div>
-          <div class="card-content-view-btn underline">Voir l'extrait ></div>
+          <button
+            class="card-content-view-btn underline"
+            @click="showModal = true"
+          >
+            Voir l'extrait >
+          </button>
+          <ModalBase :show="showModal">
+            <div class="p-4 px-15 divide-y">
+              <div>
+                <div class="text-lg font-semibold my-8 text-slate-500">
+                  {{ extract.name }}
+                </div>
+                <!-- eslint-disable vue/no-v-html -->
+                <div
+                  class="text-xs text-justify"
+                  v-html="extract.content"
+                ></div>
+                <!--eslint-enable-->
+                <div
+                  class="text-xs italic font-semibold my-5 text-slate-500 text-right"
+                >
+                  {{ extract.source }}
+                </div>
+              </div>
+              <div class="flex flex-col">
+                <p
+                  v-if="extract.used_in_article"
+                  class="text-xs mt-5 font-semibold"
+                >
+                  Cet extrait apparaît dans les promenades suivantes :
+                </p>
+                <p v-else class="text-xs mt-5 font-semibold">
+                  Extrait non encore utilisé
+                </p>
+                <div class="self-end">
+                  <button
+                    type="button"
+                    class="w-100px bg-indigo-200 px-3 py-1 font-medium"
+                    @click="showModal = false"
+                  >
+                    Fermer
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ModalBase>
         </div>
       </div>
       <hr class="my-6" />
@@ -68,26 +155,10 @@ onMounted(() => {
             >
               Modifier
             </div>
-            <!--             <NuxtLink
-              :to="`/contributor/${
-                promenade.user.username + '_' + promenade.user.id
-              }`"
-            >
-              <div class="flex gap-3 items-center">
-                <div
-                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
-                >
-                  <img :src="promenade.user.picture" alt="avatar" />
-                </div>
-                <div class="card-content-author gray-color text-xs italic">
-                  par :
-                  <span class="underline">{{ promenade.user.username }}</span>
-                </div>
-              </div>
-            </NuxtLink> -->
           </div>
           <div
-            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color"
+            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color cursor-pointer"
+            @click.prevent="submitDeletedExtract"
           >
             <div class="delete ml-auto w-[12px] cursor-pointer">
               <img

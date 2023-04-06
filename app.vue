@@ -1,11 +1,14 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="app">
-    <NuxtLayout>
-      <main>
-        <NuxtPage />
-      </main>
-    </NuxtLayout>
+  <div>
+    <div class="app relative z-10">
+      <NuxtLayout>
+        <main>
+          <NuxtPage />
+        </main>
+      </NuxtLayout>
+    </div>
+    <div id="modals" class="relative z-20"></div>
   </div>
 </template>

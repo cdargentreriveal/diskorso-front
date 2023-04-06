@@ -16,5 +16,6 @@ export interface ExtractFetched {
   source: string
   status: string
   updatedAt: string
+  used_in_article: boolean
   user_id: number
 }

@@ -34,7 +34,7 @@ async function submitDeletedPromenade() {
   } catch (error) {
     displaySwal(
       'Erreur lors de la modification',
-      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'Une erreur est survenue lors de la suppression de votre promenade. Veuillez réessayer plus tard.',
       'error',
       'Ok'
     )

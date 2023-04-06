@@ -34,6 +34,7 @@ const extracts = computed(() => {
   } else {
     return response.value.data.map((extract) => ({
       ...extract,
+      showModal: false,
     }))
   }
 })
@@ -62,9 +63,13 @@ const datasTitle = computed((): BtnAdminPage[] => [
     <div
       class="container_promenade w-9/12 mx-auto flex items-center gap-8 flex-wrap"
     >
-      <div class="w-4/12 flex gap-8">
+      <div class="flex gap-8">
         <div v-for="(extract, index) in extracts" :key="index">
-          <AdminCardTemplateExtrait :extract="extract" />
+          <AdminCardTemplateExtrait
+            :extract="extract"
+            :show-modal="extract.showModal"
+            class="h-full w-70"
+          />
         </div>
       </div>
     </div>
