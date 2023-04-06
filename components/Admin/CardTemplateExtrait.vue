@@ -77,7 +77,7 @@ async function submitDeletedExtract() {
       <div class="card-content-title font-bold text-xl my-1 mb-3">
         <h2>{{ extract.name }}</h2>
       </div>
-      <div class="card-content-categories flex gap-4 py-5">
+      <div class="card-content-categories flex py-5">
         <div
           v-for="(cat, index) in extract.categories"
           :key="index"

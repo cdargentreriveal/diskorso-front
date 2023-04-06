@@ -7,7 +7,6 @@ definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
-
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
@@ -392,9 +391,8 @@ onMounted(() => {
               v-if="item.type === 'transition'"
               class="flex justify-between py-5 mb-10 items-start"
             >
-              <div class="w-full h-[300px] mr-5 cursor-move">
+              <div class="w-full mr-5 cursor-move">
                 <WysiwygEditor
-                  class="h-full"
                   @update:value="(content) => (item.content = content)"
                 />
               </div>
