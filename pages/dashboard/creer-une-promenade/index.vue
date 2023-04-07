@@ -129,7 +129,7 @@ function addExcerptBlock(content: string): void {
 }
 
 function removeItem(index: number): void {
-  const type = items.value[index].type
+  /*   const type = items.value[index].type
 
   if (type === 'image') {
     imageCount.value--
@@ -138,7 +138,7 @@ function removeItem(index: number): void {
   } else if (type === 'excerpt') {
     excerptCount.value--
   }
-
+ */
   items.value.splice(index, 1)
 }
 
