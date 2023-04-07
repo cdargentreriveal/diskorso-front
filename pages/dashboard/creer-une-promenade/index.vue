@@ -351,7 +351,7 @@ onMounted(() => {
               v-if="item.type === 'image'"
               class="flex justify-between py-6 items-start"
             >
-              <div class="my-2 w-full">
+              <div class="my-2 w-full drag">
                 <label for="avatar-upload text-sm">
                   <input
                     id="avatar-upload"
@@ -427,7 +427,7 @@ onMounted(() => {
               class="flex justify-between py-6 items-start"
             >
               <div
-                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm"
+                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm drag"
               >
                 <div v-html="item.content"></div>
               </div>
