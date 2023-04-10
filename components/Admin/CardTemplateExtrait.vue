@@ -4,7 +4,7 @@ import { ExtractFetched } from '~~/types/Extracts'
 import { deletedExtract } from '~~/utils/connected/deletedExtract'
 
 // const showModal = ref(false)
-const showModal = useState<boolean>('showModal', () => false)
+// const showModal = useState<boolean>('showModal', () => false)
 const config = useRuntimeConfig()
 const { $swal } = useNuxtApp()
 const displaySwal = (
@@ -28,6 +28,10 @@ const propsCard = defineProps({
   },
   showModal: {
     type: Boolean,
+    required: true,
+  },
+  toggle: {
+    type: Function,
     required: true,
   },
 })
@@ -69,7 +73,7 @@ async function submitDeletedExtract() {
       <div class="switch-btn mb-4 flex items-center text-xs justify-end">
         <div class="mr-2 visible">Mettre en avant</div>
         <label class="switch">
-          <input type="checkbox" />
+          <input type="checkbox" @click="sendToPinia(extract)" />
           <span class="slider round"></span>
         </label>
       </div>
@@ -108,10 +112,7 @@ async function submitDeletedExtract() {
             </div>
             <div class="card-content-number-check ml-1">+6</div>
           </div>
-          <button
-            class="card-content-view-btn underline"
-            @click="showModal = true"
-          >
+          <button class="card-content-view-btn underline" @click="toggle()">
             Voir l'extrait >
           </button>
           <ModalBase :show="showModal">
@@ -146,7 +147,7 @@ async function submitDeletedExtract() {
                   <button
                     type="button"
                     class="w-100px bg-indigo-200 px-3 py-1 font-medium"
-                    @click="showModal = false"
+                    @click="toggle()"
                   >
                     Fermer
                   </button>

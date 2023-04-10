@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { Promenade } from '~~/types/Promenades'
-const user = useUserStore()
+import { refreshToken } from '~~/utils/connected/refreshToken'
 const config = useRuntimeConfig()
 
 let xsrfToken: any = null
@@ -25,35 +24,40 @@ definePageMeta({
   middleware: ['is-logged'],
 })
 
-type Response = {
-  data: Promenade[]
-  message: string
-  success: boolean
-}
-const { data: response } = await useAsyncData<Response>('response', () =>
-  $fetch(`${config.public.baseURL}/promenadeditor/getpromenades`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${xsrfToken}`,
-    },
-    credentials: 'include',
-  })
+const {
+  data: response,
+  error,
+  execute,
+} = await useAsyncData<Promenade[]>(
+  'response',
+  async () =>
+    await $fetch(`${config.public.baseURL}/promenadeditor/getpromenades`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${xsrfToken}`,
+      },
+      credentials: 'include',
+    }).then((res: any) => {
+      const promenades = res.data.sort((a: any, b: any) => {
+        const dateA = new Date(a.createdAt)
+        const dateB = new Date(b.createdAt)
+        return dateB.getTime() - dateA.getTime()
+      })
+      return promenades
+    })
 )
 
-const promenades = computed(() => {
-  if (response.value === null) {
-    return []
-  } else {
-    const promenadesCopy = [...response.value.data] // create a copy of the array
-    promenadesCopy.sort((a, b) => {
-      const dateA = new Date(a.createdAt)
-      const dateB = new Date(b.createdAt)
-      return dateB.getTime() - dateA.getTime() // sort in descending order
+if (error.value !== null) {
+  refreshToken(config.public.baseURL)
+    .then(() => {
+      execute()
     })
-    return promenadesCopy
-  }
-})
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error('Erreur lors du rafraîchissement du token:', error)
+    })
+}
 
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
@@ -79,7 +83,7 @@ onMounted(() => {
     <AdminCatsFilter />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
-        v-for="(promenade, index) in promenades"
+        v-for="(promenade, index) in response"
         :key="index"
         class="w-4/12 p-2 h-full"
       >

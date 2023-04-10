@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { Category } from '~~/types/Categories'
-const { data: categories } = useDiskorso<Category[]>('category/all')
+import { useCategoryStore } from '~~/store/category'
+
+const categoriesStore = useCategoryStore()
+const categories = categoriesStore.categories
 </script>
 
 <template>
@@ -8,9 +10,9 @@ const { data: categories } = useDiskorso<Category[]>('category/all')
     <div class="flex items-center justify-center">
       <div v-for="(categorie, index) in categories" :key="index">
         <button
-          :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie.color} uppercase`"
+          :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie?.color} uppercase`"
         >
-          {{ categorie.title }}
+          {{ categorie?.title }}
         </button>
       </div>
     </div>

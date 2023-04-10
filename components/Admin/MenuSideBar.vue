@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
 import { createdPromenade } from '~~/utils/connected'
+import { useCategoryStore } from '~~/store/category'
 const config = useRuntimeConfig()
-const { data: categories } = useDiskorso<Category[]>('category/all')
+
+const categoriesStore = useCategoryStore()
+const categories = categoriesStore.categories
 definePageMeta({
   layout: 'page',
 })
@@ -154,7 +157,7 @@ function addMetaDescription(event: Event): void {
                 class="flex my-2"
               >
                 <input
-                  :id="`checkbox-${categorie.id}`"
+                  :id="`checkbox-${categorie?.id}`"
                   type="checkbox"
                   name="categories"
                   class="mx-2"

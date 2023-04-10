@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { Promenade } from '../types/Promenades'
 
+import { useCategoryStore } from '~~/store/category'
+
+const categories = useCategoryStore()
+const cat = categories.categories
+
 definePageMeta({
   layout: 'page',
 })
