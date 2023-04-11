@@ -99,6 +99,7 @@ interface TransitionItem {
 interface ExcerptItem {
   type: 'excerpt'
   id: Number
+  index: Number
   content: string
 }
 
@@ -122,9 +123,9 @@ function addTransitionInput(): void {
     transitionCount.value++
   }
 }
-const isExcerptAdded = ref(false)
-function addExcerptBlock(content: string, id: number): void {
-  if (excerptCount.value < 4 && !isExcerptAdded.value) {
+const isExcerptAdded = ref<boolean[]>([false, false, false, false])
+function addExcerptBlock(content: string, id: number, index: number): void {
+  if (excerptCount.value < 4) {
     // Vérifier si l'extrait est déjà présent
     const existingExcerpt = items.value.find(
       (item) => item.type === 'excerpt' && item.id === id
@@ -137,10 +138,11 @@ function addExcerptBlock(content: string, id: number): void {
     items.value.push({
       type: 'excerpt',
       id,
+      index,
       content,
     })
     excerptCount.value++
-    isExcerptAdded.value = true
+    isExcerptAdded.value[index] = true
   }
 }
 function removeItem(index: number): void {
@@ -155,7 +157,7 @@ function removeItem(index: number): void {
     items.value.forEach((item) => {
       if (item.type === 'excerpt') {
         excerptCount.value++
-        isExcerptAdded.value = false
+        isExcerptAdded.value[index] = false
       }
     })
   }
@@ -310,10 +312,10 @@ const toggle = (extract: any): boolean => {
                 <div
                   :class="{
                     'cursor-not-allowed disabled':
-                      excerptCount === 4 || isExcerptAdded,
+                      excerptCount === 4 || isExcerptAdded[index],
                   }"
                   class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
-                  @click="addExcerptBlock(extract.content, extract.id)"
+                  @click="addExcerptBlock(extract.content, extract.id, index)"
                 >
                   <button>Ajouter l'extrait</button>
                 </div>
