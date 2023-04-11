@@ -27,39 +27,37 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      if (typeof process !== 'undefined' && process.client) {
-        if (editorRef.value) {
-          quillInstance = new MyQuill(editorRef.value, {
-            modules: {
-              toolbar: [
-                [{ header: [2, 3, 4, false] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                [{ color: [] }],
-                [{ list: 'ordered' }, { list: 'bullet' }],
-                [{ align: [] }],
-                ['link'],
-              ],
-            },
-            theme: 'snow',
-          })
+      if (editorRef.value) {
+        quillInstance = new MyQuill(editorRef.value, {
+          modules: {
+            toolbar: [
+              [{ header: [2, 3, 4, false] }],
+              ['bold', 'italic', 'underline', 'strike'],
+              [{ color: [] }],
+              [{ list: 'ordered' }, { list: 'bullet' }],
+              [{ align: [] }],
+              ['link'],
+            ],
+          },
+          theme: 'snow',
+        })
 
-          quillInstance.on('text-change', updateValue)
+        quillInstance.on('text-change', updateValue)
 
-          watch(
-            () => props.value,
-            (newValue) => {
-              if (quillInstance) {
-                quillInstance.setContents(
-                  quillInstance.clipboard.convert({ text: newValue })
-                )
-              }
+        watch(
+          () => props.value,
+          (newValue) => {
+            if (quillInstance) {
+              quillInstance.setContents(
+                quillInstance.clipboard.convert({ text: newValue })
+              )
             }
-          )
+          }
+        )
 
-          quillInstance.setContents(
-            quillInstance.clipboard.convert({ text: props.value })
-          )
-        }
+        quillInstance.setContents(
+          quillInstance.clipboard.convert({ text: props.value })
+        )
       }
     })
 

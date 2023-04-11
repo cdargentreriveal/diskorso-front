@@ -9,8 +9,8 @@ definePageMeta({
   middleware: ['is-logged'],
 })
 
-const extractsStore = useExtractStore()
 
+const extractsStore = useExtractStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
@@ -131,9 +131,8 @@ function addExcerptBlock(content: string): void {
     excerptCount.value++
   }
 }
-
 function removeItem(index: number): void {
-  const type = items.value[index].type
+  /*   const type = items.value[index].type
 
   if (type === 'image') {
     imageCount.value--
@@ -142,7 +141,7 @@ function removeItem(index: number): void {
   } else if (type === 'excerpt') {
     excerptCount.value--
   }
-
+ */
   items.value.splice(index, 1)
 }
 
@@ -179,6 +178,7 @@ onMounted(() => {
   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
+      handle: '.drag',
       animation: 250,
       onEnd: (event: any) => {
         const newIndex = event.newIndex
@@ -218,7 +218,7 @@ const toggle = (extract: any): boolean => {
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
       <div class="w-4/12 relative">
         <div
-          class="extraits w-11/12 text-xs mb-3 sticky top-[22%] h-[80vh] overflow-auto"
+          class="extraits w-11/12 text-xs mb-3 sticky top-[22%] h-[60vh] overflow-auto"
         >
           <div
             v-for="(extract, index) in extractsStore.extracts"
@@ -400,9 +400,9 @@ const toggle = (extract: any): boolean => {
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
-              class="flex justify-between py-5 items-start"
+              class="flex justify-between py-6 items-start"
             >
-              <div class="my-2 w-full">
+              <div class="my-2 w-full drag">
                 <label for="avatar-upload text-sm">
                   <input
                     id="avatar-upload"
@@ -441,30 +441,44 @@ const toggle = (extract: any): boolean => {
             <!-- Transition input -->
             <div
               v-if="item.type === 'transition'"
-              class="flex justify-between py-5 mb-10 items-start"
+              class="flex justify-between py-6 items-start"
             >
-              <div class="w-full h-[300px] mr-5 cursor-move">
+              <div class="w-full">
                 <WysiwygEditor
-                  class="h-full"
+                  v-model="item.content"
                   @update:value="(content) => (item.content = content)"
                 />
               </div>
-              <button @click="removeItem(index)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </button>
+                <div
+                  class="h-[251px] border border-slate-300 flex items-center justify-center drag cursor-move"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
             </div>
 
             <!-- Excerpt block -->
             <div
               v-if="item.type === 'excerpt'"
-              class="flex justify-between py-5 items-start"
+              class="flex justify-between py-6 items-start"
             >
               <div
-                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm"
+                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm drag"
               >
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
