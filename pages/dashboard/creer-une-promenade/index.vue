@@ -9,7 +9,6 @@ definePageMeta({
   middleware: ['is-logged'],
 })
 
-
 const extractsStore = useExtractStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -99,6 +98,7 @@ interface TransitionItem {
 
 interface ExcerptItem {
   type: 'excerpt'
+  id: Number
   content: string
 }
 
@@ -108,6 +108,7 @@ const items = ref<ItemType[]>([])
 const imageCount = ref<number>(0)
 const transitionCount = ref<number>(0)
 const excerptCount = ref<number>(0)
+
 function addImageInput(): void {
   if (imageCount.value < 4) {
     items.value.push({ type: 'image', file: null, imageUrl: null })
@@ -121,27 +122,44 @@ function addTransitionInput(): void {
     transitionCount.value++
   }
 }
+const isExcerptAdded = ref(false)
+function addExcerptBlock(content: string, id: number): void {
+  if (excerptCount.value < 4 && !isExcerptAdded.value) {
+    // Vérifier si l'extrait est déjà présent
+    const existingExcerpt = items.value.find(
+      (item) => item.type === 'excerpt' && item.id === id
+    )
+    if (existingExcerpt) {
+      return
+    }
 
-function addExcerptBlock(content: string): void {
-  if (excerptCount.value < 4) {
+    // Ajouter l'extrait s'il n'est pas déjà présent
     items.value.push({
       type: 'excerpt',
+      id,
       content,
     })
     excerptCount.value++
+    isExcerptAdded.value = true
   }
 }
 function removeItem(index: number): void {
-  /*   const type = items.value[index].type
+  const type = items.value[index].type
 
   if (type === 'image') {
     imageCount.value--
   } else if (type === 'transition') {
     transitionCount.value--
   } else if (type === 'excerpt') {
-    excerptCount.value--
+    excerptCount.value = 0
+    items.value.forEach((item) => {
+      if (item.type === 'excerpt') {
+        excerptCount.value++
+        isExcerptAdded.value = false
+      }
+    })
   }
- */
+
   items.value.splice(index, 1)
 }
 
@@ -290,17 +308,14 @@ const toggle = (extract: any): boolean => {
                   </div>
                 </ModalBase>
                 <div
-                  :class="
-                    excerptCount === 4 ? 'cursor-not-allowed disabled' : ''
-                  "
+                  :class="{
+                    'cursor-not-allowed disabled':
+                      excerptCount === 4 || isExcerptAdded,
+                  }"
                   class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
-                  @click="addExcerptBlock(extract.content)"
+                  @click="addExcerptBlock(extract.content, extract.id)"
                 >
-                  <button
-                    :class="excerptCount === 4 ? 'cursor-not-allowed' : ''"
-                  >
-                    Ajouter l'extrait
-                  </button>
+                  <button>Ajouter l'extrait</button>
                 </div>
               </div>
             </div>

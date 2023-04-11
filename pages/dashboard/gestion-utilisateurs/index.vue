@@ -156,7 +156,7 @@ definePageMeta({
               Username
             </div>
             <div
-              class="bg-white w-full border border-slate-300 text-center p-1"
+              class="bg-white w-full border border-slate-300 text-center p-1 w-[180%]"
             >
               Email
             </div>
@@ -210,7 +210,7 @@ definePageMeta({
                 {{ user.username }}
               </div>
               <div
-                class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-start overflow-y-auto"
+                class="bg-white w-full border border-slate-300 text-center p-1 flex items-center justify-center overflow-y-auto w-[180%]"
               >
                 {{ user.email }}
               </div>
