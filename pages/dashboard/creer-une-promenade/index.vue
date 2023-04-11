@@ -3,10 +3,13 @@ import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { ExtractFetched } from '~~/types/Extracts'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
+import { useExtractStore } from '~~/store/extracts'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
+
+const extractsStore = useExtractStore()
 
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -213,7 +216,7 @@ onMounted(() => {
           class="extraits w-11/12 text-xs mb-3 sticky top-[22%] h-[80vh] overflow-auto"
         >
           <div
-            v-for="(extract, index) in extracts"
+            v-for="(extract, index) in extractsStore.extracts"
             :key="index"
             class="extraits_item bg-white rounded mb-5 p-5"
           >
@@ -415,6 +418,7 @@ onMounted(() => {
               <div
                 class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm"
               >
+                <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
               </div>
               <button @click="removeItem(index)">

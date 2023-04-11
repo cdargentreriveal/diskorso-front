@@ -2,6 +2,9 @@
 import { PropType } from 'vue'
 import { ExtractFetched } from '~~/types/Extracts'
 import { deletedExtract } from '~~/utils/connected/deletedExtract'
+import { useExtractStore } from '~~/store/extracts'
+
+const extractsStore = useExtractStore()
 
 // const showModal = ref(false)
 // const showModal = useState<boolean>('showModal', () => false)
@@ -64,6 +67,31 @@ async function submitDeletedExtract() {
     )
   }
 }
+
+const extractId = ref(propsCard.extract.id)
+const isChecked = ref(
+  localStorage.getItem(`extract_${extractId.value}_isChecked`) === 'true' ||
+    false
+)
+
+function sendToPinia(extract: ExtractFetched) {
+  isChecked.value = !isChecked.value // toggle the checked state
+
+  if (isChecked.value) {
+    extractsStore.addExtracts(extract)
+    localStorage.setItem(`extract_${extractId.value}_isChecked`, 'true') // add the extract if the checkbox is checked
+  } else {
+    extractsStore.removeExtract(extract.id)
+    localStorage.removeItem(`extract_${extractId.value}_isChecked`) // remove the extract if the checkbox is unchecked
+  }
+}
+
+watch(extractId, (newVal, oldVal) => {
+  if (process.client) {
+    isChecked.value =
+      localStorage.getItem(`extract_${newVal}_isChecked`) === 'true' || false
+  }
+})
 </script>
 
 <template>
@@ -71,9 +99,15 @@ async function submitDeletedExtract() {
     <div class="card-content p-6">
       <!-- Rounded switch -->
       <div class="switch-btn mb-4 flex items-center text-xs justify-end">
+        {{ isChecked ? 'Checked' : 'Not checked' }}
         <div class="mr-2 visible">Mettre en avant</div>
         <label class="switch">
-          <input type="checkbox" @click="sendToPinia(extract)" />
+          <input
+            v-model="isChecked"
+            type="checkbox"
+            @click="sendToPinia(extract)"
+          />
+
           <span class="slider round"></span>
         </label>
       </div>
