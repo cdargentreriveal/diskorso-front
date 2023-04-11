@@ -127,7 +127,6 @@ function addExcerptBlock(content: string): void {
     excerptCount.value++
   }
 }
-
 function removeItem(index: number): void {
   /*   const type = items.value[index].type
 
@@ -394,6 +393,7 @@ onMounted(() => {
             >
               <div class="w-full">
                 <WysiwygEditor
+                  :key="`editor_${index}`"
                   v-model="item.content"
                   @update:value="(content) => (item.content = content)"
                 />

@@ -60,6 +60,7 @@ export default defineComponent({
         )
       }
     })
+
     onUnmounted(() => {
       if (quillInstance) {
         quillInstance.off('text-change', updateValue)
