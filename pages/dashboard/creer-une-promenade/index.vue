@@ -393,7 +393,6 @@ onMounted(() => {
             >
               <div class="w-full">
                 <WysiwygEditor
-                  :key="`editor_${index}`"
                   v-model="item.content"
                   @update:value="(content) => (item.content = content)"
                 />
