@@ -1,7 +1,11 @@
 import { defineStore } from 'pinia'
 import { ExtractFetched } from '~~/types/Extracts'
 
-export type Extracts = ExtractFetched[]
+interface ExtractWithModal extends ExtractFetched {
+  showModal: boolean
+}
+
+export type Extracts = ExtractWithModal[]
 
 interface ExtractState {
   extracts: Extracts
@@ -11,7 +15,7 @@ export const useExtractStore = defineStore('extractStore', {
     extracts: [],
   }),
   actions: {
-    addExtracts(extract: ExtractFetched) {
+    addExtracts(extract: ExtractWithModal) {
       const existingExtract = this.extracts.find(
         (extractP) => extractP.name === extract.name
       )

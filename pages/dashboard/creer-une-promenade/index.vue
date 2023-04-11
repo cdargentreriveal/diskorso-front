@@ -197,6 +197,11 @@ onMounted(() => {
     })
   }
 })
+
+const toggle = (extract: any): boolean => {
+  extract.showModal = !extract.showModal
+  return extract.showModal
+}
 </script>
 
 <template>
@@ -238,9 +243,52 @@ onMounted(() => {
             </div>
             <div class="btns mt-4">
               <div class="flex items-center justify-between">
-                <div class="extraits_view underline font-semibold">
+                <div
+                  class="extraits_view underline font-semibold"
+                  @click="toggle(extract)"
+                >
                   Voir l'extrait
                 </div>
+                <ModalBase :show="extract.showModal">
+                  <div class="p-4 px-15 divide-y">
+                    <div>
+                      <div class="text-lg font-semibold my-8 text-slate-500">
+                        {{ extract.name }}
+                      </div>
+                      <!-- eslint-disable vue/no-v-html -->
+                      <div
+                        class="text-xs text-justify"
+                        v-html="extract.content"
+                      ></div>
+                      <!--eslint-enable-->
+                      <div
+                        class="text-xs italic font-semibold my-5 text-slate-500 text-right"
+                      >
+                        {{ extract.source }}
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <p
+                        v-if="extract.used_in_article"
+                        class="text-xs mt-5 font-semibold"
+                      >
+                        Cet extrait apparaît dans les promenades suivantes :
+                      </p>
+                      <p v-else class="text-xs mt-5 font-semibold">
+                        Extrait non encore utilisé
+                      </p>
+                      <div class="self-end">
+                        <button
+                          type="button"
+                          class="w-100px bg-indigo-200 px-3 py-1 font-medium"
+                          @click="toggle(extract)"
+                        >
+                          Fermer
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </ModalBase>
                 <div
                   :class="
                     excerptCount === 4 ? 'cursor-not-allowed disabled' : ''
@@ -493,5 +541,9 @@ sup {
 .promenade_btn_transition,
 .extrait_btn {
   background-color: var(--purple-color);
+}
+
+.extraits_view:hover {
+  cursor: pointer;
 }
 </style>

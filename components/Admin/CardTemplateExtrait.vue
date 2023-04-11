@@ -39,6 +39,10 @@ const propsCard = defineProps({
   },
 })
 
+interface ExtractWithModal extends ExtractFetched {
+  showModal: boolean
+}
+
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
@@ -75,13 +79,14 @@ const isChecked = ref(
 )
 
 function sendToPinia(extract: ExtractFetched) {
-  isChecked.value = !isChecked.value // toggle the checked state
+  isChecked.value = !isChecked.value
+  const newExtract = { ...extract, showModal: false } // toggle the checked state
 
   if (isChecked.value) {
-    extractsStore.addExtracts(extract)
+    extractsStore.addExtracts(newExtract)
     localStorage.setItem(`extract_${extractId.value}_isChecked`, 'true') // add the extract if the checkbox is checked
   } else {
-    extractsStore.removeExtract(extract.id)
+    extractsStore.removeExtract(newExtract.id)
     localStorage.removeItem(`extract_${extractId.value}_isChecked`) // remove the extract if the checkbox is unchecked
   }
 }
@@ -99,7 +104,6 @@ watch(extractId, (newVal, oldVal) => {
     <div class="card-content p-6">
       <!-- Rounded switch -->
       <div class="switch-btn mb-4 flex items-center text-xs justify-end">
-        {{ isChecked ? 'Checked' : 'Not checked' }}
         <div class="mr-2 visible">Mettre en avant</div>
         <label class="switch">
           <input
