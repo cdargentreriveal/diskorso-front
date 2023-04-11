@@ -1,4 +1,14 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Category } from './types/Categories'
+import { useCategoryStore } from '~~/store/category'
+
+const categoriesStore = useCategoryStore()
+const { data: categories } = useDiskorso<Category[]>('category/all')
+
+onMounted(() => {
+  categoriesStore.setCategories(categories)
+})
+</script>
 
 <template>
   <div>

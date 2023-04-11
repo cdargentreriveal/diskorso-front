@@ -2,9 +2,12 @@
 import { PropType } from 'vue'
 import { ExtractFetched } from '~~/types/Extracts'
 import { deletedExtract } from '~~/utils/connected/deletedExtract'
+import { useExtractStore } from '~~/store/extracts'
+
+const extractsStore = useExtractStore()
 
 // const showModal = ref(false)
-const showModal = useState<boolean>('showModal', () => false)
+// const showModal = useState<boolean>('showModal', () => false)
 const config = useRuntimeConfig()
 const { $swal } = useNuxtApp()
 const displaySwal = (
@@ -30,7 +33,15 @@ const propsCard = defineProps({
     type: Boolean,
     required: true,
   },
+  toggle: {
+    type: Function,
+    required: true,
+  },
 })
+
+interface ExtractWithModal extends ExtractFetched {
+  showModal: boolean
+}
 
 onMounted(() => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
@@ -60,6 +71,32 @@ async function submitDeletedExtract() {
     )
   }
 }
+
+const extractId = ref(propsCard.extract.id)
+const isChecked = ref(
+  localStorage.getItem(`extract_${extractId.value}_isChecked`) === 'true' ||
+    false
+)
+
+function sendToPinia(extract: ExtractFetched) {
+  isChecked.value = !isChecked.value
+  const newExtract = { ...extract, showModal: false } // toggle the checked state
+
+  if (isChecked.value) {
+    extractsStore.addExtracts(newExtract)
+    localStorage.setItem(`extract_${extractId.value}_isChecked`, 'true') // add the extract if the checkbox is checked
+  } else {
+    extractsStore.removeExtract(newExtract.id)
+    localStorage.removeItem(`extract_${extractId.value}_isChecked`) // remove the extract if the checkbox is unchecked
+  }
+}
+
+watch(extractId, (newVal, oldVal) => {
+  if (process.client) {
+    isChecked.value =
+      localStorage.getItem(`extract_${newVal}_isChecked`) === 'true' || false
+  }
+})
 </script>
 
 <template>
@@ -69,7 +106,12 @@ async function submitDeletedExtract() {
       <div class="switch-btn mb-4 flex items-center text-xs justify-end">
         <div class="mr-2 visible">Mettre en avant</div>
         <label class="switch">
-          <input type="checkbox" />
+          <input
+            v-model="isChecked"
+            type="checkbox"
+            @click="sendToPinia(extract)"
+          />
+
           <span class="slider round"></span>
         </label>
       </div>
@@ -108,10 +150,7 @@ async function submitDeletedExtract() {
             </div>
             <div class="card-content-number-check ml-1">+6</div>
           </div>
-          <button
-            class="card-content-view-btn underline"
-            @click="showModal = true"
-          >
+          <button class="card-content-view-btn underline" @click="toggle()">
             Voir l'extrait >
           </button>
           <ModalBase :show="showModal">
@@ -146,7 +185,7 @@ async function submitDeletedExtract() {
                   <button
                     type="button"
                     class="w-100px bg-indigo-200 px-3 py-1 font-medium"
-                    @click="showModal = false"
+                    @click="toggle()"
                   >
                     Fermer
                   </button>

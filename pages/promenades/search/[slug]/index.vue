@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Promenade } from '~~/types/Promenades'
-import { Category } from '~~/types/Categories'
+import { useCategoryStore } from '~~/store/category'
 definePageMeta({
   layout: 'page',
 })
@@ -17,13 +17,18 @@ const loading = ref(false)
 const { data: promenades } = useDiskorso<Promenade[]>(
   `promenade/tag/search/${route.params.slug}`
 )
-const { data: categories } = useDiskorso<Category[]>('category/all')
+
+const categoriesStore = useCategoryStore()
+const categories = computed(() => categoriesStore.categories)
 
 // ________________________________________________________________________________________
 //* Methods pour filtrer
 // ________________________________________________________________________________________
 const filteredCategories = computed(() => {
-  if (!promenades || !promenades.value || !categories || !categories.value) {
+  if (!categories || !categories.value) {
+    return []
+  }
+  if (!promenades || !promenades.value || !categories) {
     return []
   }
   const categoryCounts: { [key: string]: number } = {}
@@ -42,7 +47,11 @@ const filteredCategories = computed(() => {
       }
     })
   })
-  const filteredCategories = categories.value.filter((category) => {
+  if (!categories || !categories.value) {
+    return []
+  }
+
+  const filteredCategories = categories.value?.filter((category) => {
     return categoryCounts[category.title]
   })
   return filteredCategories.map((category) => ({
