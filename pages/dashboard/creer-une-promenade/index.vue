@@ -98,8 +98,8 @@ interface TransitionItem {
 
 interface ExcerptItem {
   type: 'excerpt'
-  id: Number
-  index: Number
+  id: number
+  index: number
   content: string
 }
 
@@ -128,7 +128,8 @@ function addExcerptBlock(content: string, id: number, index: number): void {
   if (excerptCount.value < 4) {
     // Vérifier si l'extrait est déjà présent
     const existingExcerpt = items.value.find(
-      (item) => item.type === 'excerpt' && item.id === id
+      (item) => item.type === 'excerpt' && item.id === id,
+      (isExcerptAdded.value[id] = true)
     )
     if (existingExcerpt) {
       return
@@ -142,10 +143,9 @@ function addExcerptBlock(content: string, id: number, index: number): void {
       content,
     })
     excerptCount.value++
-    isExcerptAdded.value[index] = true
   }
 }
-function removeItem(index: number): void {
+function removeItem(index: number, id: number): void {
   const type = items.value[index].type
 
   if (type === 'image') {
@@ -153,13 +153,8 @@ function removeItem(index: number): void {
   } else if (type === 'transition') {
     transitionCount.value--
   } else if (type === 'excerpt') {
-    excerptCount.value = 0
-    items.value.forEach((item) => {
-      if (item.type === 'excerpt') {
-        excerptCount.value++
-        isExcerptAdded.value[index] = false
-      }
-    })
+    excerptCount.value--
+    isExcerptAdded.value[id] = false
   }
 
   items.value.splice(index, 1)
@@ -312,7 +307,7 @@ const toggle = (extract: any): boolean => {
                 <div
                   :class="{
                     'cursor-not-allowed disabled':
-                      excerptCount === 4 || isExcerptAdded[index],
+                      excerptCount === 4 || isExcerptAdded[extract.id],
                   }"
                   class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                   @click="addExcerptBlock(extract.content, extract.id, index)"
@@ -446,7 +441,7 @@ const toggle = (extract: any): boolean => {
                   </div>
                 </label>
               </div>
-              <button class="mt-4" @click="removeItem(index)">
+              <button class="mt-4" @click="removeItem(index, index)">
                 <img
                   src="@/assets/images/icons/corbeille.svg"
                   alt=""
@@ -469,7 +464,7 @@ const toggle = (extract: any): boolean => {
               <div class="btns">
                 <button
                   class="p-[14px] border border-slate-300"
-                  @click="removeItem(index)"
+                  @click="removeItem(index, index)"
                 >
                   <img
                     src="@/assets/images/icons/corbeille.svg"
@@ -500,7 +495,7 @@ const toggle = (extract: any): boolean => {
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
               </div>
-              <button @click="removeItem(index)">
+              <button @click="removeItem(index, item.id)">
                 <img
                   src="@/assets/images/icons/corbeille.svg"
                   alt=""
