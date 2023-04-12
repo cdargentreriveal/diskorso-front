@@ -145,6 +145,7 @@ function addExcerptBlock(content: string, id: number, index: number): void {
     excerptCount.value++
   }
 }
+
 function removeItem(index: number, id: number): void {
   const type = items.value[index].type
 
@@ -190,7 +191,7 @@ const hasAvatar = computed(() => !!avatarUrl.value)
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
-  if (blocTransition.value) {
+  /*   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
       handle: '.drag',
@@ -203,7 +204,7 @@ onMounted(() => {
         updatedItemsPublished.value = updatedItems
       },
     })
-  }
+  } */
   const descriptionCard = document.querySelectorAll('.extraits_item_text')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -457,7 +458,7 @@ const toggle = (extract: any): boolean => {
             >
               <div class="w-full">
                 <WysiwygEditor
-                  v-model="item.content"
+                  :key="'editor-' + index"
                   @update:value="(content) => (item.content = content)"
                 />
               </div>

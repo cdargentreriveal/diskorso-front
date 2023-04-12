@@ -4,7 +4,8 @@
 
 <script lang="ts">
 import MyQuill from 'quill'
-import 'quill/dist/quill.snow.css' // Ajouter cette ligne
+import 'quill/dist/quill.snow.css'
+
 export default defineComponent({
   name: 'WysiwygEditor',
   props: {
@@ -32,7 +33,7 @@ export default defineComponent({
           modules: {
             toolbar: [
               [{ header: [2, 3, 4, false] }],
-              ['bold', 'italic', 'underline', 'strike'],
+              ['bold', 'italic', 'underline'],
               [{ color: [] }],
               [{ list: 'ordered' }, { list: 'bullet' }],
               [{ align: [] }],
@@ -44,22 +45,21 @@ export default defineComponent({
 
         quillInstance.on('text-change', updateValue)
 
-        watch(
-          () => props.value,
-          (newValue) => {
-            if (quillInstance) {
-              quillInstance.setContents(
-                quillInstance.clipboard.convert({ text: newValue })
-              )
-            }
-          }
-        )
-
         quillInstance.setContents(
           quillInstance.clipboard.convert({ text: props.value })
         )
       }
     })
+    watch(
+      () => props.value,
+      (newValue) => {
+        if (quillInstance) {
+          quillInstance.setContents(
+            quillInstance.clipboard.convert({ text: newValue })
+          )
+        }
+      }
+    )
 
     onUnmounted(() => {
       if (quillInstance) {
@@ -74,4 +74,5 @@ export default defineComponent({
   },
 })
 </script>
+
 <style scoped lang="scss"></style>

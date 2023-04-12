@@ -1,5 +1,5 @@
 <template>
-  <div class="heroHeader relative overflow-hidden">
+  <div class="heroHeader relative">
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
@@ -69,6 +69,7 @@ export default {
   }
   &-image {
     margin-top: 0;
+    z-index: 10;
     bottom: -0.7vw;
   }
   &-line {
