@@ -8,6 +8,18 @@ const { data: categories } = useDiskorso<Category[]>('category/all')
 onMounted(() => {
   categoriesStore.setCategories(categories)
 })
+
+if (process.client) {
+  window.addEventListener('beforeunload', () => {
+    localStorage.clear()
+  })
+}
+onUnmounted(() => {
+  // Remove the beforeunload event listener
+  window.removeEventListener('beforeunload', () => {
+    localStorage.clear()
+  })
+})
 </script>
 
 <template>

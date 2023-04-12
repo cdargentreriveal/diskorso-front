@@ -1,0 +1,218 @@
+<script lang="ts" setup>
+import { Category } from '~~/types/Categories'
+import { useCategoryStore } from '~~/store/category'
+import { createdExtract } from '~~/utils/connected'
+const config = useRuntimeConfig()
+
+const categoriesStore = useCategoryStore()
+const categories = categoriesStore.categories
+definePageMeta({
+  layout: 'page',
+})
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+  })
+}
+async function submitCreatedPromenade() {
+  const data = reactive({
+    name: propsAdminMenuSideBar.name,
+    source: propsAdminMenuSideBar.source,
+    content: propsAdminMenuSideBar.content,
+    categoriesIds: selectedCategoryIds,
+  })
+
+  try {
+    if (selectedCategoryIds.value.length === 0) {
+      displaySwal(
+        'Catégorie manquante',
+        `Merci d'affecter au moins une catégorie`,
+        'error',
+        'ok'
+      )
+    } else {
+      const response = await createdExtract(config.public.baseURL, data)
+      if (response.error) {
+        displaySwal('Echec', `${response.message}`, 'error', 'ok')
+      } else {
+        displaySwal(
+          'Extrait sauvegardé',
+          `Votre extrait ${data.name} a bien été sauvegardé`,
+          'success',
+          'Ok'
+        )
+      }
+    }
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la création',
+      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
+
+const propsAdminMenuSideBar = defineProps({
+  name: {
+    type: String,
+    default: '',
+  },
+  source: {
+    type: String,
+    default: '',
+  },
+  content: {
+    type: String,
+    default: '',
+  },
+  actionBtn: {
+    type: Object,
+    default() {
+      return {}
+    },
+  },
+})
+
+const showModal = ref<boolean>(false)
+const toggle = () => {
+  showModal.value = !showModal.value
+}
+
+// Ajouter catégories
+const categoriesCount = ref<number>(0)
+interface CategoryItem {
+  type: 'categories'
+  content: number
+}
+interface MetaTitleItem {
+  type: 'metaTitle'
+  content: string
+}
+interface MetaDescriptionItem {
+  type: 'metaDescription'
+  content: string
+}
+type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
+const items = ref<ItemType[]>([])
+const selectedCategories = reactive<Category[]>([])
+
+function addCategories(value: any) {
+  if (selectedCategories.includes(value)) {
+    selectedCategories.splice(selectedCategories.indexOf(value), 1)
+  } else {
+    selectedCategories.push(value)
+  }
+}
+function isCheckboxDisabled(categorie: Category): boolean {
+  return (
+    selectedCategories.length === 3 && !selectedCategories.includes(categorie)
+  )
+}
+const selectedCategoryIds = computed(() => {
+  return selectedCategories.map((category) => category.id)
+})
+</script>
+<template>
+  <div
+    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[220px] border-l-1 border-slate-300 z-10"
+  >
+    <div class="menu-admin pt-[150px] pb-[25px] h-full">
+      <div class="px-5 py-7 grow">
+        <div
+          class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
+        >
+          <button @click="toggle()">Prévisualiser</button>
+        </div>
+        <ModalBase :show="showModal">
+          <div class="p-4 px-15 divide-y">
+            <div>
+              <div class="text-lg font-semibold my-8 text-slate-500">
+                {{ name }}
+              </div>
+              <!-- eslint-disable vue/no-v-html -->
+              <div class="text-xs text-justify" v-html="content"></div>
+              <!--eslint-enable-->
+              <div
+                class="text-xs italic font-semibold my-5 text-slate-500 text-right"
+              >
+                <a :href="source" target="_blank">{{ source }}</a>
+              </div>
+              <div class="flex flex-col">
+                <div class="self-end">
+                  <button
+                    type="button"
+                    class="w-100px bg-indigo-200 px-3 py-1 font-medium"
+                    @click="toggle()"
+                  >
+                    Fermer
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ModalBase>
+        <Separator />
+        <div class="categories">
+          <div class="categories_title text-base font-semibold mb-5">
+            <h4>Catégories<sup>*</sup></h4>
+          </div>
+          <div class="categories_list h-[150px] overflow-auto">
+            <ul class="text-sm">
+              <li
+                v-for="(categorie, index) in categories"
+                :key="index"
+                class="flex my-2"
+              >
+                <input
+                  :id="`checkbox-${categorie?.id}`"
+                  type="checkbox"
+                  name="categories"
+                  class="mx-2"
+                  :disabled="isCheckboxDisabled(categorie)"
+                  :value="categorie.title"
+                  @change="addCategories(categorie)"
+                /><label for="scales"> {{ categorie.title }}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <Separator />
+      </div>
+      <div class="published px-5 pt-7 pb-[7px]">
+        <button
+          type="submit"
+          class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
+          @click.prevent="submitCreatedPromenade"
+        >
+          <span class="font-semibold">Enregistrer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+<style scoped lang="scss">
+.menu-admin {
+  display: flex;
+  flex-direction: column;
+}
+
+.grow {
+  flex-grow: 1;
+}
+.published_btn {
+  background-color: #50d6b7;
+}
+sup {
+  color: #f55a78;
+}
+</style>

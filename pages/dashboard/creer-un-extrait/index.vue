@@ -13,6 +13,9 @@ const datasTitle = computed((): BtnAdminPage[] => [
     actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
   },
 ])
+const nameInput = ref('')
+const sourceInput = ref('')
+const contentInput = ref('')
 </script>
 
 <template>
@@ -32,6 +35,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
             >Nom de l'extrait <sup>*</sup>
             <div class="my-2">
               <input
+                v-model="nameInput"
                 type="text"
                 name="scales"
                 class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
@@ -45,6 +49,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
             >Source de l'extrait <sup>*</sup>
             <div class="my-2">
               <input
+                v-model="sourceInput"
                 type="text"
                 name="scales"
                 class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
@@ -57,13 +62,20 @@ const datasTitle = computed((): BtnAdminPage[] => [
       <div class="extrait-content">
         <div class="font-semibold mb-4">Collez votre contenu <sup>*</sup></div>
         <div class="my-2 w-full h-[30vh] max-h-[30vh]">
-          <WysiwygEditor
+          <WYSIWYGWysywygEditorWithoutToolBar
+            v-model="contentInput"
             class="h-full bg-white"
             :modules="{ toolbar: false }"
+            @update:value="(content) => (contentInput = content)"
           />
         </div>
       </div>
     </div>
+    <AdminMenuSideBarCreateExtract
+      :name="nameInput"
+      :source="sourceInput"
+      :content="contentInput"
+    />
   </div>
 </template>
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <div ref="editorRef"></div>
+  <div ref="editorRef" class="my-editor"></div>
 </template>
 
 <script lang="ts">
@@ -29,16 +29,7 @@ export default defineComponent({
     onMounted(() => {
       if (editorRef.value) {
         quillInstance = new MyQuill(editorRef.value, {
-          modules: {
-            toolbar: [
-              [{ header: [2, 3, 4, false] }],
-              ['bold', 'italic', 'underline', 'strike'],
-              [{ color: [] }],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              [{ align: [] }],
-              ['link'],
-            ],
-          },
+          modules: { toolbar: false },
           theme: 'snow',
         })
 
@@ -74,4 +65,3 @@ export default defineComponent({
   },
 })
 </script>
-<style scoped lang="scss"></style>
