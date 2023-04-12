@@ -328,12 +328,15 @@ async function changeAvatar(event: Event) {
             </div>
             <div class="promenades-archived">Promenades en brouillon</div>
           </div>
-          <div class="w-3/12 text-center py-6">
+          <NuxtLink
+            to="/dashboard/mes-extraits"
+            class="w-3/12 text-center py-6"
+          >
             <div class="promenades-number text-2xl purple-color font-bold">
               {{ user.currentUser?.totalExtracts }}
             </div>
             <div class="extraits-used">Total extraits stockés</div>
-          </div>
+          </NuxtLink>
           <div class="w-3/12 text-center py-6">
             <div class="promenades-number text-2xl purple-color font-bold">
               {{ user.currentUser?.usedExtractsCount }}

@@ -24,7 +24,7 @@ const url = computed(() => `${config.public.baseURL}/${query.value}`)
 const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   'promenades',
   async () => {
-    const data = await $fetch<Promenade[]>(url.value)
+    const data = await $fetch<Promenade[]>(url.value, {})
     return data.sort((a, b) => b.id - a.id)
   }
 )

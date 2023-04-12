@@ -1,11 +1,10 @@
 <template>
-  <div ref="editorRef"></div>
+  <div ref="editorRef" class="my-editor"></div>
 </template>
 
 <script lang="ts">
 import MyQuill from 'quill'
-import 'quill/dist/quill.snow.css'
-
+import 'quill/dist/quill.snow.css' // Ajouter cette ligne
 export default defineComponent({
   name: 'WysiwygEditor',
   props: {
@@ -30,36 +29,28 @@ export default defineComponent({
     onMounted(() => {
       if (editorRef.value) {
         quillInstance = new MyQuill(editorRef.value, {
-          modules: {
-            toolbar: [
-              [{ header: [2, 3, 4, false] }],
-              ['bold', 'italic', 'underline'],
-              [{ color: [] }],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              [{ align: [] }],
-              ['link'],
-            ],
-          },
+          modules: { toolbar: false },
           theme: 'snow',
         })
 
         quillInstance.on('text-change', updateValue)
+
+        watch(
+          () => props.value,
+          (newValue) => {
+            if (quillInstance) {
+              quillInstance.setContents(
+                quillInstance.clipboard.convert({ text: newValue })
+              )
+            }
+          }
+        )
 
         quillInstance.setContents(
           quillInstance.clipboard.convert({ text: props.value })
         )
       }
     })
-    watch(
-      () => props.value,
-      (newValue) => {
-        if (quillInstance) {
-          quillInstance.setContents(
-            quillInstance.clipboard.convert({ text: newValue })
-          )
-        }
-      }
-    )
 
     onUnmounted(() => {
       if (quillInstance) {
@@ -74,5 +65,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style scoped lang="scss"></style>

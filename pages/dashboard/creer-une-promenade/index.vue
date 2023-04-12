@@ -280,7 +280,9 @@ const toggle = (extract: any): boolean => {
                       <div
                         class="text-xs italic font-semibold my-5 text-slate-500 text-right"
                       >
-                        {{ extract.source }}
+                        <a :href="extract.source" target="_blank">{{
+                          extract.source
+                        }}</a>
                       </div>
                     </div>
                     <div class="flex flex-col">
