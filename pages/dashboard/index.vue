@@ -8,7 +8,7 @@ let xsrfToken: any = null
 if (process.client) {
   xsrfToken = localStorage.getItem('xsrfToken')
 }
-
+const numberOfPromenadeUserConnected = ref(3)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -31,14 +31,17 @@ const {
 } = await useAsyncData<Promenade[]>(
   'response',
   async () =>
-    await $fetch(`${config.public.baseURL}/promenadeditor/getpromenades`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${xsrfToken}`,
-      },
-      credentials: 'include',
-    }).then((res: any) => {
+    await $fetch(
+      `${config.public.baseURL}/promenadeditor/getpromenades/${numberOfPromenadeUserConnected.value}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${xsrfToken}`,
+        },
+        credentials: 'include',
+      }
+    ).then((res: any) => {
       const promenades = res.data.sort((a: any, b: any) => {
         const dateA = new Date(a.createdAt)
         const dateB = new Date(b.createdAt)

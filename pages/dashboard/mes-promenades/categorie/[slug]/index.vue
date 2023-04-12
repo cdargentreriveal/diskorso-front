@@ -32,8 +32,6 @@ const query = ref(
   `promenadeditor/getpromenades/category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
 )
 
-const slug: string | any = route.params.slug
-
 // ________________________________________________________________________________________
 //* Methods pour mettre à jour promenades en fonction de la navigation
 // ________________________________________________________________________________________
