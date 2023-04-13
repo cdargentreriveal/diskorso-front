@@ -16,7 +16,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
     titleBlack: 'Mes',
     titlePurple: 'Extraits',
     actionBtn: [{ action: 'Créer un extrait' }],
-    route: { name: `dashboard/mes-extraits/categorie/${route.params.slug}` },
+    route: { name: `dashboard/creer-un-extrait` },
     category: categories.find(
       (category) => category.slug === route.params.slug
     ),

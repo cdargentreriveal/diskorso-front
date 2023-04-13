@@ -23,7 +23,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
     titleBlack: 'Mes',
     titlePurple: 'promenades',
     actionBtn: [{ action: 'Créer une promenade' }],
-    route: { name: `dashboard/mes-promenades/categorie/${route.params.slug}` },
+    route: { name: 'dashboard/creer-une-promenade' },
     category: categories.find(
       (category) => category.slug === route.params.slug
     ),

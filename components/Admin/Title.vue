@@ -74,7 +74,7 @@
       </div>
       <div v-else>
         <NuxtLink
-          :to="route"
+          :to="'/' + propsAdminTitle.route"
           class="px-4 py-3 text-sm rounded-md text-white"
           :class="actionBtn.length > 1 ? 'action-button ' : 'link-button '"
         >
