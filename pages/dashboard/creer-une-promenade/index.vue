@@ -477,7 +477,7 @@ const toggle = (extract: any): boolean => {
             >
               <div class="w-full">
                 <WysiwygEditor
-                  :value="item.content"
+                  v-model="item.content"
                   @update:value="(value) => (item.content = value)"
                 />
               </div>
