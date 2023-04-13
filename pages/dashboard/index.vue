@@ -1,14 +1,32 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
+import { useUserStore } from '~~/store/user'
 import { Promenade } from '~~/types/Promenades'
+import { lastNumberData } from '~~/utils/connected'
 import { refreshToken } from '~~/utils/connected/refreshToken'
 const config = useRuntimeConfig()
+const user = useUserStore()
 
+definePageMeta({
+  layout: 'admin',
+  middleware: ['is-logged'],
+})
+
+// ________________________________________________________________________________________
+//* state
+// ________________________________________________________________________________________
 let xsrfToken: any = null
+let xsrfTokenTime: any = null
 if (process.client) {
   xsrfToken = localStorage.getItem('xsrfToken')
+  xsrfTokenTime = localStorage.getItem('xsrfToken_time')
 }
-const numberOfPromenadeUserConnected = ref(3)
+const lastNumberId = ref(0)
+const firstNumberId = ref(0)
+// if (xsrfToken && xsrfTokenTime && Date.now() >= +xsrfTokenTime - 2000) {
+//   await refreshToken(config.public.baseURL)
+// }
+const numberOfPromenadeUserConnectedToDisplay = ref(2)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -18,30 +36,31 @@ const datasTitle = computed((): BtnAdminPage[] => [
     route: { name: 'dashboard/creer-une-promenade' },
   },
 ])
+const query = ref(
+  `promenadeditor/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}`
+)
 
-definePageMeta({
-  layout: 'admin',
-  middleware: ['is-logged'],
-})
+// ________________________________________________________________________________________
+//* Methods pour mettre à jour promenades en fonction de la navigation
+// ________________________________________________________________________________________
+const url = computed(() => `${config.public.baseURL}/${query.value}`)
 
 const {
   data: response,
   error,
   execute,
+  refresh,
 } = await useAsyncData<Promenade[]>(
   'response',
   async () =>
-    await $fetch(
-      `${config.public.baseURL}/promenadeditor/getpromenades/${numberOfPromenadeUserConnected.value}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${xsrfToken}`,
-        },
-        credentials: 'include',
-      }
-    ).then((res: any) => {
+    await $fetch(url.value, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${xsrfToken}`,
+      },
+      credentials: 'include',
+    }).then((res: any) => {
       const promenades = res.data.sort((a: any, b: any) => {
         const dateA = new Date(a.createdAt)
         const dateB = new Date(b.createdAt)
@@ -50,8 +69,7 @@ const {
       return promenades
     })
 )
-
-if (error.value !== null) {
+if (error.value) {
   refreshToken(config.public.baseURL)
     .then(() => {
       execute()
@@ -62,7 +80,103 @@ if (error.value !== null) {
     })
 }
 
-onMounted(() => {
+// ________________________________________________________________________________________
+//* Methods pour navigation : previous - next - first
+// ________________________________________________________________________________________
+const lastId = computed(() => {
+  if (response.value === null) {
+    return null
+  }
+  return response.value[response.value.length - 1].id
+})
+const firstId = computed(() => {
+  if (response.value === null) {
+    return 0
+  } else {
+    return response.value[0].id
+  }
+})
+// const { data: firstNumberData } = await useFetch<number>(
+//   `${config.public.baseURL}/promenadeditor/findFirstPromenade`,
+//   {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       Authorization: `Bearer ${xsrfToken}`,
+//     },
+//     credentials: 'include',
+//   }
+// )
+// next
+async function next() {
+  if (
+    lastId.value === null ||
+    response.value === null ||
+    firstNumberId.value === null
+  ) {
+    query.value = `promenadeditor/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}`
+  } else if (lastId.value === +firstNumberId.value) {
+    return 'no more promenade'
+  } else {
+    query.value = `promenadeditor/promenade-cursor/${numberOfPromenadeUserConnectedToDisplay.value}/${lastId.value}/1/desc`
+    const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+    if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
+      await refreshToken(config.public.baseURL)
+      execute()
+    } else {
+      execute()
+    }
+  }
+}
+// previous
+async function previous() {
+  if (lastId.value === null || lastNumberId.value === null) {
+    execute()
+    query.value = `promenadeditor/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}`
+  } else if (firstId.value === lastNumberId.value) {
+    // refresh()
+    // query.value = `findLastPromenades/${numberOfPromenade.value}`
+    return 'no more promenade'
+  } else {
+    query.value = `promenadeditor/promenade-cursor/${numberOfPromenadeUserConnectedToDisplay.value}/${firstId.value}/1/asc`
+    const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+    if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
+      await refreshToken(config.public.baseURL)
+      execute()
+    } else {
+      execute()
+    }
+  }
+}
+// return first
+async function first() {
+  query.value = `promenadeditor/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}`
+  const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+  if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
+    await refreshToken(config.public.baseURL)
+    execute()
+  } else {
+    execute()
+  }
+}
+
+// ________________________________________________________________________________________
+//* Methods pour metadata : nombre total de promenades et de pages
+// ________________________________________________________________________________________
+const totalPromenades = computed(
+  () =>
+    (user.currentUser?.publishedPromenadesCount ?? 0) +
+    (user.currentUser?.unpublishedPromenadesCount ?? 0)
+)
+let totalPages = 0
+if (totalPromenades.value === null) {
+  totalPages = 0
+} else {
+  totalPages = Math.ceil(
+    +totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
+  )
+}
+onMounted(async () => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -70,6 +184,10 @@ onMounted(() => {
       element.textContent = shortDescription + '...'
     })
   }
+  const resultLast = await lastNumberData(config.public.baseURL)
+  lastNumberId.value = resultLast
+  const resultFirst = await lastNumberData(config.public.baseURL)
+  firstNumberId.value = resultFirst
 })
 </script>
 
@@ -84,6 +202,7 @@ onMounted(() => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter />
+    <DisplayPromenadesSearchSection />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in response"
@@ -92,6 +211,16 @@ onMounted(() => {
       >
         <AdminCardTemplate :promenade="promenade" class="h-full" />
       </div>
+    </div>
+    <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
+      <DisplayPromenadesPagination
+        v-if="totalPromenades !== null"
+        :first="first"
+        :previous="previous"
+        :next="next"
+        :total-promenade="+totalPromenades"
+        :totalpage="+totalPages"
+      />
     </div>
   </div>
 </template>

@@ -1,7 +1,11 @@
 <script lang="ts" setup>
+import { useCategoryStore } from '~~/store/category'
 import { BtnAdminPage } from '~~/types/AdminTitlePage'
 import { Promenade } from '~~/types/Promenades'
 import { refreshToken } from '~~/utils/connected'
+
+const categoriesStore = useCategoryStore()
+const categories = categoriesStore.categories
 
 definePageMeta({
   layout: 'admin',
@@ -19,7 +23,10 @@ const datasTitle = computed((): BtnAdminPage[] => [
     titleBlack: 'Mes',
     titlePurple: 'promenades',
     actionBtn: [{ action: 'Créer une promenade' }],
-    route: { name: 'dashboard/creer-une-promenade' },
+    route: { name: `dashboard/mes-promenades/categorie/${route.params.slug}` },
+    category: categories.find(
+      (category) => category.slug === route.params.slug
+    ),
   },
 ])
 // ________________________________________________________________________________________
@@ -38,7 +45,7 @@ const query = ref(
 const url = computed(() => `${config.public.baseURL}/${query.value}`)
 const {
   data: promenades,
-  refresh,
+  execute,
   error,
 } = useAsyncData<Promenade[]>('promenades', async () => {
   const data = await $fetch<any>(url.value, {
@@ -53,16 +60,16 @@ const {
   return promenades
 })
 
-// if (error.value !== null) {
-//   refreshToken(config.public.baseURL)
-//     .then(() => {
-//       execute()
-//     })
-//     .catch((error) => {
-//       // eslint-disable-next-line no-console
-//       console.error('Erreur lors du rafraîchissement du token:', error)
-//     })
-// }
+if (error.value !== null) {
+  refreshToken(config.public.baseURL)
+    .then(() => {
+      execute()
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error('Erreur lors du rafraîchissement du token:', error)
+    })
+}
 </script>
 
 <template>
@@ -74,8 +81,10 @@ const {
       :title-purple="datasTitle[0].titlePurple"
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
+      :category="datasTitle[0].category"
     />
     <AdminCatsFilter />
+    <DisplayPromenadesSearchSection />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in promenades"
@@ -83,6 +92,14 @@ const {
         class="w-4/12 p-2 h-full"
       >
         <AdminCardTemplate :promenade="promenade" class="h-full" />
+        <!-- <DisplayPromenadesPagination
+          v-if="totalPromenades !== null"
+          :first="first"
+          :previous="previous"
+          :next="next"
+          :total-promenade="+totalPromenades"
+          :totalpage="+totalPages"
+        /> -->
       </div>
     </div>
   </div>

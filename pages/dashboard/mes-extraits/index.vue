@@ -90,7 +90,7 @@ onMounted(() => {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <AdminCatsFilter />
+    <AdminCatsFilter page="extraits" />
     <div class="container_promenade w-9/12 mx-auto flex items-center flex-wrap">
       <div
         v-for="(extract, index) in response?.data"

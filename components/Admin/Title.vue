@@ -5,6 +5,12 @@
         <h2>
           {{ titleBlack }}
           <span class="font-medium purple-color">{{ titlePurple }}</span>
+          <button
+            v-if="JSON.stringify(category) !== '{}'"
+            :class="`category-btn px-8 py-4 mx-8 rounded-full text-sm ${category?.color} uppercase`"
+          >
+            {{ category?.title }}
+          </button>
         </h2>
       </div>
       <div v-if="data.length > 0" class="data px-4 py-3 text-sm">
@@ -118,6 +124,12 @@ const propsAdminTitle = defineProps({
     default: '',
   },
   actionBtn: {
+    type: Object,
+    default() {
+      return {}
+    },
+  },
+  category: {
     type: Object,
     default() {
       return {}

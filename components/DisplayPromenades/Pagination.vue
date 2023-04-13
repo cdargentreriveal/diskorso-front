@@ -25,7 +25,7 @@ const propsNavigation = defineProps({
 
 <template>
   <div
-    class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+    class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full"
   >
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
@@ -36,10 +36,6 @@ const propsNavigation = defineProps({
           pages
         </p>
       </div>
-      <!--//TODO : à mettre en français, et à rendre plus ux friendly-->
-      <!-- <button class="p-8" @click="first()">First Page</button>
-      <button class="p-8" @click="previous()">Previous</button>
-      <button class="p-8" @click="next()">Next</button> -->
     </div>
     <nav
       class="isolate inline-flex -space-x-px rounded-md shadow-sm"

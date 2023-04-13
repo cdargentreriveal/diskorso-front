@@ -5,4 +5,5 @@ export interface BtnAdminPage {
   actionBtn?: object
   data?: object
   route?: any
+  category?: Object
 }

@@ -30,25 +30,6 @@ type Response = {
   success: boolean
 }
 
-const { data: response } = await useAsyncData<Response>('response', () =>
-  $fetch(`${config.public.baseURL}/extract/user-connected/all`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${xsrfToken}`,
-    },
-    credentials: 'include',
-  })
-)
-const extracts = computed(() => {
-  if (response.value === null) {
-    return []
-  } else {
-    return response.value.data.map((extract) => ({
-      ...extract,
-    }))
-  }
-})
 const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
