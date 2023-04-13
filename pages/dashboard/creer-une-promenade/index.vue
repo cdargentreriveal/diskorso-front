@@ -251,7 +251,7 @@ const toggle = (extract: any): boolean => {
           >
             <div>Pas d'extraits sélectionnés</div>
           </div>
-          <div v-else class="h-[50vh] overflow-auto">
+          <div v-else class="h-[53vh] overflow-auto">
             <div
               v-for="(extract, index) in extractsStore.extracts"
               :key="index"
