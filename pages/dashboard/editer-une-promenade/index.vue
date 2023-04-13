@@ -13,7 +13,7 @@ const extractsStore = useExtractStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
-    titleBlack: 'Créer une',
+    titleBlack: 'éditer une',
     titlePurple: 'promenade',
     actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
   },
@@ -190,7 +190,7 @@ const hasAvatar = computed(() => !!avatarUrl.value)
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
-  if (blocTransition.value) {
+  /*   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
       handle: '.drag',
@@ -203,7 +203,7 @@ onMounted(() => {
         updatedItemsPublished.value = updatedItems
       },
     })
-  }
+  } */
   const descriptionCard = document.querySelectorAll('.extraits_item_text')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -249,9 +249,9 @@ const toggle = (extract: any): boolean => {
             v-if="extractsStore.extracts.length < 1"
             class="empty-extract h-[50vh] flex items-center justify-center border-dashed border border-slate-400 text-slate-400"
           >
-            <div>Pas d'extraits sélectionnés</div>
+            <div>Pas d'extraits selectionnés</div>
           </div>
-          <div v-else class="h-[50vh] overflow-auto">
+          <div v-else class="h-[60vh] overflow-auto">
             <div
               v-for="(extract, index) in extractsStore.extracts"
               :key="index"
@@ -477,7 +477,7 @@ const toggle = (extract: any): boolean => {
             >
               <div class="w-full">
                 <WysiwygEditor
-                  :value="item.content"
+                  v-model="item.content"
                   @update:value="(value) => (item.content = value)"
                 />
               </div>
