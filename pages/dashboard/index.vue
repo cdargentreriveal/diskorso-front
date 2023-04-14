@@ -2,7 +2,7 @@
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { useUserStore } from '~~/store/user'
 import { Promenade } from '~~/types/Promenades'
-import { lastNumberData } from '~~/utils/connected'
+import { firstNumberData, lastNumberData } from '~~/utils/connected'
 import { refreshToken } from '~~/utils/connected/refreshToken'
 const config = useRuntimeConfig()
 const user = useUserStore()
@@ -186,7 +186,7 @@ onMounted(async () => {
   }
   const resultLast = await lastNumberData(config.public.baseURL)
   lastNumberId.value = resultLast
-  const resultFirst = await lastNumberData(config.public.baseURL)
+  const resultFirst = await firstNumberData(config.public.baseURL)
   firstNumberId.value = resultFirst
 })
 </script>

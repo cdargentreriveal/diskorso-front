@@ -66,7 +66,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
     titleBlack: 'Mes',
     titlePurple: 'Extraits',
     actionBtn: [{ action: 'Créer un extrait' }],
-    route: { name: 'creer-un-extrait' },
+    route: { name: 'dashboard/creer-un-extrait' },
   },
 ])
 onMounted(() => {
@@ -105,6 +105,16 @@ onMounted(() => {
         />
       </div>
     </div>
+    <!-- <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
+      <DisplayPromenadesPagination
+        v-if="totalPromenades !== null"
+        :first="first"
+        :previous="previous"
+        :next="next"
+        :total-promenade="+totalPromenades"
+        :totalpage="+totalPages"
+      />
+    </div> -->
   </div>
 </template>
 <style scoped lang="scss">
