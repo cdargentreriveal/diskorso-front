@@ -16,12 +16,12 @@ const categories = categoriesStore.categories
     <div class="flex items-center">
       <NuxtLink :to="`/dashboard/`">
         <button
-          class="category-btn px-8 py-4 mx-2 rounded-full text-sm border border-solid border-slate-400 text-slate-400 uppercase"
+          class="category-btn px-7 py-4 mx-2 rounded-full text-sm border border-solid border-slate-400 text-slate-400 uppercase"
         >
           Tout
         </button>
       </NuxtLink>
-      <div class="flex items-center justify-center w-full">
+      <div class="flex items-center justify-center w-10/12">
         <div v-for="(categorie, index) in categories" :key="index">
           <div v-if="propsAdminCat.page === 'extraits'">
             <NuxtLink
