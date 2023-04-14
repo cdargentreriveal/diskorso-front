@@ -5,7 +5,7 @@ const searchTag = ref('')
 <template>
   <div class="search-bar-container">
     <div
-      class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
+      class="search-bar my-10 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
     >
       <div class="search-bar-input w-full h-full">
         <input
