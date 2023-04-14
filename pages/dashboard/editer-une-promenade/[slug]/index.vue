@@ -54,7 +54,7 @@ const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
 }
-const avatarUrl = ref('')
+const avatarUrl = ref(PromnadeStore.selectPromenade?.main_image)
 const fileInput = ref<HTMLInputElement>()
 
 function handleFileUpload(event: Event) {
@@ -191,7 +191,7 @@ const hasAvatar = computed(() => !!avatarUrl.value)
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
-  /*   if (blocTransition.value) {
+  if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
       handle: '.drag',
@@ -204,7 +204,7 @@ onMounted(() => {
         updatedItemsPublished.value = updatedItems
       },
     })
-  } */
+  }
   const descriptionCard = document.querySelectorAll('.extraits_item_text')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -428,7 +428,11 @@ const toggle = (extract: any): boolean => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="index" class="bloc">
+          <div
+            v-for="(item, index) in PromnadeStore.selectPromenade.content"
+            :key="index"
+            class="bloc"
+          >
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
