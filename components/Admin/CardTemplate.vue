@@ -42,7 +42,7 @@ async function submitDeletedPromenade() {
     )
   }
 }
-function test() {
+function getPromenadeEdit() {
   PromnadeStore.setPromenade(propsCard.promenade)
 }
 const propsCard = defineProps({
@@ -166,11 +166,10 @@ const propsCard = defineProps({
           </div>
         </div>
         <hr class="my-6" />
-        <div class="test" @click="test">test</div>
         <div class="w-7/12 mx-auto">
           <NuxtLink
             :to="`/dashboard/editer-une-promenade/${promenade.slug}`"
-            @click="test"
+            @click="getPromenadeEdit"
           >
             <div
               class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
