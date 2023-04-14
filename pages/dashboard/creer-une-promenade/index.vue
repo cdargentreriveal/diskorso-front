@@ -438,7 +438,6 @@ const toggle = (extract: any): boolean => {
             :key="index"
             class="bloc"
           >
-            {{ index }}
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
