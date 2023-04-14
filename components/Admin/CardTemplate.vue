@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import { PropType } from 'vue'
 import { Promenade } from '~~/types/Promenades'
+import { usePromenadeStore } from '~~/store/promenade'
 import { deletedPromenade } from '~~/utils/connected'
+const PromnadeStore = usePromenadeStore()
 const config = useRuntimeConfig()
 const { $swal } = useNuxtApp()
 const displaySwal = (
@@ -39,6 +41,9 @@ async function submitDeletedPromenade() {
       'Ok'
     )
   }
+}
+function test() {
+  PromnadeStore.setPromenade(propsCard.promenade)
 }
 const propsCard = defineProps({
   promenade: {
@@ -161,8 +166,12 @@ const propsCard = defineProps({
           </div>
         </div>
         <hr class="my-6" />
+        <div class="test" @click="test">test</div>
         <div class="w-7/12 mx-auto">
-          <NuxtLink :to="`/dashboard/editer-une-promenade/${promenade.slug}`">
+          <NuxtLink
+            :to="`/dashboard/editer-une-promenade/${promenade.slug}`"
+            @click="test"
+          >
             <div
               class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
             >

@@ -2,13 +2,14 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { ExtractFetched } from '~~/types/Extracts'
+import { usePromenadeStore } from '~~/store/promenade'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 import { useExtractStore } from '~~/store/extracts'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
-
+const PromnadeStore = usePromenadeStore()
 const extractsStore = useExtractStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -221,7 +222,7 @@ const toggle = (extract: any): boolean => {
 
 <template>
   <AdminMenu />
-  <div class="container mx-auto">
+  <div v-if="PromnadeStore.selectPromenade" class="container mx-auto">
     <AdminTitle
       v-if="datasTitle[0].type === 'button'"
       :title-black="datasTitle[0].titleBlack"
@@ -339,7 +340,6 @@ const toggle = (extract: any): boolean => {
           </div>
         </div>
       </div>
-
       <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
           <div class="flex items-center justify-between">
@@ -350,7 +350,7 @@ const toggle = (extract: any): boolean => {
           </div>
           <div class="my-2">
             <input
-              v-model="titleInput"
+              v-model="PromnadeStore.selectPromenade.title"
               type="text"
               name="scales"
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
@@ -418,7 +418,7 @@ const toggle = (extract: any): boolean => {
             </div>
           </div>
           <textarea
-            v-model="summaryPromenade"
+            v-model="PromnadeStore.selectPromenade.summary"
             type="text"
             name="scales"
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
