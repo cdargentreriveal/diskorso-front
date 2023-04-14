@@ -105,6 +105,10 @@ const { data: promenade } = useDiskorso<Promenade>(
                   class="extrait bg-slate-100 relative py-3"
                 >
                   <div v-html="blocsContent.content"></div>
+                  <div class="source text-xs italic text-right mb-3">
+                    <span>source: </span>
+                    <span class="underline">www.lemonde.fr</span>
+                  </div>
                 </div>
                 <div v-if="blocsContent.type === 'image'" class="image">
                   <img
