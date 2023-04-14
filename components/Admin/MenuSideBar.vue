@@ -189,7 +189,7 @@ function addMetaDescription(event: Event): void {
             <textarea
               type="text"
               name="scales"
-              class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-full max-h-[75px]"
+              class="my-2 p-2 text-xs border border-slate-300 rounded w-full h-full max-h-[68px]"
               maxlength="120"
               @change="addMetaDescription($event)"
             />

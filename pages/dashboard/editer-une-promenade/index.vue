@@ -13,7 +13,7 @@ const extractsStore = useExtractStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
-    titleBlack: 'Créer une',
+    titleBlack: 'éditer une',
     titlePurple: 'promenade',
     actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
   },
@@ -30,6 +30,25 @@ type Response = {
   success: boolean
 }
 
+const { data: response } = await useAsyncData<Response>('response', () =>
+  $fetch(`${config.public.baseURL}/extract/user-connected/all`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${xsrfToken}`,
+    },
+    credentials: 'include',
+  })
+)
+const extracts = computed(() => {
+  if (response.value === null) {
+    return []
+  } else {
+    return response.value.data.map((extract) => ({
+      ...extract,
+    }))
+  }
+})
 const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
@@ -138,10 +157,6 @@ function removeItem(index: number, id: number): void {
     excerptCount.value--
     isExcerptAdded.value[id] = false
   }
-
-  /*  const bloc = document.getElementById('bloc' + index)
-  bloc?.remove()
- */
   items.value.splice(index, 1)
 }
 
@@ -175,7 +190,7 @@ const hasAvatar = computed(() => !!avatarUrl.value)
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
-  if (blocTransition.value) {
+  /*   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
       handle: '.drag',
@@ -188,7 +203,7 @@ onMounted(() => {
         updatedItemsPublished.value = updatedItems
       },
     })
-  }
+  } */
   const descriptionCard = document.querySelectorAll('.extraits_item_text')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -234,9 +249,9 @@ const toggle = (extract: any): boolean => {
             v-if="extractsStore.extracts.length < 1"
             class="empty-extract h-[50vh] flex items-center justify-center border-dashed border border-slate-400 text-slate-400"
           >
-            <div>Pas d'extraits sélectionnés</div>
+            <div>Pas d'extraits selectionnés</div>
           </div>
-          <div v-else class="h-[53vh] overflow-auto">
+          <div v-else class="h-[60vh] overflow-auto">
             <div
               v-for="(extract, index) in extractsStore.extracts"
               :key="index"
@@ -413,12 +428,7 @@ const toggle = (extract: any): boolean => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div
-            v-for="(item, index) in items"
-            :id="'bloc' + index"
-            :key="index"
-            class="bloc"
-          >
+          <div v-for="(item, index) in items" :key="index" class="bloc">
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"

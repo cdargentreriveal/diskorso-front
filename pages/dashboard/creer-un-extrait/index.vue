@@ -65,7 +65,6 @@ const contentInput = ref('')
           <WYSIWYGWysywygEditorWithoutToolBar
             v-model="contentInput"
             class="h-full bg-white"
-            :modules="{ toolbar: false }"
             @update:value="(content) => (contentInput = content)"
           />
         </div>

@@ -123,11 +123,13 @@ const propsCard = defineProps({
       <div class="card-content-bottom pb-2">
         <div class="flex items-center justify-between">
           <div class="card-content-author w-1/2">
-            <div
-              class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
-            >
-              Modifier
-            </div>
+            <NuxtLink to="/dashboard/editer-une-promenade">
+              <div
+                class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
+              >
+                Modifier
+              </div>
+            </NuxtLink>
             <!--             <NuxtLink
               :to="`/contributor/${
                 promenade.user.username + '_' + promenade.user.id
