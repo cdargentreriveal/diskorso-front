@@ -74,7 +74,7 @@ const searchTag = ref('')
   pointer-events: none;
   button {
     cursor: not-allowed;
-    background-color: var(--gray-light-color);
+    background-color: rgb(226 232 240);
   }
 }
 </style>

@@ -50,7 +50,7 @@ const categories = categoriesStore.categories
                   'category-btn': true,
                   'px-8 py-4 mx-2 rounded-full text-sm uppercase': true,
                   [categorie.color]: categorie.slug === route.params.slug,
-                  'bg-slate-300 text-white':
+                  'bg-slate-200 text-white':
                     categorie.slug !== route.params.slug,
                 }"
               >
