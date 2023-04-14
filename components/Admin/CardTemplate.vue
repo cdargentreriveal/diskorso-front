@@ -85,19 +85,15 @@ const propsCard = defineProps({
           <span>En brouillon</span>
         </div>
         <div
-          v-if="!promenade.published"
-          class="published absolute bottom-0 text-black right-0 text-xs p-3 flex items-center bg-white underline"
+          class="date absolute bottom-0 right-0 bg-white card-content-date text-xs gray-color text-xs p-3"
         >
-          <span>Publier maintenant </span>
+          Crée le : {{ getDate(promenade.createdAt) }}
         </div>
       </div>
     </NuxtLink>
     <div class="card-content p-6">
       <div class="card-content-title font-bold text-xl my-1 h-[56px]">
         <h2>{{ promenade.title }}</h2>
-      </div>
-      <div class="card-content-date text-xs gray-color mt-2">
-        Crée le : {{ getDate(promenade.createdAt) }}
       </div>
       <div class="card-content-categories flex gap-2 py-5">
         <div
@@ -122,34 +118,36 @@ const propsCard = defineProps({
       <hr class="my-6" />
       <div class="card-content-bottom pb-2">
         <div class="flex items-center justify-between">
-          <div class="card-content-author w-1/2">
-            <NuxtLink to="/dashboard/editer-une-promenade">
-              <div
-                class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
-              >
-                Modifier
-              </div>
-            </NuxtLink>
-            <!--             <NuxtLink
-              :to="`/contributor/${
-                promenade.user.username + '_' + promenade.user.id
-              }`"
+          <div class="card-content-author w-7/12">
+            <div
+              v-if="!promenade.published"
+              class="text-black right-0 text-xs flex items-center bg-white underline gap-2"
             >
-              <div class="flex gap-3 items-center">
-                <div
-                  class="card-content-avatar w-1/5 rounded-full overflow-hidden border border-black h-[45px] w-[45px]"
-                >
-                  <img :src="promenade.user.picture" alt="avatar" />
-                </div>
-                <div class="card-content-author gray-color text-xs italic">
-                  par :
-                  <span class="underline">{{ promenade.user.username }}</span>
-                </div>
+              <div class="w-[17px]">
+                <img
+                  src="@/assets/images/icons/menu-admin/eye.svg"
+                  alt=""
+                  class="w-full"
+                />
               </div>
-            </NuxtLink> -->
+              <span>Publier maintenant </span>
+            </div>
+            <div
+              v-else
+              class="text-black right-0 text-xs flex items-center bg-white underline gap-2"
+            >
+              <div class="w-[17px]">
+                <img
+                  src="@/assets/images/icons/menu-admin/eye.svg"
+                  alt=""
+                  class="w-full"
+                />
+              </div>
+              <span>Mettre en brouillon </span>
+            </div>
           </div>
           <div
-            class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color cursor-pointer"
+            class="card-content-link text-right text-xs w-5/12 flex gap-2 underline items-center red-color cursor-pointer"
             @click.prevent="submitDeletedPromenade"
           >
             <div class="delete ml-auto w-[12px]">
@@ -162,6 +160,16 @@ const propsCard = defineProps({
             <span>Supprimer</span>
           </div>
         </div>
+        <hr class="my-6" />
+        <div class="w-7/12 mx-auto">
+          <NuxtLink to="/dashboard/editer-une-promenade">
+            <div
+              class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
+            >
+              Modifier
+            </div>
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </div>
@@ -172,16 +180,12 @@ const propsCard = defineProps({
   background-color: var(--blue-color);
   border-radius: 0 0 0 0.5rem;
 }
-.published {
+.date {
   border-radius: 0.5rem 0 0 0;
-  &:after {
-    content: ' →';
-    white-space: break-spaces;
-  }
 }
 .card {
   &-image {
-    height: 200px;
+    height: 180px;
     width: 100%;
     overflow: hidden;
     & img {

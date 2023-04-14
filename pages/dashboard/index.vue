@@ -176,7 +176,7 @@ if (totalPromenades.value === null) {
     +totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
   )
 }
-onMounted(async () => {
+function subStringSummary() {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -184,6 +184,12 @@ onMounted(async () => {
       element.textContent = shortDescription + '...'
     })
   }
+}
+onUpdated(() => {
+  subStringSummary()
+})
+onMounted(async () => {
+  subStringSummary()
   const resultLast = await lastNumberData(config.public.baseURL)
   lastNumberId.value = resultLast
   const resultFirst = await firstNumberData(config.public.baseURL)

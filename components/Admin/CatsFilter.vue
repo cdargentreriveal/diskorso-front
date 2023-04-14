@@ -16,12 +16,16 @@ const categories = categoriesStore.categories
     <div class="flex items-center">
       <NuxtLink :to="`/dashboard/`">
         <button
-          class="category-btn px-7 py-4 mx-2 rounded-full text-sm border border-solid border-slate-400 text-slate-400 uppercase"
+          class="category-btn px-7 py-4 mx-2 rounded-full text-xs font-semibold text-slate-400 uppercase flex items-center gap-3"
         >
-          Tout
+          <img
+            src="@/assets/images/icons/menu-admin/eye.svg"
+            alt="icone oeil"
+          />
+          <span>Tout voir</span>
         </button>
       </NuxtLink>
-      <div class="flex items-center justify-center w-10/12">
+      <div class="flex items-center justify-center w-9/12">
         <div v-for="(categorie, index) in categories" :key="index">
           <div v-if="propsAdminCat.page === 'extraits'">
             <NuxtLink
