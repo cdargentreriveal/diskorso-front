@@ -157,6 +157,10 @@ function removeItem(index: number, id: number): void {
     excerptCount.value--
     isExcerptAdded.value[id] = false
   }
+
+  /*  const bloc = document.getElementById('bloc' + index)
+  bloc?.remove()
+ */
   items.value.splice(index, 1)
 }
 
@@ -428,7 +432,13 @@ const toggle = (extract: any): boolean => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="index" class="bloc">
+          <div
+            v-for="(item, index) in items"
+            :id="'bloc' + index"
+            :key="index"
+            class="bloc"
+          >
+            {{ index }}
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
