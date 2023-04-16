@@ -39,9 +39,30 @@ async function submitCreatedPromenade() {
         'error',
         'ok'
       )
+    } else if (propsAdminMenuSideBar.name === '') {
+      displaySwal(
+        "Nom de l'extrait manquant",
+        `Merci de renseigner un nom à votre extrait`,
+        'error',
+        'ok'
+      )
+    } else if (propsAdminMenuSideBar.source === '') {
+      displaySwal(
+        'Source manquante',
+        `Merci de renseigner la source de votre extrait`,
+        'error',
+        'ok'
+      )
+    } else if (propsAdminMenuSideBar.content === '') {
+      displaySwal(
+        'Extrait vide',
+        `Merci de renseigner le contenu de votre extrait`,
+        'error',
+        'ok'
+      )
     } else {
       const response = await createdExtract(config.public.baseURL, data)
-      if (response.error) {
+      if (!response.success) {
         displaySwal('Echec', `${response.message}`, 'error', 'ok')
       } else {
         displaySwal(
@@ -50,6 +71,9 @@ async function submitCreatedPromenade() {
           'success',
           'Ok'
         )
+        propsAdminMenuSideBar.clearData()
+        selectedCategories.splice(0, selectedCategories.length)
+        clearSelectedCategories()
       }
     }
   } catch (error) {
@@ -59,6 +83,15 @@ async function submitCreatedPromenade() {
       'error',
       'Ok'
     )
+  }
+}
+
+const clearSelectedCategories = () => {
+  const checkboxes = document.getElementsByName(
+    'categories'
+  ) as NodeListOf<HTMLInputElement>
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = false
   }
 }
 
@@ -80,6 +113,10 @@ const propsAdminMenuSideBar = defineProps({
     default() {
       return {}
     },
+  },
+  clearData: {
+    type: Function,
+    required: true,
   },
 })
 

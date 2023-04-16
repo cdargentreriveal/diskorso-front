@@ -168,14 +168,19 @@ const totalPromenades = computed(
     (user.currentUser?.publishedPromenadesCount ?? 0) +
     (user.currentUser?.unpublishedPromenadesCount ?? 0)
 )
-let totalPages = 0
-if (totalPromenades.value === null) {
-  totalPages = 0
-} else {
-  totalPages = Math.ceil(
-    +totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
-  )
-}
+const totalPages = ref(
+  totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
+)
+watch(totalPromenades, (newValue) => {
+  if (newValue === null) {
+    totalPages.value = 0
+  } else {
+    totalPages.value = Math.ceil(
+      +newValue / numberOfPromenadeUserConnectedToDisplay.value
+    )
+  }
+})
+
 onMounted(async () => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
@@ -184,9 +189,15 @@ onMounted(async () => {
       element.textContent = shortDescription + '...'
     })
   }
-  const resultLast = await lastNumberData(config.public.baseURL)
+  const resultLast = await lastNumberData(
+    config.public.baseURL,
+    'promenadeditor/findLastPromenade'
+  )
   lastNumberId.value = resultLast
-  const resultFirst = await firstNumberData(config.public.baseURL)
+  const resultFirst = await firstNumberData(
+    config.public.baseURL,
+    'promenadeditor/findFirstPromenade'
+  )
   firstNumberId.value = resultFirst
 })
 </script>

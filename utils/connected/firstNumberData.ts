@@ -1,6 +1,6 @@
 import { refreshToken } from '../connected/refreshToken'
 
-export async function firstNumberData(baseURL: string) {
+export async function firstNumberData(baseURL: string, endpoint: string) {
   let xsrfTokenTime: any = null
   if (process.client) {
     xsrfTokenTime = localStorage.getItem('xsrfToken_time')
@@ -17,17 +17,14 @@ export async function firstNumberData(baseURL: string) {
     },
     credentials: 'include' as RequestCredentials,
   }
-  const response = await fetch(
-    `${baseURL}/promenadeditor/findFirstPromenade`,
-    options
-  )
+  const response = await fetch(`${baseURL}/${endpoint}`, options)
   if (response.ok) {
     const data = await response.json()
     return data
   } else {
     const data = await response.json()
     await refreshToken(baseURL)
-    await fetch(`${baseURL}/promenadeditor/findFirstPromenade`, options)
+    await fetch(`${baseURL}/${endpoint}`, options)
     return data
   }
 }
