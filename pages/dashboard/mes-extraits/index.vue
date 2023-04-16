@@ -78,7 +78,9 @@ if (error.value !== null) {
 }
 
 const totalExtracts = computed(() => user.currentUser?.totalExtracts || 0)
-const totalPages = ref(totalExtracts.value / numberOfExtractToDisplay.value)
+const totalPages = ref(
+  Math.ceil(totalExtracts.value / numberOfExtractToDisplay.value)
+)
 watch(totalExtracts, (newValue) => {
   if (newValue === null) {
     totalPages.value = 0

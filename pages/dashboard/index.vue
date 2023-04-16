@@ -169,7 +169,9 @@ const totalPromenades = computed(
     (user.currentUser?.unpublishedPromenadesCount ?? 0)
 )
 const totalPages = ref(
-  totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
+  Math.ceil(
+    totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
+  )
 )
 watch(totalPromenades, (newValue) => {
   if (newValue === null) {
