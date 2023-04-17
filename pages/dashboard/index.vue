@@ -179,11 +179,17 @@ const totalPages = ref(
   Math.ceil(
     totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
   )
-
-}
-function subStringSummary() {
-
 )
+
+function subStringSummary() {
+  const descriptionCard = document.querySelectorAll('.card-content-description')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 90) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
+}
 watch(totalPromenades, (newValue) => {
   if (newValue === null) {
     totalPages.value = 0
@@ -194,13 +200,11 @@ watch(totalPromenades, (newValue) => {
   }
 })
 
-
 onUpdated(() => {
   subStringSummary()
 })
 onMounted(async () => {
   subStringSummary()
-  const resultLast = await lastNumberData(config.public.baseURL)
   const resultLast = await lastNumberData(
     config.public.baseURL,
     'promenadeditor/findLastPromenade'
