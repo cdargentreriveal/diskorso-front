@@ -1,6 +1,7 @@
 <script lang="ts" setup>
+import WysywygEditorWithoutToolBar from '../../../components/WYSIWYG/WysywygEditorWithoutToolBar.vue'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
-import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
+
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
@@ -16,6 +17,15 @@ const datasTitle = computed((): BtnAdminPage[] => [
 const nameInput = ref('')
 const sourceInput = ref('')
 const contentInput = ref('')
+const wysiwygEditorRef = ref<typeof WysywygEditorWithoutToolBar | null>(null)
+
+const clearData = (): void => {
+  nameInput.value = ''
+  sourceInput.value = ''
+  contentInput.value = ''
+  wysiwygEditorRef.value?.clearEditor()
+  refreshNuxtData()
+}
 </script>
 
 <template>
@@ -63,6 +73,7 @@ const contentInput = ref('')
         <div class="font-semibold mb-4">Collez votre contenu <sup>*</sup></div>
         <div class="my-2 w-full h-[30vh] max-h-[30vh]">
           <WYSIWYGWysywygEditorWithoutToolBar
+            ref="wysiwygEditorRef"
             v-model="contentInput"
             class="h-full bg-white"
             @update:value="(content) => (contentInput = content)"
@@ -74,6 +85,7 @@ const contentInput = ref('')
       :name="nameInput"
       :source="sourceInput"
       :content="contentInput"
+      :clear-data="clearData"
     />
   </div>
 </template>

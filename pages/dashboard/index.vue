@@ -96,17 +96,6 @@ const firstId = computed(() => {
     return response.value[0].id
   }
 })
-// const { data: firstNumberData } = await useFetch<number>(
-//   `${config.public.baseURL}/promenadeditor/findFirstPromenade`,
-//   {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${xsrfToken}`,
-//     },
-//     credentials: 'include',
-//   }
-// )
 // next
 const firstBtnPagination = ref(true)
 const middleBtnPagination = ref(false)
@@ -186,31 +175,41 @@ const totalPromenades = computed(
     (user.currentUser?.publishedPromenadesCount ?? 0) +
     (user.currentUser?.unpublishedPromenadesCount ?? 0)
 )
-let totalPages = 0
-if (totalPromenades.value === null) {
-  totalPages = 0
-} else {
-  totalPages = Math.ceil(
-    +totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
+const totalPages = ref(
+  Math.ceil(
+    totalPromenades.value / numberOfPromenadeUserConnectedToDisplay.value
   )
+
 }
 function subStringSummary() {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 90) ?? ''
-      element.textContent = shortDescription + '...'
-    })
+
+)
+watch(totalPromenades, (newValue) => {
+  if (newValue === null) {
+    totalPages.value = 0
+  } else {
+    totalPages.value = Math.ceil(
+      +newValue / numberOfPromenadeUserConnectedToDisplay.value
+    )
   }
-}
+})
+
+
 onUpdated(() => {
   subStringSummary()
 })
 onMounted(async () => {
   subStringSummary()
   const resultLast = await lastNumberData(config.public.baseURL)
+  const resultLast = await lastNumberData(
+    config.public.baseURL,
+    'promenadeditor/findLastPromenade'
+  )
   lastNumberId.value = resultLast
-  const resultFirst = await firstNumberData(config.public.baseURL)
+  const resultFirst = await firstNumberData(
+    config.public.baseURL,
+    'promenadeditor/findFirstPromenade'
+  )
   firstNumberId.value = resultFirst
 })
 </script>
@@ -226,7 +225,7 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter />
-    <DisplayPromenadesSearchSection />
+    <DisplayPromenadesSearchSection :admin="true" />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in response"

@@ -1,19 +1,21 @@
 <template>
-  <div ref="editorRef" class="my-editor"></div>
+  <div>
+    <div ref="editorRef" class="my-editor"></div>
+  </div>
 </template>
 
 <script lang="ts">
 import MyQuill from 'quill'
 import 'quill/dist/quill.snow.css' // Ajouter cette ligne
 export default defineComponent({
-  name: 'WysiwygEditor',
+  name: 'WysiwygEditorWithoutToolBar',
   props: {
     value: {
       type: String,
       default: '',
     },
   },
-  emits: ['update:value'],
+  emits: ['update:value', 'deleteContent'],
   setup(props, { emit }) {
     const editorRef = ref<HTMLDivElement | null>(null)
     let quillInstance: MyQuill | null = null
@@ -26,11 +28,19 @@ export default defineComponent({
       }
     }
 
+    const clearEditor = () => {
+      if (quillInstance) {
+        quillInstance.setText('')
+      }
+    }
+
     onMounted(() => {
       if (editorRef.value) {
         quillInstance = new MyQuill(editorRef.value, {
           modules: { toolbar: false },
           theme: 'snow',
+          bounds: editorRef.value,
+          placeholder: 'Collez votre contenu ici...', // Ajoutez cette ligne
         })
 
         quillInstance.on('text-change', updateValue)
@@ -61,6 +71,7 @@ export default defineComponent({
 
     return {
       editorRef,
+      clearEditor,
     }
   },
 })

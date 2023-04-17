@@ -1,5 +1,11 @@
 <script lang="ts" setup>
 const searchTag = ref('')
+const propsSearch = defineProps({
+  admin: {
+    type: Boolean,
+    required: true,
+  },
+})
 </script>
 
 <template>
@@ -29,7 +35,12 @@ const searchTag = ref('')
         </button>
       </div>
       <div v-else class="search-bar-button text-white text-sm h-full">
-        <NuxtLink :to="`/promenades/search/${searchTag}`">
+        <NuxtLink v-if="!admin" :to="`/promenades/search/${searchTag}`" >
+          <button class="px-8 w-full h-full uppercase">
+            <span class="flex items-center">Rechercher</span>
+          </button>
+        </NuxtLink>
+        <NuxtLink v-else :to="`/dashboard/mes-promenades/search/${searchTag}`">
           <button class="px-8 w-full h-full uppercase">
             <span class="flex items-center">Rechercher</span>
           </button>
