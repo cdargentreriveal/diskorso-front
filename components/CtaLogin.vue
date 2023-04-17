@@ -18,12 +18,23 @@
         <div
           class="cta_login-content-description text-center w-1/2 -md:w-full -md:px-5 -md:text-sm mx-auto pt-5"
         >
-          <p>
+          <p v-if="user">
+            Créez dès à présent votre promenade de manière collaborative en
+            cliquant sur le bouton "créer une promenade"
+          </p>
+          <p v-else>
             Créez dès à présent votre promenade de manière collaborative en vous
             inscrivant gratuitement ou en vous connectant sur notre plateforme !
           </p>
           <div class="w-1/2 mx-auto pt-10">
-            <ul class="flex justify-center items-center">
+            <NuxtLink
+              to="/dashboard/creer-une-promenade"
+              v-if="user"
+              class="created_btn font-bold p-5 capitalize mx-3 rounded-lg"
+            >
+              <button>Créer une promenade</button>
+            </NuxtLink>
+            <ul v-else class="flex justify-center items-center">
               <li v-for="(item, i) in menus" :key="i">
                 <Anchor
                   v-if="item.type === 'link'"
@@ -51,6 +62,7 @@
 
 <script setup lang="ts">
 import { IMenuItem } from '@/types/MenuItems'
+import { useUserStore } from '~~/store/user'
 const menus = computed((): IMenuItem[] => [
   {
     type: 'button',
@@ -63,6 +75,7 @@ const menus = computed((): IMenuItem[] => [
     route: { name: 'sign_in' },
   },
 ])
+const user = useUserStore()
 </script>
 
 <style lang="scss" scoped>
@@ -70,6 +83,12 @@ const menus = computed((): IMenuItem[] => [
   &-content {
     background-color: #186662;
   }
+}
+
+.created_btn {
+  background-color: var(--purple-color);
+  color: white;
+  border: none;
 }
 li .Connexion {
   background-color: white;
