@@ -64,7 +64,10 @@ const propsCard = defineProps({
 <template>
   <div class="card rounded-md overflow-hidden bg-white box-shaddow h-full">
     <NuxtLink :to="`/promenades/${promenade.slug}`">
-      <div class="card-image relative">
+      <div
+        class="card-image relative"
+        :class="!promenade.published ? 'filter-gray' : ''"
+      >
         <img
           v-if="promenade.main_image === ''"
           class="w-full h-full object-cover"
@@ -80,7 +83,7 @@ const propsCard = defineProps({
         />
         <div
           v-if="!promenade.published"
-          class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center"
+          class="draft absolute top-0 text-white right-0 text-xs p-2 flex items-center justify-center w-[136px]"
         >
           <img
             src="@/assets/images/icons/eye-off.svg"
@@ -88,6 +91,17 @@ const propsCard = defineProps({
             class="w-[15px] mr-2"
           />
           <span>En brouillon</span>
+        </div>
+        <div
+          v-else
+          class="published absolute top-0 text-white right-0 text-xs p-2 flex items-center justify-center w-[136px]"
+        >
+          <img
+            src="@/assets/images/icons/eye-white.svg"
+            alt="icone oeil caché"
+            class="w-[15px] mr-2"
+          />
+          <span>Publiée</span>
         </div>
         <div
           class="date absolute bottom-0 right-0 bg-white card-content-date text-xs gray-color text-xs p-3"
@@ -143,7 +157,7 @@ const propsCard = defineProps({
             >
               <div class="w-[17px]">
                 <img
-                  src="@/assets/images/icons/menu-admin/eye.svg"
+                  src="@/assets/images/icons/eye-off-gray.svg"
                   alt=""
                   class="w-full"
                 />
@@ -185,6 +199,13 @@ const propsCard = defineProps({
 
 <style lang="scss" scoped>
 .draft {
+  background-color: var(--gray-color);
+  border-radius: 0 0 0 0.5rem;
+}
+.filter-gray {
+  filter: grayscale(1);
+}
+.published {
   background-color: var(--blue-color);
   border-radius: 0 0 0 0.5rem;
 }
