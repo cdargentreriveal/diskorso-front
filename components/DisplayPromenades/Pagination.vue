@@ -22,12 +22,15 @@ const propsNavigation = defineProps({
   },
   firstBtnPagination: {
     type: Boolean,
+    default: true,
   },
   middleBtnPagination: {
     type: Boolean,
+    default: false,
   },
   lastBtnPagination: {
     type: Boolean,
+    default: false,
   },
 })
 </script>
@@ -118,6 +121,6 @@ const propsNavigation = defineProps({
 .pagination .last.active {
   color: var(--purple-color);
   border: 1px solid var(--purple-color);
-  background-color: #F6F2FF;
+  background-color: #f6f2ff;
 }
 </style>
