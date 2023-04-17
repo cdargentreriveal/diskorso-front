@@ -96,17 +96,6 @@ const firstId = computed(() => {
     return response.value[0].id
   }
 })
-// const { data: firstNumberData } = await useFetch<number>(
-//   `${config.public.baseURL}/promenadeditor/findFirstPromenade`,
-//   {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${xsrfToken}`,
-//     },
-//     credentials: 'include',
-//   }
-// )
 // next
 async function next() {
   if (
@@ -215,7 +204,7 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter />
-    <DisplayPromenadesSearchSection />
+    <DisplayPromenadesSearchSection :admin="true" />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in response"

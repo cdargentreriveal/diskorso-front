@@ -62,7 +62,7 @@ async function submitCreatedPromenade() {
       )
     } else {
       const response = await createdExtract(config.public.baseURL, data)
-      if (!response.success) {
+      if (!response.success && response.statusCode !== 401) {
         displaySwal('Echec', `${response.message}`, 'error', 'ok')
       } else {
         displaySwal(

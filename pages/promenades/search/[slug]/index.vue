@@ -111,7 +111,7 @@ const usernamesWithCounts = computed(() => {
   <client-only>
     <div class="container mx-auto">
       <DisplayPromenadesCategorieSection />
-      <DisplayPromenadesSearchSection />
+      <DisplayPromenadesSearchSection :admin="false" />
       <Separator />
       <div class="flex mt-10 mb-20">
         <div class="w-1/3 relative">

@@ -103,7 +103,7 @@ if (totalPromenades.value === null) {
 <template>
   <div class="container mx-auto">
     <DisplayPromenadesCategorieSection />
-    <DisplayPromenadesSearchSection />
+    <DisplayPromenadesSearchSection :admin="false" />
     <Separator />
     <div class="">
       <TitleSection title-black="Les promenades de" :title-purple="slug" />
