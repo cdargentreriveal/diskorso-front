@@ -112,7 +112,7 @@ const firstId = computed(() => {
 const firstBtnPagination = ref(true)
 const middleBtnPagination = ref(false)
 const lastBtnPagination = ref(false)
-onBeforeUpdate(() => {
+onUpdated(() => {
   if (firstId.value === lastNumberId.value) {
     firstBtnPagination.value = true
     middleBtnPagination.value = false

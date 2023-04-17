@@ -223,6 +223,8 @@ onMounted(async () => {
       >
         <AdminCardTemplate :promenade="promenade" class="h-full" />
       </div>
+    </div>
+    <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
       <DisplayPromenadesPagination
         v-if="totalPromenades !== null"
         :first="first"
