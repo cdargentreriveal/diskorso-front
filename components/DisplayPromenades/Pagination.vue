@@ -20,12 +20,21 @@ const propsNavigation = defineProps({
     type: Number,
     required: true,
   },
+  firstBtnPagination: {
+    type: Boolean,
+  },
+  middleBtnPagination: {
+    type: Boolean,
+  },
+  lastBtnPagination: {
+    type: Boolean,
+  },
 })
 </script>
 
 <template>
   <div
-    class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full"
+    class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full pagination"
   >
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
@@ -61,18 +70,20 @@ const propsNavigation = defineProps({
       </div>
       <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
       <div
-        class="click relative z-10 inline-flex items-center border border-indigo-500 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-600 focus:z-20"
+        class="click first relative z-10 inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 focus:z-20"
+        :class="firstBtnPagination ? 'active' : ''"
         @click="first()"
       >
         1
       </div>
       <span
-        class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+        class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+        :class="middleBtnPagination ? 'active' : ''"
         >...</span
       >
       <div
-        href="#"
-        class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+        class="relative last inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+        :class="lastBtnPagination ? 'active' : 'ctive'"
       >
         {{ totalpage }}
       </div>
@@ -101,5 +112,12 @@ const propsNavigation = defineProps({
 <style lang="scss" scoped>
 .click {
   cursor: pointer;
+}
+.pagination .first.active,
+.pagination .middle.active,
+.pagination .last.active {
+  color: var(--purple-color);
+  border: 1px solid var(--purple-color);
+  background-color: #F6F2FF;
 }
 </style>

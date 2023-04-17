@@ -5,14 +5,15 @@
         <h2>
           {{ titleBlack }}
           <span class="font-medium purple-color">{{ titlePurple }}</span>
-          <button
-            v-if="JSON.stringify(category) !== '{}'"
-            :class="`category-btn px-8 py-4 mx-8 rounded-full text-sm ${category?.color} uppercase`"
-          >
-            {{ category?.title }}
-          </button>
         </h2>
       </div>
+<!--       <button
+        v-if="JSON.stringify(category) !== '{}'"
+        :class="`category-btn px-5 py-3 mx-8 rounded-full relative text-sm ${category?.color} uppercase`"
+      >
+        {{ category?.title }}
+        <div class="close absolute top-0 -right-5">✕</div>
+      </button> -->
       <div v-if="data.length > 0" class="data px-4 py-3 text-sm">
         <span v-for="(item, i) in data" :key="i"
           ><span class="text-base font-bold number mr-1">{{

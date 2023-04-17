@@ -2,13 +2,14 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { ExtractFetched } from '~~/types/Extracts'
+import { usePromenadeStore } from '~~/store/promenade'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
 import { useExtractStore } from '~~/store/extracts'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
-
+const PromnadeStore = usePromenadeStore()
 const extractsStore = useExtractStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -53,7 +54,7 @@ const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
 }
-const avatarUrl = ref('')
+const avatarUrl = ref(PromnadeStore.selectPromenade?.main_image)
 const fileInput = ref<HTMLInputElement>()
 
 function handleFileUpload(event: Event) {
@@ -190,7 +191,7 @@ const hasAvatar = computed(() => !!avatarUrl.value)
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
-  /*   if (blocTransition.value) {
+  if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
       handle: '.drag',
@@ -203,7 +204,7 @@ onMounted(() => {
         updatedItemsPublished.value = updatedItems
       },
     })
-  } */
+  }
   const descriptionCard = document.querySelectorAll('.extraits_item_text')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
@@ -221,7 +222,7 @@ const toggle = (extract: any): boolean => {
 
 <template>
   <AdminMenu />
-  <div class="container mx-auto">
+  <div v-if="PromnadeStore.selectPromenade" class="container mx-auto">
     <AdminTitle
       v-if="datasTitle[0].type === 'button'"
       :title-black="datasTitle[0].titleBlack"
@@ -339,7 +340,6 @@ const toggle = (extract: any): boolean => {
           </div>
         </div>
       </div>
-
       <div class="w-8/12 relative">
         <div class="promenade_title font-semibold text-lg mb-8">
           <div class="flex items-center justify-between">
@@ -350,7 +350,7 @@ const toggle = (extract: any): boolean => {
           </div>
           <div class="my-2">
             <input
-              v-model="titleInput"
+              v-model="PromnadeStore.selectPromenade.title"
               type="text"
               name="scales"
               class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
@@ -418,7 +418,7 @@ const toggle = (extract: any): boolean => {
             </div>
           </div>
           <textarea
-            v-model="summaryPromenade"
+            v-model="PromnadeStore.selectPromenade.summary"
             type="text"
             name="scales"
             class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
@@ -428,7 +428,11 @@ const toggle = (extract: any): boolean => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="index" class="bloc">
+          <div
+            v-for="(item, index) in PromnadeStore.selectPromenade.content"
+            :key="index"
+            class="bloc"
+          >
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
