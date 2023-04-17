@@ -18,7 +18,7 @@
         <div
           class="cta_login-content-description text-center w-1/2 -md:w-full -md:px-5 -md:text-sm mx-auto pt-5"
         >
-          <p v-if="user">
+          <p v-if="user.currentUser !== null">
             Créez dès à présent votre promenade de manière collaborative en
             cliquant sur le bouton "créer une promenade"
           </p>
@@ -29,7 +29,7 @@
           <div class="w-1/2 mx-auto pt-10">
             <NuxtLink
               to="/dashboard/creer-une-promenade"
-              v-if="user"
+              v-if="user.currentUser !== null"
               class="created_btn font-bold p-5 capitalize mx-3 rounded-lg"
             >
               <button>Créer une promenade</button>
