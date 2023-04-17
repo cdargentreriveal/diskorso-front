@@ -106,7 +106,7 @@ const firstId = computed(() => {
   if (response.value === null) {
     return 0
   } else {
-    return response.value.data[0].id
+    return response?.value.data[0].id
   }
 })
 // next
@@ -193,7 +193,9 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter page="extraits" />
-    <div class="container_promenade w-9/12 mx-auto flex items-center flex-wrap">
+    <div
+      class="container_promenade w-9/12 mx-auto flex items-center flex-wrap mb-8"
+    >
       <div
         v-for="(extract, index) in response?.data"
         :key="index"

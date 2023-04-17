@@ -519,13 +519,13 @@ const toggle = (extract: any): boolean => {
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
               </div>
-              <button @click="removeItem(index, item.id)">
+              <!--               <button @click="removeItem(index, item.id)">
                 <img
                   src="@/assets/images/icons/corbeille.svg"
                   alt=""
                   class="w-[15px]"
                 />
-              </button>
+              </button> -->
             </div>
           </div>
         </div>
