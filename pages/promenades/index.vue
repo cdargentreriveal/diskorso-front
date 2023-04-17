@@ -107,7 +107,7 @@ onMounted(() => {
 <template>
   <div class="container mx-auto">
     <DisplayPromenadesCategorieSection />
-    <DisplayPromenadesSearchSection :admin="false" />
+    <DisplayPromenadesSearchSection />
     <Separator />
     <div class="">
       <TitleSection title-black="Toutes les" title-purple="Promenades" />
