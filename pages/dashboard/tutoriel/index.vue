@@ -11,7 +11,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
     titleBlack: 'Suivre',
     titlePurple: 'le tutoriel',
     actionBtn: [{ action: 'Créer une promenade' }],
-    route: { name: 'creer-une-promenade' },
+    route: { name: 'dashboard/creer-une-promenade' },
   },
 ])
 </script>

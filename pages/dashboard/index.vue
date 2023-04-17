@@ -108,6 +108,24 @@ const firstId = computed(() => {
 //   }
 // )
 // next
+const firstBtnPagination = ref(true)
+const middleBtnPagination = ref(false)
+const lastBtnPagination = ref(false)
+onUpdated(() => {
+  if (firstId.value === lastNumberId.value) {
+    firstBtnPagination.value = true
+    middleBtnPagination.value = false
+    lastBtnPagination.value = false
+  } else if (lastId.value === +firstNumberId.value) {
+    firstBtnPagination.value = false
+    middleBtnPagination.value = false
+    lastBtnPagination.value = true
+  } else {
+    firstBtnPagination.value = false
+    middleBtnPagination.value = true
+    lastBtnPagination.value = false
+  }
+})
 async function next() {
   if (
     lastId.value === null ||
@@ -226,6 +244,9 @@ onMounted(async () => {
         :next="next"
         :total-promenade="+totalPromenades"
         :totalpage="+totalPages"
+        :first-btn-pagination="firstBtnPagination"
+        :middle-btn-pagination="middleBtnPagination"
+        :last-btn-pagination="lastBtnPagination"
       />
     </div>
   </div>
