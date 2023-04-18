@@ -102,6 +102,7 @@ const middleBtnPagination = ref(false)
 const lastBtnPagination = ref(false)
 
 onBeforeUpdate(() => {
+  subStringSummary()
   nextTick(() => {
     if (firstId.value && firstId.value === lastNumberId.value) {
       firstBtnPagination.value = true
@@ -190,7 +191,7 @@ function subStringSummary() {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 90) ?? ''
+      const shortDescription = element.textContent?.substring(0, 90)
       element.textContent = shortDescription + '...'
     })
   }
