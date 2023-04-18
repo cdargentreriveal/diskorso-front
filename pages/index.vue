@@ -37,19 +37,19 @@ onUnmounted(() => {
   <HomeAboutDiskorso class="-md:px-5" />
   <Separator />
   <section class="container mx-auto promenades">
-    <div class="py-8 text-center">
-      <div class="title uppercase font-bold text-4xl">
+    <div class="py-8 text-center -sm:py-5">
+      <div class="title uppercase font-bold text-4xl -sm:text-2xl">
         <h2>
           Les dernières <br />
           <span class="font-medium purple-color">Promenades</span>
         </h2>
       </div>
     </div>
-    <div class="flex my-20 gap-6 flex-wrap">
+    <div class="flex my-20 gap-6 flex-wrap -sm:my-8">
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
-        class="card rounded bg-white box-shaddow w-[32%] -md:w-full"
+        class="card rounded bg-white box-shaddow w-[32%] -md:w-full -sm:mx-5"
       >
         <CardsTemplateCard :promenade="promenade" />
       </div>

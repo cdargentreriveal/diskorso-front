@@ -78,7 +78,7 @@ const onClick = (event: MouseEvent) => {
     :class="`${selectedStyle} ${selectedSize}`"
   >
     <div
-      class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4"
+      class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4 -sm:text-sm"
     >
       <div class="link uppercase">
         <slot>{{ text }}</slot>
@@ -87,7 +87,7 @@ const onClick = (event: MouseEvent) => {
         <img
           src="@/assets/images/icons/arrow-right-black.svg"
           alt="fleche droite noire"
-          class="pl-3"
+          class="pl-3 -sm:w-[30px]"
         />
       </span>
     </div>

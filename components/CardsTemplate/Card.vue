@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <NuxtLink :to="`/promenades/${promenade.slug}`">
-      <div class="card-image">
+      <div class="card-image -sm:h-[180px] h-[240px]">
         <img
           v-if="promenade.main_image === 'string'"
           class="w-full"
@@ -17,11 +17,13 @@
         />
       </div>
     </NuxtLink>
-    <div class="card-content p-8">
-      <div class="card-content-title font-bold text-2xl my-1 h-[64px]">
+    <div class="card-content p-8 -sm:p-5">
+      <div
+        class="card-content-title font-bold text-2xl my-1 h-[64px] -sm:text-xl"
+      >
         <h2>{{ promenade.title }}</h2>
       </div>
-      <div class="card-content-date text-sm gray-color mt-2">
+      <div class="card-content-date text-sm gray-color mt-2 -sm:text-xs">
         Crée le : {{ getDate(promenade.createdAt) }}
       </div>
       <div class="card-content-categories flex gap-4 py-5">
@@ -41,7 +43,7 @@
           </NuxtLink>
         </div>
       </div>
-      <p class="text-sm gray-color card-content-description h-[60px]">
+      <p class="text-sm gray-color card-content-description h-[60px] ">
         {{ promenade.summary }}
       </p>
       <div class="card-content-bottom pt-8 pb-2">
@@ -72,7 +74,7 @@
           </div>
           <div class="card-content-link text-right w-1/2">
             <NuxtLink :to="`/promenades/${promenade.slug}`">
-              <button class="font-semibold underline text-sm">
+              <button class="font-semibold underline text-sm -sm:text-xs">
                 Lire la promenade >
               </button>
             </NuxtLink>
@@ -106,7 +108,6 @@ const propsCard = defineProps({
 <style lang="scss" scoped>
 .card {
   &-image {
-    height: 240px;
     width: 100%;
     overflow: hidden;
     & img {

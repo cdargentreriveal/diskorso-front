@@ -202,6 +202,7 @@ li .Inscription {
   }
   &-open {
     top: -100%;
+    z-index: 100;
     animation: menuOpen 0.7s ease-in-out forwards;
   }
 }
