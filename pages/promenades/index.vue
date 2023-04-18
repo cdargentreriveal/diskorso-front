@@ -116,7 +116,7 @@ onMounted(() => {
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
-        class="card rounded bg-white box-shaddow w-[32%] -md:w-full"
+        class="card rounded bg-white box-shaddow w-[32%] -md:w-full -sm:mx-5"
       >
         <CardsTemplateCard :promenade="promenade" />
       </div>
