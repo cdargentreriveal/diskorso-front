@@ -96,6 +96,28 @@ const firstId = computed(() => {
     return response.value[0]?.id ?? 0
   }
 })
+
+const firstBtnPagination = ref(true)
+const middleBtnPagination = ref(false)
+const lastBtnPagination = ref(false)
+
+onBeforeUpdate(() => {
+  nextTick(() => {
+    if (firstId.value && firstId.value === lastNumberId.value) {
+      firstBtnPagination.value = true
+      middleBtnPagination.value = false
+      lastBtnPagination.value = false
+    } else if (lastId.value && lastId.value === +firstNumberId.value) {
+      firstBtnPagination.value = false
+      middleBtnPagination.value = false
+      lastBtnPagination.value = true
+    } else {
+      firstBtnPagination.value = false
+      middleBtnPagination.value = true
+      lastBtnPagination.value = false
+    }
+  })
+})
 // next
 
 async function next() {
@@ -182,26 +204,7 @@ watch(totalPromenades, (newValue) => {
     )
   }
 })
-const firstBtnPagination = ref(true)
-const middleBtnPagination = ref(false)
-const lastBtnPagination = ref(false)
 
-onBeforeUpdate(() => {
-  subStringSummary()
-  if (firstId.value === lastNumberId.value) {
-    firstBtnPagination.value = true
-    middleBtnPagination.value = false
-    lastBtnPagination.value = false
-  } else if (lastId.value === +firstNumberId.value) {
-    firstBtnPagination.value = false
-    middleBtnPagination.value = false
-    lastBtnPagination.value = true
-  } else {
-    firstBtnPagination.value = false
-    middleBtnPagination.value = true
-    lastBtnPagination.value = false
-  }
-})
 onMounted(async () => {
   subStringSummary()
   const resultLast = await lastNumberData(
