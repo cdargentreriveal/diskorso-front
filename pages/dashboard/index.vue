@@ -87,13 +87,13 @@ const lastId = computed(() => {
   if (response.value === null) {
     return null
   }
-  return response.value[response.value.length - 1].id
+  return response.value[response.value.length - 1]?.id ?? null
 })
 const firstId = computed(() => {
   if (response.value === null) {
     return 0
   } else {
-    return response?.value[0].id
+    return response.value[0]?.id ?? 0
   }
 })
 // next
