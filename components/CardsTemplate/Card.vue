@@ -43,7 +43,7 @@
           </NuxtLink>
         </div>
       </div>
-      <p class="text-sm gray-color card-content-description h-[60px] ">
+      <p class="text-sm gray-color card-content-description h-[60px]">
         {{ promenade.summary }}
       </p>
       <div class="card-content-bottom pt-8 pb-2">

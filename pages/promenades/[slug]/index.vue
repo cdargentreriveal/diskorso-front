@@ -13,7 +13,7 @@ const { data: promenade } = useDiskorso<Promenade>(
 
 <template>
   <client-only>
-    <div class="promenade_page">
+    <div class="promenade_page -sm:overflow-hidden">
       <div v-if="promenade === null">
         <div class="container mx-auto">
           <div class="h-[70vh] flex justify-center items-center">
@@ -37,10 +37,10 @@ const { data: promenade } = useDiskorso<Promenade>(
           }"
         ></div>
         <div
-          class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow"
+          class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -sm:w-full -sm:py-15"
         >
           <div
-            class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 border border-black border-2"
+            class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 -sm:left-10 border border-black border-2"
           >
             <NuxtLink :to="`/contributor/${promenade.user.username}`">
               <img
@@ -51,8 +51,10 @@ const { data: promenade } = useDiskorso<Promenade>(
               <img v-else :src="promenade.user.picture" alt="image de profil" />
             </NuxtLink>
           </div>
-          <div class="promenade_page_content_header px-20">
-            <div class="promenade_page_content_title text-4xl font-bold">
+          <div class="promenade_page_content_header px-20 -sm:px-10">
+            <div
+              class="promenade_page_content_title text-4xl font-bold -sm:text-2xl"
+            >
               <h1>{{ promenade.title }}</h1>
             </div>
             <div
@@ -92,7 +94,7 @@ const { data: promenade } = useDiskorso<Promenade>(
               <div
                 v-for="(blocsContent, i) in promenade.content"
                 :key="i"
-                class="px-20 py-10"
+                class="px-20 py-10 -sm:px-10 -sm:py-5"
               >
                 <div
                   v-if="blocsContent.type === 'transition'"
@@ -122,7 +124,7 @@ const { data: promenade } = useDiskorso<Promenade>(
             <!--eslint-enable-->
           </section>
           <div class="promenade_page_content_details_image">
-            <div class="px-20 py-10">
+            <div class="px-20 py-10 -sm:px-10 -sm:py-5">
               <img
                 :src="promenade.main_image"
                 class="rounded-xl w-full"
@@ -132,7 +134,7 @@ const { data: promenade } = useDiskorso<Promenade>(
             </div>
           </div>
         </div>
-        <div class="w-8/12 mx-auto">
+        <div class="w-8/12 mx-auto -sm:w-full">
           <div class="all-promenades mt-15">
             <div class="text-center">
               <Button
@@ -143,7 +145,7 @@ const { data: promenade } = useDiskorso<Promenade>(
             </div>
           </div>
         </div>
-        <div class="w-8/12 mx-auto">
+        <div class="w-8/12 mx-auto -sm:w-11/12">
           <CtaLogin />
         </div>
       </div>
