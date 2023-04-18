@@ -133,6 +133,17 @@ const { data: promenade } = useDiskorso<Promenade>(
           </div>
         </div>
         <div class="w-8/12 mx-auto">
+          <div class="all-promenades mt-15">
+            <div class="text-center">
+              <Button
+                text="Voir toutes les promenades"
+                type="secondary"
+                to="/promenades"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="w-8/12 mx-auto">
           <CtaLogin />
         </div>
       </div>
