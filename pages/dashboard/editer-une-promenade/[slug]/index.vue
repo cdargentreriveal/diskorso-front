@@ -205,13 +205,13 @@ onMounted(() => {
       },
     })
   }
-  const descriptionCard = document.querySelectorAll('.extraits_item_text')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 100) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
+  // const descriptionCard = document.querySelectorAll('.extraits_item_text')
+  // if (descriptionCard) {
+  //   descriptionCard.forEach((element) => {
+  //     const shortDescription = element.textContent?.substring(0, 100) ?? ''
+  //     element.textContent = shortDescription + '...'
+  //   })
+  // }
 })
 
 const toggle = (extract: any): boolean => {
@@ -480,10 +480,10 @@ const toggle = (extract: any): boolean => {
               class="flex justify-between py-6 items-start"
             >
               <div class="w-full">
-                <WysiwygEditor
+                <!-- <WysiwygEditor
                   v-model="item.content"
                   @update:value="(value) => (item.content = value)"
-                />
+                /> -->
               </div>
               <div class="btns">
                 <button

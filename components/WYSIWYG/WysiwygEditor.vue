@@ -1,5 +1,8 @@
 <template>
-  <div ref="editorRef"></div>
+  <div>
+    {{ content }}
+    <div ref="editorRef"></div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -10,6 +13,10 @@ export default defineComponent({
   name: 'WysiwygEditor',
   props: {
     value: {
+      type: String,
+      default: '',
+    },
+    content: {
       type: String,
       default: '',
     },
@@ -67,7 +74,6 @@ export default defineComponent({
         quillInstance = null
       }
     })
-
     return {
       editorRef,
     }
