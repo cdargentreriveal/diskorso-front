@@ -3,7 +3,12 @@ interface Category {
   title: string
   color: string
 }
-
+interface Promenade {
+  id: number
+  main_image: string
+  title: string
+  slug: string
+}
 export interface ExtractFetched {
   blocked: boolean
   categories: Category[]
@@ -12,7 +17,7 @@ export interface ExtractFetched {
   description: string
   id: number
   name: string
-  promenades: [number]
+  promenades: Promenade[]
   source: string
   status: string
   updatedAt: string

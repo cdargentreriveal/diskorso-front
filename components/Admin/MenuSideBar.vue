@@ -33,7 +33,7 @@ async function submitCreatedPromenade() {
     meta_title: 'Titre pour le référencement',
     meta_description: 'Description pour le référencement',
     categoriesIds: selectedIds,
-    extractsIds: [],
+    extractsIds: excerptElementsId,
     published: propsAdminMenuSideBar.published,
   })
 
@@ -121,6 +121,14 @@ function isCheckboxDisabled(categorie: Category): boolean {
     selectedCategories.length === 3 && !selectedCategories.includes(categorie)
   )
 }
+
+const excerptElementsId = computed(() => {
+  const excerptElements = propsAdminMenuSideBar.content.filter(
+    (item: any) => item.type === 'excerpt'
+  )
+  const excerptIds = excerptElements.map((item: any) => item.id)
+  return excerptIds
+})
 const selectedIds = computed(() => {
   return selectedCategories.map((category) => category.id)
 })

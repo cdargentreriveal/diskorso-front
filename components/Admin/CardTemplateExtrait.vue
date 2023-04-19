@@ -174,12 +174,22 @@ watch(extractId, (newVal, oldVal) => {
                 </div>
               </div>
               <div class="flex flex-col">
-                <p
-                  v-if="extract.used_in_article"
-                  class="text-xs mt-5 font-semibold"
-                >
-                  Cet extrait apparaît dans les promenades suivantes :
-                </p>
+                <div v-if="extract.used_in_article">
+                  <p class="text-xs mt-5 font-semibold">
+                    Cet extrait apparaît dans les promenades suivantes :
+                  </p>
+                  <ul
+                    v-for="(promenade, i) in extract.promenades"
+                    :key="i"
+                    class="list-decimal"
+                  >
+                    <nuxt-link :to="`/promenades/${promenade.slug}`">
+                      <li class="text-xs mt-5">
+                        {{ promenade.title }}
+                      </li></nuxt-link
+                    >
+                  </ul>
+                </div>
                 <p v-else class="text-xs mt-5 font-semibold">
                   Extrait non encore utilisé
                 </p>
