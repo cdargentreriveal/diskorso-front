@@ -22,7 +22,7 @@
           >
         </h1>
         <button
-          class="heroHeader-button rounded-full px-10 py-4 -sm:text-2xl -sm:text-sm md:text-lg my-10 uppercase"
+          class="heroHeader-button rounded-full px-10 py-4 -sm:text-sm md:text-lg my-10 uppercase"
           @click="scrollTo"
         >
           <span class="flex items-center gap-4">

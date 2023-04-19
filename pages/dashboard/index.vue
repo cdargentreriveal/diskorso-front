@@ -87,7 +87,9 @@ const lastId = computed(() => {
   if (response.value === null) {
     return null
   }
+
   return response.value[response.value.length - 1]?.id ?? 0
+
 })
 const firstId = computed(() => {
   if (response.value === null) {
@@ -96,25 +98,31 @@ const firstId = computed(() => {
     return response.value[0]?.id ?? 0
   }
 })
-// next
+
 const firstBtnPagination = ref(true)
 const middleBtnPagination = ref(false)
 const lastBtnPagination = ref(false)
-onUpdated(() => {
-  if (firstId.value === lastNumberId.value) {
-    firstBtnPagination.value = true
-    middleBtnPagination.value = false
-    lastBtnPagination.value = false
-  } else if (lastId.value === +firstNumberId.value) {
-    firstBtnPagination.value = false
-    middleBtnPagination.value = false
-    lastBtnPagination.value = true
-  } else {
-    firstBtnPagination.value = false
-    middleBtnPagination.value = true
-    lastBtnPagination.value = false
-  }
+
+onBeforeUpdate(() => {
+  subStringSummary()
+  nextTick(() => {
+    if (firstId.value && firstId.value === lastNumberId.value) {
+      firstBtnPagination.value = true
+      middleBtnPagination.value = false
+      lastBtnPagination.value = false
+    } else if (lastId.value && lastId.value === +firstNumberId.value) {
+      firstBtnPagination.value = false
+      middleBtnPagination.value = false
+      lastBtnPagination.value = true
+    } else {
+      firstBtnPagination.value = false
+      middleBtnPagination.value = true
+      lastBtnPagination.value = false
+    }
+  })
 })
+// next
+
 async function next() {
   if (
     lastId.value === null ||
@@ -185,7 +193,7 @@ function subStringSummary() {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
     descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 90) ?? ''
+      const shortDescription = element.textContent?.substring(0, 90)
       element.textContent = shortDescription + '...'
     })
   }
@@ -200,9 +208,6 @@ watch(totalPromenades, (newValue) => {
   }
 })
 
-onUpdated(() => {
-  subStringSummary()
-})
 onMounted(async () => {
   subStringSummary()
   const resultLast = await lastNumberData(

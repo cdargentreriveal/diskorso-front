@@ -97,18 +97,48 @@ const toggle = (extract: any): boolean => {
 //* Methods pour navigation : previous - next - first
 // ________________________________________________________________________________________
 const lastId = computed(() => {
-  if (response.value === null) {
+  if (
+    !response.value ||
+    !response.value.data ||
+    response.value.data.length === 0
+  ) {
     return null
   }
   return response.value.data[response.value.data.length - 1].id
 })
 const firstId = computed(() => {
-  if (response.value === null) {
+  if (
+    response.value === null ||
+    !response.value.data ||
+    response.value.data.length === 0
+  ) {
     return 0
   } else {
-    return response.value.data[0].id
+    return response.value.data[0].id ?? 0
   }
 })
+
+const firstBtnPagination = ref(true)
+const middleBtnPagination = ref(false)
+const lastBtnPagination = ref(false)
+onBeforeUpdate(() => {
+  nextTick(() => {
+    if (firstId.value && firstId.value === lastNumberId.value) {
+      firstBtnPagination.value = true
+      middleBtnPagination.value = false
+      lastBtnPagination.value = false
+    } else if (lastId.value && lastId.value === +firstNumberId.value) {
+      firstBtnPagination.value = false
+      middleBtnPagination.value = false
+      lastBtnPagination.value = true
+    } else {
+      firstBtnPagination.value = false
+      middleBtnPagination.value = true
+      lastBtnPagination.value = false
+    }
+  })
+})
+
 // next
 async function next() {
   if (
@@ -193,7 +223,9 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter page="extraits" />
-    <div class="container_promenade w-9/12 mx-auto flex items-center flex-wrap">
+    <div
+      class="container_promenade w-9/12 mx-auto flex items-center flex-wrap mb-8"
+    >
       <div
         v-for="(extract, index) in response?.data"
         :key="index"
@@ -215,6 +247,9 @@ onMounted(async () => {
         :next="next"
         :total-promenade="+totalExtracts"
         :totalpage="+totalPages"
+        :first-btn-pagination="firstBtnPagination"
+        :middle-btn-pagination="middleBtnPagination"
+        :last-btn-pagination="lastBtnPagination"
       />
     </div>
   </div>
