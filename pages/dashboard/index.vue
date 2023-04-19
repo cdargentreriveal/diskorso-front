@@ -26,7 +26,7 @@ const firstNumberId = ref(0)
 // if (xsrfToken && xsrfTokenTime && Date.now() >= +xsrfTokenTime - 2000) {
 //   await refreshToken(config.public.baseURL)
 // }
-const numberOfPromenadeUserConnectedToDisplay = ref(2)
+const numberOfPromenadeUserConnectedToDisplay = ref(4)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -87,7 +87,9 @@ const lastId = computed(() => {
   if (response.value === null) {
     return null
   }
-  return response.value[response.value.length - 1]?.id ?? null
+
+  return response.value[response.value.length - 1]?.id ?? 0
+
 })
 const firstId = computed(() => {
   if (response.value === null) {
@@ -232,7 +234,7 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter />
-    <DisplayPromenadesSearchSection :admin="true" />
+    <DisplayPromenadesSearchSectionConnected />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in response"

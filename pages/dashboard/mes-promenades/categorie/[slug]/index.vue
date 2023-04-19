@@ -214,7 +214,7 @@ onMounted(async () => {
       :category="datasTitle[0].category"
     />
     <AdminCatsFilter />
-    <DisplayPromenadesSearchSection :admin="true" />
+    <DisplayPromenadesSearchSectionConnected />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in promenadeByCat"

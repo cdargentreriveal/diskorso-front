@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const searchTag = ref('')
+import { searchByTagConnected } from '~~/utils/connected'
+const searchTagConnected = ref('')
 </script>
 
 <template>
@@ -9,17 +10,20 @@ const searchTag = ref('')
     >
       <div class="search-bar-input w-full h-full">
         <input
-          v-model="searchTag"
+          v-model="searchTagConnected"
           type="search"
           placeholder="Rentrer un mot clé pour lancer la recherche..."
           class="py-4 px-8 w-full h-full border-gray border text-sm italic"
-          @keyup.enter="searchTag.length >= 3 && searchByTag(searchTag)"
+          @keyup.enter="
+            searchTagConnected.length >= 3 &&
+              searchByTagConnected(searchTagConnected)
+          "
         />
       </div>
       <div
-        v-if="searchTag === '' || searchTag.length < 3"
+        v-if="searchTagConnected === '' || searchTagConnected.length < 3"
         :class="
-          searchTag === '' || searchTag.length < 3
+          searchTagConnected === '' || searchTagConnected.length < 3
             ? 'disabled search-bar-button text-white text-sm h-full'
             : ''
         "
@@ -29,7 +33,9 @@ const searchTag = ref('')
         </button>
       </div>
       <div v-else class="search-bar-button text-white text-sm h-full">
-        <NuxtLink :to="`/promenades/search/${searchTag}`">
+        <NuxtLink
+          :to="`/dashboard/mes-promenades/search/${searchTagConnected}`"
+        >
           <button class="px-8 w-full h-full uppercase">
             <span class="flex items-center">Rechercher</span>
           </button>
