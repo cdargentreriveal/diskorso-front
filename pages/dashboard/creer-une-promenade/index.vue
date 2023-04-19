@@ -400,7 +400,7 @@ onMounted(() => {
           <div
             class="promenade_bloc_empty_el p-8 border-dashed border border-slate-300 text-slate-300"
           >
-            Ajouter un extrait, une transition ou une image
+            Ajouter un extrait, une transition ou une images
           </div>
         </div>
         <!-- bouton ajouter une image et / ou une transition -->
