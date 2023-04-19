@@ -74,75 +74,74 @@ export default {
               </NuxtLink>
             </div>
           </div>
-          <client-only>
-            <div class="w-1/2">
-              <div v-if="windowWidth > 768">
-                <ul class="flex justify-end items-center">
-                  <li v-for="(item, i) in menus" :key="i">
+
+          <div class="w-1/2">
+            <div v-if="windowWidth > 768">
+              <ul class="flex justify-end items-center">
+                <li v-for="(item, i) in menus" :key="i">
+                  <Anchor
+                    v-if="item.type === 'link'"
+                    :to="item.route ? item.route : undefined"
+                    :href="item.href ? item.href : undefined"
+                    class="hover:no-underline mx-7"
+                    >{{ item.text }}
+                  </Anchor>
+                  <Button
+                    v-else-if="item.type === 'button'"
+                    :text="item.text"
+                    size="xs"
+                    :class="item.text + ' font-bold p-5 capitalize mx-3 '"
+                    :to="item.route ? item.route : undefined"
+                    :href="item.href ? item.href : undefined"
+                  />
+                </li>
+              </ul>
+            </div>
+            <!-- Menu burger mobile -->
+            <div v-else class="menu-burger">
+              <div
+                class="menu-burger-line text-right"
+                @click="displayMobileMenu"
+              >
+                <span>Menu</span>
+              </div>
+              <div
+                v-if="menuOpen === true"
+                class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
+              >
+                <div
+                  class="closed absolute right-10 top-10"
+                  @click="displayMobileMenu"
+                >
+                  Fermer
+                </div>
+                <ul class="py-10 text-xl mt-15">
+                  <li v-for="(item, i) in menus" :key="i" class="py-3">
                     <Anchor
                       v-if="item.type === 'link'"
                       :to="item.route ? item.route : undefined"
                       :href="item.href ? item.href : undefined"
-                      class="hover:no-underline mx-7"
+                      class="hover:no-underline mx-3"
+                      @click="menuOpen = false"
                       >{{ item.text }}
                     </Anchor>
                     <Button
-                      v-else-if="item.type === 'button'"
+                      v-if="item.type === 'button'"
                       :text="item.text"
                       size="xs"
-                      :class="item.text + ' font-bold p-5 capitalize mx-3 '"
+                      :class="
+                        item.text +
+                        ' font-bold p-5 capitalize mx-3 -md:py-7 -md:text-base'
+                      "
                       :to="item.route ? item.route : undefined"
                       :href="item.href ? item.href : undefined"
+                      @click="menuOpen = false"
                     />
                   </li>
                 </ul>
               </div>
-              <!-- Menu burger mobile -->
-              <div v-else class="menu-burger">
-                <div
-                  class="menu-burger-line text-right"
-                  @click="displayMobileMenu"
-                >
-                  <span>Menu</span>
-                </div>
-                <div
-                  v-if="menuOpen === true"
-                  class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
-                >
-                  <div
-                    class="closed absolute right-10 top-10"
-                    @click="displayMobileMenu"
-                  >
-                    Fermer
-                  </div>
-                  <ul class="py-10 text-xl mt-15">
-                    <li v-for="(item, i) in menus" :key="i" class="py-3">
-                      <Anchor
-                        v-if="item.type === 'link'"
-                        :to="item.route ? item.route : undefined"
-                        :href="item.href ? item.href : undefined"
-                        class="hover:no-underline mx-3"
-                        @click="menuOpen = false"
-                        >{{ item.text }}
-                      </Anchor>
-                      <Button
-                        v-if="item.type === 'button'"
-                        :text="item.text"
-                        size="xs"
-                        :class="
-                          item.text +
-                          ' font-bold p-5 capitalize mx-3 -md:py-7 -md:text-base'
-                        "
-                        :to="item.route ? item.route : undefined"
-                        :href="item.href ? item.href : undefined"
-                        @click="menuOpen = false"
-                      />
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
-          </client-only>
+          </div>
         </nav>
       </div>
     </div>
