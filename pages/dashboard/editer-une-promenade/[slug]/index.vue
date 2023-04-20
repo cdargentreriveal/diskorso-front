@@ -213,10 +213,18 @@ onMounted(() => {
   //   })
   // }
 })
-
+const mainImage = ref('')
 const toggle = (extract: any): boolean => {
   extract.showModal = !extract.showModal
   return extract.showModal
+}
+const clearData = (): void => {
+  titleInput.value = ''
+  slugTitleInput.value = ''
+  summaryPromenade.value = ''
+  mainImage.value = ''
+  updatedItemsPublished.value = []
+  refreshNuxtData()
 }
 </script>
 
@@ -563,13 +571,14 @@ const toggle = (extract: any): boolean => {
       </div>
     </div>
   </div>
-  <AdminMenuSideBar
+  <AdminMenuSideBa
     :title="titleInput"
     :slug="slugTitleInput"
     :main-image="avatarUrl"
     :summary="summaryPromenade"
     :content="updatedItemsPublished"
     :published="!!publishedPromenade"
+    :clear-data="clearData"
   />
 </template>
 <style scoped lang="scss">
