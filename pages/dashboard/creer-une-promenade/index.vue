@@ -3,7 +3,6 @@ import { getCurrentInstance } from 'vue'
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
-
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
@@ -155,7 +154,9 @@ function removeItem(index: number, id: number): void {
     excerptCount.value--
     isExcerptAdded.value[id] = false
   }
-  items.value.splice(index, 1)
+  const newItems = [...items.value]
+  newItems.splice(index, 1)
+  items.value = newItems
 }
 
 function handleImageUpload(event: Event, index: number): void {
@@ -231,7 +232,7 @@ onMounted(() => {
 
       <div class="w-8/12 relative">
         <CreatePromenadeTitle :set-title-input="setTitleInput" />
-        <div contenteditable="true">Cliquez ici pour éditer ce texte</div>
+        <!--  <div contenteditable="true">Cliquez ici pour éditer ce texte</div> -->
 
         <div class="promenade_image font-semibold text-lg mb-10">
           <h2>Ajouter la photo mise en avant</h2>
@@ -297,6 +298,7 @@ onMounted(() => {
             :key="index"
             class="bloc"
           >
+            {{ index }}
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
@@ -345,7 +347,6 @@ onMounted(() => {
               <div class="w-full">
                 <WysiwygEditor
                   ref="childRef"
-                  v-model="item.content"
                   :content="item.content"
                   :editor-ref-name="item.editorRefName"
                   @update:value="(value) => (item.content = value)"

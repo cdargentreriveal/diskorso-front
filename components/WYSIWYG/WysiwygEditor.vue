@@ -25,7 +25,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const editorRef = ref<HTMLDivElement | null>(null)
     let quillInstance: MyQuill | null = null
-
+    const contentHtml = ref(props.content)
     const updateValue = () => {
       if (quillInstance && editorRef.value) {
         const html =
@@ -51,23 +51,30 @@ export default defineComponent({
         })
 
         quillInstance.on('text-change', updateValue)
-
-        quillInstance.setContents(
-          quillInstance.clipboard.convert({ text: props.value })
-        )
+        quillInstance.setText(props.content)
       }
     })
-    watch(
-      () => props.value,
-      (newValue) => {
-        if (quillInstance) {
-          quillInstance.setContents(
-            quillInstance.clipboard.convert({ text: newValue })
-          )
-        }
+    onUpdated(() => {
+      const html = editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
+      if (props.content !== html && quillInstance) {
+        quillInstance.setText(props.content || '')
+        const text = quillInstance
+          .getText()
+          .trim()
+          .replace(/<\/?[^>]+(>|$)/g, '')
+        quillInstance.setText(text)
       }
-    )
-
+    })
+    /*   watch(
+          () => props.content,
+          (newValue) => {
+            contentHtml.value = newValue
+            if (quillInstance) {
+              quillInstance.clipboard.dangerouslyPasteHTML(newValue)
+            }
+          }
+        )
+    */
     onUnmounted(() => {
       if (quillInstance) {
         quillInstance.off('text-change', updateValue)
