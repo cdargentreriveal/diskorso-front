@@ -298,7 +298,6 @@ onMounted(() => {
             :key="index"
             class="bloc"
           >
-            {{ index }}
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"

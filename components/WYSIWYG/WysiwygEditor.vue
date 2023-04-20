@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ content }}
     <div ref="editorRef"></div>
   </div>
 </template>
