@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
-import { createdPromenade } from '~~/utils/connected'
+import { createdPromenade, sendMainImagePromenade } from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
 const config = useRuntimeConfig()
 
@@ -14,48 +14,168 @@ const displaySwal = (
   title: string,
   text: string,
   icon: string,
-  confirmButtonText: string
+  confirmButtonText: string,
+  imageUrl?: string
 ) => {
   $swal.fire({
     title,
     text,
     icon,
     confirmButtonText,
+    imageUrl,
   })
 }
-async function submitCreatedPromenade() {
-  const data = reactive({
-    title: propsAdminMenuSideBar.title,
-    slug: propsAdminMenuSideBar.slug,
-    summary: propsAdminMenuSideBar.summary,
-    main_image: propsAdminMenuSideBar.mainImage,
-    content: propsAdminMenuSideBar.content,
-    meta_title: 'Titre pour le référencement',
-    meta_description: 'Description pour le référencement',
-    categoriesIds: selectedIds,
-    extractsIds: excerptElementsId,
-    published: propsAdminMenuSideBar.published,
-  })
-
-  try {
-    const response = await createdPromenade(config.public.baseURL, data)
-    if (response.error) {
-      displaySwal('Echec', `${response.message}`, 'error', 'ok')
-    } else {
-      displaySwal(
-        'Promenade créee',
-        `Votre promenade ${data.title} a bien été créée`,
-        'success',
-        'Ok'
-      )
-    }
-  } catch (error) {
+function submitCreatedPromenade() {
+  if (propsAdminMenuSideBar.title === '') {
     displaySwal(
-      'Erreur lors de la création',
-      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'Titre manquant',
+      'Le titre de la promenade est obligatoire',
       'error',
-      'Ok'
+      'ok'
     )
+  } else if (propsAdminMenuSideBar.summary === '') {
+    displaySwal(
+      'Description manquante',
+      'La description de la promenade est obligatoire',
+      'error',
+      'ok'
+    )
+  } else if (selectedIds.value.length === 0) {
+    displaySwal(
+      'Catégorie manquante',
+      'Merci de sélectionner au moins une catégorie',
+      'error',
+      'ok'
+    )
+  } else {
+    $swal
+      .fire({
+        title: 'Souhaitez-vous?',
+        icon: 'question',
+        showCancelButton: true,
+        showDenyButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        denyButtonColor: '#3085d6',
+        confirmButtonText: 'Enregistrer en brouillon',
+        denyButtonText: 'Publier la promenade',
+        cancelButtonText: 'Fermer',
+        cancelButtonMargin: 15,
+        width: '48em',
+      })
+      .then(async (result: any) => {
+        if (result.isConfirmed) {
+          let url = ''
+          if (propsAdminMenuSideBar.mainImage === '') {
+            url = ''
+          } else {
+            const image =
+              propsAdminMenuSideBar.mainImage instanceof FormData
+                ? propsAdminMenuSideBar.mainImage
+                : new FormData()
+            url = await sendMainImagePromenade(config.public.baseURL, image)
+          }
+          if (
+            url === "L'image est trop grande, elle ne doit pas dépasser 500ko"
+          ) {
+            displaySwal('Image trop lourde', url, 'error', 'ok')
+          } else {
+            const data = reactive({
+              title: propsAdminMenuSideBar.title,
+              slug: propsAdminMenuSideBar.slug,
+              summary: propsAdminMenuSideBar.summary,
+              main_image: url,
+              content: propsAdminMenuSideBar.content,
+              meta_title: 'Titre pour le référencement',
+              meta_description: 'Description pour le référencement',
+              categoriesIds: selectedIds,
+              extractsIds: excerptElementsId,
+              published: false,
+              publishedAt: '',
+            })
+            try {
+              const response = await createdPromenade(
+                config.public.baseURL,
+                data
+              )
+              if (!response.success) {
+                displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
+              } else {
+                $swal.fire({
+                  title: 'Promenade enregistrée!',
+                  text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
+                  imageHeight: 120,
+                  imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                })
+                propsAdminMenuSideBar.clearData()
+                navigateTo('/dashboard')
+              }
+            } catch (error) {
+              displaySwal(
+                'Erreur lors de la création',
+                'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+                'error',
+                'Ok'
+              )
+            }
+          }
+        } else if (result.isDenied) {
+          let url2 = ''
+          if (propsAdminMenuSideBar.mainImage === '') {
+            url2 = ''
+          } else {
+            const image =
+              propsAdminMenuSideBar.mainImage instanceof FormData
+                ? propsAdminMenuSideBar.mainImage
+                : new FormData()
+            url2 = await sendMainImagePromenade(config.public.baseURL, image)
+          }
+          if (
+            url2 === "L'image est trop grande, elle ne doit pas dépasser 500ko"
+          ) {
+            displaySwal('Image trop lourde', url2, 'error', 'ok')
+          } else {
+            const data = reactive({
+              title: propsAdminMenuSideBar.title,
+              slug: propsAdminMenuSideBar.slug,
+              summary: propsAdminMenuSideBar.summary,
+              main_image: url2,
+              content: propsAdminMenuSideBar.content,
+              meta_title: 'Titre pour le référencement',
+              meta_description: 'Description pour le référencement',
+              categoriesIds: selectedIds,
+              extractsIds: excerptElementsId,
+              published: true,
+              publishedAt: new Date().toISOString(),
+            })
+            try {
+              const response = await createdPromenade(
+                config.public.baseURL,
+                data
+              )
+              if (!response.success) {
+                displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
+              } else {
+                $swal.fire({
+                  title: 'Promenade créee',
+                  text: `Votre promenade ${data.title} a bien été créée et publiée`,
+                  imageHeight: 120,
+                  imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                })
+                propsAdminMenuSideBar.clearData()
+                navigateTo('/dashboard')
+              }
+            } catch (error) {
+              displaySwal(
+                'Erreur lors de la création',
+                'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+                'error',
+                'Ok'
+              )
+            }
+          }
+        }
+      })
   }
 }
 
@@ -69,7 +189,7 @@ const propsAdminMenuSideBar = defineProps({
     default: '',
   },
   mainImage: {
-    type: String,
+    type: [FormData, String],
     default: '',
   },
   summary: {
@@ -89,6 +209,10 @@ const propsAdminMenuSideBar = defineProps({
     default() {
       return {}
     },
+  },
+  clearData: {
+    type: Function,
+    required: true,
   },
 })
 // Ajouter catégories

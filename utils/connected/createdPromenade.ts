@@ -3,7 +3,7 @@ import { useUserStore } from '~~/store/user'
 
 const userToStore = useUserStore()
 
-export async function createdPromenade(baseURL: string, data: object) {
+export async function createdPromenade(baseURL: string, data: any) {
   const xsrfToken = localStorage.getItem('xsrfToken')
   const response = await fetch(`${baseURL}/promenadeditor/create-promenade`, {
     method: 'POST',
@@ -15,10 +15,10 @@ export async function createdPromenade(baseURL: string, data: object) {
     body: JSON.stringify(data),
   })
   if (response.ok) {
-    const data = await response.json()
-    return data
+    const dataFethed = await response.json()
+    return dataFethed
   } else {
-    const data = await response.json()
+    const dataFethed = await response.json()
     await refreshToken(baseURL)
     await fetch(`${baseURL}/promenadeditor/create-promenade`, {
       method: 'POST',
@@ -29,6 +29,21 @@ export async function createdPromenade(baseURL: string, data: object) {
       credentials: 'include' as RequestCredentials,
       body: JSON.stringify(data),
     })
-    return data
+    const currentUser = userToStore.currentUser
+    if (data.published) {
+      const publishedPromenadesCount = currentUser!.publishedPromenadesCount + 1
+      userToStore.setUser({
+        ...currentUser!,
+        publishedPromenadesCount,
+      })
+    } else {
+      const unpublishedPromenadesCount =
+        currentUser!.unpublishedPromenadesCount + 1
+      userToStore.setUser({
+        ...currentUser!,
+        unpublishedPromenadesCount,
+      })
+    }
+    return dataFethed
   }
 }

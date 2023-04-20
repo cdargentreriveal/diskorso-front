@@ -179,7 +179,7 @@ const propsCard = defineProps({
           :key="index"
           class="category"
         >
-          <NuxtLink :to="`/categorie/${cat.slug}`">
+          <NuxtLink :to="`/dashboard/mes-promenades/categorie/${cat.slug}`">
             <button
               :class="
                 cat.color + ' category-btn px-4 py-2 rounded-full text-xs'

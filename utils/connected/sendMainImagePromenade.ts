@@ -1,9 +1,6 @@
 import { refreshToken } from '../connected/refreshToken'
-import { useUserStore } from '~~/store/user'
 
-const userToStore = useUserStore()
-
-export async function modifyAvatar(baseUrl: string, file: FormData) {
+export async function sendMainImagePromenade(baseUrl: string, file: FormData) {
   const xsrfToken = localStorage.getItem('xsrfToken')
   const options = {
     method: 'POST',
@@ -15,21 +12,29 @@ export async function modifyAvatar(baseUrl: string, file: FormData) {
     body: file,
   }
   const response = await fetch(
-    `${baseUrl}/users/user-connected/upload-avatar`,
+    `${baseUrl}/promenadeditor/upload-main-image`,
     options
   )
   if (response.ok) {
     const data = await response.json()
-    const newAvatarUrl = data.data
-    userToStore.currentUser!.picture = newAvatarUrl
-    return data
+    const urlMainImage = data.data
+    if (urlMainImage.message) {
+      return urlMainImage.message
+    } else {
+      return urlMainImage
+    }
   } else {
     await refreshToken(baseUrl)
     const newResponse = await fetch(
-      `${baseUrl}/users/user-connected/upload-avatar`,
+      `${baseUrl}/promenadeditor/upload-main-image`,
       options
     )
     const newData = await newResponse.json()
-    return newData
+    const urlMainImage = newData.data
+    if (urlMainImage.message) {
+      return urlMainImage.message
+    } else {
+      return urlMainImage
+    }
   }
 }

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { getCurrentInstance } from 'vue'
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
@@ -14,7 +13,8 @@ const datasTitle = computed((): BtnAdminPage[] => [
     type: 'button',
     titleBlack: 'Créer une',
     titlePurple: 'promenade',
-    actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
+    actionBtn: [{ action: 'Voir tutoriel' }],
+    route: { name: 'dashboard/tutoriel' },
   },
 ])
 
@@ -27,18 +27,21 @@ const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
 }
-const avatarUrl = ref('')
+const mainImage = ref('')
+const mainImageToUpload = ref()
 const fileInput = ref<HTMLInputElement>()
 
 function handleFileUpload(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0]
   if (!file) return
-
+  const formData = new FormData()
+  formData.append('file', file)
+  mainImageToUpload.value = formData
   const reader = new FileReader()
   reader.onload = () => {
     const image = new Image()
     image.onload = () => {
-      avatarUrl.value = reader.result as string
+      mainImage.value = reader.result as string
     }
     image.src = reader.result as string
   }
@@ -46,7 +49,7 @@ function handleFileUpload(event: Event) {
 }
 
 function deletePicturesBanner() {
-  avatarUrl.value = ''
+  mainImage.value = ''
   if (fileInput.value) {
     fileInput.value.value = ''
   }
@@ -183,7 +186,7 @@ function handleImageUpload(event: Event, index: number): void {
   reader.readAsDataURL(file)
 }
 // Calculer si une photo est sélectionnée
-const hasAvatar = computed(() => !!avatarUrl.value)
+const hasAvatar = computed(() => !!mainImage.value)
 // mettre a jour le tableau ITEMS dans updatedItemsPublished pour envoyer les bonnes positions des elements au back
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
@@ -210,6 +213,14 @@ onMounted(() => {
     })
   }
 })
+const clearData = (): void => {
+  titleInput.value = ''
+  slugTitleInput.value = ''
+  summaryPromenade.value = ''
+  mainImage.value = ''
+  updatedItemsPublished.value = []
+  refreshNuxtData()
+}
 </script>
 
 <template>
@@ -221,6 +232,7 @@ onMounted(() => {
       :title-purple="datasTitle[0].titlePurple"
       :data="datasTitle[0].data"
       :action-btn="datasTitle[0].actionBtn"
+      :route="datasTitle[0].route.name"
       @my-event="handleMyEvent"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
@@ -231,7 +243,6 @@ onMounted(() => {
 
       <div class="w-8/12 relative">
         <CreatePromenadeTitle :set-title-input="setTitleInput" />
-        <div contenteditable="true">Cliquez ici pour éditer ce texte</div>
 
         <div class="promenade_image font-semibold text-lg mb-10">
           <h2>Ajouter la photo mise en avant</h2>
@@ -252,7 +263,7 @@ onMounted(() => {
               >
                 <div class="flex h-full w-full items-start p-2">
                   <img
-                    :src="avatarUrl"
+                    :src="mainImage"
                     type="file"
                     name="files"
                     class="object-cover h-full w-full rounded-lg block"
@@ -431,10 +442,11 @@ onMounted(() => {
   <AdminMenuSideBar
     :title="titleInput"
     :slug="slugTitleInput"
-    :main-image="avatarUrl"
+    :main-image="mainImageToUpload"
     :summary="summaryPromenade"
     :content="updatedItemsPublished"
     :published="!!publishedPromenade"
+    :clear-data="clearData"
   />
 </template>
 <style scoped lang="scss">

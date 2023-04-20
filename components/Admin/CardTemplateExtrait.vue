@@ -178,16 +178,14 @@ watch(extractId, (newVal, oldVal) => {
                   <p class="text-xs mt-5 font-semibold">
                     Cet extrait apparaît dans les promenades suivantes :
                   </p>
-                  <ul
-                    v-for="(promenade, i) in extract.promenades"
-                    :key="i"
-                    class="list-decimal"
-                  >
-                    <nuxt-link :to="`/promenades/${promenade.slug}`">
-                      <li class="text-xs mt-5">
-                        {{ promenade.title }}
-                      </li></nuxt-link
-                    >
+                  <ul class="list-decimal text-xs mt-5">
+                    <li v-for="(promenade, i) in extract.promenades" :key="i">
+                      <nuxt-link :to="`/promenades/${promenade.slug}`">
+                        <span class="text-xs mt-5 inline-block">
+                          {{ promenade.title }}
+                        </span></nuxt-link
+                      >
+                    </li>
                   </ul>
                 </div>
                 <p v-else class="text-xs mt-5 font-semibold">

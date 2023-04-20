@@ -26,7 +26,7 @@ const firstNumberId = ref(0)
 // if (xsrfToken && xsrfTokenTime && Date.now() >= +xsrfTokenTime - 2000) {
 //   await refreshToken(config.public.baseURL)
 // }
-const numberOfPromenadeUserConnectedToDisplay = ref(4)
+const numberOfPromenadeUserConnectedToDisplay = ref(3)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
