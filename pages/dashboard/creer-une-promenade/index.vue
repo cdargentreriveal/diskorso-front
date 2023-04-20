@@ -185,14 +185,16 @@ onMounted(() => {
   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
+      draggable: '.sortable-item',
       handle: '.drag',
       animation: 250,
       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-        const updatedItems = [...updatedItemsPublished.value]
-        updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
-        updatedItemsPublished.value = updatedItems
+        const updatedItems = items.value.slice() // créer une copie du tableau
+        const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
+        updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
+        items.value = updatedItems // mettre à jour le tableau d'origine
       },
     })
   }
@@ -287,9 +289,8 @@ onMounted(() => {
         <div ref="blocTransition" class="promenadeContainer">
           <div
             v-for="(item, index) in items"
-            :id="'bloc' + index"
             :key="index"
-            class="bloc"
+            class="bloc sortable-item"
           >
             <!-- Image input -->
             <div
