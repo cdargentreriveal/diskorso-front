@@ -145,18 +145,11 @@ function removeItem(index: number, id: number): void {
     imageCount.value--
   } else if (type === 'transition') {
     transitionCount.value--
-    const editorRefName = items.value[index].editorRefName
-    const editorIndex = editorRefNames.value.indexOf(editorRefName!)
-    if (editorIndex !== -1) {
-      editorRefNames.value.splice(editorIndex, 1)
-    }
   } else if (type === 'excerpt') {
     excerptCount.value--
     isExcerptAdded.value[id] = false
   }
-  const newItems = [...items.value]
-  newItems.splice(index, 1)
-  items.value = newItems
+  items.value.splice(index, 1)
 }
 
 function handleImageUpload(event: Event, index: number): void {
@@ -341,13 +334,11 @@ onMounted(() => {
             <!-- Transition input -->
             <div
               v-if="item.type === 'transition'"
-              :class="`flex justify-between py-6 items-start ${item.id}`"
+              class="flex justify-between py-6 items-start"
             >
               <div class="w-full">
                 <WysiwygEditor
-                  ref="childRef"
                   :content="item.content"
-                  :editor-ref-name="item.editorRefName"
                   @update:value="(value) => (item.content = value)"
                 />
               </div>

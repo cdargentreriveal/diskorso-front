@@ -50,17 +50,23 @@ export default defineComponent({
         })
 
         quillInstance.on('text-change', updateValue)
-        quillInstance.setText(props.content)
+        const html =
+          editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
+        if (props.content !== html && quillInstance) {
+          quillInstance.clipboard.dangerouslyPasteHTML(props.content || '')
+          const length = quillInstance.getLength()
+          quillInstance.setSelection(length, length)
+        }
       }
     })
-    onUpdated(() => {
+    /*     onUpdated(() => {
       const html = editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
       if (props.content !== html && quillInstance) {
         quillInstance.clipboard.dangerouslyPasteHTML(props.content || '')
         const length = quillInstance.getLength()
         quillInstance.setSelection(length, length)
       }
-    })
+    }) */
     /*   watch(
           () => props.content,
           (newValue) => {
