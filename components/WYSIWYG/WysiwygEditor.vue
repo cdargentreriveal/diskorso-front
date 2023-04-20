@@ -57,12 +57,9 @@ export default defineComponent({
     onUpdated(() => {
       const html = editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
       if (props.content !== html && quillInstance) {
-        quillInstance.setText(props.content || '')
-        const text = quillInstance
-          .getText()
-          .trim()
-          .replace(/<\/?[^>]+(>|$)/g, '')
-        quillInstance.setText(text)
+        quillInstance.clipboard.dangerouslyPasteHTML(props.content || '')
+        const length = quillInstance.getLength()
+        quillInstance.setSelection(length, length)
       }
     })
     /*   watch(
