@@ -40,11 +40,19 @@ const firstId = computed(() => {
     return promenades.value[0].id
   }
 })
-const { data: lastNumberData } = await useDiskorso<number>(
-  'promenade/findLastPromenade'
+// const { data: lastNumberData } = await useDiskorso<number>(
+//   'promenade/findLastPromenade'
+// )
+const { data: lastNumberData } = await useAsyncData<number>(
+  'lastNumberData',
+  () => $fetch(`${config.public.baseURL}/promenade/findLastPromenade`)
 )
-const { data: firstNumberData } = await useDiskorso<number>(
-  'promenade/findFirstPromenade'
+// const { data: firstNumberData } = await useDiskorso<number>(
+//   'promenade/findFirstPromenade'
+// )
+const { data: firstNumberData } = await useAsyncData<number>(
+  'firstNumberData',
+  () => $fetch(`${config.public.baseURL}/promenade/findFirstPromenade`)
 )
 // next
 function next() {
@@ -84,8 +92,12 @@ function first() {
 // ________________________________________________________________________________________
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
-const { data: totalPromenades } = await useDiskorso<number>(
-  'promenade/countAll'
+// const { data: totalPromenades } = await useDiskorso<number>(
+//   'promenade/countAll'
+// )
+const { data: totalPromenades } = await useAsyncData<number>(
+  'totalPromenades',
+  () => $fetch(`${config.public.baseURL}/promenade/countAll`)
 )
 let totalPages = 0
 if (totalPromenades.value === null) {

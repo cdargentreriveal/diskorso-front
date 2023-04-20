@@ -45,11 +45,25 @@ const firstId = computed(() => {
     return promenades.value[0].id
   }
 })
-const { data: lastNumberData } = await useDiskorso<number>(
-  `promenade/category/last-promenade/${route.params.slug}`
+// const { data: lastNumberData } = await useDiskorso<number>(
+//   `promenade/category/last-promenade/${route.params.slug}`
+// )
+const { data: lastNumberData } = await useAsyncData<number>(
+  'lastNumberData',
+  () =>
+    $fetch(
+      `${config.public.baseURL}/promenade/category/last-promenade/${route.params.slug}`
+    )
 )
-const { data: firstNumberData } = await useDiskorso<number>(
-  `promenade/category/first-promenade/${route.params.slug}`
+// const { data: firstNumberData } = await useDiskorso<number>(
+//   `promenade/category/first-promenade/${route.params.slug}`
+// )
+const { data: firstNumberData } = await useAsyncData<number>(
+  'firstNumberData',
+  () =>
+    $fetch(
+      `${config.public.baseURL}/promenade/category/first-promenade/${route.params.slug}`
+    )
 )
 // next
 function next() {
@@ -89,8 +103,15 @@ function first() {
 // ________________________________________________________________________________________
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
-const { data: totalPromenades } = await useDiskorso<number>(
-  `promenade/category/${route.params.slug}/count`
+// const { data: totalPromenades } = await useDiskorso<number>(
+//   `promenade/category/${route.params.slug}/count`
+// )
+const { data: totalPromenades } = await useAsyncData<number>(
+  'totalPromenades',
+  () =>
+    $fetch(
+      `${config.public.baseURL}/promenade/category/${route.params.slug}/count`
+    )
 )
 let totalPages = 0
 if (totalPromenades.value === null) {

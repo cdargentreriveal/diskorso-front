@@ -12,10 +12,6 @@ definePageMeta({
 
 const numberOfPromenade = ref(3)
 
-// const { data: promenades } = await useDiskorso<Promenade[]>(
-//   `promenade/findLastPromenades/${numberOfPromenade.value}`
-// )
-
 const { data: promenades } = await useAsyncData<Promenade[]>('promenades', () =>
   $fetch(
     `${config.public.baseURL}/promenade/findLastPromenades/${numberOfPromenade.value}`
