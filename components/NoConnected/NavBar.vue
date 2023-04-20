@@ -188,9 +188,7 @@ li .Inscription {
     color: white;
   }
 }
-.menu-burger li:nth-child(3) {
-  padding-top: 2rem;
-}
+
 .menu-burger {
   & ul {
     cursor: pointer;
