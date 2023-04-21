@@ -24,7 +24,13 @@ const url = computed(() => `${config.public.baseURL}/${query.value}`)
 const { data: promenades, refresh } = useAsyncData<Promenade[]>(
   'promenades',
   async () => {
-    const data = await $fetch<Promenade[]>(url.value, {})
+    const data = await $fetch<Promenade[]>(url.value, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
     return data.sort((a, b) => b.id - a.id)
   }
 )
@@ -52,7 +58,14 @@ const { data: lastNumberData } = await useAsyncData<number>(
   'lastNumberData',
   () =>
     $fetch(
-      `${config.public.baseURL}/promenade/category/last-promenade/${route.params.slug}`
+      `${config.public.baseURL}/promenade/category/last-promenade/${route.params.slug}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }
     )
 )
 // const { data: firstNumberData } = await useDiskorso<number>(
@@ -62,7 +75,14 @@ const { data: firstNumberData } = await useAsyncData<number>(
   'firstNumberData',
   () =>
     $fetch(
-      `${config.public.baseURL}/promenade/category/first-promenade/${route.params.slug}`
+      `${config.public.baseURL}/promenade/category/first-promenade/${route.params.slug}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }
     )
 )
 // next
@@ -110,7 +130,14 @@ const { data: totalPromenades } = await useAsyncData<number>(
   'totalPromenades',
   () =>
     $fetch(
-      `${config.public.baseURL}/promenade/category/${route.params.slug}/count`
+      `${config.public.baseURL}/promenade/category/${route.params.slug}/count`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      }
     )
 )
 let totalPages = 0
