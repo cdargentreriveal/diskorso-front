@@ -116,6 +116,7 @@ watch(extractId, (newVal, oldVal) => {
         </label>
       </div>
       <hr class="my-6" />
+      <span class="text-xs">{{ getDate(extract.createdAt) }}</span>
       <div class="card-content-title font-bold text-xl my-1 mb-3">
         <h2>{{ extract.name }}</h2>
       </div>
