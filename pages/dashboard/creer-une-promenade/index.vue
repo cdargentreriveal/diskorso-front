@@ -136,10 +136,10 @@ function addTransitionInput(): void {
     transitionCount.value++
   }
 }
-const childRef = ref()
+const updatedItemsPublished = ref(items.value)
 function removeItem(index: number, id: number): void {
   const type = items.value[index].type
-
+  const typeUpdate = updatedItemsPublished.value[index].type
   if (type === 'image') {
     imageCount.value--
   } else if (type === 'transition') {
@@ -148,7 +148,12 @@ function removeItem(index: number, id: number): void {
     excerptCount.value--
     isExcerptAdded.value[id] = false
   }
-  items.value.splice(index, 1)
+  if (type !== typeUpdate) {
+    items.value = [...updatedItemsPublished.value]
+  }
+  /* if (type === typeUpdate) {
+    items.value.splice(index, 1)
+  } */
 }
 
 function handleImageUpload(event: Event, index: number): void {
@@ -178,13 +183,11 @@ function handleImageUpload(event: Event, index: number): void {
 // Calculer si une photo est sélectionnée
 const hasAvatar = computed(() => !!avatarUrl.value)
 // mettre a jour le tableau ITEMS dans updatedItemsPublished pour envoyer les bonnes positions des elements au back
-const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
-      draggable: '.sortable-item',
       handle: '.drag',
       animation: 250,
       onEnd: (event: any) => {
@@ -193,7 +196,7 @@ onMounted(() => {
         const updatedItems = items.value.slice() // créer une copie du tableau
         const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
         updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
-        items.value = updatedItems // mettre à jour le tableau d'origine
+        updatedItemsPublished.value = updatedItems // mettre à jour le tableau d'origine
       },
     })
   }
@@ -286,11 +289,7 @@ onMounted(() => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div
-            v-for="(item, index) in items"
-            :key="index"
-            class="bloc sortable-item"
-          >
+          <div v-for="(item, index) in items" :key="index" class="bloc">
             <!-- Image input -->
             <div
               v-if="item.type === 'image'"
@@ -367,10 +366,10 @@ onMounted(() => {
             <!-- Excerpt block -->
             <div
               v-if="item.type === 'excerpt'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-start drag"
             >
               <div
-                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm drag"
+                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm"
               >
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
