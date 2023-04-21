@@ -364,7 +364,6 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-
             <!-- Excerpt block -->
             <div
               v-if="item.type === 'excerpt'"
