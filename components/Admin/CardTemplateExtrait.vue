@@ -97,6 +97,20 @@ watch(extractId, (newVal, oldVal) => {
       localStorage.getItem(`extract_${newVal}_isChecked`) === 'true' || false
   }
 })
+
+let prevValue = extractsStore.tout_selectionner
+watch(
+  () => extractsStore.tout_selectionner,
+  (newValue, oldValue) => {
+    if (newValue === oldValue + 1) {
+      // Compare avec la valeur précédente pour détecter l'incrémentation
+      isChecked.value = false // Met à jour la valeur de isChecked
+      localStorage.setItem(`extract_${extractId.value}_isChecked`, 'true')
+    }
+    localStorage.removeItem(`extract_${extractId.value}_isChecked`)
+    prevValue = newValue // Met à jour la valeur précédente avec la valeur actuelle
+  }
+)
 </script>
 
 <template>
@@ -104,7 +118,7 @@ watch(extractId, (newVal, oldVal) => {
     <div class="card-content p-6">
       <!-- Rounded switch -->
       <div class="switch-btn mb-4 flex items-center text-xs justify-end">
-        <div class="mr-2 visible">Mettre en avant</div>
+        <div class="mr-2 visible">Sélectionner</div>
         <label class="switch">
           <input
             v-model="isChecked"
@@ -116,7 +130,7 @@ watch(extractId, (newVal, oldVal) => {
         </label>
       </div>
       <hr class="my-6" />
-      <span class="text-xs">{{ getDate(extract.createdAt) }}</span>
+      <span class="small">{{ getDate(extract.createdAt) }}</span>
       <div class="card-content-title font-bold text-xl my-1 mb-3">
         <h2>{{ extract.name }}</h2>
       </div>
@@ -135,12 +149,18 @@ watch(extractId, (newVal, oldVal) => {
           </NuxtLink>
         </div>
       </div>
-      <p class="text-xs gray-color card-content-description">
-        {{ extract.description }}
-      </p>
+      <!-- eslint-disable vue/no-v-html -->
+      <p
+        class="text-xs gray-color card-content-description h-[75px]"
+        v-html="`${extract.content.slice(0, 175)}...`"
+      ></p>
       <div class="card-content-view text-xs mt-5">
         <div class="flex items-center justify-between">
-          <div class="card-content-number flex items-center">
+          <!-- <div v-if="extract.promenades.length !== 0"></div> -->
+          <div
+            v-if="extract.promenades.length !== 0"
+            class="card-content-number flex items-center"
+          >
             <div class="card-content-number-list flex items-center">
               <div
                 class="rounded-full bg-amber-600 h-[25px] w-[25px] border border-white"
@@ -312,5 +332,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.small {
+  font-size: 0.65rem;
+  font-style: italic;
 }
 </style>

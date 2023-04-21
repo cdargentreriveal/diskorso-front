@@ -173,11 +173,8 @@ const selectedCategoryIds = computed(() => {
         <ModalBase :show="showModal">
           <div class="p-4 px-15 divide-y">
             <div>
-              <div class="text-lg font-semibold my-8 text-slate-500">
-                {{ name }}
-              </div>
               <!-- eslint-disable vue/no-v-html -->
-              <div class="text-xs text-justify" v-html="content"></div>
+              <div class="text-xs text-justify mt-8" v-html="content"></div>
               <!--eslint-enable-->
               <div
                 class="text-xs italic font-semibold my-5 text-slate-500 text-right"
