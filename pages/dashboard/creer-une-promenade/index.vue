@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { getCurrentInstance } from 'vue'
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'

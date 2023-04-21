@@ -194,7 +194,7 @@ li .Inscription {
   .logo {
     filter: invert(0);
   }
-  ul {
+  ul li {
     color: white;
   }
   .menu-burger-line {
