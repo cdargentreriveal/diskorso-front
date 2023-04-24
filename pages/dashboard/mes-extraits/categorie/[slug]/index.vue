@@ -63,10 +63,13 @@ const {
       },
       credentials: 'include',
     }).then((res: any) => {
-      const extracts = res.data.map((extract: ExtractFetched) => ({
-        ...extract,
-        showModal: false,
-      }))
+      // const extractsFetched = res.data.sort((a: any, b: any) => b.id - a.id)
+      const extracts = res.data
+        .map((extract: ExtractFetched) => ({
+          ...extract,
+          showModal: false,
+        }))
+        .sort((a: any, b: any) => b.id - a.id)
       return { data: extracts, message: res.message, success: res.success }
     })
 )
@@ -166,7 +169,7 @@ async function next() {
     response.value === null ||
     firstNumberId.value === null
   ) {
-    query.value = `extract//${route.params.slug}/${numberOfExtractToDisplay.value}`
+    query.value = `extract/${route.params.slug}/${numberOfExtractToDisplay.value}`
   } else if (lastId.value === +firstNumberId.value) {
     return 'no more promenade'
   } else {
@@ -211,34 +214,6 @@ async function first() {
     execute()
   }
 }
-
-// const { data: totalExtracts } = await useAsyncData<number>(
-//   'totalPromenades',
-//   async () =>
-//     await $fetch<any>(
-//       `${config.public.baseURL}/extract/category/${route.params.slug}/count`,
-//       {
-//         method: 'GET',
-//         headers: {
-//           'Content-Type': 'application/json',
-//           Authorization: `Bearer ${xsrfToken}`,
-//         },
-//         credentials: 'include',
-//       }
-//     )
-// )
-// const totalPages = ref(
-//   Math.ceil(totalExtracts.value! / numberOfExtractToDisplay.value)
-// )
-// watch(totalPromenades, (newValue) => {
-//   if (newValue === null) {
-//     totalPages.value = 0
-//   } else {
-//     totalPages.value = Math.ceil(
-//       +newValue / numberOfPromenadeUserConnectedToDisplayByCategory.value
-//     )
-//   }
-// })
 
 onMounted(async () => {
   const descriptionCard = document.querySelectorAll('.card-content-description')

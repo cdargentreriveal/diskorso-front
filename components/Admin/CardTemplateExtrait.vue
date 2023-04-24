@@ -140,7 +140,7 @@ watch(
           :key="index"
           class="category"
         >
-          <NuxtLink :to="`mes-extraits/categorie/${cat.slug}`">
+          <NuxtLink :to="`/dashboard/mes-extraits/categorie/${cat.slug}`">
             <button
               :class="`${cat.color} category-btn px-5 py-2 rounded-full text-xs`"
             >

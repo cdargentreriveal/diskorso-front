@@ -60,10 +60,12 @@ const {
       },
       credentials: 'include',
     }).then((res: any) => {
-      const extracts = res.data.map((extract: ExtractFetched) => ({
-        ...extract,
-        showModal: false,
-      }))
+      const extracts = res.data
+        .map((extract: ExtractFetched) => ({
+          ...extract,
+          showModal: false,
+        }))
+        .sort((a: any, b: any) => b.id - a.id)
       return { data: extracts, message: res.message, success: res.success }
     })
 )

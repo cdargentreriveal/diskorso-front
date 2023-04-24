@@ -134,6 +134,7 @@ async function next() {
   } else {
     query.value = `promenadeditor/promenade-cursor/${numberOfPromenadeUserConnectedToDisplay.value}/${lastId.value}/1/desc`
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+    execute()
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
       execute()
