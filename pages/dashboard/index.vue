@@ -233,7 +233,7 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter />
-    <DisplayPromenadesSearchSectionConnected />
+    <DisplayPromenadesSearchSectionConnected locate="mes-promenades" />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in response"

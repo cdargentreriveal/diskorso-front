@@ -237,7 +237,7 @@ const deleteAllExtracts = () => {
     />
 
     <AdminCatsFilter page="extraits" />
-    <DisplayPromenadesSearchSectionConnected />
+    <DisplayPromenadesSearchSectionConnected locate="mes-extraits" />
     <div
       v-if="extractsStore.extracts.length > 0"
       class="container_promenade w-9/12 switch-btn mb-4 flex items-center text-xs mb-8 mx-auto"

@@ -100,7 +100,7 @@ const nombrePromenades = computed(() => {
     />
     <!-- <AdminCatsFilter /> -->
     <button class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
-      <nuxt-link to="/dashboard"> Retour toutes lespromenades </nuxt-link>
+      <nuxt-link to="/dashboard"> Retour toutes les promenades </nuxt-link>
     </button>
     <DisplayPromenadesSearchSectionConnected />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
