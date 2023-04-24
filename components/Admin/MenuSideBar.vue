@@ -2,6 +2,9 @@
 import { Category } from '~~/types/Categories'
 import { createdPromenade, sendMainImagePromenade } from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
+
+import { usePromenadeStore } from '~~/store/promenade'
+const PromenadeStore = usePromenadeStore()
 const config = useRuntimeConfig()
 
 const categoriesStore = useCategoryStore()
@@ -26,14 +29,14 @@ const displaySwal = (
   })
 }
 function submitCreatedPromenade() {
-  if (propsAdminMenuSideBar.title === '') {
+  if (PromenadeStore.creationTitlePromenade === '') {
     displaySwal(
       'Titre manquant',
       'Le titre de la promenade est obligatoire',
       'error',
       'ok'
     )
-  } else if (propsAdminMenuSideBar.summary === '') {
+  } else if (PromenadeStore.creationSummaryPromenade === '') {
     displaySwal(
       'Description manquante',
       'La description de la promenade est obligatoire',
@@ -81,9 +84,9 @@ function submitCreatedPromenade() {
             displaySwal('Image trop lourde', url, 'error', 'ok')
           } else {
             const data = reactive({
-              title: propsAdminMenuSideBar.title,
-              slug: propsAdminMenuSideBar.slug,
-              summary: propsAdminMenuSideBar.summary,
+              title: PromenadeStore.creationTitlePromenade,
+              slug: PromenadeStore.creationSlugPromenade,
+              summary: PromenadeStore.creationSummaryPromenade,
               main_image: url,
               content: propsAdminMenuSideBar.content,
               meta_title: 'Titre pour le référencement',
@@ -136,9 +139,9 @@ function submitCreatedPromenade() {
             displaySwal('Image trop lourde', url2, 'error', 'ok')
           } else {
             const data = reactive({
-              title: propsAdminMenuSideBar.title,
-              slug: propsAdminMenuSideBar.slug,
-              summary: propsAdminMenuSideBar.summary,
+              title: PromenadeStore.creationTitlePromenade,
+              slug: PromenadeStore.creationSlugPromenade,
+              summary: PromenadeStore.creationSummaryPromenade,
               main_image: url2,
               content: propsAdminMenuSideBar.content,
               meta_title: 'Titre pour le référencement',
@@ -180,20 +183,8 @@ function submitCreatedPromenade() {
 }
 
 const propsAdminMenuSideBar = defineProps({
-  title: {
-    type: String,
-    default: '',
-  },
-  slug: {
-    type: String,
-    default: '',
-  },
   mainImage: {
     type: [FormData, String],
-    default: '',
-  },
-  summary: {
-    type: String,
     default: '',
   },
   content: {

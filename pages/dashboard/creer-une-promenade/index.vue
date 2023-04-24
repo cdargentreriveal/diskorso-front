@@ -2,12 +2,14 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
+import { usePromenadeStore } from '~~/store/promenade'
 
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
 
+const PromnadeStore = usePromenadeStore()
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
@@ -54,16 +56,7 @@ function deletePicturesBanner() {
     fileInput.value.value = ''
   }
 }
-const titleInput = ref('')
-const slugTitleInput = ref('')
-const summaryPromenade = ref('')
-function setTitleInput(value: string) {
-  titleInput.value = value
-  slugTitleInput.value = value.replace(/ /g, '-')
-}
-function updateSummaryPromenade(value: string): void {
-  summaryPromenade.value = value
-}
+
 // Ajouter blocs à la volée
 
 interface ImageItem {
@@ -214,9 +207,6 @@ onMounted(() => {
   }
 })
 const clearData = (): void => {
-  titleInput.value = ''
-  slugTitleInput.value = ''
-  summaryPromenade.value = ''
   mainImage.value = ''
   updatedItemsPublished.value = []
   refreshNuxtData()
@@ -242,7 +232,7 @@ const clearData = (): void => {
       />
 
       <div class="w-8/12 relative">
-        <CreatePromenadeTitle :set-title-input="setTitleInput" />
+        <CreatePromenadeTitle />
 
         <div class="promenade_image font-semibold text-lg mb-10">
           <h2>Ajouter la photo mise en avant</h2>
@@ -296,9 +286,7 @@ const clearData = (): void => {
           </div>
         </div>
 
-        <CreatePromenadeDescription
-          :update-summary-promenade="updateSummaryPromenade"
-        />
+        <CreatePromenadeDescription />
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
@@ -440,10 +428,7 @@ const clearData = (): void => {
     </div>
   </div>
   <AdminMenuSideBar
-    :title="titleInput"
-    :slug="slugTitleInput"
     :main-image="mainImageToUpload"
-    :summary="summaryPromenade"
     :content="updatedItemsPublished"
     :published="!!publishedPromenade"
     :clear-data="clearData"
