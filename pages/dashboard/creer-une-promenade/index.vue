@@ -193,7 +193,7 @@ onMounted(() => {
       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-        const updatedItems = items.value.slice() // créer une copie du tableau
+        const updatedItems = [...items.value] // créer une copie du tableau
         const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
         updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
         updatedItemsPublished.value = updatedItems // mettre à jour le tableau d'origine
@@ -430,9 +430,7 @@ onMounted(() => {
 .action-button {
   background-color: var(--purple-color);
 }
-sup {
-  color: #f55a78;
-}
+
 .promenade_btns {
   background-color: #f8f8f8;
 }
