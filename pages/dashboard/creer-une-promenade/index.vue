@@ -139,7 +139,6 @@ function addTransitionInput(): void {
 const updatedItemsPublished = ref(items.value)
 function removeItem(index: number, id: number): void {
   const type = items.value[index].type
-  const typeUpdate = updatedItemsPublished.value[index].type
   if (type === 'image') {
     imageCount.value--
   } else if (type === 'transition') {
@@ -148,12 +147,7 @@ function removeItem(index: number, id: number): void {
     excerptCount.value--
     isExcerptAdded.value[id] = false
   }
-  if (type !== typeUpdate) {
-    items.value = [...updatedItemsPublished.value]
-  }
-  /* if (type === typeUpdate) {
-    items.value.splice(index, 1)
-  } */
+  items.value.splice(index, 1)
 }
 
 function handleImageUpload(event: Event, index: number): void {
@@ -196,7 +190,7 @@ onMounted(() => {
         const updatedItems = [...items.value] // créer une copie du tableau
         const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
         updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
-        updatedItemsPublished.value = updatedItems // mettre à jour le tableau d'origine
+        items.value = updatedItems // mettre à jour le tableau d'origine
       },
     })
   }
@@ -289,8 +283,11 @@ onMounted(() => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="index" class="bloc">
-            <!-- Image input -->
+          <div
+            v-for="(item, index) in items"
+            :key="item.type + index"
+            class="bloc"
+          >
             <div
               v-if="item.type === 'image'"
               class="flex justify-between py-6 items-start"
