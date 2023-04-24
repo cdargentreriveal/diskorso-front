@@ -86,8 +86,8 @@ interface ExcerptItem {
 }
 
 type ItemType = ImageItem | TransitionItem | ExcerptItem
-
 const items = ref<ItemType[]>([])
+const keys = ref([])
 const imageCount = ref<number>(0)
 const transitionCount = ref<number>(0)
 const excerptCount = ref<number>(0)
@@ -283,11 +283,8 @@ onMounted(() => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div
-            v-for="(item, index) in items"
-            :key="item.type + index"
-            class="bloc"
-          >
+          <div v-for="(item, index) in items" :key="item.type" class="bloc">
+            {{ index }}
             <div
               v-if="item.type === 'image'"
               class="flex justify-between py-6 items-start"
