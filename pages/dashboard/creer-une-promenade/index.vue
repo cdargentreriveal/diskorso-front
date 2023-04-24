@@ -66,6 +66,7 @@ interface ImageItem {
   file: File | null
   imageUrl: string | null
   id?: number
+  key: string
   editorRefName?: string
   content?: string
 }
@@ -73,7 +74,7 @@ interface ImageItem {
 interface TransitionItem {
   type: 'transition'
   content: string
-  id?: number
+  key: string
   editorRefName: string
 }
 
@@ -82,6 +83,7 @@ interface ExcerptItem {
   id: number
   index: number
   content: string
+  key: string
   editorRefName?: string
 }
 
@@ -110,17 +112,25 @@ function addExcerptBlock(content: string, id: number, index: number): void {
       id,
       index,
       content,
+      key: generateUniqueId(),
     })
     excerptCount.value++
   }
 }
 function addImageInput(): void {
   if (imageCount.value < 4) {
-    items.value.push({ type: 'image', file: null, imageUrl: null })
+    items.value.push({
+      type: 'image',
+      file: null,
+      imageUrl: null,
+      key: generateUniqueId(),
+    })
     imageCount.value++
   }
 }
-
+function generateUniqueId() {
+  return Math.random().toString(36).substr(2, 9)
+}
 const editorRefNames = ref<string[]>([])
 function addTransitionInput(): void {
   if (transitionCount.value < 10) {
@@ -132,7 +142,12 @@ function addTransitionInput(): void {
       editorRefName = `editorRef-${id}-${i}` // Générer un nom unique pour la référence de l'éditeur
     } while (editorRefNames.value.includes(editorRefName)) // Répéter jusqu'à ce que le nom soit unique
     editorRefNames.value.push(editorRefName) // Ajouter le nom de référence à la liste
-    items.value.push({ type: 'transition', content: '', editorRefName })
+    items.value.push({
+      type: 'transition',
+      content: '',
+      editorRefName,
+      key: generateUniqueId(),
+    })
     transitionCount.value++
   }
 }
@@ -283,7 +298,7 @@ onMounted(() => {
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div v-for="(item, index) in items" :key="item.type" class="bloc">
+          <div v-for="(item, index) in items" :key="item.key" class="bloc">
             {{ index }}
             <div
               v-if="item.type === 'image'"
