@@ -193,6 +193,7 @@ async function first() {
     execute()
   }
 }
+
 onMounted(async () => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
