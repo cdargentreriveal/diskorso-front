@@ -1,15 +1,17 @@
 <script lang="ts" setup>
-const props = defineProps({
-  setTitleInput: {
-    type: Function,
-    required: true,
-  },
-  setTitleInputBind: {
-    type: String,
-    default: '',
-  },
-})
-const localTitleInput = ref(props.setTitleInputBind)
+
+import { usePromenadeStore } from '~~/store/promenade'
+const PromenadeStore = usePromenadeStore()
+
+const localTitleInput = ref(PromenadeStore.creationTitlePromenade)
+
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const value = target.value
+  PromenadeStore.setCreationTitlePromenade(value)
+  localTitleInput.value = value
+}
+
 </script>
 
 <template>
@@ -20,12 +22,12 @@ const localTitleInput = ref(props.setTitleInputBind)
     </div>
     <div class="my-2">
       <input
-        v-model="localTitleInput"
         type="text"
         name="scales"
         class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
         maxlength="40"
-        @change="setTitleInput(localTitleInput)"
+        :value="localTitleInput"
+        @input="onInput"
       />
     </div>
   </div>

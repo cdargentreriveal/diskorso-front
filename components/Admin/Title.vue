@@ -7,7 +7,7 @@
           <span class="font-medium purple-color">{{ titlePurple }}</span>
         </h2>
       </div>
-<!--       <button
+      <!--       <button
         v-if="JSON.stringify(category) !== '{}'"
         :class="`category-btn px-5 py-3 mx-8 rounded-full relative text-sm ${category?.color} uppercase`"
       >

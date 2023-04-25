@@ -9,10 +9,12 @@ export type Extracts = ExtractWithModal[]
 
 interface ExtractState {
   extracts: Extracts
+  tout_selectionner: number
 }
 export const useExtractStore = defineStore('extractStore', {
   state: (): ExtractState => ({
     extracts: [],
+    tout_selectionner: 0,
   }),
   actions: {
     addExtracts(extract: ExtractWithModal) {
@@ -33,6 +35,10 @@ export const useExtractStore = defineStore('extractStore', {
       if (index !== -1) {
         this.extracts.splice(index, 1)
       }
+    },
+    removeAllExtract() {
+      this.extracts.splice(0, this.extracts.length)
+      this.tout_selectionner++
     },
   },
 })

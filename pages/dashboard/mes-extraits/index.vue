@@ -4,17 +4,19 @@ import { useUserStore } from '~~/store/user'
 import { ExtractFetched } from '~~/types/Extracts'
 import { firstNumberData, lastNumberData } from '~~/utils/connected'
 import { refreshToken } from '~~/utils/connected/refreshToken'
+import { useExtractStore } from '~~/store/extracts'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
 const config = useRuntimeConfig()
 const user = useUserStore()
+const extractsStore = useExtractStore()
 let xsrfToken: any = null
 if (process.client) {
   xsrfToken = localStorage.getItem('xsrfToken')
 }
-const numberOfExtractToDisplay = ref(2)
+const numberOfExtractToDisplay = ref(9)
 const lastNumberId = ref(0)
 const firstNumberId = ref(0)
 const datasTitle = computed((): BtnAdminPage[] => [
@@ -58,10 +60,12 @@ const {
       },
       credentials: 'include',
     }).then((res: any) => {
-      const extracts = res.data.map((extract: ExtractFetched) => ({
-        ...extract,
-        showModal: false,
-      }))
+      const extracts = res.data
+        .map((extract: ExtractFetched) => ({
+          ...extract,
+          showModal: false,
+        }))
+        .sort((a: any, b: any) => b.id - a.id)
       return { data: extracts, message: res.message, success: res.success }
     })
 )
@@ -191,6 +195,7 @@ async function first() {
     execute()
   }
 }
+
 onMounted(async () => {
   const descriptionCard = document.querySelectorAll('.card-content-description')
   if (descriptionCard) {
@@ -210,10 +215,21 @@ onMounted(async () => {
   )
   firstNumberId.value = resultFirst
 })
+
+const deleteAllExtracts = () => {
+  extractsStore.removeAllExtract()
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
+      localStorage.removeItem(key!)
+    }
+  }
+}
 </script>
 
 <template>
   <AdminMenu />
+
   <div class="container mx-auto">
     <AdminTitle
       v-if="datasTitle[0].type === 'link'"
@@ -222,7 +238,20 @@ onMounted(async () => {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
+
     <AdminCatsFilter page="extraits" />
+    <DisplayPromenadesSearchSectionConnected locate="mes-extraits" />
+    <div
+      v-if="extractsStore.extracts.length > 0"
+      class="container_promenade w-9/12 switch-btn mb-4 flex items-center text-xs mb-8 mx-auto"
+    >
+      <button
+        class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 ml-5"
+        @click="deleteAllExtracts()"
+      >
+        Tous déselectionner
+      </button>
+    </div>
     <div
       class="container_promenade w-9/12 mx-auto flex items-center flex-wrap mb-8"
     >
@@ -257,5 +286,18 @@ onMounted(async () => {
 <style scoped lang="scss">
 .action-button {
   background-color: var(--purple-color);
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 </style>

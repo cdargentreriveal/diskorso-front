@@ -26,7 +26,7 @@ const firstNumberId = ref(0)
 // if (xsrfToken && xsrfTokenTime && Date.now() >= +xsrfTokenTime - 2000) {
 //   await refreshToken(config.public.baseURL)
 // }
-const numberOfPromenadeUserConnectedToDisplay = ref(4)
+const numberOfPromenadeUserConnectedToDisplay = ref(3)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -89,7 +89,6 @@ const lastId = computed(() => {
   }
 
   return response.value[response.value.length - 1]?.id ?? 0
-
 })
 const firstId = computed(() => {
   if (response.value === null) {
@@ -135,6 +134,7 @@ async function next() {
   } else {
     query.value = `promenadeditor/promenade-cursor/${numberOfPromenadeUserConnectedToDisplay.value}/${lastId.value}/1/desc`
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+    execute()
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
       execute()
@@ -234,7 +234,7 @@ onMounted(async () => {
       :route="datasTitle[0].route.name"
     />
     <AdminCatsFilter />
-    <DisplayPromenadesSearchSectionConnected />
+    <DisplayPromenadesSearchSectionConnected locate="mes-promenades" />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in response"

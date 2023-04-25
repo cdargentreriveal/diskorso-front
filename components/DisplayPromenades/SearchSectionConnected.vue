@@ -1,6 +1,13 @@
 <script lang="ts" setup>
 import { searchByTagConnected } from '~~/utils/connected'
 const searchTagConnected = ref('')
+
+const propsCard = defineProps({
+  locate: {
+    type: String,
+    default: 'null',
+  },
+})
 </script>
 
 <template>
@@ -16,7 +23,7 @@ const searchTagConnected = ref('')
           class="py-4 px-8 w-full h-full border-gray border text-sm italic"
           @keyup.enter="
             searchTagConnected.length >= 3 &&
-              searchByTagConnected(searchTagConnected)
+              searchByTagConnected(searchTagConnected, locate)
           "
         />
       </div>
@@ -33,9 +40,7 @@ const searchTagConnected = ref('')
         </button>
       </div>
       <div v-else class="search-bar-button text-white text-sm h-full">
-        <NuxtLink
-          :to="`/dashboard/mes-promenades/search/${searchTagConnected}`"
-        >
+        <NuxtLink :to="`/dashboard/${{ locate }}/search/${searchTagConnected}`">
           <button class="px-8 w-full h-full uppercase">
             <span class="flex items-center">Rechercher</span>
           </button>

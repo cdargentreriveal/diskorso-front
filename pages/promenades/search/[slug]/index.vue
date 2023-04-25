@@ -10,12 +10,16 @@ definePageMeta({
 // ________________________________________________________________________________________
 const route = useRoute()
 const loading = ref(false)
+const config = useRuntimeConfig()
 
 // ________________________________________________________________________________________
 //* Methods pour récupérer promenades et catégorie en fonction du slug
 // ________________________________________________________________________________________
-const { data: promenades } = useDiskorso<Promenade[]>(
-  `promenade/tag/search/${route.params.slug}`
+// const { data: promenades } = useDiskorso<Promenade[]>(
+//   `promenade/tag/search/${route.params.slug}`
+// )
+const { data: promenades } = await useAsyncData<Promenade[]>('promenades', () =>
+  $fetch(`${config.public.baseURL}/promenade/tag/search/${route.params.slug}`)
 )
 
 const categoriesStore = useCategoryStore()

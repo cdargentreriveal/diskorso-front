@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { Category } from './types/Categories'
 import { useCategoryStore } from '~~/store/category'
+const config = useRuntimeConfig()
 
 const categoriesStore = useCategoryStore()
-const { data: categories } = useDiskorso<Category[]>('category/all')
+
+const { data: categories } = await useAsyncData<Category[]>('categories', () =>
+  $fetch(`${config.public.baseURL}/category/all`)
+)
 
 onMounted(() => {
   categoriesStore.setCategories(categories)

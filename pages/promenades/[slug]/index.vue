@@ -6,8 +6,12 @@ definePageMeta({
   layout: 'page',
 })
 const route = useRoute()
-const { data: promenade } = useDiskorso<Promenade>(
-  `promenade/${route.params.slug}`
+const config = useRuntimeConfig()
+// const { data: promenade } = useDiskorso<Promenade>(
+//   `promenade/${route.params.slug}`
+// )
+const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
+  $fetch(`${config.public.baseURL}/promenade/${route.params.slug}`)
 )
 </script>
 

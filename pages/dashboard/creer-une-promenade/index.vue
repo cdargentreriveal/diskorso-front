@@ -2,6 +2,7 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
+
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
@@ -12,7 +13,8 @@ const datasTitle = computed((): BtnAdminPage[] => [
     type: 'button',
     titleBlack: 'Créer une',
     titlePurple: 'promenade',
-    actionBtn: [{ action: 'Publier' }, { action: 'Brouillon' }],
+    actionBtn: [{ action: 'Voir tutoriel' }],
+    route: { name: 'dashboard/tutoriel' },
   },
 ])
 
@@ -25,41 +27,7 @@ const publishedPromenade = ref<Boolean>(false)
 const handleMyEvent = (value: boolean) => {
   publishedPromenade.value = value
 }
-const avatarUrl = ref('')
 const fileInput = ref<HTMLInputElement>()
-
-function handleFileUpload(event: Event) {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (!file) return
-
-  const reader = new FileReader()
-  reader.onload = () => {
-    const image = new Image()
-    image.onload = () => {
-      avatarUrl.value = reader.result as string
-    }
-    image.src = reader.result as string
-  }
-  reader.readAsDataURL(file)
-}
-
-function deletePicturesBanner() {
-  avatarUrl.value = ''
-  if (fileInput.value) {
-    fileInput.value.value = ''
-  }
-}
-const titleInput = ref('')
-const slugTitleInput = ref('')
-const summaryPromenade = ref('')
-function setTitleInput(value: string) {
-  titleInput.value = value
-  slugTitleInput.value = value.replace(/ /g, '-')
-}
-function updateSummaryPromenade(value: string): void {
-  summaryPromenade.value = value
-}
-// Ajouter blocs à la volée
 
 interface ImageItem {
   type: 'image'
@@ -189,8 +157,7 @@ function handleImageUpload(event: Event, index: number): void {
   }
   reader.readAsDataURL(file)
 }
-// Calculer si une photo est sélectionnée
-const hasAvatar = computed(() => !!avatarUrl.value)
+
 // mettre a jour le tableau ITEMS dans updatedItemsPublished pour envoyer les bonnes positions des elements au back
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
@@ -228,6 +195,7 @@ onMounted(() => {
       :title-purple="datasTitle[0].titlePurple"
       :data="datasTitle[0].data"
       :action-btn="datasTitle[0].actionBtn"
+      :route="datasTitle[0].route.name"
       @my-event="handleMyEvent"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
@@ -237,64 +205,11 @@ onMounted(() => {
       />
 
       <div class="w-8/12 relative">
-        <CreatePromenadeTitle :set-title-input="setTitleInput" />
-        <!--  <div contenteditable="true">Cliquez ici pour éditer ce texte</div> -->
 
-        <div class="promenade_image font-semibold text-lg mb-10">
-          <h2>Ajouter la photo mise en avant</h2>
-          <div class="my-5">
-            <label for="avatar-upload text-sm">
-              <input
-                id="avatar-upload"
-                ref="fileInput"
-                type="file"
-                accept="image/*"
-                class="text-sm"
-                :class="!hasAvatar ? 'inherit' : 'hidden'"
-                @change="handleFileUpload"
-              />
-              <div
-                v-if="hasAvatar"
-                class="banner h-[300px] w-full overflow-hidden"
-              >
-                <div class="flex h-full w-full items-start p-2">
-                  <img
-                    :src="avatarUrl"
-                    type="file"
-                    name="files"
-                    class="object-cover h-full w-full rounded-lg block"
-                    alt=""
-                  />
-                  <div
-                    class="delete ml-2 w-[15px] cursor-pointer"
-                    @click="deletePicturesBanner"
-                  >
-                    <img
-                      src="@/assets/images/icons/corbeille.svg"
-                      alt=""
-                      class="w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                v-if="hasAvatar"
-                class="source py-2 w-full flex items-center"
-              >
-                <label class="text-sm pr-5">Source : <sup>*</sup></label
-                ><input
-                  class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
-                  type="text"
-                  placeholder="Le nom de la source"
-                />
-              </div>
-            </label>
-          </div>
-        </div>
+        <CreatePromenadeTitle />
+        <CreatePromenadeMainImage />
+        <CreatePromenadeDescription />
 
-        <CreatePromenadeDescription
-          :update-summary-promenade="updateSummaryPromenade"
-        />
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
@@ -469,10 +384,6 @@ onMounted(() => {
     </div>
   </div>
   <AdminMenuSideBar
-    :title="titleInput"
-    :slug="slugTitleInput"
-    :main-image="avatarUrl"
-    :summary="summaryPromenade"
     :content="items"
     :published="!!publishedPromenade"
   />

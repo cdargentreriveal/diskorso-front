@@ -25,9 +25,9 @@ const displaySwal = (
 }
 async function submitCreatedPromenade() {
   const data = reactive({
-    name: propsAdminMenuSideBar.name,
-    source: propsAdminMenuSideBar.source,
-    content: propsAdminMenuSideBar.content,
+    name: propsAdminMenuSideBarExtract.name,
+    source: propsAdminMenuSideBarExtract.source,
+    content: propsAdminMenuSideBarExtract.content,
     categoriesIds: selectedCategoryIds,
   })
 
@@ -39,21 +39,21 @@ async function submitCreatedPromenade() {
         'error',
         'ok'
       )
-    } else if (propsAdminMenuSideBar.name === '') {
+    } else if (propsAdminMenuSideBarExtract.name === '') {
       displaySwal(
         "Nom de l'extrait manquant",
         `Merci de renseigner un nom à votre extrait`,
         'error',
         'ok'
       )
-    } else if (propsAdminMenuSideBar.source === '') {
+    } else if (propsAdminMenuSideBarExtract.source === '') {
       displaySwal(
         'Source manquante',
         `Merci de renseigner la source de votre extrait`,
         'error',
         'ok'
       )
-    } else if (propsAdminMenuSideBar.content === '') {
+    } else if (propsAdminMenuSideBarExtract.content === '') {
       displaySwal(
         'Extrait vide',
         `Merci de renseigner le contenu de votre extrait`,
@@ -71,7 +71,7 @@ async function submitCreatedPromenade() {
           'success',
           'Ok'
         )
-        propsAdminMenuSideBar.clearData()
+        propsAdminMenuSideBarExtract.clearData()
         selectedCategories.splice(0, selectedCategories.length)
         clearSelectedCategories()
       }
@@ -95,7 +95,7 @@ const clearSelectedCategories = () => {
   }
 }
 
-const propsAdminMenuSideBar = defineProps({
+const propsAdminMenuSideBarExtract = defineProps({
   name: {
     type: String,
     default: '',
@@ -173,11 +173,8 @@ const selectedCategoryIds = computed(() => {
         <ModalBase :show="showModal">
           <div class="p-4 px-15 divide-y">
             <div>
-              <div class="text-lg font-semibold my-8 text-slate-500">
-                {{ name }}
-              </div>
               <!-- eslint-disable vue/no-v-html -->
-              <div class="text-xs text-justify" v-html="content"></div>
+              <div class="text-xs text-justify mt-8" v-html="content"></div>
               <!--eslint-enable-->
               <div
                 class="text-xs italic font-semibold my-5 text-slate-500 text-right"

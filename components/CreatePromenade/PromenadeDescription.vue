@@ -1,16 +1,17 @@
 <script lang="ts" setup>
-const props = defineProps({
-  updateSummaryPromenade: {
-    type: Function,
-    required: true,
-  },
-  summaryPromenadeBind: {
-    type: String,
-    default: '',
-  },
-})
 
-const localSummaryPromenade = ref(props.summaryPromenadeBind)
+import { usePromenadeStore } from '~~/store/promenade'
+const PromenadeStore = usePromenadeStore()
+
+const localSummaryInput = ref(PromenadeStore.creationSummaryPromenade)
+
+const onInput = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const value = target.value
+  PromenadeStore.setCreationSummaryPromenade(value)
+  localSummaryInput.value = value
+}
+
 </script>
 
 <template>
@@ -20,12 +21,12 @@ const localSummaryPromenade = ref(props.summaryPromenadeBind)
       <div class="max_words font-normal text-xs italic">350 caractères max</div>
     </div>
     <textarea
-      v-model="localSummaryPromenade"
       type="text"
       name="scales"
       class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
       maxlength="350"
-      @input="updateSummaryPromenade(localSummaryPromenade)"
+      :value="localSummaryInput"
+      @input="onInput"
     />
   </div>
 </template>

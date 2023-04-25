@@ -2,7 +2,11 @@
 import { PropType } from 'vue'
 import { Promenade } from '~~/types/Promenades'
 import { usePromenadeStore } from '~~/store/promenade'
-import { deletedPromenade } from '~~/utils/connected'
+import {
+  deletedPromenade,
+  publishPromenade,
+  unPublishPromenade,
+} from '~~/utils/connected'
 const PromnadeStore = usePromenadeStore()
 const config = useRuntimeConfig()
 const { $swal } = useNuxtApp()
@@ -10,25 +14,61 @@ const displaySwal = (
   title: string,
   text: string,
   icon: string,
-  confirmButtonText: string
+  confirmButtonText: string,
+  showCancelButton?: boolean
 ) => {
   $swal.fire({
     title,
     text,
     icon,
     confirmButtonText,
+    showCancelButton,
   })
 }
-async function submitDeletedPromenade() {
+function submitDeletedPromenade() {
   const data = {
     id: propsCard.promenade.id,
   }
 
   try {
-    await deletedPromenade(config.public.baseURL, data)
+    $swal
+      .fire({
+        title: 'Êtes-vous sûr?',
+        text: 'La suppression de promenade est définitive!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Oui, je supprime!',
+        cancelButtonText: 'Fermer',
+      })
+      .then(async (result: any) => {
+        if (result.isConfirmed) {
+          await deletedPromenade(config.public.baseURL, data)
+          displaySwal(
+            'Promenade supprimée',
+            `Votre promenade a bien été supprimée`,
+            'success',
+            'Ok'
+          )
+          refreshNuxtData()
+        }
+      })
+  } catch (error) {
     displaySwal(
-      'Promenade supprimée',
-      `Votre promenade a bien été supprimée`,
+      'Erreur lors de la modification',
+      'Une erreur est survenue lors de la suppression de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
+async function submitPublishPromenade(id: number) {
+  try {
+    await publishPromenade(config.public.baseURL, id)
+    displaySwal(
+      'Promenade publiée',
+      `Votre promenade a bien été publiée, elle est maintenant visible sur le site`,
       'success',
       'Ok'
     )
@@ -36,7 +76,26 @@ async function submitDeletedPromenade() {
   } catch (error) {
     displaySwal(
       'Erreur lors de la modification',
-      'Une erreur est survenue lors de la suppression de votre promenade. Veuillez réessayer plus tard.',
+      'Une erreur est survenue lors de la modification de votre promenade. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
+async function submitUnpublishPromenade(id: number) {
+  try {
+    await unPublishPromenade(config.public.baseURL, id)
+    displaySwal(
+      'Promenade retirée',
+      `Votre promenade a bien été retirée, elle est maintenant non visible sur le site`,
+      'success',
+      'Ok'
+    )
+    refreshNuxtData()
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la modification',
+      'Une erreur est survenue lors de la modification de votre promenade. Veuillez réessayer plus tard.',
       'error',
       'Ok'
     )
@@ -120,7 +179,7 @@ const propsCard = defineProps({
           :key="index"
           class="category"
         >
-          <NuxtLink :to="`/categorie/${cat.slug}`">
+          <NuxtLink :to="`/dashboard/mes-promenades/categorie/${cat.slug}`">
             <button
               :class="
                 cat.color + ' category-btn px-4 py-2 rounded-full text-xs'
@@ -140,7 +199,8 @@ const propsCard = defineProps({
           <div class="card-content-author w-7/12">
             <div
               v-if="!promenade.published"
-              class="text-black right-0 text-xs flex items-center bg-white underline gap-2"
+              class="text-black right-0 text-xs flex items-center bg-white underline gap-2 cursor-pointer"
+              @click.prevent="submitPublishPromenade(promenade.id)"
             >
               <div class="w-[17px]">
                 <img
@@ -153,7 +213,8 @@ const propsCard = defineProps({
             </div>
             <div
               v-else
-              class="text-black right-0 text-xs flex items-center bg-white underline gap-2"
+              class="text-black right-0 text-xs flex items-center bg-white underline gap-2 cursor-pointer"
+              @click.prevent="submitUnpublishPromenade(promenade.id)"
             >
               <div class="w-[17px]">
                 <img
