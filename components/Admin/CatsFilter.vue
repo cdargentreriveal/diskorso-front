@@ -13,8 +13,8 @@ const categories = categoriesStore.categories
 
 <template>
   <div class="btns-categories w-9/12 mx-auto mb-8">
-    <div class="flex items-center">
-      <div class="w-3/12">
+    <div class="flex items-center relative">
+      <div class="absolute -left-8">
         <NuxtLink
           v-if="route.path.startsWith('/dashboard/mes-promenades/categorie')"
           :to="`/dashboard/`"
@@ -44,7 +44,7 @@ const categories = categoriesStore.categories
           </button>
         </NuxtLink>
       </div>
-      <div class="flex items-center w-9/12">
+      <div class="flex items-center w-full justify-center">
         <div v-for="(categorie, index) in categories" :key="index">
           <div v-if="propsAdminCat.page === 'extraits'">
             <NuxtLink

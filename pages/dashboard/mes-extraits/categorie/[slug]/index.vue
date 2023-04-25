@@ -264,11 +264,12 @@ const deleteAllExtracts = () => {
       v-if="extractsStore.extracts.length > 0"
       class="container_promenade w-9/12 switch-btn mb-4 flex items-center text-xs mb-8 mx-auto"
     >
-      <button
-        class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 ml-5"
+    <button
+        class="bg-gray gray-color py-2 px-4 ml-2 rounded-full"
         @click="deleteAllExtracts()"
       >
-        Tous déselectionner
+        <span class="red-color mr-2">✕</span>
+        <span>Tout déselectionner</span>
       </button>
     </div>
     <div
