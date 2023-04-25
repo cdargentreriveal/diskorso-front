@@ -7,11 +7,17 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     creationTitlePromenade: string
     creationSlugPromenade: string
     creationSummaryPromenade: string
+    creationMainImagePromenade: string
+    mainImage: string
+    mainImageToUpload: FormData
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',
     creationSlugPromenade: '',
     creationSummaryPromenade: '',
+    creationMainImagePromenade: '',
+    mainImage: '',
+    mainImageToUpload: new FormData(),
   }),
   actions: {
     setPromenade(currentPromenade: Promenade | null) {
@@ -23,6 +29,15 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     },
     setCreationSummaryPromenade(summary: string) {
       this.creationSummaryPromenade = summary
+    },
+    setCreationMainImagePromenade(summary: string) {
+      this.creationMainImagePromenade = summary
+    },
+    setMainImage(mainImage: string) {
+      this.mainImage = mainImage
+    },
+    setmainImageToUpload(mainImageToUpload: FormData) {
+      this.mainImageToUpload = mainImageToUpload
     },
   },
 })

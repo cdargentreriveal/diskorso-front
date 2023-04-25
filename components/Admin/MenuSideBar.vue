@@ -69,13 +69,10 @@ function submitCreatedPromenade() {
       .then(async (result: any) => {
         if (result.isConfirmed) {
           let url = ''
-          if (propsAdminMenuSideBar.mainImage === '') {
+          if (!PromenadeStore.mainImageToUpload.has('file')) {
             url = ''
           } else {
-            const image =
-              propsAdminMenuSideBar.mainImage instanceof FormData
-                ? propsAdminMenuSideBar.mainImage
-                : new FormData()
+            const image = PromenadeStore.mainImageToUpload
             url = await sendMainImagePromenade(config.public.baseURL, image)
           }
           if (
@@ -110,7 +107,6 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
-                propsAdminMenuSideBar.clearData()
                 navigateTo('/dashboard')
               }
             } catch (error) {
@@ -124,13 +120,10 @@ function submitCreatedPromenade() {
           }
         } else if (result.isDenied) {
           let url2 = ''
-          if (propsAdminMenuSideBar.mainImage === '') {
+          if (!PromenadeStore.mainImageToUpload.has('file')) {
             url2 = ''
           } else {
-            const image =
-              propsAdminMenuSideBar.mainImage instanceof FormData
-                ? propsAdminMenuSideBar.mainImage
-                : new FormData()
+            const image = PromenadeStore.mainImageToUpload
             url2 = await sendMainImagePromenade(config.public.baseURL, image)
           }
           if (
@@ -165,7 +158,6 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
-                propsAdminMenuSideBar.clearData()
                 navigateTo('/dashboard')
               }
             } catch (error) {
@@ -183,10 +175,6 @@ function submitCreatedPromenade() {
 }
 
 const propsAdminMenuSideBar = defineProps({
-  mainImage: {
-    type: [FormData, String],
-    default: '',
-  },
   content: {
     type: Array,
     default: () => [],
@@ -200,10 +188,6 @@ const propsAdminMenuSideBar = defineProps({
     default() {
       return {}
     },
-  },
-  clearData: {
-    type: Function,
-    required: true,
   },
 })
 // Ajouter catégories
