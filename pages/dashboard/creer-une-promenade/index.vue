@@ -299,12 +299,12 @@ onMounted(() => {
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
           <div v-for="(item, index) in items" :key="item.key" class="bloc">
-            {{ index }}
+            {{ index + 1 }}
             <div
               v-if="item.type === 'image'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-stretch"
             >
-              <div class="my-2 w-full drag">
+              <div class="w-full border border-slate-300 p-8 min-h-min">
                 <label for="avatar-upload text-sm">
                   <input
                     id="avatar-upload"
@@ -331,18 +331,33 @@ onMounted(() => {
                   </div>
                 </label>
               </div>
-              <button class="mt-4" @click="removeItem(index, index)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index, index)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px] h-[15px]"
+                  />
+                </button>
+                <div
+                  class="border bloc-drag border-slate-300 flex items-center justify-center drag cursor-move py-5"
+                  :class="item.imageUrl ? 'h-[331px]' : 'h-full'"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
             </div>
             <!-- Transition input -->
             <div
               v-if="item.type === 'transition'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-stretch"
             >
               <div class="w-full">
                 <WysiwygEditor
@@ -358,11 +373,11 @@ onMounted(() => {
                   <img
                     src="@/assets/images/icons/corbeille.svg"
                     alt=""
-                    class="w-[15px]"
+                    class="w-[15px] h-[15px]"
                   />
                 </button>
                 <div
-                  class="h-[251px] border border-slate-300 flex items-center justify-center drag cursor-move"
+                  class="h-full bloc-drag border border-slate-300 flex items-center justify-center drag cursor-move"
                 >
                   <img
                     src="@/assets/images/icons/drag.svg"
@@ -375,21 +390,35 @@ onMounted(() => {
             <!-- Excerpt block -->
             <div
               v-if="item.type === 'excerpt'"
-              class="flex justify-between py-6 items-start drag"
+              class="flex justify-between py-6 items-stretch"
             >
               <div
-                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm"
+                class="bg-white p-5 w-full cursor-move text-sm border border-slate-300 min-h-min"
               >
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
               </div>
-              <button @click="removeItem(index, item.id)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index, item.id)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px] h-[15px]"
+                  />
+                </button>
+                <div
+                  class="border bloc-drag border-slate-300 flex items-center justify-center py-5 drag cursor-move"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -457,5 +486,8 @@ onMounted(() => {
 
 .extraits_view:hover {
   cursor: pointer;
+}
+.bloc-drag {
+  height: calc(100% - 45px);
 }
 </style>
