@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { ItemType } from '~~/types/CreatePromenade'
 import { Promenade } from '~~/types/Promenades'
 
 export const usePromenadeStore = defineStore('promenadeStore', {
@@ -10,6 +11,10 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     creationMainImagePromenade: string
     mainImage: string
     mainImageToUpload: FormData
+    items: ItemType[]
+    imageCount: number
+    transitionCount: number
+    excerptCount: number
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',
@@ -18,6 +23,10 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     creationMainImagePromenade: '',
     mainImage: '',
     mainImageToUpload: new FormData(),
+    items: [],
+    imageCount: 0,
+    transitionCount: 0,
+    excerptCount: 0,
   }),
   actions: {
     setPromenade(currentPromenade: Promenade | null) {
@@ -38,6 +47,46 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     },
     setmainImageToUpload(mainImageToUpload: FormData) {
       this.mainImageToUpload = mainImageToUpload
+    },
+    pushItem(item: ItemType) {
+      this.items.push(item)
+    },
+    incrementCount(type: 'image' | 'excerpt' | 'transition') {
+      switch (type) {
+        case 'image':
+          this.imageCount++
+          break
+        case 'excerpt':
+          this.excerptCount++
+          break
+        case 'transition':
+          this.transitionCount++
+          break
+        default:
+          // eslint-disable-next-line no-console
+          console.log(`Type invalide : ${type}`)
+          break
+      }
+    },
+    decrementCount(type: 'image' | 'excerpt' | 'transition') {
+      switch (type) {
+        case 'image':
+          this.imageCount--
+          break
+        case 'excerpt':
+          this.excerptCount--
+          break
+        case 'transition':
+          this.transitionCount--
+          break
+        default:
+          // eslint-disable-next-line no-console
+          console.log(`Type invalide : ${type}`)
+          break
+      }
+    },
+    clearItems() {
+      this.items = []
     },
   },
 })

@@ -85,7 +85,7 @@ function submitCreatedPromenade() {
               slug: PromenadeStore.creationSlugPromenade,
               summary: PromenadeStore.creationSummaryPromenade,
               main_image: url,
-              content: propsAdminMenuSideBar.content,
+              content: PromenadeStore.items,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
@@ -107,6 +107,13 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
+                PromenadeStore.setCreationTitlePromenade('')
+                PromenadeStore.setCreationSummaryPromenade('')
+                PromenadeStore.setCreationMainImagePromenade('')
+                PromenadeStore.setCreationMainImagePromenade('')
+                PromenadeStore.setmainImageToUpload(new FormData())
+                PromenadeStore.clearItems()
+
                 navigateTo('/dashboard')
               }
             } catch (error) {
@@ -136,7 +143,7 @@ function submitCreatedPromenade() {
               slug: PromenadeStore.creationSlugPromenade,
               summary: PromenadeStore.creationSummaryPromenade,
               main_image: url2,
-              content: propsAdminMenuSideBar.content,
+              content: PromenadeStore.items,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
@@ -158,6 +165,12 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
+                PromenadeStore.setCreationTitlePromenade('')
+                PromenadeStore.setCreationSummaryPromenade('')
+                PromenadeStore.setCreationMainImagePromenade('')
+                PromenadeStore.setCreationMainImagePromenade('')
+                PromenadeStore.setmainImageToUpload(new FormData())
+                PromenadeStore.clearItems()
                 navigateTo('/dashboard')
               }
             } catch (error) {
@@ -173,25 +186,7 @@ function submitCreatedPromenade() {
       })
   }
 }
-
-const propsAdminMenuSideBar = defineProps({
-  content: {
-    type: Array,
-    default: () => [],
-  },
-  published: {
-    type: Boolean,
-    default: false,
-  },
-  actionBtn: {
-    type: Object,
-    default() {
-      return {}
-    },
-  },
-})
 // Ajouter catégories
-const categoriesCount = ref<number>(0)
 interface CategoryItem {
   type: 'categories'
   content: number
@@ -222,7 +217,7 @@ function isCheckboxDisabled(categorie: Category): boolean {
 }
 
 const excerptElementsId = computed(() => {
-  const excerptElements = propsAdminMenuSideBar.content.filter(
+  const excerptElements = PromenadeStore.items.filter(
     (item: any) => item.type === 'excerpt'
   )
   const excerptIds = excerptElements.map((item: any) => item.id)
