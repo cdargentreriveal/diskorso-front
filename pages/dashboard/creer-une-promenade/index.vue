@@ -299,7 +299,6 @@ onMounted(() => {
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
           <div v-for="(item, index) in items" :key="item.key" class="bloc">
-            {{ index + 1 }}
             <div
               v-if="item.type === 'image'"
               class="flex justify-between py-6 items-stretch"
@@ -343,8 +342,12 @@ onMounted(() => {
                   />
                 </button>
                 <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
                   class="border bloc-drag border-slate-300 flex items-center justify-center drag cursor-move py-5"
-                  :class="item.imageUrl ? 'h-[331px]' : 'h-full'"
                 >
                   <img
                     src="@/assets/images/icons/drag.svg"
@@ -376,6 +379,11 @@ onMounted(() => {
                     class="w-[15px] h-[15px]"
                   />
                 </button>
+                <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
                 <div
                   class="h-full bloc-drag border border-slate-300 flex items-center justify-center drag cursor-move"
                 >
@@ -409,6 +417,11 @@ onMounted(() => {
                     class="w-[15px] h-[15px]"
                   />
                 </button>
+                <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
                 <div
                   class="border bloc-drag border-slate-300 flex items-center justify-center py-5 drag cursor-move"
                 >
@@ -460,7 +473,7 @@ onMounted(() => {
     :slug="slugTitleInput"
     :main-image="avatarUrl"
     :summary="summaryPromenade"
-    :content="updatedItemsPublished"
+    :content="items"
     :published="!!publishedPromenade"
   />
 </template>
@@ -488,6 +501,6 @@ onMounted(() => {
   cursor: pointer;
 }
 .bloc-drag {
-  height: calc(100% - 45px);
+  height: calc(100% - 87px);
 }
 </style>
