@@ -264,7 +264,7 @@ const deleteAllExtracts = () => {
       v-if="extractsStore.extracts.length > 0"
       class="container_promenade w-9/12 switch-btn mb-4 flex items-center text-xs mb-8 mx-auto"
     >
-    <button
+      <button
         class="bg-gray gray-color py-2 px-4 ml-2 rounded-full"
         @click="deleteAllExtracts()"
       >

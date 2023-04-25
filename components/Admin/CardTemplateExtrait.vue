@@ -213,11 +213,13 @@ watch(
                       Cet extrait apparaît dans les promenades suivantes :
                     </p>
                     <ul
-                      class="list-decimal text-xs mt-4 ml-4 flex flex-col flex-wrap h-[90px]"
+                      class="list-decimal text-xs mt-4 ml-4 flex flex-col flex-wrap h-[100px]"
                     >
                       <li v-for="(promenade, i) in extract.promenades" :key="i">
                         <nuxt-link :to="`/promenades/${promenade.slug}`">
-                          <span class="text-xs mt-3 inline-block">
+                          <span
+                            class="text-xs mt-4 inline-block underline underline-offset-2"
+                          >
                             {{ promenade.title }}
                           </span></nuxt-link
                         >
