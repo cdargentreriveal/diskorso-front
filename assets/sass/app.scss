@@ -24,6 +24,9 @@
 .gray-color{
   color: var(--gray-color);
 }
+.bg-gray{
+  background-color: var(--gray-light-color);
+}
 .box-shaddow{
   -webkit-box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.11);
   box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.11);
