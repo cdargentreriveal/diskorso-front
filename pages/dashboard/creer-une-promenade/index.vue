@@ -205,12 +205,9 @@ onMounted(() => {
       />
 
       <div class="w-8/12 relative">
-
         <CreatePromenadeTitle />
         <CreatePromenadeMainImage />
         <CreatePromenadeDescription />
-
-
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
           <div v-for="(item, index) in items" :key="item.key" class="bloc">
@@ -383,10 +380,7 @@ onMounted(() => {
       </div>
     </div>
   </div>
-  <AdminMenuSideBar
-    :content="items"
-    :published="!!publishedPromenade"
-  />
+  <AdminMenuSideBar :content="items" :published="!!publishedPromenade" />
 </template>
 <style scoped lang="scss">
 .action-button {

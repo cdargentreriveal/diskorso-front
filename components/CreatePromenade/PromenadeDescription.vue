@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 import { usePromenadeStore } from '~~/store/promenade'
 const PromenadeStore = usePromenadeStore()
 
@@ -11,7 +10,6 @@ const onInput = (event: Event) => {
   PromenadeStore.setCreationSummaryPromenade(value)
   localSummaryInput.value = value
 }
-
 </script>
 
 <template>
