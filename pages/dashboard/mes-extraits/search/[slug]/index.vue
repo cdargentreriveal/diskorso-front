@@ -88,16 +88,6 @@ const toggle = (extract: any): boolean => {
   return extract.showModal
 }
 
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
-
 const deleteAllExtracts = () => {
   extractsStore.removeAllExtract()
   for (let i = 0; i < localStorage.length; i++) {
