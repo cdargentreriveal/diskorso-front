@@ -92,7 +92,7 @@ function updateSummaryPromenade(value: string): void {
 interface ImageItem {
   type: 'image'
   file?: File | null
-  imageUrl: string | null
+  imageUrl?: string | null
   id?: number
   key?: string
   editorRefName?: string

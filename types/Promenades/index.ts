@@ -20,9 +20,9 @@ export interface Promenade {
   main_image: string
   content: Array<{
     type: string
-    imageUrl: string
+    imageUrl?: string
     content: string
-    key: string
+    key?: string
   }>
   meta_title?: string
   meta_description?: string
