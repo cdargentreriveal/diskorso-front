@@ -167,7 +167,14 @@ watch(
                 class="-ml-3"
               >
                 <img
+                  v-if="extractElement.main_image"
                   :src="extractElement.main_image"
+                  alt=""
+                  class="object-top h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-white"
+                />
+                <img
+                  v-else
+                  src="@/assets/images/banner-diskorso-promenade.jpg"
                   alt=""
                   class="object-top h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-white"
                 />
