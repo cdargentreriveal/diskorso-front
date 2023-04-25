@@ -103,7 +103,6 @@ const middleBtnPagination = ref(false)
 const lastBtnPagination = ref(false)
 
 onBeforeUpdate(() => {
-  subStringSummary()
   nextTick(() => {
     if (firstId.value && firstId.value === lastNumberId.value) {
       firstBtnPagination.value = true
@@ -189,15 +188,6 @@ const totalPages = ref(
   )
 )
 
-function subStringSummary() {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 90)
-      element.textContent = shortDescription + '...'
-    })
-  }
-}
 watch(totalPromenades, (newValue) => {
   if (newValue === null) {
     totalPages.value = 0
@@ -209,7 +199,6 @@ watch(totalPromenades, (newValue) => {
 })
 
 onMounted(async () => {
-  subStringSummary()
   const resultLast = await lastNumberData(
     config.public.baseURL,
     'promenadeditor/findLastPromenade'
