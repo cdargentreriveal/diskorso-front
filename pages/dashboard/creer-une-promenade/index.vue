@@ -2,8 +2,6 @@
 import Sortable from 'sortablejs'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import WysiwygEditor from '~/components/WYSIWYG/WysiwygEditor.vue'
-import { usePromenadeStore } from '~~/store/promenade'
-import { handleFileUpload } from '~~/utils/connected/handleFileUpload'
 
 definePageMeta({
   layout: 'admin',
@@ -36,6 +34,7 @@ interface ImageItem {
   file: File | null
   imageUrl: string | null
   id?: number
+  key: string
   editorRefName?: string
   content?: string
 }
@@ -43,7 +42,7 @@ interface ImageItem {
 interface TransitionItem {
   type: 'transition'
   content: string
-  id?: number
+  key: string
   editorRefName: string
 }
 
@@ -52,12 +51,13 @@ interface ExcerptItem {
   id: number
   index: number
   content: string
+  key: string
   editorRefName?: string
 }
 
 type ItemType = ImageItem | TransitionItem | ExcerptItem
-
 const items = ref<ItemType[]>([])
+const keys = ref([])
 const imageCount = ref<number>(0)
 const transitionCount = ref<number>(0)
 const excerptCount = ref<number>(0)
@@ -80,17 +80,25 @@ function addExcerptBlock(content: string, id: number, index: number): void {
       id,
       index,
       content,
+      key: generateUniqueId(),
     })
     excerptCount.value++
   }
 }
 function addImageInput(): void {
   if (imageCount.value < 4) {
-    items.value.push({ type: 'image', file: null, imageUrl: null })
+    items.value.push({
+      type: 'image',
+      file: null,
+      imageUrl: null,
+      key: generateUniqueId(),
+    })
     imageCount.value++
   }
 }
-
+function generateUniqueId() {
+  return Math.random().toString(36).substr(2, 9)
+}
 const editorRefNames = ref<string[]>([])
 function addTransitionInput(): void {
   if (transitionCount.value < 10) {
@@ -102,23 +110,22 @@ function addTransitionInput(): void {
       editorRefName = `editorRef-${id}-${i}` // Générer un nom unique pour la référence de l'éditeur
     } while (editorRefNames.value.includes(editorRefName)) // Répéter jusqu'à ce que le nom soit unique
     editorRefNames.value.push(editorRefName) // Ajouter le nom de référence à la liste
-    items.value.push({ type: 'transition', content: '', editorRefName })
+    items.value.push({
+      type: 'transition',
+      content: '',
+      editorRefName,
+      key: generateUniqueId(),
+    })
     transitionCount.value++
   }
 }
-const childRef = ref()
+const updatedItemsPublished = ref(items.value)
 function removeItem(index: number, id: number): void {
   const type = items.value[index].type
-
   if (type === 'image') {
     imageCount.value--
   } else if (type === 'transition') {
     transitionCount.value--
-    const editorRefName = items.value[index].editorRefName
-    const editorIndex = editorRefNames.value.indexOf(editorRefName!)
-    if (editorIndex !== -1) {
-      editorRefNames.value.splice(editorIndex, 1)
-    }
   } else if (type === 'excerpt') {
     excerptCount.value--
     isExcerptAdded.value[id] = false
@@ -152,7 +159,6 @@ function handleImageUpload(event: Event, index: number): void {
 }
 
 // mettre a jour le tableau ITEMS dans updatedItemsPublished pour envoyer les bonnes positions des elements au back
-const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
   if (blocTransition.value) {
@@ -163,9 +169,10 @@ onMounted(() => {
       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-        const updatedItems = [...updatedItemsPublished.value]
-        updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
-        updatedItemsPublished.value = updatedItems
+        const updatedItems = [...items.value] // créer une copie du tableau
+        const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
+        updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
+        items.value = updatedItems // mettre à jour le tableau d'origine
       },
     })
   }
@@ -198,24 +205,20 @@ onMounted(() => {
       />
 
       <div class="w-8/12 relative">
+
         <CreatePromenadeTitle />
         <CreatePromenadeMainImage />
         <CreatePromenadeDescription />
 
+
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div
-            v-for="(item, index) in items"
-            :id="'bloc' + index"
-            :key="index"
-            class="bloc"
-          >
-            <!-- Image input -->
+          <div v-for="(item, index) in items" :key="item.key" class="bloc">
             <div
               v-if="item.type === 'image'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-stretch"
             >
-              <div class="my-2 w-full drag">
+              <div class="w-full border border-slate-300 p-8 min-h-min">
                 <label for="avatar-upload text-sm">
                   <input
                     id="avatar-upload"
@@ -242,25 +245,41 @@ onMounted(() => {
                   </div>
                 </label>
               </div>
-              <button class="mt-4" @click="removeItem(index, index)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index, index)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px] h-[15px]"
+                  />
+                </button>
+                <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
+                  class="border bloc-drag border-slate-300 flex items-center justify-center drag cursor-move py-5"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
             </div>
             <!-- Transition input -->
             <div
               v-if="item.type === 'transition'"
-              :class="`flex justify-between py-6 items-start ${item.id}`"
+              class="flex justify-between py-6 items-stretch"
             >
               <div class="w-full">
                 <WysiwygEditor
-                  ref="childRef"
-                  v-model="item.content"
                   :content="item.content"
-                  :editor-ref-name="item.editorRefName"
                   @update:value="(value) => (item.content = value)"
                 />
               </div>
@@ -272,11 +291,16 @@ onMounted(() => {
                   <img
                     src="@/assets/images/icons/corbeille.svg"
                     alt=""
-                    class="w-[15px]"
+                    class="w-[15px] h-[15px]"
                   />
                 </button>
                 <div
-                  class="h-[251px] border border-slate-300 flex items-center justify-center drag cursor-move"
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
+                  class="h-full bloc-drag border border-slate-300 flex items-center justify-center drag cursor-move"
                 >
                   <img
                     src="@/assets/images/icons/drag.svg"
@@ -286,25 +310,43 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-
             <!-- Excerpt block -->
             <div
               v-if="item.type === 'excerpt'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-stretch"
             >
               <div
-                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm drag"
+                class="bg-white p-5 w-full cursor-move text-sm border border-slate-300 min-h-min"
               >
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
               </div>
-              <button @click="removeItem(index, item.id)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index, item.id)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px] h-[15px]"
+                  />
+                </button>
+                <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
+                  class="border bloc-drag border-slate-300 flex items-center justify-center py-5 drag cursor-move"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -342,7 +384,7 @@ onMounted(() => {
     </div>
   </div>
   <AdminMenuSideBar
-    :content="updatedItemsPublished"
+    :content="items"
     :published="!!publishedPromenade"
   />
 </template>
@@ -350,9 +392,7 @@ onMounted(() => {
 .action-button {
   background-color: var(--purple-color);
 }
-sup {
-  color: #f55a78;
-}
+
 .promenade_btns {
   background-color: #f8f8f8;
 }
@@ -370,5 +410,8 @@ sup {
 
 .extraits_view:hover {
   cursor: pointer;
+}
+.bloc-drag {
+  height: calc(100% - 87px);
 }
 </style>

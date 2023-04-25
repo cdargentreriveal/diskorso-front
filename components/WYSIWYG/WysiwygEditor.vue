@@ -7,7 +7,6 @@
 <script lang="ts">
 import MyQuill from 'quill'
 import 'quill/dist/quill.snow.css'
-
 export default defineComponent({
   name: 'WysiwygEditor',
   props: {
@@ -24,7 +23,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const editorRef = ref<HTMLDivElement | null>(null)
     let quillInstance: MyQuill | null = null
-
+    const contentHtml = ref(props.content)
     const updateValue = () => {
       if (quillInstance && editorRef.value) {
         const html =
@@ -50,23 +49,33 @@ export default defineComponent({
         })
 
         quillInstance.on('text-change', updateValue)
-
-        quillInstance.setContents(
-          quillInstance.clipboard.convert({ text: props.value })
-        )
-      }
-    })
-    watch(
-      () => props.value,
-      (newValue) => {
-        if (quillInstance) {
-          quillInstance.setContents(
-            quillInstance.clipboard.convert({ text: newValue })
-          )
+        const html =
+          editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
+        if (props.content !== html && quillInstance) {
+          quillInstance.clipboard.dangerouslyPasteHTML(props.content || '')
+          const length = quillInstance.getLength()
+          quillInstance.setSelection(length, length)
         }
       }
-    )
-
+    })
+    /*     onUpdated(() => {
+      const html = editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
+      if (props.content !== html && quillInstance) {
+        quillInstance.clipboard.dangerouslyPasteHTML(props.content || '')
+        const length = quillInstance.getLength()
+        quillInstance.setSelection(length, length)
+      }
+    }) */
+    /*   watch(
+          () => props.content,
+          (newValue) => {
+            contentHtml.value = newValue
+            if (quillInstance) {
+              quillInstance.clipboard.dangerouslyPasteHTML(newValue)
+            }
+          }
+        )
+    */
     onUnmounted(() => {
       if (quillInstance) {
         quillInstance.off('text-change', updateValue)
