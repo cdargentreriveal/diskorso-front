@@ -4,8 +4,12 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  setTitleInputBind: {
+    type: String,
+    default: '',
+  },
 })
-const localTitleInput = ref('')
+const localTitleInput = ref(props.setTitleInputBind)
 </script>
 
 <template>

@@ -4,9 +4,13 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  summaryPromenadeBind: {
+    type: String,
+    default: '',
+  },
 })
 
-const localSummaryPromenade = ref('')
+const localSummaryPromenade = ref(props.summaryPromenadeBind)
 </script>
 
 <template>

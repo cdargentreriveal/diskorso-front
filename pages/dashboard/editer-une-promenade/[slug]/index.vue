@@ -84,28 +84,39 @@ const summaryPromenade = ref('')
 function setTitleInput(value: String) {
   slugTitleInput.value = value.replace(/ /g, '-')
 }
+function updateSummaryPromenade(value: string): void {
+  summaryPromenade.value = value
+}
 // Ajouter blocs à la volée
 
 interface ImageItem {
   type: 'image'
-  file: File | null
+  file?: File | null
   imageUrl: string | null
+  id?: number
+  key?: string
+  editorRefName?: string
+  content: string
 }
 
 interface TransitionItem {
   type: 'transition'
   content: string
+  editorRefName?: string
+  key?: string
 }
 
 interface ExcerptItem {
   type: 'excerpt'
   id: number
-  index: number
+  index?: number
+  editorRefName?: string
   content: string
+  key?: string
 }
 
 type ItemType = ImageItem | TransitionItem | ExcerptItem
-
+const editorRefNames = ref<string[]>([])
 const items = ref<ItemType[]>([])
 const imageCount = ref<number>(0)
 const transitionCount = ref<number>(0)
@@ -113,14 +124,24 @@ const excerptCount = ref<number>(0)
 
 function addImageInput(): void {
   if (imageCount.value < 4) {
-    items.value.push({ type: 'image', file: null, imageUrl: null })
+    items.value.push({
+      type: 'image',
+      content: '',
+      file: null,
+      imageUrl: null,
+      key: generateUniqueId(),
+    })
     imageCount.value++
   }
 }
 
 function addTransitionInput(): void {
   if (transitionCount.value < 10) {
-    items.value.push({ type: 'transition', content: '' })
+    items.value.push({
+      type: 'transition',
+      content: '',
+      key: generateUniqueId(),
+    })
     transitionCount.value++
   }
 }
@@ -142,11 +163,14 @@ function addExcerptBlock(content: string, id: number, index: number): void {
       id,
       index,
       content,
+      key: generateUniqueId(),
     })
     excerptCount.value++
   }
 }
-
+function generateUniqueId() {
+  return Math.random().toString(36).substr(2, 9)
+}
 function removeItem(index: number, id: number): void {
   const type = items.value[index].type
 
@@ -191,6 +215,10 @@ const hasAvatar = computed(() => !!avatarUrl.value)
 const updatedItemsPublished = ref(items.value)
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
+  if (PromnadeStore.selectPromenade) {
+    items.value = PromnadeStore.selectPromenade.content
+    console.log(PromnadeStore.selectPromenade)
+  }
   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
@@ -199,19 +227,20 @@ onMounted(() => {
       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-        const updatedItems = [...updatedItemsPublished.value]
-        updatedItems.splice(newIndex, 0, updatedItems.splice(oldIndex, 1)[0])
-        updatedItemsPublished.value = updatedItems
+        const updatedItems = [...items.value] // créer une copie du tableau
+        const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
+        updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
+        items.value = updatedItems // mettre à jour le tableau d'origine
       },
     })
   }
-  // const descriptionCard = document.querySelectorAll('.extraits_item_text')
-  // if (descriptionCard) {
-  //   descriptionCard.forEach((element) => {
-  //     const shortDescription = element.textContent?.substring(0, 100) ?? ''
-  //     element.textContent = shortDescription + '...'
-  //   })
-  // }
+  const descriptionCard = document.querySelectorAll('.extraits_item_text')
+  if (descriptionCard) {
+    descriptionCard.forEach((element) => {
+      const shortDescription = element.textContent?.substring(0, 100) ?? ''
+      element.textContent = shortDescription + '...'
+    })
+  }
 })
 
 const toggle = (extract: any): boolean => {
@@ -232,133 +261,18 @@ const toggle = (extract: any): boolean => {
       @my-event="handleMyEvent"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
-      <div class="w-4/12 relative">
-        <div class="extraits w-11/12 text-xs mb-3 sticky top-[22%]">
-          <div class="mb-6 flex items-center justify-between">
-            <div class="underline mx-3">
-              <NuxtLink to="/dashboard/mes-extraits"
-                >Accéder aux extraits</NuxtLink
-              >
-            </div>
-            <div class="underline mx-3">
-              <NuxtLink to="/dashboard/creer-un-extrait"
-                >+ Créer un extrait</NuxtLink
-              >
-            </div>
-          </div>
-          <div
-            v-if="extractsStore.extracts.length < 1"
-            class="empty-extract h-[50vh] flex items-center justify-center border-dashed border border-slate-400 text-slate-400"
-          >
-            <div>Pas d'extraits selectionnés</div>
-          </div>
-          <div v-else class="h-[60vh] overflow-auto">
-            <div
-              v-for="(extract, index) in extractsStore.extracts"
-              :key="index"
-              class="extraits_item bg-white rounded mb-5 p-5"
-            >
-              <div class="extraits_item_title text-sm font-semibold mb-2">
-                <h3>{{ extract.name }}</h3>
-              </div>
-              <div class="extraits_item_cats flex gap-2 flex-wrap">
-                <div
-                  v-for="(cat, indexCat) in extract.categories"
-                  :key="indexCat"
-                  class="cats category-btn px-4 py-2 rounded-full inline mb-1"
-                  :class="cat.color"
-                >
-                  {{ cat.title }}
-                </div>
-              </div>
-              <div class="extraits_item_text my-3">
-                <p>{{ extract.content }}</p>
-              </div>
-              <div class="btns mt-4">
-                <div class="flex items-center justify-between">
-                  <div
-                    class="extraits_view underline font-semibold"
-                    @click="toggle(extract)"
-                  >
-                    Voir l'extrait
-                  </div>
-                  <ModalBase :show="extract.showModal">
-                    <div class="p-4 px-15 divide-y">
-                      <div>
-                        <div class="text-lg font-semibold my-8 text-slate-500">
-                          {{ extract.name }}
-                        </div>
-                        <!-- eslint-disable vue/no-v-html -->
-                        <div
-                          class="text-xs text-justify"
-                          v-html="extract.content"
-                        ></div>
-                        <!--eslint-enable-->
-                        <div
-                          class="text-xs italic font-semibold my-5 text-slate-500 text-right"
-                        >
-                          <a :href="extract.source" target="_blank">{{
-                            extract.source
-                          }}</a>
-                        </div>
-                      </div>
-                      <div class="flex flex-col">
-                        <p
-                          v-if="extract.used_in_article"
-                          class="text-xs mt-5 font-semibold"
-                        >
-                          Cet extrait apparaît dans les promenades suivantes :
-                        </p>
-                        <p v-else class="text-xs mt-5 font-semibold">
-                          Extrait non encore utilisé
-                        </p>
-                        <div class="self-end">
-                          <button
-                            type="button"
-                            class="w-100px bg-indigo-200 px-3 py-1 font-medium"
-                            @click="toggle(extract)"
-                          >
-                            Fermer
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </ModalBase>
-                  <div
-                    :class="{
-                      'cursor-not-allowed disabled':
-                        excerptCount === 4 || isExcerptAdded[extract.id],
-                    }"
-                    class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
-                    @click="addExcerptBlock(extract.content, extract.id, index)"
-                  >
-                    <button>Ajouter l'extrait</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <CreatePromenadeHandleExtracts
+        :add-excerpt-block="addExcerptBlock"
+        :is-excerpt-added="isExcerptAdded"
+      />
+
       <div class="w-8/12 relative">
-        <div class="promenade_title font-semibold text-lg mb-8">
-          <div class="flex items-center justify-between">
-            <h2>Titre de la promenade<sup>*</sup></h2>
-            <div class="max_words font-normal text-xs italic">
-              40 caractères max
-            </div>
-          </div>
-          <div class="my-2">
-            <input
-              v-model="PromnadeStore.selectPromenade.title"
-              type="text"
-              name="scales"
-              class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
-              maxlength="40"
-              @change="setTitleInput(titleInput)"
-            />
-          </div>
-        </div>
+        <CreatePromenadeTitle
+          :set-title-input="setTitleInput"
+          :set-title-input-bind="PromnadeStore.selectPromenade.title"
+        />
+        <!--  <div contenteditable="true">Cliquez ici pour éditer ce texte</div> -->
+
         <div class="promenade_image font-semibold text-lg mb-10">
           <h2>Ajouter la photo mise en avant</h2>
           <div class="my-5">
@@ -410,35 +324,21 @@ const toggle = (extract: any): boolean => {
             </label>
           </div>
         </div>
-        <div class="promenade_description font-semibold text-lg mb-8">
-          <div class="flex items-center justify-between">
-            <h2>Ajouter une description<sup>*</sup></h2>
-            <div class="max_words font-normal text-xs italic">
-              350 caractères max
-            </div>
-          </div>
-          <textarea
-            v-model="PromnadeStore.selectPromenade.summary"
-            type="text"
-            name="scales"
-            class="my-2 p-2 text-sm border border-slate-300 rounded w-full"
-            maxlength="350"
-          />
-        </div>
+
+        <CreatePromenadeDescription
+          :update-summary-promenade="updateSummaryPromenade"
+          :summary-promenade-bind="PromnadeStore.selectPromenade.summary"
+        />
 
         <!-- blocs construction promenade -->
         <div ref="blocTransition" class="promenadeContainer">
-          <div
-            v-for="(item, index) in PromnadeStore.selectPromenade.content"
-            :key="index"
-            class="bloc"
-          >
-            <!-- Image input -->
+          <div v-for="(item, index) in items" :key="item.key" class="bloc">
+            {{ item.key }}
             <div
               v-if="item.type === 'image'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-stretch"
             >
-              <div class="my-2 w-full drag">
+              <div class="w-full border border-slate-300 p-8 min-h-min">
                 <label for="avatar-upload text-sm">
                   <input
                     id="avatar-upload"
@@ -465,26 +365,6 @@ const toggle = (extract: any): boolean => {
                   </div>
                 </label>
               </div>
-              <button class="mt-4" @click="removeItem(index, index)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button>
-            </div>
-
-            <!-- Transition input -->
-            <div
-              v-if="item.type === 'transition'"
-              class="flex justify-between py-6 items-start"
-            >
-              <div class="w-full">
-                <!-- <WysiwygEditor
-                  v-model="item.content"
-                  @update:value="(value) => (item.content = value)"
-                /> -->
-              </div>
               <div class="btns">
                 <button
                   class="p-[14px] border border-slate-300"
@@ -493,11 +373,16 @@ const toggle = (extract: any): boolean => {
                   <img
                     src="@/assets/images/icons/corbeille.svg"
                     alt=""
-                    class="w-[15px]"
+                    class="w-[15px] h-[15px]"
                   />
                 </button>
                 <div
-                  class="h-[251px] border border-slate-300 flex items-center justify-center drag cursor-move"
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
+                  class="border bloc-drag border-slate-300 flex items-center justify-center drag cursor-move py-5"
                 >
                   <img
                     src="@/assets/images/icons/drag.svg"
@@ -507,26 +392,81 @@ const toggle = (extract: any): boolean => {
                 </div>
               </div>
             </div>
-
+            <!-- Transition input -->
+            <div
+              v-if="item.type === 'transition'"
+              class="flex justify-between py-6 items-stretch"
+            >
+              <div class="w-full">
+                <WysiwygEditor
+                  :content="item.content"
+                  @update:value="(value) => (item.content = value)"
+                />
+              </div>
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index, index)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px] h-[15px]"
+                  />
+                </button>
+                <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
+                  class="h-full bloc-drag border border-slate-300 flex items-center justify-center drag cursor-move"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
+            </div>
             <!-- Excerpt block -->
             <div
               v-if="item.type === 'excerpt'"
-              class="flex justify-between py-6 items-start"
+              class="flex justify-between py-6 items-stretch"
             >
               <div
-                class="bg-white rounded-md p-5 w-full mr-5 cursor-move text-sm drag"
+                class="bg-white p-5 w-full cursor-move text-sm border border-slate-300 min-h-min"
               >
                 <!-- eslint-disable vue/no-v-html -->
                 <div v-html="item.content"></div>
               </div>
-
-              <!-- <button @click="removeItem(index, item.id)">
-                <img
-                  src="@/assets/images/icons/corbeille.svg"
-                  alt=""
-                  class="w-[15px]"
-                />
-              </button> -->
+              <div class="btns">
+                <button
+                  class="p-[14px] border border-slate-300"
+                  @click="removeItem(index, item.id)"
+                >
+                  <img
+                    src="@/assets/images/icons/corbeille.svg"
+                    alt=""
+                    class="w-[15px] h-[15px]"
+                  />
+                </button>
+                <div
+                  class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div
+                  class="border bloc-drag border-slate-300 flex items-center justify-center py-5 drag cursor-move"
+                >
+                  <img
+                    src="@/assets/images/icons/drag.svg"
+                    alt=""
+                    class="w-[15px]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -596,5 +536,8 @@ sup {
 
 .extraits_view:hover {
   cursor: pointer;
+}
+.bloc-drag {
+  height: calc(100% - 87px);
 }
 </style>
