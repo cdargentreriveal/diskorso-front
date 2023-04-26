@@ -116,7 +116,10 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
                     <span class="underline">www.lemonde.fr</span>
                   </div>
                 </div>
-                <div v-if="blocsContent.type === 'image'" class="image">
+                <div
+                  v-if="blocsContent.type === 'image' && blocsContent.imageUrl"
+                  class="image"
+                >
                   <img
                     :src="blocsContent.imageUrl"
                     alt=""
