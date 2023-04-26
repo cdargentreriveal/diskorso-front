@@ -174,7 +174,7 @@ async function changeAvatar(event: Event) {
       :action-btn="datasTitle[0].actionBtn"
       :route="datasTitle[0].route.name"
     />
-    <div class="container_promenade w-9/12 mx-auto">
+    <div class="container_promenade w-9/12 mx-auto mt-15">
       <div class="flex gap-6 justify-between items-center">
         <div class="w-2/12 rounded-md">
           <form v-if="user.currentUser" class="form">
