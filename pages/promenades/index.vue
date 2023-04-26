@@ -105,15 +105,6 @@ if (totalPromenades.value === null) {
 } else {
   totalPages = Math.ceil(+totalPromenades.value / numberOfPromenade.value)
 }
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
 </script>
 
 <template>

@@ -191,6 +191,7 @@ const propsCard = defineProps({
         </div>
       </div>
       <p
+        v-if="promenade.summary"
         class="text-xs gray-color card-content-description h-[50px] flex items-center"
       >
         {{

@@ -101,8 +101,8 @@ const firstId = computed(() => {
 const firstBtnPagination = ref(true)
 const middleBtnPagination = ref(false)
 const lastBtnPagination = ref(false)
-
-onBeforeUpdate(() => {
+const paginationPageCurrent = ref(1)
+onUpdated(() => {
   nextTick(() => {
     if (firstId.value && firstId.value === lastNumberId.value) {
       firstBtnPagination.value = true
@@ -132,6 +132,9 @@ async function next() {
     return 'no more promenade'
   } else {
     query.value = `promenadeditor/promenade-cursor/${numberOfPromenadeUserConnectedToDisplay.value}/${lastId.value}/1/desc`
+    nextTick(() => {
+      paginationPageCurrent.value = paginationPageCurrent.value + 1
+    })
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     execute()
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
@@ -150,9 +153,11 @@ async function previous() {
   } else if (firstId.value === lastNumberId.value) {
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
+    paginationPageCurrent.value = 1
     return 'no more promenade'
   } else {
     query.value = `promenadeditor/promenade-cursor/${numberOfPromenadeUserConnectedToDisplay.value}/${firstId.value}/1/asc`
+    paginationPageCurrent.value = paginationPageCurrent.value - 1
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
@@ -165,6 +170,7 @@ async function previous() {
 // return first
 async function first() {
   query.value = `promenadeditor/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}`
+  paginationPageCurrent.value = 1
   const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
   if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
     await refreshToken(config.public.baseURL)
@@ -241,6 +247,7 @@ onMounted(async () => {
         :next="next"
         :total-promenade="+totalPromenades"
         :totalpage="+totalPages"
+        :pagination-page-current="paginationPageCurrent"
         :first-btn-pagination="firstBtnPagination"
         :middle-btn-pagination="middleBtnPagination"
         :last-btn-pagination="lastBtnPagination"
