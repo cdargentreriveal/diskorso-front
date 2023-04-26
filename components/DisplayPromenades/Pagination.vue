@@ -24,18 +24,6 @@ const propsNavigation = defineProps({
     type: Number,
     default: 1,
   },
-  firstBtnPagination: {
-    type: Boolean,
-    default: true,
-  },
-  middleBtnPagination: {
-    type: Boolean,
-    default: false,
-  },
-  lastBtnPagination: {
-    type: Boolean,
-    default: false,
-  },
 })
 </script>
 
@@ -78,61 +66,38 @@ const propsNavigation = defineProps({
       <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
       <div
         class="click first relative z-10 inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 focus:z-20"
-        :class="firstBtnPagination ? 'active' : ''"
+        :class="paginationPageCurrent === 1 ? 'active' : ''"
         @click="first()"
       >
         1
       </div>
-      <span
-        v-if="paginationPageCurrent < 2 || paginationPageCurrent === totalpage"
-        class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-        :class="middleBtnPagination ? 'active' : ''"
-        >...</span
-      >
-      <div v-if="paginationPageCurrent === 2">
+      <div>
         <span
+          v-if="paginationPageCurrent > 2"
+          class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+          >...</span
+        >
+        <span
+          v-if="paginationPageCurrent > 1 && paginationPageCurrent < totalpage"
           class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-          :class="middleBtnPagination ? 'active' : ''"
+          :class="
+            paginationPageCurrent > 1 && paginationPageCurrent < totalpage
+              ? 'active'
+              : ''
+          "
           >{{ paginationPageCurrent }}</span
         >
         <span
-          class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-          >...</span
-        >
-      </div>
-      <div
-        v-if="
-          paginationPageCurrent > 2 && paginationPageCurrent < totalpage - 1
-        "
-      >
-        <span
-          class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-          >...</span
-        >
-        <span
+          v-if="
+            paginationPageCurrent >= 1 && paginationPageCurrent < totalpage - 1
+          "
           class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-          :class="middleBtnPagination ? 'active' : ''"
-          >{{ paginationPageCurrent }}</span
-        >
-        <span
-          class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
           >...</span
-        >
-      </div>
-      <div v-if="paginationPageCurrent === totalpage - 1">
-        <span
-          class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-          >...</span
-        >
-        <span
-          class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-          :class="middleBtnPagination ? 'active' : ''"
-          >{{ paginationPageCurrent }}</span
         >
       </div>
       <div
         class="relative last inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-        :class="lastBtnPagination ? 'active' : ''"
+        :class="paginationPageCurrent === totalpage ? 'active' : ''"
       >
         {{ totalpage }}
       </div>
