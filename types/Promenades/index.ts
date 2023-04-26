@@ -18,6 +18,7 @@ export interface Promenade {
   slug: string
   summary: string
   main_image: string
+  main_image_source: string
   content: Array<{
     type: string
     imageUrl?: string

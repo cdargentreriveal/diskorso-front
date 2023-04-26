@@ -4,8 +4,8 @@ const PromnadeStore = usePromenadeStore()
 const fileInput = ref<HTMLInputElement>()
 
 // Calculer si une photo est sélectionnée
-const hasAvatar = computed(() => !!PromnadeStore.mainImage)
-const localSourceInput = ref(PromnadeStore.mainImageSource)
+const hasAvatar = computed(() => !!PromnadeStore.selectPromenade?.main_image)
+const localSourceInput = ref(PromnadeStore.selectPromenade?.main_image_source)
 
 function handleFileUpload(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0]
@@ -17,14 +17,14 @@ function handleFileUpload(event: Event) {
   reader.onload = () => {
     const image = new Image()
     image.onload = () => {
-      PromnadeStore.mainImage = reader.result as string
+      PromnadeStore.selectPromenade!.main_image = reader.result as string
     }
     image.src = reader.result as string
   }
   reader.readAsDataURL(file)
 }
 function deletePicturesBanner() {
-  PromnadeStore.mainImage = ''
+  PromnadeStore.selectPromenade!.main_image = ''
   if (fileInput.value) {
     fileInput.value.value = ''
   }
@@ -32,7 +32,7 @@ function deletePicturesBanner() {
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement
   const value = target.value
-  PromnadeStore.setMainImageSource(value)
+  PromnadeStore.setMainImageSourceEdit(value)
   localSourceInput.value = value
 }
 </script>
@@ -54,7 +54,7 @@ const onInput = (event: Event) => {
         <div v-if="hasAvatar" class="banner h-[300px] w-full overflow-hidden">
           <div class="flex h-full w-full items-start p-2">
             <img
-              :src="PromnadeStore.mainImage"
+              :src="PromnadeStore.selectPromenade?.main_image"
               type="file"
               name="files"
               class="object-cover h-full w-full rounded-lg block"

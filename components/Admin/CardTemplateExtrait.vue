@@ -133,7 +133,6 @@ watch(
 
       <span class="small">{{ getDate(extract.createdAt) }}</span>
       <div class="card-content-title font-bold text-xl my-1 mb-3 h-[56px]">
-
         <h2>{{ extract.name }}</h2>
       </div>
       <div class="card-content-categories flex py-5 gap-2">
