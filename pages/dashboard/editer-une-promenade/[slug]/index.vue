@@ -13,7 +13,7 @@ definePageMeta({
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'button',
-    titleBlack: 'Créer une',
+    titleBlack: 'Modifier la',
     titlePurple: 'promenade',
     actionBtn: [{ action: 'Voir tutoriel' }],
     route: { name: 'dashboard/tutoriel' },
@@ -21,25 +21,25 @@ const datasTitle = computed((): BtnAdminPage[] => [
 ])
 
 function addImageInput(): void {
-  if (PromenadeStore.imageCount < 4) {
-    PromenadeStore.pushItem({
+  if (PromenadeStore.imageCountEdit < 4) {
+    PromenadeStore.pushItemEdit({
       type: 'image',
       file: null,
       imageUrl: null,
       key: generateUniqueId(),
     })
-    PromenadeStore.incrementCount('image')
+    PromenadeStore.incrementCountEdit('image')
   }
 }
 
 function addTransitionInput(): void {
-  if (PromenadeStore.transitionCount < 10) {
-    PromenadeStore.pushItem({
+  if (PromenadeStore.transitionCountEdit < 10) {
+    PromenadeStore.pushItemEdit({
       type: 'transition',
       content: '',
       key: generateUniqueId(),
     })
-    PromenadeStore.incrementCount('transition')
+    PromenadeStore.incrementCountEdit('transition')
   }
 }
 </script>
@@ -80,7 +80,7 @@ function addTransitionInput(): void {
               <div
                 class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
                 :class="
-                  PromenadeStore.imageCount === 4
+                  PromenadeStore.imageCountEdit === 4
                     ? 'cursor-not-allowed disabled'
                     : ''
                 "
@@ -88,7 +88,9 @@ function addTransitionInput(): void {
               >
                 <button
                   :class="
-                    PromenadeStore.imageCount === 4 ? 'cursor-not-allowed' : ''
+                    PromenadeStore.imageCountEdit === 4
+                      ? 'cursor-not-allowed'
+                      : ''
                   "
                 >
                   Ajouter une image

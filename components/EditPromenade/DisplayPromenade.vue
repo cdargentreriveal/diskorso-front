@@ -3,12 +3,19 @@ import Sortable from 'sortablejs'
 import { usePromenadeStore } from '~~/store/promenade'
 const PromenadeStore = usePromenadeStore()
 
+// function removeItem(index: number, id: number): void {
+//   const type = PromenadeStore.itemsEdit[index].type
+//   PromenadeStore.decrementCount(type)
+//   PromenadeStore.itemsEdit.splice(index, 1)
+// }
 function removeItem(index: number, id: number): void {
-  const type = PromenadeStore.items[index].type
+  const type = PromenadeStore.itemsEdit[index].type
+  // if (type === 'excerpt') {
+  //   PromenadeStore.removeExtractid(id)
+  // }
   PromenadeStore.decrementCount(type)
-  PromenadeStore.items.splice(index, 1)
+  PromenadeStore.itemsEdit.splice(index, 1)
 }
-
 function handleImageUpload(event: Event, index: number): void {
   const file = (event.target as HTMLInputElement).files?.[0]
 
@@ -21,7 +28,7 @@ function handleImageUpload(event: Event, index: number): void {
     const image = new Image()
     image.onload = () => {
       // Mettre à jour l'objet correspondant à l'input
-      const item = PromenadeStore.items[index]
+      const item = PromenadeStore.itemsEdit[index]
       if (item.type === 'image') {
         item.file = file
         // item.imageUrl = imageUrl // Mettre à jour l'URL de l'image dans l'objet
@@ -35,6 +42,7 @@ function handleImageUpload(event: Event, index: number): void {
 }
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
+  PromenadeStore.itemsEdit = PromenadeStore.selectPromenade!.content
   if (blocTransition.value) {
     const sortableTransition = new Sortable(blocTransition.value, {
       group: 'bloc',
@@ -43,10 +51,10 @@ onMounted(() => {
       onEnd: (event: any) => {
         const newIndex = event.newIndex
         const oldIndex = event.oldIndex
-        const updatedItems = [...PromenadeStore.selectPromenade!.content] // créer une copie du tableau
+        const updatedItems = [...PromenadeStore.itemsEdit] // créer une copie du tableau
         const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
         updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
-        PromenadeStore.selectPromenade!.content = updatedItems // mettre à jour le tableau d'origine
+        PromenadeStore.itemsEdit = updatedItems // mettre à jour le tableau d'origine
       },
     })
   }
@@ -63,7 +71,7 @@ onMounted(() => {
 <template>
   <div ref="blocTransition" class="promenadeContainer">
     <div
-      v-for="(item, index) in PromenadeStore.selectPromenade!.content"
+      v-for="(item, index) in PromenadeStore.itemsEdit"
       :key="item.key"
       class="bloc"
     >

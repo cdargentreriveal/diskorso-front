@@ -5,16 +5,39 @@ const extractsStore = useExtractStore()
 const PromenadeStore = usePromenadeStore()
 
 const isExcerptAdded = ref<boolean[]>([false, false, false, false])
+// function addExcerptBlock(content: string, id: number, index: number): void {
+//   if (excerptCount.value < 4) {
+//     // Vérifier si l'extrait est déjà présent
+//     const existingExcerpt = items.value.find(
+//       (item) => item.type === 'excerpt' && item.id === id,
+//       (isExcerptAdded.value[id] = true)
+//     )
+//     if (existingExcerpt) {
+//       return
+//     }
+
+//     // Ajouter l'extrait s'il n'est pas déjà présent
+//     items.value.push({
+//       type: 'excerpt',
+//       id,
+//       index,
+//       content,
+//       key: generateUniqueId(),
+//     })
+//     excerptCount.value++
+// }
+// }
 function addExcerptBlock(content: string, id: number, index: number): void {
   if (PromenadeStore.excerptCount < 4) {
     // Vérifier si l'extrait est déjà présent
-    const existingExcerpt = PromenadeStore.items.find(
-      (item) => item.type === 'excerpt' && item.id === id,
-      (isExcerptAdded.value[id] = true)
-    )
-    if (existingExcerpt) {
-      return
-    }
+    // const existingExcerpt = PromenadeStore.items.find(
+    //   (item) => item.type === 'excerpt' && item.id === id,
+    //   PromenadeStore.addExtractid(id)
+    // )
+    // PromenadeStore.addExtractid(id)
+    // if (existingExcerpt) {
+    //   return
+    // }
     // Ajouter l'extrait s'il n'est pas déjà présent
     PromenadeStore.pushItem({
       type: 'excerpt',

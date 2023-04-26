@@ -5,6 +5,9 @@ const PromenadeStore = usePromenadeStore()
 
 function removeItem(index: number, id: number): void {
   const type = PromenadeStore.items[index].type
+  if (type === 'excerpt') {
+    PromenadeStore.removeExtractid(id)
+  }
   PromenadeStore.decrementCount(type)
   PromenadeStore.items.splice(index, 1)
 }

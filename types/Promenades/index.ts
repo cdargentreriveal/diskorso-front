@@ -1,4 +1,5 @@
 import { Category } from '../Categories/'
+import { ItemType } from '../CreatePromenade'
 
 interface ExtractsPourPromenade {
   id: number
@@ -19,12 +20,7 @@ export interface Promenade {
   summary: string
   main_image: string
   main_image_source: string
-  content: Array<{
-    type: string
-    imageUrl?: string
-    content: string
-    key?: string
-  }>
+  content: ItemType[]
   meta_title?: string
   meta_description?: string
   published: boolean

@@ -209,9 +209,7 @@ interface MetaDescriptionItem {
 }
 type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
 const items = ref<ItemType[]>([])
-const selectedCategories = reactive<Category[]>(
-  PromenadeStore.selectPromenade!.categories
-)
+const selectedCategories = reactive<Category[]>([])
 
 function addCategories(value: any) {
   if (selectedCategories.includes(value)) {
@@ -244,8 +242,6 @@ function addMetaDescription(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaDescription', content: value })
 }
-const isChecked = (categorie: Category) =>
-  computed<boolean>(() => selectedCategories.includes(categorie))
 </script>
 <template>
   <div

@@ -22,6 +22,7 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imageCountEdit: number
     transitionCountEdit: number
     excerptCountEdit: number
+    isExcerptAdded: [boolean, boolean, boolean, boolean]
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',
@@ -41,8 +42,15 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imageCountEdit: 0,
     transitionCountEdit: 0,
     excerptCountEdit: 0,
+    isExcerptAdded: [false, false, false, false],
   }),
   actions: {
+    addExtractid(id: number) {
+      this.isExcerptAdded[id] = true
+    },
+    removeExtractid(id: number) {
+      this.isExcerptAdded[id] = false
+    },
     setPromenade(currentPromenade: Promenade | null) {
       this.selectPromenade = currentPromenade
     },
