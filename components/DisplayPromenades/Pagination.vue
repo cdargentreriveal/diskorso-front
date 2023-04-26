@@ -36,7 +36,7 @@ const propsNavigation = defineProps({
       <div>
         <p class="text-sm text-gray-700">
           <span class="font-medium">{{ totalPromenade }}</span>
-          résultats
+          résultats sur
           <span class="font-medium">{{ totalpage }}</span>
           pages
         </p>
