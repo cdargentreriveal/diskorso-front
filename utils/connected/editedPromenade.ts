@@ -3,10 +3,10 @@ import { useUserStore } from '~~/store/user'
 
 const userToStore = useUserStore()
 
-export async function createdPromenade(baseURL: string, data: any) {
+export async function editedPromenade(baseURL: string, data: any) {
   const xsrfToken = localStorage.getItem('xsrfToken')
-  const response = await fetch(`${baseURL}/promenadeditor/create-promenade`, {
-    method: 'POST',
+  const response = await fetch(`${baseURL}/promenadeditor/edit-promenade`, {
+    method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${xsrfToken}`,
@@ -14,14 +14,14 @@ export async function createdPromenade(baseURL: string, data: any) {
     credentials: 'include' as RequestCredentials,
     body: JSON.stringify(data),
   })
-  if (response.status === 201) {
+  if (response.status === 200) {
     const dataFethed = await response.json()
     return dataFethed
   } else {
     const dataFethed = await response.json()
     await refreshToken(baseURL)
-    await fetch(`${baseURL}/promenadeditor/create-promenade`, {
-      method: 'POST',
+    await fetch(`${baseURL}/promenadeditor/edit-promenade`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${xsrfToken}`,

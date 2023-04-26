@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
-import { createdPromenade, sendMainImagePromenade } from '~~/utils/connected'
+import { editedPromenade, sendMainImagePromenade } from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
 import { useExtractStore } from '~~/store/extracts'
 import { usePromenadeStore } from '~~/store/promenade'
@@ -31,14 +31,14 @@ const displaySwal = (
   })
 }
 function submitCreatedPromenade() {
-  if (PromenadeStore.creationTitlePromenade === '') {
+  if (PromenadeStore.selectPromenade?.title === '') {
     displaySwal(
       'Titre manquant',
       'Le titre de la promenade est obligatoire',
       'error',
       'ok'
     )
-  } else if (PromenadeStore.creationSummaryPromenade === '') {
+  } else if (PromenadeStore.selectPromenade?.summary === '') {
     displaySwal(
       'Description manquante',
       'La description de la promenade est obligatoire',
@@ -71,10 +71,10 @@ function submitCreatedPromenade() {
       .then(async (result: any) => {
         if (result.isConfirmed) {
           let url = ''
-          if (!PromenadeStore.mainImageToUpload.has('file')) {
+          if (!PromenadeStore.mainImageToUploadEdit.has('file')) {
             url = ''
           } else {
-            const image = PromenadeStore.mainImageToUpload
+            const image = PromenadeStore.mainImageToUploadEdit
             url = await sendMainImagePromenade(config.public.baseURL, image)
           }
           if (
@@ -83,21 +83,23 @@ function submitCreatedPromenade() {
             displaySwal('Image trop lourde', url, 'error', 'ok')
           } else {
             const data = reactive({
-              title: PromenadeStore.creationTitlePromenade,
-              slug: PromenadeStore.creationSlugPromenade,
-              summary: PromenadeStore.creationSummaryPromenade,
+              id: PromenadeStore.selectPromenade?.id,
+              title: PromenadeStore.selectPromenade?.title,
+              slug: PromenadeStore.selectPromenade?.slug,
+              summary: PromenadeStore.selectPromenade?.summary,
               main_image: url,
-              main_image_source: PromenadeStore.mainImageSource,
-              content: PromenadeStore.items,
+              main_image_source:
+                PromenadeStore.selectPromenade?.main_image_source,
+              content: PromenadeStore.selectPromenade?.content,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: false,
-              publishedAt: '',
+              publishedAt: PromenadeStore.selectPromenade?.publishedAt,
             })
             try {
-              const response = await createdPromenade(
+              const response = await editedPromenade(
                 config.public.baseURL,
                 data
               )
@@ -144,21 +146,23 @@ function submitCreatedPromenade() {
             displaySwal('Image trop lourde', url2, 'error', 'ok')
           } else {
             const data = reactive({
-              title: PromenadeStore.creationTitlePromenade,
-              slug: PromenadeStore.creationSlugPromenade,
-              summary: PromenadeStore.creationSummaryPromenade,
+              id: PromenadeStore.selectPromenade?.id,
+              title: PromenadeStore.selectPromenade?.title,
+              slug: PromenadeStore.selectPromenade?.slug,
+              summary: PromenadeStore.selectPromenade?.summary,
               main_image: url2,
-              main_image_source: PromenadeStore.mainImageSource,
-              content: PromenadeStore.items,
+              main_image_source:
+                PromenadeStore.selectPromenade?.main_image_source,
+              content: PromenadeStore.selectPromenade?.content,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: true,
-              publishedAt: new Date().toISOString(),
+              publishedAt: PromenadeStore.selectPromenade?.publishedAt,
             })
             try {
-              const response = await createdPromenade(
+              const response = await editedPromenade(
                 config.public.baseURL,
                 data
               )

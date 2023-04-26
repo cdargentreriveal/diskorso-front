@@ -1,18 +1,31 @@
 <script lang="ts" setup>
 import { useExtractStore } from '~~/store/extracts'
+import { usePromenadeStore } from '~~/store/promenade'
 const extractsStore = useExtractStore()
-const excerptCount = ref<number>(0)
+const PromenadeStore = usePromenadeStore()
 
-const props = defineProps({
-  addExcerptBlock: {
-    type: Function,
-    required: true,
-  },
-  isExcerptAdded: {
-    type: Array,
-    required: true,
-  },
-})
+const isExcerptAdded = ref<boolean[]>([false, false, false, false])
+function addExcerptBlock(content: string, id: number, index: number): void {
+  if (PromenadeStore.excerptCount < 4) {
+    // Vérifier si l'extrait est déjà présent
+    const existingExcerpt = PromenadeStore.items.find(
+      (item) => item.type === 'excerpt' && item.id === id,
+      (isExcerptAdded.value[id] = true)
+    )
+    if (existingExcerpt) {
+      return
+    }
+    // Ajouter l'extrait s'il n'est pas déjà présent
+    PromenadeStore.pushItem({
+      type: 'excerpt',
+      id,
+      index,
+      content,
+      key: generateUniqueId(),
+    })
+    PromenadeStore.incrementCount('excerpt')
+  }
+}
 
 // const items = ref<ExcerptItem[]>([])
 
@@ -133,7 +146,8 @@ const toggle = (extract: any): boolean => {
               <div
                 :class="{
                   'cursor-not-allowed disabled':
-                    excerptCount === 4 || isExcerptAdded[extract.id],
+                    PromenadeStore.excerptCount === 4 ||
+                    isExcerptAdded[extract.id],
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="addExcerptBlock(extract.content, extract.id, index)"
