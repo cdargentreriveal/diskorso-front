@@ -74,43 +74,58 @@ const toggle = (extract: any): boolean => {
                 Voir l'extrait
               </div>
               <ModalBase :show="extract.showModal">
-                <div class="p-4 px-15 divide-y">
-                  <div>
-                    <div class="text-lg font-semibold my-8 text-slate-500">
-                      {{ extract.name }}
-                    </div>
-                    <!-- eslint-disable vue/no-v-html -->
-                    <div
-                      class="text-xs text-justify"
-                      v-html="extract.content"
-                    ></div>
-                    <!--eslint-enable-->
-                    <div
-                      class="text-xs italic font-semibold my-5 text-slate-500 text-right"
-                    >
-                      <a :href="extract.source" target="_blank">{{
-                        extract.source
-                      }}</a>
-                    </div>
+                <div class="relative">
+                  <div
+                    class="closed absolute top-8 right-8 text-lg cursor-pointer"
+                    @click="toggle(extract)"
+                  >
+                    ✕
                   </div>
-                  <div class="flex flex-col">
-                    <p
-                      v-if="extract.used_in_article"
-                      class="text-xs mt-5 font-semibold"
-                    >
-                      Cet extrait apparaît dans les promenades suivantes :
-                    </p>
-                    <p v-else class="text-xs mt-5 font-semibold">
-                      Extrait non encore utilisé
-                    </p>
-                    <div class="self-end">
-                      <button
-                        type="button"
-                        class="w-100px bg-indigo-200 px-3 py-1 font-medium"
-                        @click="toggle(extract)"
+                  <div class="p-12 divide-y">
+                    <div>
+                      <div class="text-lg font-semibold my-8 text-slate-500">
+                        {{ extract.name }}
+                      </div>
+                      <!-- eslint-disable vue/no-v-html -->
+                      <div
+                        class="text-xs text-justify"
+                        v-html="extract.content"
+                      ></div>
+                      <!--eslint-enable-->
+                      <div
+                        class="text-xs italic font-semibold my-5 text-slate-500 text-right"
                       >
-                        Fermer
-                      </button>
+                        <a :href="extract.source" target="_blank">{{
+                          extract.source
+                        }}</a>
+                      </div>
+                    </div>
+                    <div class="flex flex-col">
+                      <div v-if="extract.used_in_article">
+                        <p class="text-xs mt-5 font-semibold">
+                          Cet extrait apparaît dans les promenades suivantes :
+                        </p>
+                        <ul
+                          class="list-decimal text-xs mt-4 ml-4 flex flex-col flex-wrap content-start h-[100px]"
+                        >
+                          <li
+                            v-for="(promenade, i) in extract.promenades"
+                            :key="i"
+                            class="w-3/12 mr-2"
+                          >
+                            <nuxt-link :to="`/promenades/${promenade.slug}`">
+                              <span
+                                class="text-xs mt-4 inline-block underline underline-offset-2"
+                              >
+                                {{ promenade.title }}
+                              </span></nuxt-link
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                      <p v-else class="text-xs mt-5 font-semibold">
+                        Extrait non encore utilisé
+                      </p>
                     </div>
                   </div>
                 </div>

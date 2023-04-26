@@ -11,7 +11,8 @@ const datasTitle = computed((): BtnAdminPage[] => [
     type: 'button',
     titleBlack: 'Créer un',
     titlePurple: 'extrait',
-    actionBtn: [{ action: 'Publier' }, { action: 'Archiver' }],
+    actionBtn: [{ action: 'Voir tutoriel' }],
+    route: { name: 'dashboard/tutoriel' },
   },
 ])
 const nameInput = ref('')
@@ -37,6 +38,7 @@ const clearData = (): void => {
       :title-purple="datasTitle[0].titlePurple"
       :data="datasTitle[0].data"
       :action-btn="datasTitle[0].actionBtn"
+      :route="datasTitle[0].route.name"
     />
     <div class="container_promenade w-9/12 mx-auto">
       <div class="flex items-center gap-20 mb-10">

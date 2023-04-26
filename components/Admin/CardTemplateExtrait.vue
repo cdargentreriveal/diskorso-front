@@ -184,6 +184,11 @@ watch(
               +{{ extract.promenades.length }}
             </div>
           </div>
+          <div v-else>
+            <span class="text-xs italic text-gray-400"
+              >Extrait non utilisé</span
+            >
+          </div>
           <button class="card-content-view-btn underline" @click="toggle()">
             Voir l'extrait >
           </button>
