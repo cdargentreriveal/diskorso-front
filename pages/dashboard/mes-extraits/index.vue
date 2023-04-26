@@ -122,30 +122,12 @@ const firstId = computed(() => {
   }
 })
 
-const firstBtnPagination = ref(true)
-const middleBtnPagination = ref(false)
-const lastBtnPagination = ref(false)
 const paginationPageCurrent = ref(1)
-onUpdated(() => {
-  nextTick(() => {
-    if (firstId.value && firstId.value === lastNumberId.value) {
-      firstBtnPagination.value = true
-      middleBtnPagination.value = false
-      lastBtnPagination.value = false
-    } else if (lastId.value && lastId.value === +firstNumberId.value) {
-      firstBtnPagination.value = false
-      middleBtnPagination.value = false
-      lastBtnPagination.value = true
-    } else {
-      firstBtnPagination.value = false
-      middleBtnPagination.value = true
-      lastBtnPagination.value = false
-    }
-  })
-})
+const Loading = ref(false)
 
 // next
 async function next() {
+  Loading.value = true
   if (
     lastId.value === null ||
     response.value === null ||
@@ -153,56 +135,66 @@ async function next() {
   ) {
     query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}`
   } else if (lastId.value === +firstNumberId.value) {
+    paginationPageCurrent.value = totalPages.value
+    Loading.value = false
     return 'no more promenade'
   } else {
     query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${lastId.value}/1/desc`
-    nextTick(() => {
-      paginationPageCurrent.value = paginationPageCurrent.value + 1
-    })
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
-      execute()
-    } else {
-      execute()
     }
+    await execute()
+    await nextTick(() => {
+      paginationPageCurrent.value = paginationPageCurrent.value + 1
+      setTimeout(() => {
+        Loading.value = false
+      }, 250)
+    })
   }
 }
 // previous
 async function previous() {
+  Loading.value = true
   if (lastId.value === null || lastNumberId.value === null) {
     execute()
     query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}`
   } else if (firstId.value === lastNumberId.value) {
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
+    Loading.value = false
     paginationPageCurrent.value = 1
     return 'no more promenade'
   } else {
     query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${firstId.value}/1/asc`
-    nextTick(() => {
-      paginationPageCurrent.value = paginationPageCurrent.value - 1
-    })
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
-      execute()
-    } else {
-      execute()
     }
+    await execute()
+    await nextTick(() => {
+      paginationPageCurrent.value = paginationPageCurrent.value - 1
+      setTimeout(() => {
+        Loading.value = false
+      }, 250)
+    })
   }
 }
 // return first
 async function first() {
+  Loading.value = true
   query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}`
-  paginationPageCurrent.value = 1
   const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
   if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
     await refreshToken(config.public.baseURL)
-    execute()
-  } else {
-    execute()
   }
+  await execute()
+  await nextTick(() => {
+    paginationPageCurrent.value = 1
+    setTimeout(() => {
+      Loading.value = false
+    }, 250)
+  })
 }
 
 onMounted(async () => {
@@ -237,8 +229,16 @@ const deleteAllExtracts = () => {
 </script>
 
 <template>
+  <div
+    v-if="Loading"
+    class="loading fixed bg-slate-600/[0.9] h-full w-full left-0 top-0 z-15 flex items-center justify-center"
+  >
+    <div>
+      <div class="loader"></div>
+      <div class="text-white mt-5 text-lg">Chargement des extraits</div>
+    </div>
+  </div>
   <AdminMenu />
-
   <div class="container mx-auto">
     <AdminTitle
       v-if="datasTitle[0].type === 'link'"
@@ -287,9 +287,6 @@ const deleteAllExtracts = () => {
         :total-promenade="+totalExtracts"
         :totalpage="+totalPages"
         :pagination-page-current="paginationPageCurrent"
-        :first-btn-pagination="firstBtnPagination"
-        :middle-btn-pagination="middleBtnPagination"
-        :last-btn-pagination="lastBtnPagination"
       />
     </div>
   </div>
