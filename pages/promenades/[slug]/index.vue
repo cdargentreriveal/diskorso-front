@@ -98,7 +98,7 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
               <div
                 v-for="(blocsContent, i) in promenade.content"
                 :key="i"
-                class="px-20 py-10 -sm:px-10 -sm:py-5"
+                class="px-20 py-5 -sm:px-5 -sm:py-5"
               >
                 <div
                   v-if="blocsContent.type === 'transition'"

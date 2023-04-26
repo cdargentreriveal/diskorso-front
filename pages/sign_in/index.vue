@@ -116,9 +116,11 @@ const signup = async (email: string, password: string, username: string) => {
             placeholder="Mot de passe *"
             class="rounded-md border border-gray w-full p-4 my-2"
           />
-          <p class="text-left text-xs pb-5">
-            Le mot de passe doit comporter au moins 8 caractères, une minuscule,
-            une majuscule et un chiffre
+          <p class="text-left text-xs pb-5 mt-2">
+            Le mot de passe doit comporter au moins
+            <span class="italic"
+              >8 caractères, une minuscule, une majuscule et un chiffre</span
+            >
           </p>
           <button
             type="submit"

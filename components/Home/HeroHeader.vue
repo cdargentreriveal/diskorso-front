@@ -1,5 +1,5 @@
 <template>
-  <div class="heroHeader relative overflow-hidden">
+  <div class="heroHeader relative">
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >

@@ -171,25 +171,22 @@ const selectedCategoryIds = computed(() => {
           <button @click="toggle()">Prévisualiser</button>
         </div>
         <ModalBase :show="showModal">
-          <div class="p-4 px-15 divide-y">
-            <div>
-              <!-- eslint-disable vue/no-v-html -->
-              <div class="text-xs text-justify mt-8" v-html="content"></div>
-              <!--eslint-enable-->
-              <div
-                class="text-xs italic font-semibold my-5 text-slate-500 text-right"
-              >
-                <a :href="source" target="_blank">{{ source }}</a>
-              </div>
-              <div class="flex flex-col">
-                <div class="self-end">
-                  <button
-                    type="button"
-                    class="w-100px bg-indigo-200 px-3 py-1 font-medium"
-                    @click="toggle()"
-                  >
-                    Fermer
-                  </button>
+          <div class="relative">
+            <div
+              class="closed absolute top-8 right-8 text-lg cursor-pointer"
+              @click="toggle()"
+            >
+              ✕
+            </div>
+            <div class="p-12 divide-y">
+              <div>
+                <!-- eslint-disable vue/no-v-html -->
+                <div class="text-xs text-justify mt-8" v-html="content"></div>
+                <!--eslint-enable-->
+                <div
+                  class="text-xs italic font-semibold my-5 text-slate-500 text-right"
+                >
+                  <a :href="source" target="_blank">{{ source }}</a>
                 </div>
               </div>
             </div>

@@ -3,11 +3,9 @@
     <NuxtLink :to="`/promenades/${promenade.slug}`">
       <div class="card-image -sm:h-[180px] h-[240px]">
         <img
-
           v-if="promenade.main_image === ''"
           class="w-full"
           src="../../assets/images/banner-diskorso-promenade.jpg"
-
           :alt="promenade.title"
         />
 
@@ -45,8 +43,16 @@
           </NuxtLink>
         </div>
       </div>
-      <p class="text-sm gray-color card-content-description h-[60px]">
-        {{ promenade.summary }}
+      <p
+        v-if="promenade.summary"
+        class="text-sm gray-color card-content-description h-[60px]"
+      >
+        {{
+          promenade.summary
+            .slice(0, 150)
+            .replace(/(<([^>]+)>)/gi, ' ')
+            .replace(/\s+/g, ' ') + '...'
+        }}
       </p>
       <div class="card-content-bottom pt-8 pb-2">
         <div class="flex items-center">

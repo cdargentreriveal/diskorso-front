@@ -19,8 +19,8 @@ if (process.client) {
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
-    titleBlack: totalExtracts.value.toString(),
-    titlePurple: 'extrait(s) trouvé(s)',
+    titleBlack: 'Mes',
+    titlePurple: 'extraits',
     actionBtn: [{ action: 'Créer un extrait' }],
     route: { name: 'dashboard/creer-un-extrait' },
   },
@@ -88,16 +88,6 @@ const toggle = (extract: any): boolean => {
   return extract.showModal
 }
 
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
-
 const deleteAllExtracts = () => {
   extractsStore.removeAllExtract()
   for (let i = 0; i < localStorage.length; i++) {
@@ -121,17 +111,36 @@ const deleteAllExtracts = () => {
       :route="datasTitle[0].route.name"
     />
 
-    <AdminCatsFilter page="extraits" />
+    <!-- <AdminCatsFilter page="extraits" /> -->
+    <div class="w-9/12 mx-auto mb-10 h-full">
+      <div class="mb-8 text-sm">
+        <nuxt-link
+          to="/dashboard/mes-extraits"
+          class="bg-gray gray-color py-2 px-4 rounded-full"
+        >
+          <span class="red-color mr-2">✕</span>
+          <span>effacer la recherche</span>
+        </nuxt-link>
+      </div>
+      <div class="promenade-number">
+        <span class="mr-2 text-lg font-bold purple-color">{{
+          totalExtracts
+        }}</span>
+        <span>extrait(s) trouvé(s) pour</span
+        ><span class="italic">"{{ route.params.slug }}"</span>
+      </div>
+    </div>
     <DisplayPromenadesSearchSectionConnected />
     <div
       v-if="extractsStore.extracts.length > 0"
       class="container_promenade w-9/12 switch-btn mb-4 flex items-center text-xs mb-8 mx-auto"
     >
       <button
-        class="bg-violet-500 hover:bg-violet-600 text-white font-bold py-2 px-4 ml-5"
+        class="bg-gray gray-color py-2 px-4 ml-2 rounded-full"
         @click="deleteAllExtracts()"
       >
-        Tous déselectionner
+        <span class="red-color mr-2">✕</span>
+        <span>Tout déselectionner</span>
       </button>
     </div>
     <div

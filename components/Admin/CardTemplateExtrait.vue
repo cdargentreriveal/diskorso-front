@@ -43,16 +43,6 @@ interface ExtractWithModal extends ExtractFetched {
   showModal: boolean
 }
 
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
-
 async function submitDeletedExtract() {
   const data = {
     ids: [propsCard.extract.id],
@@ -130,9 +120,9 @@ watch(
         </label>
       </div>
       <hr class="my-6" />
+      <span class="small text-slate-400">{{ getDate(extract.createdAt) }}</span>
+      <div class="card-content-title font-bold text-lg my-1 mb-3 h-[50px]">
 
-      <span class="small">{{ getDate(extract.createdAt) }}</span>
-      <div class="card-content-title font-bold text-xl my-1 mb-3 h-[56px]">
         <h2>{{ extract.name }}</h2>
       </div>
       <div class="card-content-categories flex py-5 gap-2">
@@ -151,12 +141,17 @@ watch(
         </div>
       </div>
       <!-- eslint-disable vue/no-v-html -->
-      <p
-        class="text-xs gray-color card-content-description h-[75px]"
-        v-html="`${extract.content.slice(0, 175)}...`"
-      ></p>
+      <div
+        class="text-xs gray-color card-content-description h-[55px] flex items-center"
+        v-html="
+          `${extract.content
+            .slice(0, 150)
+            .replace(/(<([^>]+)>)/gi, ' ')
+            .replace(/\s+/g, ' ')}...`
+        "
+      ></div>
       <div class="card-content-view text-xs mt-5">
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between h-[30px]">
           <!-- <div v-if="extract.promenades.length !== 0"></div> -->
           <div
             v-if="extract.promenades.length !== 0"
@@ -164,63 +159,92 @@ watch(
           >
             <div class="card-content-number-list flex items-center">
               <div
-                class="rounded-full bg-amber-600 h-[25px] w-[25px] border border-white"
-              ></div>
-              <div
-                class="rounded-full bg-red-600 h-[25px] w-[25px] border border-white -ml-3"
-              ></div>
+                v-for="(extractElement, index) in extract.promenades.slice(
+                  0,
+                  5
+                )"
+                :key="index"
+                class="-ml-3"
+              >
+                <img
+                  v-if="extractElement.main_image"
+                  :src="extractElement.main_image"
+                  alt=""
+                  class="object-top h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-white"
+                />
+                <img
+                  v-else
+                  src="@/assets/images/banner-diskorso-promenade.jpg"
+                  alt=""
+                  class="object-top h-[30px] w-[30px] rounded-full overflow-hidden border-2 border-white"
+                />
+              </div>
             </div>
-            <div class="card-content-number-check ml-1">+6</div>
+            <div class="card-content-number-check ml-1">
+              +{{ extract.promenades.length }}
+            </div>
+          </div>
+          <div v-else>
+            <span class="text-xs italic text-gray-400"
+              >Extrait non utilisé</span
+            >
           </div>
           <button class="card-content-view-btn underline" @click="toggle()">
             Voir l'extrait >
           </button>
           <ModalBase :show="showModal">
-            <div class="p-4 px-15 divide-y">
-              <div>
-                <div class="text-lg font-semibold my-8 text-slate-500">
-                  {{ extract.name }}
-                </div>
-                <!-- eslint-disable vue/no-v-html -->
-                <div
-                  class="text-xs text-justify"
-                  v-html="extract.content"
-                ></div>
-                <!--eslint-enable-->
-                <div
-                  class="text-xs italic font-semibold my-5 text-slate-500 text-right"
-                >
-                  <a :href="extract.source" target="_blank">{{
-                    extract.source
-                  }}</a>
-                </div>
+            <div class="relative">
+              <div
+                class="closed absolute top-8 right-8 text-lg cursor-pointer"
+                @click="toggle()"
+              >
+                ✕
               </div>
-              <div class="flex flex-col">
-                <div v-if="extract.used_in_article">
-                  <p class="text-xs mt-5 font-semibold">
-                    Cet extrait apparaît dans les promenades suivantes :
-                  </p>
-                  <ul class="list-decimal text-xs mt-5">
-                    <li v-for="(promenade, i) in extract.promenades" :key="i">
-                      <nuxt-link :to="`/promenades/${promenade.slug}`">
-                        <span class="text-xs mt-5 inline-block">
-                          {{ promenade.title }}
-                        </span></nuxt-link
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <p v-else class="text-xs mt-5 font-semibold">
-                  Extrait non encore utilisé
-                </p>
-                <div class="self-end">
-                  <button
-                    type="button"
-                    class="w-100px bg-indigo-200 px-3 py-1 font-medium"
-                    @click="toggle()"
+              <div class="p-12 divide-y">
+                <div>
+                  <div class="text-lg font-semibold mb-8 text-slate-500">
+                    {{ extract.name }}
+                  </div>
+                  <!-- eslint-disable vue/no-v-html -->
+                  <div
+                    class="text-xs text-justify"
+                    v-html="extract.content"
+                  ></div>
+                  <!--eslint-enable-->
+                  <div
+                    class="text-xs italic font-semibold my-5 text-slate-500 text-right"
                   >
-                    Fermer
-                  </button>
+                    <a :href="extract.source" target="_blank">{{
+                      extract.source
+                    }}</a>
+                  </div>
+                </div>
+                <div class="flex flex-col">
+                  <div v-if="extract.used_in_article">
+                    <p class="text-xs mt-5 font-semibold">
+                      Cet extrait apparaît dans les promenades suivantes :
+                    </p>
+                    <ul
+                      class="list-decimal text-xs mt-4 ml-4 flex flex-col flex-wrap content-start h-[100px]"
+                    >
+                      <li
+                        v-for="(promenade, i) in extract.promenades"
+                        :key="i"
+                        class="w-3/12 mr-2"
+                      >
+                        <nuxt-link :to="`/promenades/${promenade.slug}`">
+                          <span
+                            class="text-xs mt-4 inline-block underline underline-offset-2"
+                          >
+                            {{ promenade.title }}
+                          </span></nuxt-link
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <p v-else class="text-xs mt-5 font-semibold">
+                    Extrait non encore utilisé
+                  </p>
                 </div>
               </div>
             </div>

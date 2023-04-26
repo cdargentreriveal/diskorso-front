@@ -54,8 +54,11 @@ const { data: firstNumberData } = await useAsyncData<number>(
   'firstNumberData',
   () => $fetch(`${config.public.baseURL}/promenade/findFirstPromenade`)
 )
+const paginationPageCurrent = ref(1)
+const Loading = ref(false)
 // next
-function next() {
+async function next() {
+  Loading.value = true
   if (
     lastId.value === null ||
     promenades.value === null ||
@@ -63,18 +66,29 @@ function next() {
   ) {
     query.value = `promenade/findLastPromenades/${numberOfPromenade.value}`
   } else if (lastId.value === +firstNumberData.value) {
+    paginationPageCurrent.value = totalPages
+    Loading.value = false
     return 'no more promenade'
   } else {
     query.value = `promenade/promenade-cursor/${numberOfPromenade.value}/${lastId.value}/1/desc`
     refresh()
   }
+  await nextTick(() => {
+    paginationPageCurrent.value = paginationPageCurrent.value + 1
+    setTimeout(() => {
+      Loading.value = false
+    }, 250)
+  })
 }
 // previous
-function previous() {
+async function previous() {
+  Loading.value = true
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
     query.value = `promenade/findLastPromenades/${numberOfPromenade.value}`
   } else if (firstId.value === +lastNumberData.value) {
+    paginationPageCurrent.value = 1
+    Loading.value = false
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
     return 'no more promenade'
@@ -82,11 +96,23 @@ function previous() {
     query.value = `promenade/promenade-cursor/${numberOfPromenade.value}/${firstId.value}/1/asc`
     refresh()
   }
+  await nextTick(() => {
+    paginationPageCurrent.value = paginationPageCurrent.value - 1
+    setTimeout(() => {
+      Loading.value = false
+    }, 250)
+  })
 }
 // return first
-function first() {
+async function first() {
   query.value = `promenade/findLastPromenades/${numberOfPromenade.value}`
   refresh()
+  await nextTick(() => {
+    paginationPageCurrent.value = 1
+    setTimeout(() => {
+      Loading.value = false
+    }, 250)
+  })
 }
 
 // ________________________________________________________________________________________
@@ -105,18 +131,18 @@ if (totalPromenades.value === null) {
 } else {
   totalPages = Math.ceil(+totalPromenades.value / numberOfPromenade.value)
 }
-onMounted(() => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
-})
 </script>
 
 <template>
+  <div
+    v-if="Loading"
+    class="loading fixed bg-slate-600/[0.9] h-full w-full left-0 top-0 z-15 flex items-center justify-center"
+  >
+    <div>
+      <div class="loader"></div>
+      <div class="text-white mt-5 text-lg">Chargement des promenades</div>
+    </div>
+  </div>
   <div class="container mx-auto">
     <DisplayPromenadesCategorieSection />
     <DisplayPromenadesSearchSection />
@@ -141,6 +167,7 @@ onMounted(() => {
         :next="next"
         :total-promenade="+totalPromenades"
         :totalpage="+totalPages"
+        :pagination-page-current="paginationPageCurrent"
       />
     </div>
   </div>

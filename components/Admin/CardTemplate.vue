@@ -190,8 +190,16 @@ const propsCard = defineProps({
           </NuxtLink>
         </div>
       </div>
-      <p class="text-xs gray-color card-content-description h-[32px]">
-        {{ promenade.summary }}
+      <p
+        v-if="promenade.summary"
+        class="text-xs gray-color card-content-description h-[50px] flex items-center"
+      >
+        {{
+          promenade.summary
+            .slice(0, 150)
+            .replace(/(<([^>]+)>)/gi, ' ')
+            .replace(/\s+/g, ' ') + '...'
+        }}
       </p>
       <hr class="my-6" />
       <div class="card-content-bottom pb-2">

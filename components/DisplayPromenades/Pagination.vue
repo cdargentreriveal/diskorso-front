@@ -20,30 +20,23 @@ const propsNavigation = defineProps({
     type: Number,
     required: true,
   },
-  firstBtnPagination: {
-    type: Boolean,
-    default: true,
-  },
-  middleBtnPagination: {
-    type: Boolean,
-    default: false,
-  },
-  lastBtnPagination: {
-    type: Boolean,
-    default: false,
+  paginationPageCurrent: {
+    type: Number,
+    default: 1,
   },
 })
 </script>
 
 <template>
   <div
+    v-if="totalpage > 1"
     class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 w-full pagination"
   >
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
         <p class="text-sm text-gray-700">
           <span class="font-medium">{{ totalPromenade }}</span>
-          résultats
+          résultats sur
           <span class="font-medium">{{ totalpage }}</span>
           pages
         </p>
@@ -74,19 +67,38 @@ const propsNavigation = defineProps({
       <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
       <div
         class="click first relative z-10 inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 focus:z-20"
-        :class="firstBtnPagination ? 'active' : ''"
+        :class="paginationPageCurrent === 1 ? 'active' : ''"
         @click="first()"
       >
         1
       </div>
-      <span
-        class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
-        :class="middleBtnPagination ? 'active' : ''"
-        >...</span
-      >
+      <div>
+        <span
+          v-if="paginationPageCurrent > 2"
+          class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+          >...</span
+        >
+        <span
+          v-if="paginationPageCurrent > 1 && paginationPageCurrent < totalpage"
+          class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+          :class="
+            paginationPageCurrent > 1 && paginationPageCurrent < totalpage
+              ? 'active'
+              : ''
+          "
+          >{{ paginationPageCurrent }}</span
+        >
+        <span
+          v-if="
+            paginationPageCurrent >= 1 && paginationPageCurrent < totalpage - 1
+          "
+          class="relative middle inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700"
+          >...</span
+        >
+      </div>
       <div
         class="relative last inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
-        :class="lastBtnPagination ? 'active' : 'ctive'"
+        :class="paginationPageCurrent === totalpage ? 'active' : ''"
       >
         {{ totalpage }}
       </div>

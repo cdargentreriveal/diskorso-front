@@ -20,8 +20,8 @@ if (process.client) {
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
-    titleBlack: nombrePromenades.value.toString(),
-    titlePurple: 'promenade(s) trouvée(s)',
+    titleBlack: 'Mes',
+    titlePurple: 'promenades',
     actionBtn: [{ action: 'Créer une promenade' }],
     route: { name: 'dashboard/creer-une-promenade' },
     category: categories.find(
@@ -99,10 +99,25 @@ const nombrePromenades = computed(() => {
       :category="datasTitle[0].category"
     />
     <!-- <AdminCatsFilter /> -->
-    <button class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
-      <nuxt-link to="/dashboard"> Retour toutes les promenades </nuxt-link>
-    </button>
-    <DisplayPromenadesSearchSectionConnected />
+    <div class="w-9/12 mx-auto mb-10 h-full">
+      <div class="mb-8 text-sm">
+        <nuxt-link
+          to="/dashboard"
+          class="bg-gray gray-color py-2 px-4 rounded-full"
+        >
+          <span class="red-color mr-2">✕</span>
+          <span>effacer la recherche</span>
+        </nuxt-link>
+      </div>
+      <div class="promenade-number">
+        <span class="mr-2 text-lg font-bold purple-color">{{
+          nombrePromenades
+        }}</span>
+        <span>promenade(s) trouvée(s) pour</span
+        ><span class="italic">"{{ route.params.slug }}"</span>
+      </div>
+    </div>
+    <DisplayPromenadesSearchSectionConnected locate="mes-promenades" />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
         v-for="(promenade, index) in promenadeByCat"
