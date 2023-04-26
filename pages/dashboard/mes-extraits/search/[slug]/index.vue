@@ -19,8 +19,8 @@ if (process.client) {
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
-    titleBlack: totalExtracts.value.toString(),
-    titlePurple: 'extrait(s) trouvé(s)',
+    titleBlack: 'Mes',
+    titlePurple: 'extraits',
     actionBtn: [{ action: 'Créer un extrait' }],
     route: { name: 'dashboard/creer-un-extrait' },
   },
@@ -111,7 +111,25 @@ const deleteAllExtracts = () => {
       :route="datasTitle[0].route.name"
     />
 
-    <AdminCatsFilter page="extraits" />
+    <!-- <AdminCatsFilter page="extraits" /> -->
+    <div class="w-9/12 mx-auto mb-10 h-full">
+      <div class="mb-8 text-sm">
+        <nuxt-link
+          to="/dashboard/mes-extraits"
+          class="bg-gray gray-color py-2 px-4 rounded-full"
+        >
+          <span class="red-color mr-2">✕</span>
+          <span>effacer la recherche</span>
+        </nuxt-link>
+      </div>
+      <div class="promenade-number">
+        <span class="mr-2 text-lg font-bold purple-color">{{
+          totalExtracts
+        }}</span>
+        <span>extrait(s) trouvé(s) pour</span
+        ><span class="italic">"{{ route.params.slug }}"</span>
+      </div>
+    </div>
     <DisplayPromenadesSearchSectionConnected />
     <div
       v-if="extractsStore.extracts.length > 0"
