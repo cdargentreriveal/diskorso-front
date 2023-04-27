@@ -119,8 +119,10 @@ async function next() {
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
+      execute()
+    } else {
+      execute()
     }
-    await execute()
     await nextTick(() => {
       paginationPageCurrent.value = paginationPageCurrent.value + 1
       setTimeout(() => {
@@ -133,6 +135,7 @@ async function next() {
 async function previous() {
   Loading.value = true
   if (lastId.value === null || lastNumberId.value === null) {
+    execute()
     query.value = `promenadeditor/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}`
   } else if (firstId.value === lastNumberId.value) {
     // refresh()
@@ -145,8 +148,10 @@ async function previous() {
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
+      execute()
+    } else {
+      execute()
     }
-    await execute()
     await nextTick(() => {
       paginationPageCurrent.value = paginationPageCurrent.value - 1
       setTimeout(() => {
@@ -162,8 +167,10 @@ async function first() {
   const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
   if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
     await refreshToken(config.public.baseURL)
+    execute()
+  } else {
+    execute()
   }
-  await execute()
   await nextTick(() => {
     paginationPageCurrent.value = 1
     setTimeout(() => {

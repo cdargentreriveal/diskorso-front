@@ -129,7 +129,4 @@ function addTransitionInput(): void {
 .extraits_view:hover {
   cursor: pointer;
 }
-.bloc-drag {
-  height: calc(100% - 87px);
-}
 </style>

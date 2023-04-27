@@ -76,7 +76,7 @@ onMounted(() => {
         class="flex justify-between py-6 items-stretch"
       >
         <div class="w-full border border-slate-300 p-8 min-h-min">
-          <label for="avatar-upload text-sm">
+          <label for="avatar-upload text-sm translate-y-full block">
             <input
               id="avatar-upload"
               ref="fileInput"
@@ -196,3 +196,8 @@ onMounted(() => {
     </div>
   </div>
 </template>
+<style scoped lang="scss">
+.bloc-drag {
+  height: calc(100% - 87px);
+}
+</style>
