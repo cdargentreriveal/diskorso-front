@@ -4,7 +4,7 @@ import { usePromenadeStore } from '~~/store/promenade'
 const extractsStore = useExtractStore()
 const PromenadeStore = usePromenadeStore()
 
-const isExcerptAdded = ref<boolean[]>([false, false, false, false])
+const test = ref()
 // function addExcerptBlock(content: string, id: number, index: number): void {
 //   if (excerptCount.value < 4) {
 //     // Vérifier si l'extrait est déjà présent
@@ -30,14 +30,13 @@ const isExcerptAdded = ref<boolean[]>([false, false, false, false])
 function addExcerptBlock(content: string, id: number, index: number): void {
   if (PromenadeStore.excerptCount < 4) {
     // Vérifier si l'extrait est déjà présent
-    // const existingExcerpt = PromenadeStore.items.find(
-    //   (item) => item.type === 'excerpt' && item.id === id,
-    //   PromenadeStore.addExtractid(id)
-    // )
-    // PromenadeStore.addExtractid(id)
-    // if (existingExcerpt) {
-    //   return
-    // }
+    const existingExcerpt = PromenadeStore.items.find(
+      (item) => item.type === 'excerpt' && item.id === id,
+      PromenadeStore.addExtractid(id)
+    )
+    if (existingExcerpt) {
+      return
+    }
     // Ajouter l'extrait s'il n'est pas déjà présent
     PromenadeStore.pushItem({
       type: 'excerpt',
@@ -179,7 +178,7 @@ const toggle = (extract: any): boolean => {
                 :class="{
                   'cursor-not-allowed disabled':
                     PromenadeStore.excerptCount === 4 ||
-                    isExcerptAdded[extract.id],
+                    PromenadeStore.isExcerptAdded[index] === extract.id,
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="addExcerptBlock(extract.content, extract.id, index)"
