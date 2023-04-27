@@ -5,4 +5,5 @@ export interface ImageItem {
   id?: number
   key: string
   content?: string
+  imagetoUpload?: FormData
 }

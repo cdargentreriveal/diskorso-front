@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
-import { createdPromenade, sendMainImagePromenade } from '~~/utils/connected'
+import {
+  createdPromenade,
+  sendContentImagePromenade,
+  sendMainImagePromenade,
+} from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
 import { useExtractStore } from '~~/store/extracts'
 import { usePromenadeStore } from '~~/store/promenade'
@@ -82,13 +86,17 @@ function submitCreatedPromenade() {
           ) {
             displaySwal('Image trop lourde', url, 'error', 'ok')
           } else {
+            const itemsUpdated = await sendContentImagePromenade(
+              config.public.baseURL,
+              PromenadeStore.items
+            )
             const data = reactive({
               title: PromenadeStore.creationTitlePromenade,
               slug: PromenadeStore.creationSlugPromenade,
               summary: PromenadeStore.creationSummaryPromenade,
               main_image: url,
               main_image_source: PromenadeStore.mainImageSource,
-              content: PromenadeStore.items,
+              content: itemsUpdated,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
@@ -112,8 +120,6 @@ function submitCreatedPromenade() {
                 })
                 PromenadeStore.setCreationTitlePromenade('')
                 PromenadeStore.setCreationSummaryPromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
                 PromenadeStore.setMainImage('')
                 PromenadeStore.setmainImageToUpload(new FormData())
                 extractsStore.removeAllExtract()
@@ -173,8 +179,6 @@ function submitCreatedPromenade() {
                 })
                 PromenadeStore.setCreationTitlePromenade('')
                 PromenadeStore.setCreationSummaryPromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
                 PromenadeStore.setMainImage('')
                 PromenadeStore.setmainImageToUpload(new FormData())
                 extractsStore.removeAllExtract()

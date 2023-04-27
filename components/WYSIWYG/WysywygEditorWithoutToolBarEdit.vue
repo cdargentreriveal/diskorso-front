@@ -35,16 +35,7 @@ export default defineComponent({
     onMounted(() => {
       if (editorRef.value) {
         quillInstance = new MyQuill(editorRef.value, {
-          modules: {
-            toolbar: [
-              [{ header: [2, 3, 4, false] }],
-              ['bold', 'italic', 'underline'],
-              [{ color: [] }],
-              [{ list: 'ordered' }, { list: 'bullet' }],
-              [{ align: [] }],
-              ['link'],
-            ],
-          },
+          modules: { toolbar: false },
           theme: 'snow',
         })
 

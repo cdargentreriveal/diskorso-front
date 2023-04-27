@@ -112,15 +112,6 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
-                PromenadeStore.setCreationTitlePromenade('')
-                PromenadeStore.setCreationSummaryPromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setMainImage('')
-                PromenadeStore.setmainImageToUpload(new FormData())
-                extractsStore.removeAllExtract()
-                PromenadeStore.clearItems()
-
                 navigateTo('/dashboard')
               }
             } catch (error) {
@@ -175,14 +166,6 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
-                PromenadeStore.setCreationTitlePromenade('')
-                PromenadeStore.setCreationSummaryPromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setMainImage('')
-                PromenadeStore.setmainImageToUpload(new FormData())
-                extractsStore.removeAllExtract()
-                PromenadeStore.clearItems()
                 navigateTo('/dashboard')
               }
             } catch (error) {

@@ -122,7 +122,6 @@ watch(
       <hr class="my-6" />
       <span class="small text-slate-400">{{ getDate(extract.createdAt) }}</span>
       <div class="card-content-title font-bold text-lg my-1 mb-3 h-[50px]">
-
         <h2>{{ extract.name }}</h2>
       </div>
       <div class="card-content-categories flex py-5 gap-2">
@@ -255,11 +254,16 @@ watch(
       <div class="card-content-bottom pb-2">
         <div class="flex items-center justify-between">
           <div class="card-content-author w-1/2">
-            <div
-              class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
+            <NuxtLink
+              to="/dashboard/editer-un-extrait/"
+              @click="extractsStore.selectExtract(extract)"
             >
-              Modifier
-            </div>
+              <div
+                class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
+              >
+                Modifier
+              </div>
+            </NuxtLink>
           </div>
           <div
             class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color cursor-pointer"

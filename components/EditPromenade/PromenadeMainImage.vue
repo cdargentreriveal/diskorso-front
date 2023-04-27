@@ -12,7 +12,7 @@ function handleFileUpload(event: Event) {
   if (!file) return
   const formData = new FormData()
   formData.append('file', file)
-  PromnadeStore.mainImageToUpload = formData
+  PromnadeStore.mainImageToUploadEdit = formData
   const reader = new FileReader()
   reader.onload = () => {
     const image = new Image()

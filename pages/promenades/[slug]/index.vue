@@ -118,7 +118,7 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
                 </div>
                 <div v-if="blocsContent.type === 'image'" class="image">
                   <img
-                    :src="blocsContent.imageUrl"
+                    :src="blocsContent.imageUrl!"
                     alt=""
                     class="w-full rounded-xl"
                   />

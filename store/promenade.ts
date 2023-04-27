@@ -8,7 +8,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     creationTitlePromenade: string
     creationSlugPromenade: string
     creationSummaryPromenade: string
-    creationMainImagePromenade: string
     mainImage: string
     mainImageSource: string
     mainImageToUpload: FormData
@@ -16,7 +15,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imageCount: number
     transitionCount: number
     excerptCount: number
-    creationMainImagePromenadeEdit: string
     mainImageToUploadEdit: FormData
     itemsEdit: ItemType[]
     imageCountEdit: number
@@ -28,7 +26,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     creationTitlePromenade: '',
     creationSlugPromenade: '',
     creationSummaryPromenade: '',
-    creationMainImagePromenade: '',
     mainImage: '',
     mainImageSource: '',
     mainImageToUpload: new FormData(),
@@ -36,7 +33,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imageCount: 0,
     transitionCount: 0,
     excerptCount: 0,
-    creationMainImagePromenadeEdit: '',
     mainImageToUploadEdit: new FormData(),
     itemsEdit: [],
     imageCountEdit: 0,
@@ -60,9 +56,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     },
     setCreationSummaryPromenade(summary: string) {
       this.creationSummaryPromenade = summary
-    },
-    setCreationMainImagePromenade(summary: string) {
-      this.creationMainImagePromenade = summary
     },
     setMainImage(mainImage: string) {
       this.mainImage = mainImage
@@ -119,9 +112,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     },
     setCreationSummaryPromenadeEdit(summary: string) {
       this.selectPromenade!.summary = summary
-    },
-    setCreationMainImagePromenadeEdit(summary: string) {
-      this.creationMainImagePromenadeEdit = summary
     },
     setMainImageEdit(mainImage: string) {
       this.selectPromenade!.main_image = mainImage
