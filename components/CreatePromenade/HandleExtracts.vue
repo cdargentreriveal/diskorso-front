@@ -51,7 +51,10 @@ function addExcerptBlock(content: string, id: number, index: number): void {
 }
 
 // const items = ref<ExcerptItem[]>([])
-
+function sendToPinia(extract: number) {
+  extractsStore.removeExtract(extract)
+  localStorage.removeItem(`extract_${extract}_isChecked`) // remove the extract if the checkbox is unchecked
+}
 const toggle = (extract: any): boolean => {
   extract.showModal = !extract.showModal
   return extract.showModal
@@ -81,9 +84,15 @@ const toggle = (extract: any): boolean => {
         <div
           v-for="(extract, index) in extractsStore.extracts"
           :key="index"
-          class="extraits_item bg-white rounded mb-5 p-5"
+          class="extraits_item bg-white rounded mb-5 p-5 relative"
         >
-          <div class="extraits_item_title text-sm font-semibold mb-2">
+          <div
+            class="closed absolute top-5 right-5 text-xs cursor-pointer"
+            @click="sendToPinia(extract.id)"
+          >
+            ✕
+          </div>
+          <div class="extraits_item_title text-sm font-semibold mb-3">
             <h3>{{ extract.name }}</h3>
           </div>
           <div class="extraits_item_cats flex gap-2 flex-wrap">
@@ -186,6 +195,9 @@ const toggle = (extract: any): boolean => {
 </template>
 
 <style scoped lang="scss">
+.cats {
+  font-size: 11px;
+}
 .extrait_btn {
   background-color: var(--purple-color);
 }
