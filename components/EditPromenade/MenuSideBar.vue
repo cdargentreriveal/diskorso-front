@@ -213,7 +213,11 @@ interface MetaDescriptionItem {
 }
 type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
 const items = ref<ItemType[]>([])
-const selectedCategories = reactive<Category[]>([])
+const selectedCategories = reactive<Category[]>(
+  PromenadeStore.selectPromenade?.categories
+    ? [...PromenadeStore.selectPromenade.categories]
+    : []
+)
 
 function addCategories(value: any) {
   if (selectedCategories.includes(value)) {
