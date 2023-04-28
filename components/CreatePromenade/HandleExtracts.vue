@@ -30,22 +30,24 @@ const test = ref()
 function addExcerptBlock(content: string, id: number, index: number): void {
   if (PromenadeStore.excerptCount < 4) {
     // Vérifier si l'extrait est déjà présent
-    const existingExcerpt = PromenadeStore.items.find(
-      (item) => item.type === 'excerpt' && item.id === id,
-      PromenadeStore.addExtractid(id)
-    )
-    if (existingExcerpt) {
-      return
-    }
-    // Ajouter l'extrait s'il n'est pas déjà présent
-    PromenadeStore.pushItem({
-      type: 'excerpt',
-      id,
-      index,
-      content,
-      key: generateUniqueId(),
+    nextTick(() => {
+      const existingExcerpt = PromenadeStore.items.find(
+        (item) => item.type === 'excerpt' && item.id === id
+      )
+      if (!existingExcerpt) {
+        // Ajouter l'extrait s'il n'est pas déjà présent
+        PromenadeStore.pushItem({
+          type: 'excerpt',
+          id,
+          index,
+          content,
+          key: generateUniqueId(),
+        })
+        PromenadeStore.incrementCount('excerpt')
+      } else {
+        PromenadeStore.removeExtractid(id)
+      }
     })
-    PromenadeStore.incrementCount('excerpt')
   }
 }
 
@@ -178,7 +180,7 @@ const toggle = (extract: any): boolean => {
                 :class="{
                   'cursor-not-allowed disabled':
                     PromenadeStore.excerptCount === 4 ||
-                    PromenadeStore.isExcerptAdded[index] === extract.id,
+                    PromenadeStore.addExtractid(extract.id),
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="addExcerptBlock(extract.content, extract.id, index)"
