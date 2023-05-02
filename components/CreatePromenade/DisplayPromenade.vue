@@ -82,7 +82,7 @@ onMounted(() => {
               ref="fileInput"
               type="file"
               accept="image/*"
-              class="text-sm"
+              class="text-sm avatar-upload"
               :class="!item.imageUrl ? 'inherit' : 'hidden'"
               @change="handleImageUpload($event, index)"
             />
@@ -199,5 +199,8 @@ onMounted(() => {
 <style scoped lang="scss">
 .bloc-drag {
   height: calc(100% - 87px);
+}
+.avatar-upload {
+  transform: translateY(100%);
 }
 </style>

@@ -160,16 +160,6 @@ function getPromenadeEdit() {
             </div>
             <!--eslint-enable-->
           </section>
-          <div class="promenade_page_content_details_image">
-            <div class="px-20 py-10 -sm:px-10 -sm:py-5">
-              <img
-                :src="promenade.main_image"
-                class="rounded-xl w-full"
-                alt=""
-              />
-              <p class="py-4 text-right text-sm">Crédit : @unsplash</p>
-            </div>
-          </div>
         </div>
         <div class="w-8/12 mx-auto -sm:w-full">
           <div class="all-promenades mt-15">
