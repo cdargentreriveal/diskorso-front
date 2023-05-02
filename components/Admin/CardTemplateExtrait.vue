@@ -145,7 +145,7 @@ watch(
         v-html="
           `${extract.content
             .slice(0, 150)
-            .replace(/(<([^>]+)>)/gi, ' ')
+            .replace(/(<([^>]+)>)/gi, '')
             .replace(/\s+/g, ' ')}...`
         "
       ></div>

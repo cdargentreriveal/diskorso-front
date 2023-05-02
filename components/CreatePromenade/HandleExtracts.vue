@@ -179,8 +179,8 @@ const toggle = (extract: any): boolean => {
               <div
                 :class="{
                   'cursor-not-allowed disabled':
-                    PromenadeStore.excerptCount === 4 ||
-                    PromenadeStore.addExtractid(extract.id),
+                    PromenadeStore.excerptCount === 4 /* ||
+                    PromenadeStore.addExtractid(extract.id) */,
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="addExcerptBlock(extract.content, extract.id, index)"
