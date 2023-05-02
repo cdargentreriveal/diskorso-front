@@ -204,13 +204,6 @@ async function first() {
 }
 
 onMounted(async () => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
   const resultLast = await lastNumberData(
     config.public.baseURL,
     'extract/findLastExtract'
