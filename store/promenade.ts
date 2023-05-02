@@ -21,6 +21,9 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     transitionCountEdit: number
     excerptCountEdit: number
     isExcerptAdded: [boolean, boolean, boolean, boolean]
+    imagesToDelete: string[]
+    imagesToDeleteAllPromenade: string[]
+    isBannerImageChanged: boolean
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',
@@ -39,6 +42,9 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     transitionCountEdit: 0,
     excerptCountEdit: 0,
     isExcerptAdded: [false, false, false, false],
+    imagesToDelete: [],
+    imagesToDeleteAllPromenade: [],
+    isBannerImageChanged: false,
   }),
   actions: {
     addExtractid(id: number) {
@@ -161,6 +167,24 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     },
     clearItemsEdit() {
       this.itemsEdit = []
+    },
+    addImageToDeleteArray(image: string) {
+      this.imagesToDelete.push(image)
+    },
+    clearImageToDeleteArray() {
+      this.imagesToDelete = []
+    },
+    addImageToDeleteArrayAllPromenade(image: string) {
+      this.imagesToDeleteAllPromenade.push(image)
+    },
+    clearImageToDeleteArrayAllPromenade() {
+      this.imagesToDeleteAllPromenade = []
+    },
+    setIsBannerImageChanged() {
+      this.isBannerImageChanged = true
+    },
+    unsetIsBannerImageChanged() {
+      this.isBannerImageChanged = false
     },
   },
 })

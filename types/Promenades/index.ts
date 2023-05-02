@@ -24,7 +24,7 @@ export interface Promenade {
   meta_title?: string
   meta_description?: string
   published: boolean
-  publishedAt: string
+  publishedAt: Date
   userId: number
   categories: Category[]
   extracts: ExtractsPourPromenade[]

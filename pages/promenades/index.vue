@@ -31,13 +31,13 @@ const lastId = computed(() => {
   if (promenades.value === null) {
     return null
   }
-  return promenades.value[promenades.value.length - 1].id
+  return promenades.value[promenades.value.length - 1].publishedAt
 })
 const firstId = computed(() => {
   if (promenades.value === null) {
     return 0
   } else {
-    return promenades.value[0].id
+    return promenades.value[0].publishedAt
   }
 })
 // const { data: lastNumberData } = await useDiskorso<number>(
@@ -50,7 +50,7 @@ const { data: lastNumberData } = await useAsyncData<number>(
 // const { data: firstNumberData } = await useDiskorso<number>(
 //   'promenade/findFirstPromenade'
 // )
-const { data: firstNumberData } = await useAsyncData<number>(
+const { data: firstNumberData } = await useAsyncData<string>(
   'firstNumberData',
   () => $fetch(`${config.public.baseURL}/promenade/findFirstPromenade`)
 )

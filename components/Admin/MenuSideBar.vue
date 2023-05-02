@@ -102,7 +102,7 @@ function submitCreatedPromenade() {
               categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: false,
-              publishedAt: '',
+              publishedAt: new Date().toISOString(),
             })
             try {
               const response = await createdPromenade(

@@ -3,10 +3,12 @@ import { PropType } from 'vue'
 import { Promenade } from '~~/types/Promenades'
 import { usePromenadeStore } from '~~/store/promenade'
 import {
+  deleteContentImagePromenade,
   deletedPromenade,
   publishPromenade,
   unPublishPromenade,
 } from '~~/utils/connected'
+import { ItemType } from '~~/types/CreatePromenade'
 const PromnadeStore = usePromenadeStore()
 const config = useRuntimeConfig()
 const { $swal } = useNuxtApp()
@@ -44,6 +46,20 @@ function submitDeletedPromenade() {
       })
       .then(async (result: any) => {
         if (result.isConfirmed) {
+          if (propsCard.promenade.main_image !== '') {
+            await PromnadeStore.addImageToDeleteArrayAllPromenade(
+              propsCard.promenade.main_image
+            )
+          }
+          propsCard.promenade.content.forEach((element: ItemType) => {
+            if (element.type === 'image') {
+              PromnadeStore.addImageToDeleteArrayAllPromenade(element.imageUrl!)
+            }
+          })
+          const dataToDelete = reactive({
+            imagesToDelete: PromnadeStore.imagesToDeleteAllPromenade,
+          })
+          await deleteContentImagePromenade(config.public.baseURL, dataToDelete)
           await deletedPromenade(config.public.baseURL, data)
           displaySwal(
             'Promenade supprimée',
