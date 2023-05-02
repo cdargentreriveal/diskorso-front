@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
-import { editedPromenade, sendMainImagePromenade } from '~~/utils/connected'
+import {
+  deleteContentImagePromenade,
+  editedPromenade,
+  sendMainImagePromenade,
+} from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
-import { useExtractStore } from '~~/store/extracts'
 import { usePromenadeStore } from '~~/store/promenade'
 
-const extractsStore = useExtractStore()
 const PromenadeStore = usePromenadeStore()
 const config = useRuntimeConfig()
 
@@ -70,34 +72,105 @@ function submitCreatedPromenade() {
       })
       .then(async (result: any) => {
         if (result.isConfirmed) {
-          let url = ''
-          if (!PromenadeStore.mainImageToUploadEdit.has('file')) {
-            url = ''
-          } else {
-            const image = PromenadeStore.mainImageToUploadEdit
-            url = await sendMainImagePromenade(config.public.baseURL, image)
-          }
-          if (
-            url === "L'image est trop grande, elle ne doit pas dépasser 500ko"
-          ) {
-            displaySwal('Image trop lourde', url, 'error', 'ok')
+          if (PromenadeStore.isBannerImageChanged) {
+            let url = ''
+            if (!PromenadeStore.mainImageToUploadEdit.has('file')) {
+              url = ''
+            } else {
+              const image = PromenadeStore.mainImageToUploadEdit
+              url = await sendMainImagePromenade(config.public.baseURL, image)
+            }
+            if (
+              url === "L'image est trop grande, elle ne doit pas dépasser 500ko"
+            ) {
+              displaySwal('Image trop lourde', url, 'error', 'ok')
+            } else {
+              const data = reactive({
+                id: PromenadeStore.selectPromenade?.id,
+                title: PromenadeStore.selectPromenade?.title,
+                slug: PromenadeStore.selectPromenade?.slug,
+                summary: PromenadeStore.selectPromenade?.summary,
+                main_image: url,
+                main_image_source:
+                  PromenadeStore.selectPromenade?.main_image_source,
+                content: PromenadeStore.selectPromenade?.content,
+                meta_title: 'Titre pour le référencement',
+                meta_description: 'Description pour le référencement',
+                categoriesIds: selectedIds,
+                extractsIds: excerptElementsId,
+                published: false,
+                publishedAt: PromenadeStore.selectPromenade?.publishedAt,
+                mainImageToDelete: true,
+              })
+              if (PromenadeStore.imagesToDelete.length > 0) {
+                const dataToDelete = reactive({
+                  imagesToDelete: PromenadeStore.imagesToDelete,
+                })
+                await deleteContentImagePromenade(
+                  config.public.baseURL,
+                  dataToDelete
+                )
+                await PromenadeStore.clearImageToDeleteArray()
+              }
+              try {
+                const response = await editedPromenade(
+                  config.public.baseURL,
+                  data
+                )
+                if (!response.success) {
+                  displaySwal(
+                    'Echec',
+                    `${response.data.message}`,
+                    'error',
+                    'ok'
+                  )
+                } else {
+                  $swal.fire({
+                    title: 'Promenade enregistrée!',
+                    text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
+                    imageHeight: 120,
+                    imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                  })
+                  PromenadeStore.unsetIsBannerImageChanged()
+                  navigateTo('/dashboard')
+                }
+              } catch (error) {
+                displaySwal(
+                  'Erreur lors de la création',
+                  'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+                  'error',
+                  'Ok'
+                )
+              }
+            }
           } else {
             const data = reactive({
               id: PromenadeStore.selectPromenade?.id,
               title: PromenadeStore.selectPromenade?.title,
               slug: PromenadeStore.selectPromenade?.slug,
               summary: PromenadeStore.selectPromenade?.summary,
-              main_image: url,
+              content: PromenadeStore.selectPromenade?.content,
+              main_image: PromenadeStore.selectPromenade?.main_image,
               main_image_source:
                 PromenadeStore.selectPromenade?.main_image_source,
-              content: PromenadeStore.selectPromenade?.content,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: false,
               publishedAt: PromenadeStore.selectPromenade?.publishedAt,
+              mainImageToDelete: false,
             })
+            if (PromenadeStore.imagesToDelete.length > 0) {
+              const dataToDelete = reactive({
+                imagesToDelete: PromenadeStore.imagesToDelete,
+              })
+              await deleteContentImagePromenade(
+                config.public.baseURL,
+                dataToDelete
+              )
+              await PromenadeStore.clearImageToDeleteArray()
+            }
             try {
               const response = await editedPromenade(
                 config.public.baseURL,
@@ -112,15 +185,6 @@ function submitCreatedPromenade() {
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
-                PromenadeStore.setCreationTitlePromenade('')
-                PromenadeStore.setCreationSummaryPromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setMainImage('')
-                PromenadeStore.setmainImageToUpload(new FormData())
-                extractsStore.removeAllExtract()
-                PromenadeStore.clearItems()
-
                 navigateTo('/dashboard')
               }
             } catch (error) {
@@ -133,34 +197,106 @@ function submitCreatedPromenade() {
             }
           }
         } else if (result.isDenied) {
-          let url2 = ''
-          if (!PromenadeStore.mainImageToUpload.has('file')) {
-            url2 = ''
-          } else {
-            const image = PromenadeStore.mainImageToUpload
-            url2 = await sendMainImagePromenade(config.public.baseURL, image)
-          }
-          if (
-            url2 === "L'image est trop grande, elle ne doit pas dépasser 500ko"
-          ) {
-            displaySwal('Image trop lourde', url2, 'error', 'ok')
+          if (PromenadeStore.isBannerImageChanged) {
+            let url2 = ''
+            if (!PromenadeStore.mainImageToUploadEdit.has('file')) {
+              url2 = ''
+            } else {
+              const image = PromenadeStore.mainImageToUploadEdit
+              url2 = await sendMainImagePromenade(config.public.baseURL, image)
+            }
+            if (
+              url2 ===
+              "L'image est trop grande, elle ne doit pas dépasser 500ko"
+            ) {
+              displaySwal('Image trop lourde', url2, 'error', 'ok')
+            } else {
+              const data = reactive({
+                id: PromenadeStore.selectPromenade?.id,
+                title: PromenadeStore.selectPromenade?.title,
+                slug: PromenadeStore.selectPromenade?.slug,
+                summary: PromenadeStore.selectPromenade?.summary,
+                main_image: url2,
+                main_image_source:
+                  PromenadeStore.selectPromenade?.main_image_source,
+                content: PromenadeStore.selectPromenade?.content,
+                meta_title: 'Titre pour le référencement',
+                meta_description: 'Description pour le référencement',
+                categoriesIds: selectedIds,
+                extractsIds: excerptElementsId,
+                published: true,
+                publishedAt: new Date().toISOString(),
+                mainImageToDelete: true,
+              })
+              if (PromenadeStore.imagesToDelete.length > 0) {
+                const dataToDelete = reactive({
+                  imagesToDelete: PromenadeStore.imagesToDelete,
+                })
+                await deleteContentImagePromenade(
+                  config.public.baseURL,
+                  dataToDelete
+                )
+                await PromenadeStore.clearImageToDeleteArray()
+              }
+              try {
+                const response = await editedPromenade(
+                  config.public.baseURL,
+                  data
+                )
+                if (!response.success) {
+                  displaySwal(
+                    'Echec',
+                    `${response.data.message}`,
+                    'error',
+                    'ok'
+                  )
+                } else {
+                  $swal.fire({
+                    title: 'Promenade enregistrée!',
+                    text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
+                    imageHeight: 120,
+                    imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                  })
+                  PromenadeStore.unsetIsBannerImageChanged()
+                  navigateTo('/dashboard')
+                }
+              } catch (error) {
+                displaySwal(
+                  'Erreur lors de la création',
+                  'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+                  'error',
+                  'Ok'
+                )
+              }
+            }
           } else {
             const data = reactive({
               id: PromenadeStore.selectPromenade?.id,
               title: PromenadeStore.selectPromenade?.title,
               slug: PromenadeStore.selectPromenade?.slug,
               summary: PromenadeStore.selectPromenade?.summary,
-              main_image: url2,
+              content: PromenadeStore.selectPromenade?.content,
+              main_image: PromenadeStore.selectPromenade?.main_image,
               main_image_source:
                 PromenadeStore.selectPromenade?.main_image_source,
-              content: PromenadeStore.selectPromenade?.content,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
               categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: true,
-              publishedAt: PromenadeStore.selectPromenade?.publishedAt,
+              publishedAt: new Date().toISOString(),
+              mainImageToDelete: false,
             })
+            if (PromenadeStore.imagesToDelete.length > 0) {
+              const dataToDelete = reactive({
+                imagesToDelete: PromenadeStore.imagesToDelete,
+              })
+              await deleteContentImagePromenade(
+                config.public.baseURL,
+                dataToDelete
+              )
+              await PromenadeStore.clearImageToDeleteArray()
+            }
             try {
               const response = await editedPromenade(
                 config.public.baseURL,
@@ -170,19 +306,11 @@ function submitCreatedPromenade() {
                 displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
               } else {
                 $swal.fire({
-                  title: 'Promenade créee',
-                  text: `Votre promenade ${data.title} a bien été créée et publiée`,
+                  title: 'Promenade enregistrée!',
+                  text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
                   imageHeight: 120,
                   imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
                 })
-                PromenadeStore.setCreationTitlePromenade('')
-                PromenadeStore.setCreationSummaryPromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setCreationMainImagePromenade('')
-                PromenadeStore.setMainImage('')
-                PromenadeStore.setmainImageToUpload(new FormData())
-                extractsStore.removeAllExtract()
-                PromenadeStore.clearItems()
                 navigateTo('/dashboard')
               }
             } catch (error) {

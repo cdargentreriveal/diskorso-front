@@ -12,7 +12,7 @@ function handleFileUpload(event: Event) {
   if (!file) return
   const formData = new FormData()
   formData.append('file', file)
-  PromnadeStore.mainImageToUpload = formData
+  PromnadeStore.mainImageToUploadEdit = formData
   const reader = new FileReader()
   reader.onload = () => {
     const image = new Image()
@@ -22,12 +22,14 @@ function handleFileUpload(event: Event) {
     image.src = reader.result as string
   }
   reader.readAsDataURL(file)
+  PromnadeStore.setIsBannerImageChanged()
 }
 function deletePicturesBanner() {
   PromnadeStore.selectPromenade!.main_image = ''
   if (fileInput.value) {
     fileInput.value.value = ''
   }
+  PromnadeStore.setIsBannerImageChanged()
 }
 const onInput = (event: Event) => {
   const target = event.target as HTMLInputElement

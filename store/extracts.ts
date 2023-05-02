@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ExtractFetched } from '~~/types/Extracts'
 
 interface ExtractWithModal extends ExtractFetched {
-  showModal: boolean
+  showModal?: boolean
 }
 
 export type Extracts = ExtractWithModal[]
@@ -10,11 +10,16 @@ export type Extracts = ExtractWithModal[]
 interface ExtractState {
   extracts: Extracts
   tout_selectionner: number
+  extractSelected: ExtractWithModal | null
+  // nameInputEdit: string
+  // sourceInputEdit: string
+  // contentInputEdit: string
 }
 export const useExtractStore = defineStore('extractStore', {
   state: (): ExtractState => ({
     extracts: [],
     tout_selectionner: 0,
+    extractSelected: null,
   }),
   actions: {
     addExtracts(extract: ExtractWithModal) {
@@ -39,6 +44,15 @@ export const useExtractStore = defineStore('extractStore', {
     removeAllExtract() {
       this.extracts.splice(0, this.extracts.length)
       this.tout_selectionner++
+    },
+    selectExtract(extract: ExtractWithModal) {
+      this.extractSelected = extract
+    },
+    setEditNameExtract(name: string) {
+      this.extractSelected!.name = name
+    },
+    setEditSourceExtract(source: string) {
+      this.extractSelected!.source = source
     },
   },
 })

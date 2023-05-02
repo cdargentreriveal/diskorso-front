@@ -4,4 +4,6 @@ export interface ExcerptItem {
   index: number
   content: string
   key: string
+  imageUrl?: string
+  imagetoUpload?: FormData
 }

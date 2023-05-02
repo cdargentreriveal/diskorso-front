@@ -16,23 +16,16 @@ function handleImageUpload(event: Event, index: number): void {
   const file = (event.target as HTMLInputElement).files?.[0]
 
   if (!file) return
-
+  const formData = new FormData()
+  formData.append('file', file)
+  PromenadeStore.items[index].imagetoUpload = formData
   const reader = new FileReader()
   reader.onload = () => {
-    const imageUrl = reader.result as string // Récupérer l'URL de l'image depuis le reader
-
     const image = new Image()
     image.onload = () => {
-      // Mettre à jour l'objet correspondant à l'input
-      const item = PromenadeStore.items[index]
-      if (item.type === 'image') {
-        item.file = file
-        // item.imageUrl = imageUrl // Mettre à jour l'URL de l'image dans l'objet
-        item.imageUrl =
-          'https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547_960_720.jpg'
-      }
+      PromenadeStore.items[index].imageUrl = reader.result as string
     }
-    image.src = imageUrl // Charger l'image avec l'URL
+    image.src = reader.result as string
   }
   reader.readAsDataURL(file)
 }

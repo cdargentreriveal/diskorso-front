@@ -257,11 +257,16 @@ watch(
       <div class="card-content-bottom pb-2">
         <div class="flex items-center justify-between">
           <div class="card-content-author w-1/2">
-            <div
-              class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
+            <NuxtLink
+              to="/dashboard/editer-un-extrait/"
+              @click="extractsStore.selectExtract(extract)"
             >
-              Modifier
-            </div>
+              <div
+                class="edit-promenade font-semibold text-xs text-center border border-black rounded-md p-2 cursor-pointer"
+              >
+                Modifier
+              </div>
+            </NuxtLink>
           </div>
           <div
             class="card-content-link text-right text-xs w-1/2 flex gap-2 underline items-center red-color cursor-pointer"

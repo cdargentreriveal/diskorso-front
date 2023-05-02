@@ -119,7 +119,7 @@ const toggle = (extract: any): boolean => {
               >
                 Voir l'extrait
               </div>
-              <ModalBase :show="extract.showModal">
+              <ModalBase :show="extract.showModal!">
                 <div class="relative">
                   <div
                     class="closed absolute top-8 right-8 text-lg cursor-pointer"
