@@ -36,26 +36,26 @@ const lastId = computed(() => {
   if (promenades.value === null) {
     return null
   }
-  return promenades.value[promenades.value.length - 1].id
+  return promenades.value[promenades.value.length - 1].publishedAt
 })
 const firstId = computed(() => {
   if (promenades.value === null) {
     return 0
   } else {
-    return promenades.value[0].id
+    return promenades.value[0].publishedAt
   }
 })
 // const { data: lastNumberData } = await useDiskorso<number>(
 //   `promenade/user/${slug}/last-promenade`
 // )
-const { data: lastNumberData } = await useAsyncData<number>(
+const { data: lastNumberData } = await useAsyncData<string>(
   'lastNumberData',
   () => $fetch(`${config.public.baseURL}/promenade/user/${slug}/last-promenade`)
 )
 // const { data: firstNumberData } = await useDiskorso<number>(
 //   `promenade/user/${slug}/first-promenade`
 // )
-const { data: firstNumberData } = await useAsyncData<number>(
+const { data: firstNumberData } = await useAsyncData<string>(
   'firstNumberData',
   () =>
     $fetch(`${config.public.baseURL}/promenade/user/${slug}/first-promenade`)
@@ -68,10 +68,10 @@ function next() {
     firstNumberData.value === null
   ) {
     query.value = `user/findLastPromenades/${slug}/${numberOfPromenade.value}`
-  } else if (lastId.value === +firstNumberData.value) {
+  } else if (lastId.value.toString() === firstNumberData.value) {
     return 'no more promenade'
   } else {
-    query.value = `promenade/user/promenade-cursor/${slug}/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    query.value = `promenade/user/promenade-cursor/${slug}/${numberOfPromenade.value}/${lastId.value}/0/desc`
     refresh()
   }
 }
@@ -80,12 +80,12 @@ function previous() {
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
     query.value = `promenade/user/findLastPromenades/${slug}/${numberOfPromenade.value}`
-  } else if (firstId.value === +lastNumberData.value) {
+  } else if (firstId.value.toString() === lastNumberData.value) {
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
     return 'no more promenade'
   } else {
-    query.value = `promenade/user/promenade-cursor/${slug}/${numberOfPromenade.value}/${firstId.value}/1/asc`
+    query.value = `promenade/user/promenade-cursor/${slug}/${numberOfPromenade.value}/${firstId.value}/0/asc`
     refresh()
   }
 }

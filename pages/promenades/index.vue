@@ -8,7 +8,7 @@ definePageMeta({
 // ________________________________________________________________________________________
 //* state
 // ________________________________________________________________________________________
-const numberOfPromenade = ref(6)
+const numberOfPromenade = ref(2)
 const query = ref(`promenade/findLastPromenades/${numberOfPromenade.value}`)
 const config = useRuntimeConfig()
 
@@ -43,7 +43,7 @@ const firstId = computed(() => {
 // const { data: lastNumberData } = await useDiskorso<number>(
 //   'promenade/findLastPromenade'
 // )
-const { data: lastNumberData } = await useAsyncData<number>(
+const { data: lastNumberData } = await useAsyncData<string>(
   'lastNumberData',
   () => $fetch(`${config.public.baseURL}/promenade/findLastPromenade`)
 )
@@ -65,12 +65,12 @@ async function next() {
     firstNumberData.value === null
   ) {
     query.value = `promenade/findLastPromenades/${numberOfPromenade.value}`
-  } else if (lastId.value === +firstNumberData.value) {
+  } else if (lastId.value.toString() === firstNumberData.value) {
     paginationPageCurrent.value = totalPages
     Loading.value = false
     return 'no more promenade'
   } else {
-    query.value = `promenade/promenade-cursor/${numberOfPromenade.value}/${lastId.value}/1/desc`
+    query.value = `promenade/promenade-cursor/${numberOfPromenade.value}/${lastId.value}/0/desc`
     refresh()
   }
   await nextTick(() => {
@@ -86,14 +86,14 @@ async function previous() {
   if (lastId.value === null || lastNumberData.value === null) {
     refresh()
     query.value = `promenade/findLastPromenades/${numberOfPromenade.value}`
-  } else if (firstId.value === +lastNumberData.value) {
+  } else if (firstId.value.toString() === lastNumberData.value) {
     paginationPageCurrent.value = 1
     Loading.value = false
     // refresh()
     // query.value = `findLastPromenades/${numberOfPromenade.value}`
     return 'no more promenade'
   } else {
-    query.value = `promenade/promenade-cursor/${numberOfPromenade.value}/${firstId.value}/1/asc`
+    query.value = `promenade/promenade-cursor/${numberOfPromenade.value}/${firstId.value}/0/asc`
     refresh()
   }
   await nextTick(() => {

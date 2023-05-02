@@ -16,7 +16,7 @@ let xsrfToken: any = null
 if (process.client) {
   xsrfToken = localStorage.getItem('xsrfToken')
 }
-const numberOfExtractToDisplay = ref(9)
+const numberOfExtractToDisplay = ref(3)
 const lastNumberId = ref(0)
 const firstNumberId = ref(0)
 const datasTitle = computed((): BtnAdminPage[] => [
@@ -139,7 +139,7 @@ async function next() {
     Loading.value = false
     return 'no more promenade'
   } else {
-    query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${lastId.value}/1/desc`
+    query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${lastId.value}/0/desc`
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
@@ -168,7 +168,7 @@ async function previous() {
     paginationPageCurrent.value = 1
     return 'no more promenade'
   } else {
-    query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${firstId.value}/1/asc`
+    query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${firstId.value}/0/asc`
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
@@ -187,7 +187,7 @@ async function previous() {
 // return first
 async function first() {
   Loading.value = true
-  query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}`
+  query.value = `extract/getextracts/${numberOfExtractToDisplay.value}`
   const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
   if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
     await refreshToken(config.public.baseURL)
