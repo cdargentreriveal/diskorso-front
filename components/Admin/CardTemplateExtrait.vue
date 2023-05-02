@@ -145,7 +145,7 @@ watch(
         v-html="
           `${extract.content
             .slice(0, 150)
-            .replace(/(<([^>]+)>)/gi, ' ')
+            .replace(/(<([^>]+)>)/gi, '')
             .replace(/\s+/g, ' ')}...`
         "
       ></div>
@@ -160,7 +160,7 @@ watch(
               <div
                 v-for="(extractElement, index) in extract.promenades.slice(
                   0,
-                  5
+                  4
                 )"
                 :key="index"
                 class="-ml-3"
@@ -179,8 +179,11 @@ watch(
                 />
               </div>
             </div>
-            <div class="card-content-number-check ml-1">
-              +{{ extract.promenades.length }}
+            <div
+              v-if="extract.promenades.length > 4"
+              class="card-content-number-check ml-1"
+            >
+              +{{ extract.promenades.length - 4 }}
             </div>
           </div>
           <div v-else>

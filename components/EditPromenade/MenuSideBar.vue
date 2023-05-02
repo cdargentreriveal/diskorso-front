@@ -341,7 +341,11 @@ interface MetaDescriptionItem {
 }
 type ItemType = CategoryItem | MetaTitleItem | MetaDescriptionItem
 const items = ref<ItemType[]>([])
-const selectedCategories = reactive<Category[]>([])
+const selectedCategories = reactive<Category[]>(
+  PromenadeStore.selectPromenade?.categories
+    ? [...PromenadeStore.selectPromenade.categories]
+    : []
+)
 
 function addCategories(value: any) {
   if (selectedCategories.includes(value)) {
@@ -374,8 +378,12 @@ function addMetaDescription(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaDescription', content: value })
 }
-const isChecked = (categorie: Category) =>
-  computed<boolean>(() => selectedCategories.includes(categorie))
+
+function isCheckedArray(item: any) {
+  return !!PromenadeStore.selectPromenade?.categories.some(
+    (categorie: any) => categorie.id === item.id
+  )
+}
 </script>
 <template>
   <div
@@ -405,6 +413,7 @@ const isChecked = (categorie: Category) =>
                   type="checkbox"
                   name="categories"
                   class="mx-2"
+                  :checked="isCheckedArray(categorie)"
                   :disabled="isCheckboxDisabled(categorie)"
                   :value="categorie.title"
                   @change="addCategories(categorie)"

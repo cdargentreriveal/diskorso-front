@@ -1,7 +1,10 @@
 <!-- eslint-disable vue/no-v-html -->
 <script setup lang="ts">
 import { Promenade } from '@/types/Promenades'
-
+import { useUserStore } from '~~/store/user'
+import { usePromenadeStore } from '~~/store/promenade'
+const user = useUserStore()
+const PromnadeStore = usePromenadeStore()
 definePageMeta({
   layout: 'page',
 })
@@ -13,6 +16,9 @@ const config = useRuntimeConfig()
 const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
   $fetch(`${config.public.baseURL}/promenade/${route.params.slug}`)
 )
+function getPromenadeEdit() {
+  PromnadeStore.setPromenade(promenade.value)
+}
 </script>
 
 <template>
@@ -73,21 +79,45 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
                 </p>
               </NuxtLink>
             </div>
-            <div class="card-content-categories flex gap-4 py-5">
-              <div
-                v-for="(cat, index) in promenade.categories"
-                :key="index"
-                class="category"
-              >
-                <NuxtLink :to="`/categorie/${cat.slug}`">
-                  <button
-                    :class="
-                      cat.color + ' category-btn px-5 py-2 rounded-full text-sm'
-                    "
+            <div class="flex justify-between items-center">
+              <div class="card-content-categories flex gap-4 py-5">
+                <div
+                  v-for="(cat, index) in promenade.categories"
+                  :key="index"
+                  class="category"
+                >
+                  <NuxtLink :to="`/categorie/${cat.slug}`">
+                    <button
+                      :class="
+                        cat.color +
+                        ' category-btn px-5 py-2 rounded-full text-sm'
+                      "
+                    >
+                      {{ cat.title }}
+                    </button>
+                  </NuxtLink>
+                </div>
+              </div>
+              <div v-if="user.currentUser !== null">
+                <div
+                  class="edit-promenade flex items-center gap-2 text-xs border border-[gray-color] rounded-md p-2 gray-color"
+                >
+                  <span
+                    ><img
+                      src="@/assets/images/icons/menu-admin/create.svg"
+                      alt="icone edition"
+                  /></span>
+                  <NuxtLink
+                    :to="`/dashboard/editer-une-promenade/${promenade.slug}`"
+                    @click="getPromenadeEdit"
                   >
-                    {{ cat.title }}
-                  </button>
-                </NuxtLink>
+                    <div
+                      class="edit-promenade font-semibold text-center cursor-pointer"
+                    >
+                      Modifier ma promenade
+                    </div>
+                  </NuxtLink>
+                </div>
               </div>
             </div>
             <Separator />
@@ -116,7 +146,10 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
                     <span class="underline">www.lemonde.fr</span>
                   </div>
                 </div>
-                <div v-if="blocsContent.type === 'image'" class="image">
+                <div
+                  v-if="blocsContent.type === 'image' && blocsContent.imageUrl"
+                  class="image"
+                >
                   <img
                     :src="blocsContent.imageUrl!"
                     alt=""
@@ -127,16 +160,6 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
             </div>
             <!--eslint-enable-->
           </section>
-          <div class="promenade_page_content_details_image">
-            <div class="px-20 py-10 -sm:px-10 -sm:py-5">
-              <img
-                :src="promenade.main_image"
-                class="rounded-xl w-full"
-                alt=""
-              />
-              <p class="py-4 text-right text-sm">Crédit : @unsplash</p>
-            </div>
-          </div>
         </div>
         <div class="w-8/12 mx-auto -sm:w-full">
           <div class="all-promenades mt-15">

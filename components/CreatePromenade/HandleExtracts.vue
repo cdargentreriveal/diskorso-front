@@ -4,7 +4,7 @@ import { usePromenadeStore } from '~~/store/promenade'
 const extractsStore = useExtractStore()
 const PromenadeStore = usePromenadeStore()
 
-const isExcerptAdded = ref<boolean[]>([false, false, false, false])
+const test = ref()
 // function addExcerptBlock(content: string, id: number, index: number): void {
 //   if (excerptCount.value < 4) {
 //     // Vérifier si l'extrait est déjà présent
@@ -30,28 +30,32 @@ const isExcerptAdded = ref<boolean[]>([false, false, false, false])
 function addExcerptBlock(content: string, id: number, index: number): void {
   if (PromenadeStore.excerptCount < 4) {
     // Vérifier si l'extrait est déjà présent
-    // const existingExcerpt = PromenadeStore.items.find(
-    //   (item) => item.type === 'excerpt' && item.id === id,
-    //   PromenadeStore.addExtractid(id)
-    // )
-    // PromenadeStore.addExtractid(id)
-    // if (existingExcerpt) {
-    //   return
-    // }
-    // Ajouter l'extrait s'il n'est pas déjà présent
-    PromenadeStore.pushItem({
-      type: 'excerpt',
-      id,
-      index,
-      content,
-      key: generateUniqueId(),
+    nextTick(() => {
+      const existingExcerpt = PromenadeStore.items.find(
+        (item) => item.type === 'excerpt' && item.id === id
+      )
+      if (!existingExcerpt) {
+        // Ajouter l'extrait s'il n'est pas déjà présent
+        PromenadeStore.pushItem({
+          type: 'excerpt',
+          id,
+          index,
+          content,
+          key: generateUniqueId(),
+        })
+        PromenadeStore.incrementCount('excerpt')
+      } else {
+        PromenadeStore.removeExtractid(id)
+      }
     })
-    PromenadeStore.incrementCount('excerpt')
   }
 }
 
 // const items = ref<ExcerptItem[]>([])
-
+function sendToPinia(extract: number) {
+  extractsStore.removeExtract(extract)
+  localStorage.removeItem(`extract_${extract}_isChecked`) // remove the extract if the checkbox is unchecked
+}
 const toggle = (extract: any): boolean => {
   extract.showModal = !extract.showModal
   return extract.showModal
@@ -81,9 +85,15 @@ const toggle = (extract: any): boolean => {
         <div
           v-for="(extract, index) in extractsStore.extracts"
           :key="index"
-          class="extraits_item bg-white rounded mb-5 p-5"
+          class="extraits_item bg-white rounded mb-5 p-5 relative"
         >
-          <div class="extraits_item_title text-sm font-semibold mb-2">
+          <div
+            class="closed absolute top-5 right-5 text-xs cursor-pointer"
+            @click="sendToPinia(extract.id)"
+          >
+            ✕
+          </div>
+          <div class="extraits_item_title text-sm font-semibold mb-3">
             <h3>{{ extract.name }}</h3>
           </div>
           <div class="extraits_item_cats flex gap-2 flex-wrap">
@@ -169,8 +179,8 @@ const toggle = (extract: any): boolean => {
               <div
                 :class="{
                   'cursor-not-allowed disabled':
-                    PromenadeStore.excerptCount === 4 ||
-                    isExcerptAdded[extract.id],
+                    PromenadeStore.excerptCount === 4 /* ||
+                    PromenadeStore.addExtractid(extract.id) */,
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="addExcerptBlock(extract.content, extract.id, index)"
@@ -186,6 +196,9 @@ const toggle = (extract: any): boolean => {
 </template>
 
 <style scoped lang="scss">
+.cats {
+  font-size: 11px;
+}
 .extrait_btn {
   background-color: var(--purple-color);
 }

@@ -143,8 +143,10 @@ async function next() {
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
+      execute()
+    } else {
+      execute()
     }
-    await execute()
     await nextTick(() => {
       paginationPageCurrent.value = paginationPageCurrent.value + 1
       setTimeout(() => {
@@ -170,8 +172,10 @@ async function previous() {
     const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
     if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
       await refreshToken(config.public.baseURL)
+      execute()
+    } else {
+      execute()
     }
-    await execute()
     await nextTick(() => {
       paginationPageCurrent.value = paginationPageCurrent.value - 1
       setTimeout(() => {
@@ -187,8 +191,10 @@ async function first() {
   const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
   if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
     await refreshToken(config.public.baseURL)
+    execute()
+  } else {
+    execute()
   }
-  await execute()
   await nextTick(() => {
     paginationPageCurrent.value = 1
     setTimeout(() => {
@@ -198,13 +204,6 @@ async function first() {
 }
 
 onMounted(async () => {
-  const descriptionCard = document.querySelectorAll('.card-content-description')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 170) ?? ''
-      element.textContent = shortDescription + '...'
-    })
-  }
   const resultLast = await lastNumberData(
     config.public.baseURL,
     'extract/findLastExtract'
