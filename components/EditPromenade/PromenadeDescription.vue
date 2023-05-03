@@ -15,7 +15,7 @@ const onInput = (event: Event) => {
 <template>
   <div class="promenade_description font-semibold text-lg mb-8">
     <div class="flex items-center justify-between">
-      <h2>Ajouter une description<sup>*</sup></h2>
+      <h2>Modifier la description<sup>*</sup></h2>
       <div class="max_words font-normal text-xs italic">350 caractères max</div>
     </div>
     <textarea

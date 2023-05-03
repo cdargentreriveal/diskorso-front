@@ -2,6 +2,7 @@
 import Sortable from 'sortablejs'
 import { usePromenadeStore } from '~~/store/promenade'
 const PromenadeStore = usePromenadeStore()
+const idImage = ref(1)
 
 function removeItem(index: number, id: number): void {
   const type = PromenadeStore.items[index].type
@@ -12,7 +13,12 @@ function removeItem(index: number, id: number): void {
   PromenadeStore.items.splice(index, 1)
 }
 
-function handleImageUpload(event: Event, index: number): void {
+async function handleImageUpload(
+  event: Event,
+  index: number,
+  key: string
+): Promise<void> {
+  await idImage.value++
   const file = (event.target as HTMLInputElement).files?.[0]
 
   if (!file) return
@@ -26,9 +32,32 @@ function handleImageUpload(event: Event, index: number): void {
       PromenadeStore.items[index].imageUrl = reader.result as string
     }
     image.src = reader.result as string
+    PromenadeStore.items[index].imageUrl = reader.result as string
   }
   reader.readAsDataURL(file)
+  const sourceDiv = document.createElement('div')
+  sourceDiv.className = 'source py-2 w-full flex items-center'
+  const label = document.createElement('label')
+  label.className = 'text-sm pr-5'
+  label.innerHTML = 'Source : <sup>*</sup>'
+  const input = document.createElement('input')
+  input.className =
+    'p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400'
+  input.type = 'text'
+  input.placeholder = 'Le nom de la source'
+  input.value = PromenadeStore.items[index].source || ''
+  input.addEventListener('input', (event) => {
+    PromenadeStore.setCreationSourceImageContent(
+      index,
+      (event.target as HTMLInputElement).value
+    )
+  })
+  sourceDiv.appendChild(label)
+  sourceDiv.appendChild(input)
+  const parentDiv = document.getElementById('image-upload' + key)
+  parentDiv!.appendChild(sourceDiv)
 }
+
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
   if (blocTransition.value) {
@@ -68,7 +97,10 @@ onMounted(() => {
         v-if="item.type === 'image'"
         class="flex justify-between py-6 items-stretch"
       >
-        <div class="w-full border border-slate-300 p-8 min-h-min">
+        <div
+          :id="'image-upload' + item.key"
+          class="w-full border border-slate-300 p-8 min-h-min"
+        >
           <label for="avatar-upload text-sm translate-y-full block">
             <input
               id="avatar-upload"
@@ -77,7 +109,7 @@ onMounted(() => {
               accept="image/*"
               class="text-sm avatar-upload"
               :class="!item.imageUrl ? 'inherit' : 'hidden'"
-              @change="handleImageUpload($event, index)"
+              @change="handleImageUpload($event, index, item.key)"
             />
             <div
               v-if="item.imageUrl"

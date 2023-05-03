@@ -64,6 +64,11 @@ onMounted(() => {
     })
   }
 })
+const onInput = (key: string, event: Event) => {
+  const target = event.target as HTMLInputElement
+  const value = target.value
+  PromenadeStore.setSourceImageContentEdit(key, value)
+}
 </script>
 
 <template>
@@ -76,57 +81,71 @@ onMounted(() => {
       <!-- Image input -->
       <div
         v-if="item.type === 'image'"
-        class="flex justify-between py-6 items-stretch"
+        class="py-6 items-stretch border-b-1 border-slate-300"
       >
-        <div class="w-full border border-slate-300 p-8 min-h-min">
-          <label for="avatar-upload text-sm translate-y-full inline-block">
-            <input
-              id="avatar-upload"
-              ref="fileInput"
-              type="file"
-              accept="image/*"
-              class="text-sm"
-              :class="!item.imageUrl ? 'inherit' : 'hidden'"
-              @change="handleImageUpload($event, index)"
-            />
-            <div
-              v-if="item.imageUrl"
-              class="banner h-[300px] w-full overflow-hidden cursor-move"
-            >
-              <div class="flex h-full w-full items-start p-2">
-                <img
-                  :src="item.imageUrl"
-                  type="file"
-                  name="files"
-                  class="object-cover h-full w-full rounded-lg block"
-                  alt=""
-                />
+        <div class="flex justify-between py-6 items-stretch">
+          <div class="w-full border border-slate-300 p-8 min-h-min">
+            <label for="avatar-upload text-sm translate-y-full inline-block">
+              <input
+                id="avatar-upload"
+                ref="fileInput"
+                type="file"
+                accept="image/*"
+                class="text-sm"
+                :class="!item.imageUrl ? 'inherit' : 'hidden'"
+                @change="handleImageUpload($event, index)"
+              />
+              <div
+                v-if="item.imageUrl"
+                class="banner h-[300px] w-full overflow-hidden cursor-move"
+              >
+                <div class="flex h-full w-full items-start p-2">
+                  <img
+                    :src="item.imageUrl"
+                    type="file"
+                    name="files"
+                    class="object-cover h-full w-full rounded-lg block"
+                    alt=""
+                  />
+                </div>
               </div>
+            </label>
+          </div>
+          <div class="btns">
+            <button
+              class="p-[14px] border border-slate-300"
+              @click="removeItem(index, index)"
+            >
+              <img
+                src="@/assets/images/icons/corbeille.svg"
+                alt=""
+                class="w-[15px] h-[15px]"
+              />
+            </button>
+            <div
+              class="border border-slate-300 p-3 text-center text-xs text-slate-400"
+            >
+              {{ index + 1 }}
             </div>
-          </label>
-        </div>
-        <div class="btns">
-          <button
-            class="p-[14px] border border-slate-300"
-            @click="removeItem(index, index)"
-          >
-            <img
-              src="@/assets/images/icons/corbeille.svg"
-              alt=""
-              class="w-[15px] h-[15px]"
-            />
-          </button>
-          <div
-            class="border border-slate-300 p-3 text-center text-xs text-slate-400"
-          >
-            {{ index + 1 }}
-          </div>
-          <div
-            class="border bloc-drag border-slate-300 flex items-center justify-center drag cursor-move py-5"
-          >
-            <img src="@/assets/images/icons/drag.svg" alt="" class="w-[15px]" />
+            <div
+              class="border bloc-drag border-slate-300 flex items-center justify-center drag cursor-move py-5"
+            >
+              <img
+                src="@/assets/images/icons/drag.svg"
+                alt=""
+                class="w-[15px]"
+              />
+            </div>
           </div>
         </div>
+        <label class="text-sm pr-5">Source : <sup>*</sup></label
+        ><input
+          class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
+          type="text"
+          placeholder="Le nom de la source"
+          :value="item.source"
+          @input="onInput(item.key, $event)"
+        />
       </div>
       <!-- Transition input -->
       <div

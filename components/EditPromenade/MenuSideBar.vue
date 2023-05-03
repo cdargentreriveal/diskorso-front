@@ -384,6 +384,10 @@ function isCheckedArray(item: any) {
     (categorie: any) => categorie.id === item.id
   )
 }
+const showModal = ref<boolean>(false)
+const toggle = () => {
+  showModal.value = !showModal.value
+}
 </script>
 <template>
   <div
@@ -394,8 +398,150 @@ function isCheckedArray(item: any) {
         <div
           class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
         >
-          <button>Prévisualiser</button>
+          <button @click="toggle()">Prévisualiser</button>
         </div>
+        <ModalBase :show="showModal" class="modal">
+          <div class="relative">
+            <div
+              class="closed absolute top-8 right-8 text-lg cursor-pointer"
+              @click="toggle()"
+            >
+              ✕
+            </div>
+            <div>
+              <div
+                v-if="PromenadeStore.selectPromenade!.main_image === ''"
+                class="h-[55vh] w-full no-image"
+              ></div>
+              <div
+                v-else
+                class="promenade_page_banner h-[55vh] w-full bg-center bg-cover"
+                :style="{
+                  backgroundImage: 'url(' + PromenadeStore.selectPromenade!.main_image + ')',
+                }"
+              ></div>
+              <div
+                v-if="PromenadeStore.selectPromenade!.main_image !== ''"
+                class="text-right text-xs italic p-3"
+              >
+                source :
+                <span class="underline">{{
+                  PromenadeStore.selectPromenade!.main_image_source
+                }}</span>
+              </div>
+              <div
+                class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -sm:w-full -sm:py-15"
+              >
+                <div
+                  class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 -sm:left-10 border border-black border-2"
+                >
+                  <img
+                    v-if="PromenadeStore.selectPromenade!.user.picture === null"
+                    src="@/assets/images/test-avatar.jpg"
+                    alt="image de profil"
+                  />
+                  <img
+                    v-else
+                    :src="PromenadeStore.selectPromenade!.user.picture"
+                    alt="image de profil"
+                  />
+                </div>
+                <div class="promenade_page_content_header px-20 -sm:px-10">
+                  <div
+                    class="promenade_page_content_title text-4xl font-bold -sm:text-2xl"
+                  >
+                    <h1>{{ PromenadeStore.selectPromenade!.title }}</h1>
+                  </div>
+                  <div
+                    class="promenade_page_content_created flex gap-2 italic text-sm py-4"
+                  >
+                    <p>
+                      Créee le :
+                      {{ getDate(PromenadeStore.selectPromenade!.createdAt) }}
+                    </p>
+                    <span>-</span>
+
+                    <p>
+                      par :
+                      <span class="underline">{{
+                        PromenadeStore.selectPromenade!.user.username
+                      }}</span>
+                    </p>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <div class="card-content-categories flex gap-4 py-5">
+                      <div
+                        v-for="(cat, index) in PromenadeStore.selectPromenade!.categories"
+                        :key="index"
+                        class="category"
+                      >
+                        <button
+                          :class="
+                            cat.color +
+                            ' category-btn px-5 py-2 rounded-full text-sm'
+                          "
+                        >
+                          {{ cat.title }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <Separator />
+                </div>
+                <section class="promenade_page_content_details_transition">
+                  <!-- eslint-disable vue/no-v-html -->
+                  <div
+                    v-if="PromenadeStore.selectPromenade! && PromenadeStore.selectPromenade!.content"
+                  >
+                    <div
+                      v-for="(blocsContent, i) in PromenadeStore.selectPromenade!.content"
+                      :key="i"
+                      class="px-20 py-5 -sm:px-5 -sm:py-5"
+                    >
+                      <div
+                        v-if="blocsContent.type === 'transition'"
+                        class="transition"
+                      >
+                        <div v-html="blocsContent.content"></div>
+                      </div>
+                      <div
+                        v-if="blocsContent.type === 'excerpt'"
+                        class="extrait bg-slate-100 relative py-3"
+                      >
+                        <div v-html="blocsContent.content"></div>
+                        <div class="source text-xs italic text-right mb-3">
+                          <span>source: </span>
+                          <span class="underline">{{
+                            blocsContent.source
+                          }}</span>
+                        </div>
+                      </div>
+                      <div
+                        v-if="
+                          blocsContent.type === 'image' && blocsContent.imageUrl
+                        "
+                        class="image"
+                      >
+                        <img
+                          :src="blocsContent.imageUrl!"
+                          alt=""
+                          class="w-full rounded-xl"
+                        />
+                        <div class="text-right text-xs italic p-3">
+                          source :
+                          <span class="underline">{{
+                            blocsContent.source
+                          }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--eslint-enable-->
+                </section>
+              </div>
+            </div>
+          </div>
+        </ModalBase>
         <Separator />
         <div class="categories">
           <div class="categories_title text-base font-semibold mb-5">
@@ -475,5 +621,66 @@ function isCheckedArray(item: any) {
 }
 sup {
   color: #f55a78;
+}
+
+.extrait {
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    left: -5rem;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    right: -5rem;
+  }
+}
+.no-image {
+  background-image: url('@/assets/images/banner-diskorso-promenade-2.jpg');
+  background-position: center;
+  background-size: cover;
+}
+
+.promenade_page {
+  &_banner {
+    background-size: cover;
+    background-position: center;
+  }
+  &_content {
+    &_created {
+      color: var(--gray-color);
+    }
+    &_details {
+      &_transition {
+        color: var(--gray-color);
+        & h2 {
+          color: var(--gray-color);
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+        & p {
+          margin: 1.5rem 0;
+        }
+        & article {
+          margin: 1.5rem 0;
+          padding-right: 1rem;
+          /* background-color: #f8f8f8; */
+          border-right: 2px solid var(--purple-color);
+        }
+      }
+    }
+  }
+}
+.modal {
+  overflow-y: auto;
+  max-height: 680px;
 }
 </style>

@@ -33,15 +33,15 @@ function addExcerptBlock(
   id: number,
   index: number
 ): void {
-  if (PromenadeStore.excerptCount < 4) {
+  if (PromenadeStore.excerptCountEdit < 4) {
     // Vérifier si l'extrait est déjà présent
     nextTick(() => {
-      const existingExcerpt = PromenadeStore.items.find(
+      const existingExcerpt = PromenadeStore.itemsEdit.find(
         (item) => item.type === 'excerpt' && item.id === id
       )
       if (!existingExcerpt) {
         // Ajouter l'extrait s'il n'est pas déjà présent
-        PromenadeStore.pushItem({
+        PromenadeStore.pushItemEdit({
           type: 'excerpt',
           id,
           index,
@@ -49,7 +49,7 @@ function addExcerptBlock(
           key: generateUniqueId(),
           source,
         })
-        PromenadeStore.incrementCount('excerpt')
+        PromenadeStore.incrementCountEdit('excerpt')
       } else {
         PromenadeStore.removeExtractid(id)
       }

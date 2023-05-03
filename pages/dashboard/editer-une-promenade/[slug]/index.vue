@@ -56,7 +56,7 @@ function addTransitionInput(): void {
       :route="datasTitle[0].route.name"
     />
     <div class="container_promenade w-9/12 mx-auto flex gap-8">
-      <CreatePromenadeHandleExtracts />
+      <EditPromenadeHandleExtracts />
 
       <div class="w-8/12 relative">
         <EditPromenadeTitle />

@@ -24,7 +24,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imagesToDelete: string[]
     imagesToDeleteAllPromenade: string[]
     isBannerImageChanged: boolean
-
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',
@@ -188,6 +187,15 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     },
     unsetIsBannerImageChanged() {
       this.isBannerImageChanged = false
+    },
+    setCreationSourceImageContent(id: number, value: string) {
+      this.items[id].source = value
+    },
+    setSourceImageContentEdit(key: string, value: string) {
+      const itemIndex = this.itemsEdit.findIndex((item) => item.key === key)
+      if (itemIndex !== -1) {
+        this.itemsEdit[itemIndex].source = value
+      }
     },
   },
 })
