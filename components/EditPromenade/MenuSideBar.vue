@@ -679,8 +679,4 @@ sup {
     }
   }
 }
-.modal {
-  overflow-y: auto;
-  max-height: 680px;
-}
 </style>
