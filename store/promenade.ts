@@ -24,7 +24,6 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imagesToDelete: string[]
     imagesToDeleteAllPromenade: string[]
     isBannerImageChanged: boolean
-
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',

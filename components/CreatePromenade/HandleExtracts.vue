@@ -119,7 +119,7 @@ const toggle = (extract: any): boolean => {
               >
                 Voir l'extrait
               </div>
-              <ModalBase :show="extract.showModal!">
+              <ModalBase :show="extract.showModal ?? false">
                 <div class="relative">
                   <div
                     class="closed absolute top-8 right-8 text-lg cursor-pointer"
@@ -176,6 +176,8 @@ const toggle = (extract: any): boolean => {
                   </div>
                 </div>
               </ModalBase>
+              {{ PromenadeStore.addExtractid(extract.id) }}
+              {{ PromenadeStore.removeExtractid(extract.id) }}
               <div
                 :class="{
                   'cursor-not-allowed disabled':
