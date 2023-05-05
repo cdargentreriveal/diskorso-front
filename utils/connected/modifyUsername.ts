@@ -20,13 +20,19 @@ export async function modifyUsername(baseUrl: string, username: string) {
     `${baseUrl}/users/admin/modify-username`,
     options
   )
-  const response = await listUsers.json()
-  if (response.statusCode === 401) {
+  if (listUsers.status === 200) {
+    const dataFethed = await listUsers.json()
+    userToStore.currentUser!.username = dataFethed.data.username
+    return dataFethed
+  } else {
     await refreshToken(baseUrl)
-    await fetch(`${baseUrl}/users/admin/modify-username`, options)
+    await refreshToken(baseUrl)
+    const listUsersAdapated = await fetch(
+      `${baseUrl}/users/admin/modify-username`,
+      options
+    )
+    const response2 = await listUsersAdapated.json()
+    userToStore.currentUser!.username = response2.data.username
+    return response2
   }
-  if (response.success) {
-    userToStore.setUser(response.data)
-  }
-  return response
 }

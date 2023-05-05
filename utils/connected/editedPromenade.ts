@@ -18,17 +18,20 @@ export async function editedPromenade(baseURL: string, data: any) {
     const dataFethed = await response.json()
     return dataFethed
   } else {
-    const dataFethed = await response.json()
     await refreshToken(baseURL)
-    await fetch(`${baseURL}/promenadeditor/edit-promenade`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${xsrfToken}`,
-      },
-      credentials: 'include' as RequestCredentials,
-      body: JSON.stringify(data),
-    })
+    const responseUpdated = await fetch(
+      `${baseURL}/promenadeditor/edit-promenade`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${xsrfToken}`,
+        },
+        credentials: 'include' as RequestCredentials,
+        body: JSON.stringify(data),
+      }
+    )
+    const dataFethed2 = await responseUpdated.json()
     const currentUser = userToStore.currentUser
     if (data.published) {
       const publishedPromenadesCount = currentUser!.publishedPromenadesCount + 1
@@ -44,6 +47,6 @@ export async function editedPromenade(baseURL: string, data: any) {
         unpublishedPromenadesCount,
       })
     }
-    return dataFethed
+    return dataFethed2
   }
 }

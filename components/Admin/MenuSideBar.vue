@@ -58,6 +58,17 @@ function submitCreatedPromenade() {
       'error',
       'ok'
     )
+  } else if (
+    PromenadeStore.items
+      .filter((item) => item.type === 'image')
+      .some((item) => !item.source || item.source.trim() === '')
+  ) {
+    displaySwal(
+      'Source manquante',
+      'Merci de remplir la propriété source pour chaque image',
+      'error',
+      'ok'
+    )
   } else {
     $swal
       .fire({
