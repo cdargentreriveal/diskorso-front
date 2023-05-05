@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { useUserStore } from '~~/store/user'
+import { refreshToken } from '~~/utils/connected'
 const config = useRuntimeConfig()
 const userStore = useUserStore()
 const datasTitle = computed((): BtnAdminPage[] => [
@@ -59,7 +60,11 @@ type Response = {
   success: boolean
 }
 
-const { data: users } = await useAsyncData<Response>('users', () =>
+const {
+  data: users,
+  error,
+  execute,
+} = await useAsyncData<Response>('users', () =>
   $fetch(`${config.public.baseURL}/users/admin/all-users`, {
     method: 'GET',
     headers: {
@@ -69,6 +74,17 @@ const { data: users } = await useAsyncData<Response>('users', () =>
     credentials: 'include',
   })
 )
+
+if (error.value !== null) {
+  refreshToken(config.public.baseURL)
+    .then(() => {
+      execute()
+    })
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error('Erreur lors du rafraîchissement du token:', error)
+    })
+}
 
 const usersData = computed(() => {
   if (users.value === null) {

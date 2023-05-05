@@ -88,6 +88,13 @@ watch(extractId, (newVal, oldVal) => {
   }
 })
 
+watch(
+  () => propsCard.extract,
+  (newVal, oldVal) => {
+    extractId.value = newVal.id
+  }
+)
+
 let prevValue = extractsStore.tout_selectionner
 watch(
   () => extractsStore.tout_selectionner,

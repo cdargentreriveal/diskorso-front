@@ -3,6 +3,24 @@ import { usePromenadeStore } from '~~/store/promenade'
 const PromnadeStore = usePromenadeStore()
 const fileInput = ref<HTMLInputElement>()
 
+const { $swal } = useNuxtApp()
+
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string,
+  showCancelButton?: boolean
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+    showCancelButton,
+  })
+}
+
 // Calculer si une photo est sélectionnée
 const hasAvatar = computed(() => !!PromnadeStore.selectPromenade?.main_image)
 const localSourceInput = ref(PromnadeStore.selectPromenade?.main_image_source)
@@ -10,6 +28,28 @@ const localSourceInput = ref(PromnadeStore.selectPromenade?.main_image_source)
 function handleFileUpload(event: Event) {
   const file = (event.target as HTMLInputElement).files?.[0]
   if (!file) return
+  const maxSize = 500 * 1024
+  if (file.size > maxSize) {
+    displaySwal(
+      "Taille de l'image trop grande",
+      `La taille de l'image ne peut dépasser 500 ko`,
+      'error',
+      'Ok'
+    )
+    return
+  }
+  const allowedExtensions = ['png', 'svg', 'jpeg', 'jpg', 'webp']
+  const fileNameParts = file.name.split('.')
+  const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
+  if (!allowedExtensions.includes(fileExtension)) {
+    displaySwal(
+      'Format non autorisé',
+      `Les formats autorisés sont jpeg, png, webp et svg `,
+      'error',
+      'Ok'
+    )
+    return
+  }
   const formData = new FormData()
   formData.append('file', file)
   PromnadeStore.mainImageToUploadEdit = formData
