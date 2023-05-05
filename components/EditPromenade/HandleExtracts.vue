@@ -49,9 +49,8 @@ function addExcerptBlock(
           key: generateUniqueId(),
           source,
         })
+        PromenadeStore.addExtractid(id)
         PromenadeStore.incrementCountEdit('excerpt')
-      } else {
-        PromenadeStore.removeExtractid(id)
       }
     })
   }
@@ -185,8 +184,8 @@ const toggle = (extract: any): boolean => {
               <div
                 :class="{
                   'cursor-not-allowed disabled':
-                    PromenadeStore.excerptCount === 4 /* ||
-                    PromenadeStore.addExtractid(extract.id) */,
+                    PromenadeStore.excerptCount === 4 ||
+                    PromenadeStore.isExcerptAdded.includes(extract.id),
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="

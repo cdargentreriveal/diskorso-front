@@ -10,9 +10,9 @@ const PromenadeStore = usePromenadeStore()
 // }
 function removeItem(index: number, id: number): void {
   const type = PromenadeStore.itemsEdit[index].type
-  // if (type === 'excerpt') {
-  //   PromenadeStore.removeExtractid(id)
-  // }
+  if (type === 'excerpt') {
+    PromenadeStore.removeExtractid(id)
+  }
   if (type === 'image') {
     PromenadeStore.addImageToDeleteArray(
       PromenadeStore.itemsEdit[index].imageUrl!

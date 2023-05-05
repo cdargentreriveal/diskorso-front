@@ -354,6 +354,11 @@ function addCategories(value: any) {
     selectedCategories.push(value)
   }
 }
+function isCheckedArray(item: any) {
+  return PromenadeStore.selectPromenade?.categories.some(
+    (categorie: any) => categorie.id === item.id
+  )
+}
 function isCheckboxDisabled(categorie: Category): boolean {
   return (
     selectedCategories.length === 3 && !selectedCategories.includes(categorie)
@@ -379,11 +384,7 @@ function addMetaDescription(event: Event): void {
   items.value.push({ type: 'metaDescription', content: value })
 }
 
-function isCheckedArray(item: any) {
-  return !!PromenadeStore.selectPromenade?.categories.some(
-    (categorie: any) => categorie.id === item.id
-  )
-}
+
 const showModal = ref<boolean>(false)
 const toggle = () => {
   showModal.value = !showModal.value
