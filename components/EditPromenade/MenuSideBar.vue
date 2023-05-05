@@ -355,8 +355,8 @@ function addCategories(value: any) {
   }
 }
 function isCheckedArray(item: any) {
-  return PromenadeStore.selectPromenade?.categories.some(
-    (categorie: any) => categorie.id === item.id
+  return !!PromenadeStore.selectPromenade?.categories.some(
+    (categorie: Category) => categorie.id === item.id
   )
 }
 function isCheckboxDisabled(categorie: Category): boolean {
@@ -364,7 +364,6 @@ function isCheckboxDisabled(categorie: Category): boolean {
     selectedCategories.length === 3 && !selectedCategories.includes(categorie)
   )
 }
-
 const excerptElementsId = computed(() => {
   const excerptElements = PromenadeStore.items.filter(
     (item: any) => item.type === 'excerpt'
@@ -383,7 +382,6 @@ function addMetaDescription(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaDescription', content: value })
 }
-
 
 const showModal = ref<boolean>(false)
 const toggle = () => {
