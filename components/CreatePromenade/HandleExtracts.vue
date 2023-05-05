@@ -50,6 +50,7 @@ function addExcerptBlock(
           source,
         })
         PromenadeStore.incrementCount('excerpt')
+        PromenadeStore.addExtractid(id)
       } else {
         PromenadeStore.removeExtractid(id)
       }
@@ -125,7 +126,7 @@ const toggle = (extract: any): boolean => {
               >
                 Voir l'extrait
               </div>
-              <ModalBase :show="extract.showModal!">
+              <ModalBase :show="extract.showModal ?? false">
                 <div class="relative">
                   <div
                     class="closed absolute top-8 right-8 text-lg cursor-pointer"
@@ -182,11 +183,12 @@ const toggle = (extract: any): boolean => {
                   </div>
                 </div>
               </ModalBase>
+              {{ PromenadeStore.removeExtractid(extract.id) }}
               <div
                 :class="{
                   'cursor-not-allowed disabled':
-                    PromenadeStore.excerptCount === 4 /* ||
-                    PromenadeStore.addExtractid(extract.id) */,
+                    PromenadeStore.excerptCount === 4 ||
+                    PromenadeStore.isExcerptAdded.includes(extract.id),
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
                 @click="
