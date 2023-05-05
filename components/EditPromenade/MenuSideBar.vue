@@ -569,7 +569,7 @@ const toggle = () => {
           </div>
         </div>
         <Separator />
-        <div class="seo">
+        <!-- <div class="seo">
           <div class="seo_title text-base font-semibold mb-5">
             <h4>SEO</h4>
           </div>
@@ -593,7 +593,7 @@ const toggle = () => {
               @change="addMetaDescription($event)"
             />
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="published px-5 pt-7 pb-[7px]">
         <button
