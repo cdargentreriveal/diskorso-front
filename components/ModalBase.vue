@@ -2,7 +2,7 @@
 defineProps<{
   show: boolean
 }>()
-
+const route = useRouter()
 const alsoSharedState = useState('showModal')
 
 function closeModal(event: any) {
@@ -19,12 +19,18 @@ function closeModal(event: any) {
     <div v-if="show" class="" @click="closeModal">
       <!-- The backdrop -->
       <div class="fixed inset-0 bg-gray-900 opacity-40"></div>
-
       <!-- Where the actual content goes -->
-      <div
-        class="fixed inset-0 flex items-center justify-center overflow-y-scroll modal"
-      >
-        <div class="bg-white text-black w-3/5 shadow-xl rounded-lg">
+      <div class="fixed inset-0 flex items-center justify-center">
+        <div
+          class="bg-white text-black shadow-xl rounded-lg modal"
+          :class="
+            route.currentRoute.value.name !==
+              'dashboard-editer-une-promenade-slug' &&
+            route.currentRoute.value.name !== 'dashboard-creer-une-promenade'
+              ? 'w-7/12'
+              : 'w-9/12 overflow-y-scroll'
+          "
+        >
           <slot></slot>
         </div>
       </div>

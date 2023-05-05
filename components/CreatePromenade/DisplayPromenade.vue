@@ -79,7 +79,7 @@ async function handleImageUpload(
   const sourceDiv = document.createElement('div')
   sourceDiv.className = 'source py-2 w-full flex items-center'
   const label = document.createElement('label')
-  label.className = 'text-sm pr-5'
+  label.className = 'text-sm pr-5 ml-2'
   label.innerHTML = 'Source : <sup>*</sup>'
   const input = document.createElement('input')
   input.className =

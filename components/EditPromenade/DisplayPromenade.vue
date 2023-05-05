@@ -22,9 +22,9 @@ const displaySwal = (
 
 function removeItem(index: number, id: number): void {
   const type = PromenadeStore.itemsEdit[index].type
-  // if (type === 'excerpt') {
-  //   PromenadeStore.removeExtractid(id)
-  // }
+  if (type === 'excerpt') {
+    PromenadeStore.removeExtractid(id)
+  }
   if (type === 'image') {
     PromenadeStore.addImageToDeleteArray(
       PromenadeStore.itemsEdit[index].imageUrl!
@@ -113,10 +113,7 @@ const onInput = (key: string, event: Event) => {
       class="bloc"
     >
       <!-- Image input -->
-      <div
-        v-if="item.type === 'image'"
-        class="py-6 items-stretch border-b-1 border-slate-300"
-      >
+      <div v-if="item.type === 'image'" class="py-6 items-stretch">
         <div class="flex justify-between py-6 items-stretch">
           <div class="w-full border border-slate-300 p-8 min-h-min">
             <label for="avatar-upload text-sm translate-y-full inline-block">
@@ -125,7 +122,7 @@ const onInput = (key: string, event: Event) => {
                 ref="fileInput"
                 type="file"
                 accept="image/*"
-                class="text-sm"
+                class="text-sm avatar-upload"
                 :class="!item.imageUrl ? 'inherit' : 'hidden'"
                 @change="handleImageUpload($event, index)"
               />
@@ -142,6 +139,16 @@ const onInput = (key: string, event: Event) => {
                     alt=""
                   />
                 </div>
+              </div>
+              <div v-if="item.imageUrl" class="mt-2">
+                <label class="text-sm pr-5 ml-2">Source : <sup>*</sup></label
+                ><input
+                  class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
+                  type="text"
+                  placeholder="Le nom de la source"
+                  :value="item.source"
+                  @input="onInput(item.key, $event)"
+                />
               </div>
             </label>
           </div>
@@ -172,14 +179,6 @@ const onInput = (key: string, event: Event) => {
             </div>
           </div>
         </div>
-        <label class="text-sm pr-5">Source : <sup>*</sup></label
-        ><input
-          class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
-          type="text"
-          placeholder="Le nom de la source"
-          :value="item.source"
-          @input="onInput(item.key, $event)"
-        />
       </div>
       <!-- Transition input -->
       <div
@@ -255,5 +254,8 @@ const onInput = (key: string, event: Event) => {
 <style scoped lang="scss">
 .bloc-drag {
   height: calc(100% - 87px);
+}
+.avatar-upload {
+  transform: translateY(100%);
 }
 </style>

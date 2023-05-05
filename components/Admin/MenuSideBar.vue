@@ -276,36 +276,47 @@ const toggle = () => {
           <button @click="toggle()">Prévisualiser</button>
         </div>
         <ModalBase :show="showModalCreate" class="modal">
-          <div class="relative">
+          <div class="relative pb-15">
             <div
               class="closed absolute top-8 right-8 text-lg cursor-pointer"
               @click="toggle()"
             >
               ✕
             </div>
-            <div>
+            <div
+              v-if="
+                PromenadeStore.mainImage !== '' ||
+                PromenadeStore.creationTitlePromenade !== '' ||
+                PromenadeStore.items.length !== 0
+              "
+            >
               <div
                 v-if="PromenadeStore.mainImage === ''"
-                class="h-[55vh] w-full no-image"
+                class="h-[40vh] w-full no-image"
               ></div>
               <div
                 v-else
-                class="promenade_page_banner h-[55vh] w-full bg-center bg-cover"
+                class="promenade_page_banner h-[40vh] w-full bg-center bg-cover"
                 :style="{
-                  backgroundImage: 'url(' + PromenadeStore!.mainImage+ ')',
+                  backgroundImage:
+                    'url(' + PromenadeStore.mainImage + ')' ?? false,
                 }"
               ></div>
               <div
-                v-if="PromenadeStore!.mainImage !== ''"
+                v-if="PromenadeStore.mainImage !== '' ?? false"
                 class="text-right text-xs italic p-3"
               >
-                source :
-                <span class="underline">{{
-                  PromenadeStore.mainImageSource
-                }}</span>
+                <div
+                  class="absolute right-5 w-1/12 text-xs bottom-10 text-white"
+                >
+                  source : <br />
+                  <span class="underline">{{
+                    PromenadeStore.mainImageSource
+                  }}</span>
+                </div>
               </div>
               <div
-                class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -sm:w-full -sm:py-15"
+                class="promenade_page_content w-9/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -sm:w-full -sm:py-15"
               >
                 <div
                   class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 -sm:left-10 border border-black border-2"
@@ -396,7 +407,7 @@ const toggle = () => {
                         class="image"
                       >
                         <img
-                          :src="blocsContent.imageUrl!"
+                          :src="blocsContent.imageUrl ?? false"
                           alt=""
                           class="w-full rounded-xl"
                         />
@@ -412,6 +423,12 @@ const toggle = () => {
                   <!--eslint-enable-->
                 </section>
               </div>
+            </div>
+            <div
+              v-else
+              class="empty-preview h-[40vh] flex items-center justify-center"
+            >
+              <div class="content text-slate-600">Votre promenade est vide</div>
             </div>
           </div>
         </ModalBase>
@@ -484,7 +501,26 @@ const toggle = () => {
   display: flex;
   flex-direction: column;
 }
-
+.extrait {
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    left: -5rem;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    right: -5rem;
+  }
+}
 .grow {
   flex-grow: 1;
 }
