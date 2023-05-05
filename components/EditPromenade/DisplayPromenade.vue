@@ -88,7 +88,7 @@ const onInput = (key: string, event: Event) => {
                 ref="fileInput"
                 type="file"
                 accept="image/*"
-                class="text-sm"
+                class="text-sm avatar-upload"
                 :class="!item.imageUrl ? 'inherit' : 'hidden'"
                 @change="handleImageUpload($event, index)"
               />
@@ -106,7 +106,7 @@ const onInput = (key: string, event: Event) => {
                   />
                 </div>
               </div>
-              <div class="mt-2">
+              <div v-if="item.imageUrl" class="mt-2">
                 <label class="text-sm pr-5 ml-2">Source : <sup>*</sup></label
                 ><input
                   class="p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400"
@@ -220,5 +220,8 @@ const onInput = (key: string, event: Event) => {
 <style scoped lang="scss">
 .bloc-drag {
   height: calc(100% - 87px);
+}
+.avatar-upload {
+  transform: translateY(100%);
 }
 </style>
