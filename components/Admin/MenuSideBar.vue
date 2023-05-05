@@ -265,7 +265,7 @@ const toggle = () => {
           <button @click="toggle()">Prévisualiser</button>
         </div>
         <ModalBase :show="showModalCreate" class="modal">
-          <div class="relative">
+          <div class="relative pb-15">
             <div
               class="closed absolute top-8 right-8 text-lg cursor-pointer"
               @click="toggle()"
@@ -490,7 +490,26 @@ const toggle = () => {
   display: flex;
   flex-direction: column;
 }
-
+.extrait {
+  &:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    left: -5rem;
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 5rem;
+    top: 0;
+    background-color: rgba(241, 245, 249, var(--tw-bg-opacity));
+    right: -5rem;
+  }
+}
 .grow {
   flex-grow: 1;
 }
