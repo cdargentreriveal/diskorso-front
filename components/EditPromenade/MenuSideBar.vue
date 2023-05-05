@@ -495,10 +495,10 @@ const toggle = () => {
                 <section class="promenade_page_content_details_transition">
                   <!-- eslint-disable vue/no-v-html -->
                   <div
-                    v-if="PromenadeStore.selectPromenade! && PromenadeStore.selectPromenade!.content"
+                    v-if="PromenadeStore.selectPromenade! && PromenadeStore.itemsEdit"
                   >
                     <div
-                      v-for="(blocsContent, i) in PromenadeStore.selectPromenade!.content"
+                      v-for="(blocsContent, i) in PromenadeStore.itemsEdit"
                       :key="i"
                       class="px-20 py-5 -sm:px-5 -sm:py-5"
                     >
