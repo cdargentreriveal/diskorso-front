@@ -47,8 +47,13 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     isBannerImageChanged: false,
   }),
   actions: {
-    addExtractid(id: number): void {
-      this.isExcerptAdded.push(id)
+    addExtractid(id: number): boolean {
+      if (this.isExcerptAdded.includes(id)) {
+        return true
+      } else {
+        this.isExcerptAdded.push(id)
+        return false
+      }
     },
     removeExtractid(id: number): void {
       const index = this.isExcerptAdded.indexOf(id)

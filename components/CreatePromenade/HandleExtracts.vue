@@ -49,10 +49,8 @@ function addExcerptBlock(
           key: generateUniqueId(),
           source,
         })
-        PromenadeStore.incrementCount('excerpt')
         PromenadeStore.addExtractid(id)
-      } else {
-        PromenadeStore.removeExtractid(id)
+        PromenadeStore.incrementCount('excerpt')
       }
     })
   }
@@ -183,7 +181,6 @@ const toggle = (extract: any): boolean => {
                   </div>
                 </div>
               </ModalBase>
-              {{ PromenadeStore.removeExtractid(extract.id) }}
               <div
                 :class="{
                   'cursor-not-allowed disabled':
