@@ -44,6 +44,7 @@ function addExcerptBlock(content: string, id: number, index: number): void {
           key: generateUniqueId(),
         })
         PromenadeStore.incrementCount('excerpt')
+        PromenadeStore.addExtractid(id)
       } else {
         PromenadeStore.removeExtractid(id)
       }
