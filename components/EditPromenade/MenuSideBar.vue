@@ -401,9 +401,9 @@ const toggle = () => {
           <button @click="toggle()">Prévisualiser</button>
         </div>
         <ModalBase :show="showModal" class="modal">
-          <div class="relative">
+          <div class="relative pb-15">
             <div
-              class="closed absolute top-8 right-8 text-lg cursor-pointer"
+              class="closed absolute top-8 right-8 text-lg cursor-pointer text-white"
               @click="toggle()"
             >
               ✕
@@ -411,26 +411,30 @@ const toggle = () => {
             <div>
               <div
                 v-if="PromenadeStore.selectPromenade!.main_image === ''"
-                class="h-[55vh] w-full no-image"
+                class="h-[40vh] w-full no-image"
               ></div>
               <div
                 v-else
-                class="promenade_page_banner h-[55vh] w-full bg-center bg-cover"
+                class="promenade_page_banner h-[40vh] w-full bg-center bg-cover"
                 :style="{
                   backgroundImage: 'url(' + PromenadeStore.selectPromenade!.main_image + ')',
                 }"
               ></div>
               <div
                 v-if="PromenadeStore.selectPromenade!.main_image !== ''"
-                class="text-right text-xs italic p-3"
+                class="text-right text-xs italic p-3 relative"
               >
-                source :
-                <span class="underline">{{
-                  PromenadeStore.selectPromenade!.main_image_source
-                }}</span>
+                <div
+                  class="absolute right-5 w-1/12 text-xs bottom-10 text-white"
+                >
+                  source : <br />
+                  <span class="underline">{{
+                    PromenadeStore.selectPromenade!.main_image_source
+                  }}</span>
+                </div>
               </div>
               <div
-                class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -sm:w-full -sm:py-15"
+                class="promenade_page_content w-9/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -sm:w-full -sm:py-15"
               >
                 <div
                   class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 -sm:left-10 border border-black border-2"
@@ -448,7 +452,7 @@ const toggle = () => {
                 </div>
                 <div class="promenade_page_content_header px-20 -sm:px-10">
                   <div
-                    class="promenade_page_content_title text-4xl font-bold -sm:text-2xl"
+                    class="promenade_page_content_title text-3xl font-bold -sm:text-2xl"
                   >
                     <h1>{{ PromenadeStore.selectPromenade!.title }}</h1>
                   </div>
