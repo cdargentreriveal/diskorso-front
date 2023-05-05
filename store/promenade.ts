@@ -20,7 +20,7 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imageCountEdit: number
     transitionCountEdit: number
     excerptCountEdit: number
-    isExcerptAdded: Set<number>
+    isExcerptAdded: number[]
     imagesToDelete: string[]
     imagesToDeleteAllPromenade: string[]
     isBannerImageChanged: boolean
@@ -41,19 +41,20 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imageCountEdit: 0,
     transitionCountEdit: 0,
     excerptCountEdit: 0,
-    isExcerptAdded: new Set<number>(),
+    isExcerptAdded: [],
     imagesToDelete: [],
     imagesToDeleteAllPromenade: [],
     isBannerImageChanged: false,
   }),
   actions: {
-    addExtractid(id: number): boolean {
-      this.isExcerptAdded.add(id)
-      return this.isExcerptAdded.has(id)
+    addExtractid(id: number): void {
+      this.isExcerptAdded.push(id)
     },
-    removeExtractid(id: number) {
-      const result = this.isExcerptAdded.delete(id)
-      return !result
+    removeExtractid(id: number): void {
+      const index = this.isExcerptAdded.indexOf(id)
+      if (index !== -1) {
+        this.isExcerptAdded.splice(index, 1)
+      }
     },
     setPromenade(currentPromenade: Promenade | null) {
       this.selectPromenade = currentPromenade
