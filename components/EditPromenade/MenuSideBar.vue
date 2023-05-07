@@ -3,6 +3,7 @@ import { Category } from '~~/types/Categories'
 import {
   deleteContentImagePromenade,
   editedPromenade,
+  sendContentImagePromenade,
   sendMainImagePromenade,
 } from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
@@ -85,6 +86,10 @@ function submitCreatedPromenade() {
             ) {
               displaySwal('Image trop lourde', url, 'error', 'ok')
             } else {
+              const itemsUpdated = await sendContentImagePromenade(
+                config.public.baseURL,
+                PromenadeStore.selectPromenade!.content
+              )
               const data = reactive({
                 id: PromenadeStore.selectPromenade?.id,
                 title: PromenadeStore.selectPromenade?.title,
@@ -93,7 +98,7 @@ function submitCreatedPromenade() {
                 main_image: url,
                 main_image_source:
                   PromenadeStore.selectPromenade?.main_image_source,
-                content: PromenadeStore.selectPromenade?.content,
+                content: itemsUpdated,
                 meta_title: 'Titre pour le référencement',
                 meta_description: 'Description pour le référencement',
                 categoriesIds: selectedIds,
@@ -144,12 +149,16 @@ function submitCreatedPromenade() {
               }
             }
           } else {
+            const itemsUpdated = await sendContentImagePromenade(
+              config.public.baseURL,
+              PromenadeStore.selectPromenade!.content
+            )
             const data = reactive({
               id: PromenadeStore.selectPromenade?.id,
               title: PromenadeStore.selectPromenade?.title,
               slug: PromenadeStore.selectPromenade?.slug,
               summary: PromenadeStore.selectPromenade?.summary,
-              content: PromenadeStore.selectPromenade?.content,
+              content: itemsUpdated,
               main_image: PromenadeStore.selectPromenade?.main_image,
               main_image_source:
                 PromenadeStore.selectPromenade?.main_image_source,

@@ -10,7 +10,10 @@ export async function sendContentImagePromenade(
   // Map over the items array and replace the imageUrl property with the URL returned from sendImagePromenade
   const updatedItems = await Promise.all(
     items.map(async (item) => {
-      if (item.type === 'image') {
+      if (
+        item.type === 'image' &&
+        !item.imageUrl?.startsWith('https://diskord-api.s3')
+      ) {
         const file = item.imagetoUpload
         const options = {
           method: 'POST',
