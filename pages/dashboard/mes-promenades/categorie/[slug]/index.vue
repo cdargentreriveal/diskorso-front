@@ -10,7 +10,7 @@ import {
 
 const categoriesStore = useCategoryStore()
 const categories = categoriesStore.categories
-const numberOfPromenadeUserConnectedToDisplayByCategory = ref(2)
+const numberOfPromenadeUserConnectedToDisplayByCategory = ref(9)
 
 definePageMeta({
   layout: 'admin',

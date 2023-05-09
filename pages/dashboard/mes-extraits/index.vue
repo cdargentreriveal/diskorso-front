@@ -16,7 +16,7 @@ let xsrfToken: any = null
 if (process.client) {
   xsrfToken = localStorage.getItem('xsrfToken')
 }
-const numberOfExtractToDisplay = ref(3)
+const numberOfExtractToDisplay = ref(9)
 const lastNumberId = ref(0)
 const firstNumberId = ref(0)
 const datasTitle = computed((): BtnAdminPage[] => [

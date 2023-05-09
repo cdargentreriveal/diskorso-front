@@ -26,7 +26,7 @@ const firstNumberId = ref(0)
 // if (xsrfToken && xsrfTokenTime && Date.now() >= +xsrfTokenTime - 2000) {
 //   await refreshToken(config.public.baseURL)
 // }
-const numberOfPromenadeUserConnectedToDisplay = ref(3)
+const numberOfPromenadeUserConnectedToDisplay = ref(9)
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -245,7 +245,7 @@ onMounted(async () => {
     />
     <AdminCatsFilter />
     <DisplayPromenadesSearchSectionConnected locate="mes-promenades" />
-    <div class="w-9/12 mx-auto filter-draft-published">
+    <!-- <div class="w-9/12 mx-auto filter-draft-published">
       <div
         class="flex items-center gap-10 justify-center mb-8 text-sm text-slate-500"
       >
@@ -264,8 +264,8 @@ onMounted(async () => {
           <label :for="'option-' + index">{{ option.label }}</label>
         </div>
       </div>
-    </div>
-    <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
+    </div> -->
+    <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full mt-20">
       <div
         v-for="(promenade, index) in response"
         :key="index"
