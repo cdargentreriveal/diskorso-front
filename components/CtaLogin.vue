@@ -10,11 +10,11 @@
             <span class="font-medium">promenades</span>
           </h3>
           <div
-            class="hand absolute -top-5 -right-[7rem] -md:-right-10 -md:-top-21"
+            class="hand absolute -top-5 -right-[7rem] -md:-right-10 -md:-top-20"
           >
             <img
               src="@/assets/images/icons/hand-two-draw.svg"
-              class="h-[90px]"
+              class="h-[90px] -sm:h-[75px]"
               alt="icone main signe deux"
             />
           </div>

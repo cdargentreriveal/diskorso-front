@@ -1,18 +1,19 @@
 <script lang="ts" setup>
 const searchTag = ref('')
+const windowWidth = ref(process.client ? window.innerWidth : 0)
 </script>
 
 <template>
   <div class="search-bar-container">
     <div
-      class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px]"
+      class="search-bar mt-10 mb-18 flex items-center w-1/2 -xl:w-9/12 -sm:w-full mx-auto h-[50px] -sm:px-5"
     >
-      <div class="search-bar-input w-full h-full">
+      <div class="search-bar-input w-full h-full ">
         <input
           v-model="searchTag"
           type="search"
           placeholder="Rentrer un mot clé pour lancer la recherche..."
-          class="py-4 px-8 w-full h-full border-gray border text-sm italic"
+          class="py-4 px-8 w-full h-full border-gray border text-sm italic "
           @keyup.enter="searchTag.length >= 3 && searchByTag(searchTag)"
         />
       </div>
@@ -25,7 +26,10 @@ const searchTag = ref('')
         "
       >
         <button class="px-8 w-full h-full uppercase">
-          <span class="flex items-center">Rechercher</span>
+          <span v-if="windowWidth > 768" class="flex items-center"
+            >Rechercher</span
+          >
+          <span v-else class="flex items-center"></span>
         </button>
       </div>
       <div v-else class="search-bar-button text-white text-sm h-full">

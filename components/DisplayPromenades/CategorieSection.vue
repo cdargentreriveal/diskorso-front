@@ -7,11 +7,11 @@ const categories = categoriesStore.categories
 
 <template>
   <div class="btns-categories w-9/12 mx-auto mt-5 -sm:w-full">
-    <div class="flex items-center justify-center -sm:inline-block">
+    <div class="flex items-center justify-center -sm:flex-wrap">
       <div
         v-for="(categorie, index) in categories"
         :key="index"
-        class="-sm:w-1/2 -sm:inline-block -sm:text-center -sm:my-3"
+        class="-sm:my-3"
       >
         <NuxtLink :to="`/categorie/${categorie?.slug}`"
           ><button
