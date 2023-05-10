@@ -117,8 +117,8 @@ const usernamesWithCounts = computed(() => {
       <DisplayPromenadesCategorieSection />
       <DisplayPromenadesSearchSection />
       <Separator />
-      <div class="flex mt-10 mb-20">
-        <div class="w-1/3 relative">
+      <div class="flex mt-10 mb-20 -sm:inline-block">
+        <div class="w-1/3 relative -sm:w-full">
           <div class="filter py-5 w-1/2 sticky top-[15%]">
             <div class="filter-categories">
               <div class="filter-title mb-5 font-semibold text-lg">
@@ -181,7 +181,7 @@ const usernamesWithCounts = computed(() => {
             </div>
           </div>
         </div>
-        <div v-if="promenades" class="w-2/3">
+        <div v-if="promenades" class="w-2/3 -sm:w-full">
           <p class="py-5">
             <span class="text-xl font-bold purple-color">{{
               filteredPromenades.length
