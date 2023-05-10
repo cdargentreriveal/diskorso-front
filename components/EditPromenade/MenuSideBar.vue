@@ -347,21 +347,27 @@ const selectedCategories = reactive<Category[]>(
     : []
 )
 
-function addCategories(value: any) {
-  if (selectedCategories.includes(value)) {
-    selectedCategories.splice(selectedCategories.indexOf(value), 1)
+function addCategories(value: Category) {
+  const categoryIndex = selectedCategories.findIndex(
+    (cat) => cat.id === value.id
+  )
+  if (categoryIndex !== -1) {
+    selectedCategories.splice(categoryIndex, 1)
   } else {
     selectedCategories.push(value)
   }
 }
-function isCheckedArray(item: any) {
+
+function isCheckedArray(item: Category) {
   return !!PromenadeStore.selectPromenade?.categories.some(
     (categorie: Category) => categorie.id === item.id
   )
 }
+
 function isCheckboxDisabled(categorie: Category): boolean {
   return (
-    selectedCategories.length === 3 && !selectedCategories.includes(categorie)
+    selectedCategories.length === 3 &&
+    !selectedCategories.some((cat) => cat.id === categorie.id)
   )
 }
 const excerptElementsId = computed(() => {
