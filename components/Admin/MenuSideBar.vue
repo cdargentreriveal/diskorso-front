@@ -128,8 +128,9 @@ function submitCreatedPromenade() {
                 $swal.fire({
                   title: 'Promenade enregistrée!',
                   text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
-                  imageHeight: 120,
-                  imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                  imageHeight: 135,
+                  imageUrl:
+                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
                 })
                 PromenadeStore.setCreationTitlePromenade('')
                 PromenadeStore.setCreationSummaryPromenade('')
@@ -187,8 +188,9 @@ function submitCreatedPromenade() {
                 $swal.fire({
                   title: 'Promenade créee',
                   text: `Votre promenade ${data.title} a bien été créée et publiée`,
-                  imageHeight: 120,
-                  imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                  imageHeight: 135,
+                  imageUrl:
+                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
                 })
                 PromenadeStore.setCreationTitlePromenade('')
                 PromenadeStore.setCreationSummaryPromenade('')
@@ -278,7 +280,7 @@ const toggle = () => {
         <ModalBase :show="showModalCreate" class="modal">
           <div class="relative pb-15">
             <div
-              class="closed absolute top-8 right-8 text-lg cursor-pointer"
+              class="closed text-white absolute top-8 right-8 text-lg cursor-pointer"
               @click="toggle()"
             >
               ✕
