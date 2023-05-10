@@ -36,7 +36,7 @@
         </button>
       </div>
     </div>
-    <div class="heroHeader-image absolute w-full -sm:w-[90vh]">
+    <div class="heroHeader-image absolute w-full -sm:w-[90vh] -md:-left-10">
       <div class="container mx-auto">
         <img
           class="mx-auto 2xl:w-auto xl:w-9/12"
@@ -69,7 +69,7 @@ export default {
   }
   &-image {
     margin-top: 0;
-    z-index: 10;
+    z-index: 5;
     bottom: -0.7vw;
   }
   &-line {

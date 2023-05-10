@@ -10,9 +10,13 @@
             <span class="font-medium">promenades</span>
           </h3>
           <div
-            class="hand absolute top-0 -right-[7rem] -md:-right-10 -md:-top-21"
+            class="hand absolute -top-5 -right-[7rem] -md:-right-10 -md:-top-21"
           >
-            <img src="@/assets/images/icons/hand-two.png" alt="" />
+            <img
+              src="@/assets/images/icons/hand-two-draw.svg"
+              class="h-[90px]"
+              alt="icone main signe deux"
+            />
           </div>
         </div>
         <div
@@ -28,8 +32,8 @@
           </p>
           <div class="w-1/2 mx-auto pt-10">
             <NuxtLink
-              to="/dashboard/creer-une-promenade"
               v-if="user.currentUser !== null"
+              to="/dashboard/creer-une-promenade"
               class="created_btn font-bold p-5 capitalize mx-3 rounded-lg"
             >
               <button>Créer une promenade</button>

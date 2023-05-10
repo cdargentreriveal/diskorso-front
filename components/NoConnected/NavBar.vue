@@ -107,15 +107,15 @@ export default {
               </div>
               <div
                 v-if="menuOpen === true"
-                class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
+                class="menu-burger-open fixed left-0 bg-white w-full h-full"
               >
                 <div
-                  class="closed absolute right-10 top-10"
+                  class="closed absolute right-4 top-10"
                   @click="displayMobileMenu"
                 >
                   Fermer
                 </div>
-                <ul class="py-10 text-xl mt-15">
+                <ul class="py-10 text-xl mt-15 text-black">
                   <li v-for="(item, i) in menus" :key="i" class="py-3">
                     <Anchor
                       v-if="item.type === 'link'"
@@ -190,12 +190,15 @@ li .Inscription {
 }
 
 .menu-burger {
-  & ul {
+  & ul li {
     cursor: pointer;
     color: black;
   }
   &-line {
     cursor: pointer;
+  }
+  .logo {
+    filter: invert(1);
   }
   &-open {
     top: -100%;

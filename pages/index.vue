@@ -35,7 +35,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <HomeHeroHeader />
+  <HomeHeroHeader class="-md:overflow-hidden" />
   <HomeAboutDiskorso class="-md:px-5" />
   <Separator />
   <section class="container mx-auto promenades">
