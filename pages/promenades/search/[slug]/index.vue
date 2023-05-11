@@ -120,7 +120,7 @@ const usernamesWithCounts = computed(() => {
       <div class="flex mt-10 mb-20 -md:inline-block -md:mt-0 w-full">
         <div class="w-1/3 relative -md:w-full">
           <div
-            class="filter py-5 w-1/2 sticky top-[15%] -md:flex -md:w-full -md:px-4"
+            class="filter py-5 w-1/2 sticky top-[15%] -md:flex -lg:w-full -lg:px-4"
           >
             <div class="filter-categories -md:w-7/12">
               <div class="filter-title mb-5 font-semibold text-lg">
@@ -146,7 +146,7 @@ const usernamesWithCounts = computed(() => {
                 </div>
               </div>
             </div>
-            <Separator class="-sm:hidden" />
+            <Separator class="-md:hidden" />
             <div class="filter-author -md:w-5/12">
               <div class="filter-title mb-5 font-semibold text-lg">
                 <h3>
@@ -196,7 +196,7 @@ const usernamesWithCounts = computed(() => {
             <div
               v-for="(promenade, index) in filteredPromenades"
               :key="index"
-              class="card rounded bg-white box-shaddow w-[48%] -md:w-full -xl:mx-5"
+              class="card rounded bg-white box-shaddow w-[48%] -lg:w-full -xl:mx-5"
             >
               <CardsTemplateCard :promenade="promenade" />
             </div>

@@ -150,11 +150,11 @@ if (totalPromenades.value === null) {
     <div class="">
       <TitleSection title-black="Toutes les" title-purple="Promenades" />
     </div>
-    <div class="flex mt-10 mb-20 gap-6 flex-wrap">
+    <div class="flex mt-10 mb-20 gap-6 flex-wrap lg:gap-0 md:my-10">
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
-        class="card rounded bg-white box-shaddow w-[32%] -md:w-full -xl:mx-5"
+        class="card rounded bg-white box-shaddow w-[32%] -md:w-full -md:mx-5 lg:m-3 lg:w-[47%]"
       >
         <CardsTemplateCard :promenade="promenade" />
       </div>
