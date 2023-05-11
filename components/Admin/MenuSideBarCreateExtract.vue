@@ -194,11 +194,13 @@ const selectedCategoryIds = computed(() => {
         </ModalBase>
         <Separator />
         <div class="categories">
-          <div class="categories_title text-base font-semibold mb-5">
+          <div
+            class="categories_title xl:text-sm 2xl:text-base font-semibold mb-5"
+          >
             <h4>Catégories<sup>*</sup></h4>
           </div>
           <div class="categories_list h-[150px] overflow-auto">
-            <ul class="text-sm">
+            <ul class="2xl:text-sm xl:text-[12px] -2xl:leading-4">
               <li
                 v-for="(categorie, index) in categories"
                 :key="index"
@@ -219,10 +221,10 @@ const selectedCategoryIds = computed(() => {
         </div>
         <Separator />
       </div>
-      <div class="published px-5 pt-7 pb-[7px]">
+      <div class="published 2xl:px-5 pt-7 pb-[7px]">
         <button
           type="submit"
-          class="published_btn xl:w-full 2xl:w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
+          class="published_btn 2xl:w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
           @click.prevent="submitCreatedPromenade"
         >
           <span class="font-semibold">Enregistrer</span>
