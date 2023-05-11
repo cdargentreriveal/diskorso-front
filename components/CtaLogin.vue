@@ -5,7 +5,7 @@
         class="cta_login-content py-25 my-15 text-white text-center rounded-lg"
       >
         <div
-          class="justify-center cta_login-content-title font-bold text-4xl uppercase relative inline-block -md:text-3xl"
+          class="justify-center cta_login-content-title font-bold text-4xl uppercase relative inline-block -lg:text-3xl"
         >
           <h3>
             Créateur de <br />

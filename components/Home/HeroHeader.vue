@@ -1,6 +1,6 @@
 <template>
   <div
-    class="heroHeader relative 2xl:h-[80vh] md:h-[50vh] lg:h-[75vh] xl:h-[80vh]"
+    class="heroHeader relative 2xl:h-[80vh] -md:h-[80vh] md:h-[50vh] lg:h-[75vh] xl:h-[80vh]"
   >
     <div
       class="container mx-auto flex items-center justify-center h-full relative"

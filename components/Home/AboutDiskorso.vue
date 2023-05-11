@@ -1,12 +1,12 @@
 <template>
   <section id="about" class="about relative">
     <div
-      class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto xl:-top-5 -sm:-top-15 -xl:mx-5 -lg:w-full lg:left-1/2 md:left-3/12 md:-top-5"
+      class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto xl:-top-5 -sm:-top-15 -xl:mx-5 -lg:w-full sm:left-7/12 md:left-3/12 md:-top-5"
     >
       <img
         src="@/assets/images/diskorso-line-card.svg"
         alt="ligne design"
-        class="mx-auto md:w-7/12 lg:w-full"
+        class="mx-auto"
       />
     </div>
     <div class="container mx-auto my-20">

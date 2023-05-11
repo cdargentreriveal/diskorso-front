@@ -17,7 +17,7 @@
         />
       </div>
     </NuxtLink>
-    <div class="card-content xl:p-5 2xl:p-8 -sm:p-5">
+    <div class="card-content xl:p-5 2xl:p-8 -lg:p-5">
       <div
         class="card-content-title font-bold xl:text-xl 2xl:text-2xl my-1 h-[64px] -sm:text-xl"
       >

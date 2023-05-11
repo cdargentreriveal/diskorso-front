@@ -64,7 +64,7 @@ onUnmounted(() => {
     </div>
   </section>
 
-  <div class="w-8/12 mx-auto -2xl:w-10/12">
+  <div class="w-8/12 mx-auto -2xl:w-10/12 -lg:w-11/12">
     <CtaLogin />
   </div>
 </template>
