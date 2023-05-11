@@ -145,7 +145,7 @@ const selectedCategoryIds = computed(() => {
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
       <div class="px-5 py-7 grow">
         <div
-          class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
+          class="preview 2xl:w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
         >
           <button @click="toggle()">Prévisualiser</button>
         </div>

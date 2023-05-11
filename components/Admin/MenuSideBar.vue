@@ -280,7 +280,10 @@ const toggle = () => {
         <ModalBase :show="showModalCreate" class="modal">
           <div class="relative pb-15">
             <div
-              class="closed text-white absolute top-8 right-8 text-lg cursor-pointer"
+              class="closed absolute top-8 right-8 text-lg cursor-pointer"
+              :class="
+                PromenadeStore.mainImage !== '' ? 'text-white ' : 'text-black '
+              "
               @click="toggle()"
             >
               ✕
@@ -357,7 +360,9 @@ const toggle = () => {
                     </p>
                   </div>
                   <div class="flex justify-between items-center">
-                    <div class="card-content-categories flex gap-4 py-5 -md:gap-2">
+                    <div
+                      class="card-content-categories flex gap-4 py-5 -md:gap-2"
+                    >
                       <div
                         v-for="(cat, index) in selectedCategories"
                         :key="index"
@@ -436,7 +441,9 @@ const toggle = () => {
         </ModalBase>
         <Separator />
         <div class="categories">
-          <div class="categories_title text-base font-semibold mb-5">
+          <div
+            class="categories_title xl:text-sm 2xl:text-base font-semibold mb-5"
+          >
             <h4>Catégories<sup>*</sup></h4>
           </div>
           <div class="categories_list h-[150px] overflow-auto">
@@ -486,7 +493,7 @@ const toggle = () => {
           </div>
         </div> -->
       </div>
-      <div class="published px-5 pt-7 pb-[7px]">
+      <div class="published 2xl:px-5 pt-7 pb-[7px]">
         <button
           type="submit"
           class="published_btn 2xl:w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"

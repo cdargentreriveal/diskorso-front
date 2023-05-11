@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <NuxtLink :to="`/promenades/${promenade.slug}`">
-      <div class="card-image -sm:h-[180px] h-[240px]">
+      <div class="card-image -sm:h-[180px] 2xl:h-[240px] md:h-[200px]">
         <img
           v-if="promenade.main_image === ''"
           class="w-full h-full"
