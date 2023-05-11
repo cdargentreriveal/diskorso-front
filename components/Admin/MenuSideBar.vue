@@ -339,7 +339,7 @@ const toggle = () => {
                 </div>
                 <div class="promenade_page_content_header px-20 -sm:px-10">
                   <div
-                    class="promenade_page_content_title text-4xl font-bold -sm:text-2xl"
+                    class="promenade_page_content_title xl:text-2xl 2xl:text-3xl font-bold -sm:text-2xl"
                   >
                     <h1>{{ PromenadeStore.creationTitlePromenade }}</h1>
                   </div>
