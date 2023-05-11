@@ -385,6 +385,7 @@ const excerptElementsId = computed(() => {
 const selectedIds = computed(() => {
   return selectedCategories.map((category) => category.id)
 })
+
 function addMetaTitle(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaTitle', content: value })
