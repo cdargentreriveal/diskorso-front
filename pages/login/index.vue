@@ -72,7 +72,7 @@ const login = async (email: string, password: string) => {
   <div class="container mx-auto">
     <div class="w-4/12 mx-auto my-10 -md:w-full">
       <div v-if="windowWidth > 1100" class="py-8 text-center -sm:px-4">
-        <div class="title uppercase font-bold text-4xl -md:text-3xl">
+        <div class="title uppercase font-bold 2xl:text-4xl -xl:text-3xl">
           <h2>
             Se connecter <br />
             <span class="font-medium">sur Diskorso</span>
@@ -105,7 +105,7 @@ const login = async (email: string, password: string) => {
           </NuxtLink>
         </p>
       </div>
-      <div v-else class="py-8 text-center -sm:px-4 mt-20">
+      <div v-else class="py-8 text-center -sm:px-4">
         <div class="title uppercase font-bold text-4xl -md:text-xl">
           <h2>
             Dashboard accessible <br />

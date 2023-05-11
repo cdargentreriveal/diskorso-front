@@ -1,7 +1,7 @@
 <template>
   <footer>
-    <div class="footer text-white py-10">
-      <div class="container mx-auto -md:px-5">
+    <div class="footer text-white py-10 lg:px-5 2xl-px-0">
+      <div class="container mx-auto -md:px-5 lg:text-sm 2xl:text-base">
         <div class="flex items-center -sm:block justify-between">
           <div class="w-4/12 -sm:w-full -sm:py-2 -sm:text-left">
             <span>Promenades numériques - Tous droits réservés - 2023</span>

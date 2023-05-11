@@ -77,7 +77,7 @@ export default {
 
           <div class="w-1/2 md:w-10/12">
             <div v-if="windowWidth > 768">
-              <ul class="flex justify-end items-center">
+              <ul class="flex justify-end items-center lg:text-sm 2xl:text-base">
                 <li v-for="(item, i) in menus" :key="i">
                   <Anchor
                     v-if="item.type === 'link'"

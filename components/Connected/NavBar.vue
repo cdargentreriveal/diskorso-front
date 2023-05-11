@@ -87,7 +87,7 @@ export default {
           <div class="w-8/12">
             <ul
               v-if="windowWidth > 768"
-              class="flex justify-end items-center gap-4"
+              class="flex justify-end items-center gap-4 lg:text-sm 2xl:text-base"
             >
               <li v-for="(item, i) in menus" :key="i">
                 <Anchor
