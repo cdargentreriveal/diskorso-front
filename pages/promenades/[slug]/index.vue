@@ -54,7 +54,7 @@ function getPromenadeEdit() {
           <span class="underline">{{ promenade.main_image_source }}</span>
         </div>
         <div
-          class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -lg:w-10/12 -md:w-full -lg:py-15"
+          class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -2xl:w-10/12 -md:w-full -lg:py-15"
         >
           <div
             class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 -sm:left-10 border border-black border-2"
@@ -70,7 +70,7 @@ function getPromenadeEdit() {
           </div>
           <div class="promenade_page_content_header px-20 -sm:px-10">
             <div
-              class="promenade_page_content_title text-4xl font-bold -lg:text-2xl"
+              class="promenade_page_content_title 2xl:text-4xl font-bold xl:text-3xl -lg:text-2xl"
             >
               <h1>{{ promenade.title }}</h1>
             </div>
@@ -145,7 +145,7 @@ function getPromenadeEdit() {
                 </div>
                 <div
                   v-if="blocsContent.type === 'excerpt'"
-                  class="extrait bg-slate-100 relative py-3 -lg:text-sm"
+                  class="extrait bg-slate-100 relative py-3 -2xl:text-sm"
                 >
                   <div v-html="blocsContent.content"></div>
                   <div class="source text-xs italic text-right mb-3">
@@ -183,7 +183,7 @@ function getPromenadeEdit() {
             </div>
           </div>
         </div>
-        <div class="w-8/12 mx-auto -lg:w-11/12">
+        <div class="w-8/12 mx-auto -2xl:w-10/12">
           <CtaLogin />
         </div>
       </div>

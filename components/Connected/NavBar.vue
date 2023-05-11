@@ -72,7 +72,7 @@ export default {
       "
     >
       <div class="container mx-auto py-5 relative">
-        <nav role="navigation" class="flex items-center -sm:mx-5">
+        <nav role="navigation" class="flex items-center mx-5">
           <div class="w-4/12">
             <div class="logo">
               <NuxtLink to="/">
