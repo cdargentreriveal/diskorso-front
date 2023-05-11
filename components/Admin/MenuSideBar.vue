@@ -357,7 +357,7 @@ const toggle = () => {
                     </p>
                   </div>
                   <div class="flex justify-between items-center">
-                    <div class="card-content-categories flex gap-4 py-5">
+                    <div class="card-content-categories flex gap-4 py-5 -md:gap-2">
                       <div
                         v-for="(cat, index) in selectedCategories"
                         :key="index"

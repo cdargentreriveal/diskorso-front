@@ -1,10 +1,10 @@
 <template>
-  <div class="heroHeader relative">
+  <div class="heroHeader relative h-[80vh] md:h-[50vh] lg:h-[75vh]">
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
       <div
-        class="heroHeader-line absolute 2xl:w-9/12 xl:w-[70vw] -sm:w-[90vh] left-1/2"
+        class="heroHeader-line absolute 2xl:w-9/12 xl:w-[70vw] -sm:w-[90vh] left-1/2 md:w-full lg:w-[80vw]"
       >
         <img
           src="@/assets/images/diskorso-line-2.svg"
@@ -13,7 +13,7 @@
         />
       </div>
       <div
-        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-3xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem] -sm:-mt-[0]"
+        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-3xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem] -sm:-mt-[0] md:text-3xl"
       >
         <h1>
           <span class="font-bold">Plateforme Collaborative</span> <br />
@@ -36,7 +36,7 @@
         </button>
       </div>
     </div>
-    <div class="heroHeader-image absolute w-full -sm:w-[90vh] -md:-left-10">
+    <div class="heroHeader-image absolute w-full -sm:w-[90vh] -sm:-left-10">
       <div class="container mx-auto">
         <img
           class="mx-auto 2xl:w-auto xl:w-9/12"
@@ -61,7 +61,6 @@ export default {
 
 <style lang="scss" scoped>
 .heroHeader {
-  height: 80vh;
   background-color: var(--purple-color);
   animation: mymove 25s infinite ease-in-out;
   &-button {

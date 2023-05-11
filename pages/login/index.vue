@@ -71,7 +71,7 @@ const login = async (email: string, password: string) => {
 <template>
   <div class="container mx-auto">
     <div class="w-4/12 mx-auto my-10 -md:w-full">
-      <div v-if="windowWidth > 768" class="py-8 text-center -sm:px-4">
+      <div v-if="windowWidth > 1100" class="py-8 text-center -sm:px-4">
         <div class="title uppercase font-bold text-4xl -md:text-3xl">
           <h2>
             Se connecter <br />

@@ -26,7 +26,7 @@
       <div class="card-content-date text-sm gray-color mt-2 -sm:text-xs">
         Crée le : {{ getDate(promenade.createdAt) }}
       </div>
-      <div class="card-content-categories flex gap-4 py-5">
+      <div class="card-content-categories flex gap-4 py-5 -md:gap-2">
         <div
           v-for="(cat, index) in promenade.categories"
           :key="index"

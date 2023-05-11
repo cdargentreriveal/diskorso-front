@@ -61,10 +61,10 @@ export default {
         <span class="purple-color">100% gratuite</span>
       </p>
     </div>
-    <div class="main-nav w-full top-12 left-0 right-0 z-10">
+    <div class="main-nav w-full top-12 left-0 right-0 z-10 md:px-4">
       <div class="container mx-auto py-10 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
-          <div class="w-1/2">
+          <div class="w-1/2 md:w-2/12">
             <div class="logo">
               <NuxtLink to="/">
                 <img
@@ -75,7 +75,7 @@ export default {
             </div>
           </div>
 
-          <div class="w-1/2">
+          <div class="w-1/2 md:w-10/12">
             <div v-if="windowWidth > 768">
               <ul class="flex justify-end items-center">
                 <li v-for="(item, i) in menus" :key="i">
