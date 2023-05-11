@@ -112,7 +112,7 @@ watch(
 
 <template>
   <div class="card-extrait rounded-md overflow-hidden bg-white box-shaddow">
-    <div class="card-content p-6">
+    <div class="card-content 2xl:p-6 xl:p-3 xl:py-6">
       <!-- Rounded switch -->
       <div class="switch-btn mb-4 flex items-center text-xs justify-end">
         <div class="mr-2 visible">Sélectionner</div>
@@ -128,7 +128,9 @@ watch(
       </div>
       <hr class="my-6" />
       <span class="small text-slate-400">{{ getDate(extract.createdAt) }}</span>
-      <div class="card-content-title font-bold text-lg my-1 mb-3 h-[50px]">
+      <div
+        class="card-content-title font-bold 2xl:text-lg my-1 mb-3 2xl:h-[50px] xl:h-[40px]"
+      >
         <h2>{{ extract.name }}</h2>
       </div>
       <div class="card-content-categories flex py-5 gap-2">
@@ -170,7 +172,7 @@ watch(
                   4
                 )"
                 :key="index"
-                class="-ml-3"
+                class="first:ml-0 -ml-3"
               >
                 <img
                   v-if="extractElement.main_image"
