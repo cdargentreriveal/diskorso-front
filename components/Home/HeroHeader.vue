@@ -1,5 +1,7 @@
 <template>
-  <div class="heroHeader relative h-[80vh] md:h-[50vh] lg:h-[75vh]">
+  <div
+    class="heroHeader relative 2xl:h-[80vh] md:h-[50vh] lg:h-[75vh] xl:h-[80vh]"
+  >
     <div
       class="container mx-auto flex items-center justify-center h-full relative"
     >
@@ -9,11 +11,11 @@
         <img
           src="@/assets/images/diskorso-line-2.svg"
           alt="ligne design diskorso"
-          class="mx-auto 2xl:-top-25 -xl:-top-[10vh]"
+          class="mx-auto 2xl:-top-25 -2xl:-top-[10vh]"
         />
       </div>
       <div
-        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-3xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem] -sm:-mt-[0] md:text-3xl"
+        class="heroHeader-title text-center uppercase relative blur-lg text-white -sm:text-3xl 2xl:text-6xl xl:text-5xl -mt-[1.75rem] -sm:-mt-[0] md:text-3xl xl:"
       >
         <h1>
           <span class="font-bold">Plateforme Collaborative</span> <br />

@@ -120,7 +120,7 @@ const usernamesWithCounts = computed(() => {
       <div class="flex mt-10 mb-20 -md:inline-block -md:mt-0 w-full">
         <div class="w-1/3 relative -md:w-full">
           <div
-            class="filter py-5 w-1/2 sticky top-[15%] -md:flex -lg:w-full -lg:px-4"
+            class="filter py-5 w-1/2 sticky top-[15%] -md:flex -lg:w-full -2xl:px-4"
           >
             <div class="filter-categories -md:w-7/12">
               <div class="filter-title mb-5 font-semibold text-lg">
@@ -183,7 +183,7 @@ const usernamesWithCounts = computed(() => {
             </div>
           </div>
         </div>
-        <div v-if="promenades" class="w-2/3 -md:w-full -md:px-4">
+        <div v-if="promenades" class="w-2/3 -md:w-full -2xl:px-4">
           <p class="py-5">
             <span class="text-xl font-bold purple-color">{{
               filteredPromenades.length
@@ -192,13 +192,16 @@ const usernamesWithCounts = computed(() => {
             <span v-else> résultats </span>pour la recherche
             <span class="text-lg italic">“{{ route.params.slug }}“</span>
           </p>
-          <div class="flex flex-wrap gap-6 pt-4">
+          <div class="flex my-20 flex-wrap -sm:my-8 md:my-10">
             <div
               v-for="(promenade, index) in filteredPromenades"
               :key="index"
-              class="card rounded bg-white box-shaddow w-[48%] -lg:w-full -xl:mx-5"
+              class="card bg-white -lg:w-full p-4 xl:w-1/2"
             >
-              <CardsTemplateCard :promenade="promenade" />
+              <CardsTemplateCard
+                :promenade="promenade"
+                class="box-shaddow rounded-lg overflow-hidden"
+              />
             </div>
           </div>
         </div>

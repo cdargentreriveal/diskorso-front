@@ -61,7 +61,7 @@ export default {
         <span class="purple-color">100% gratuite</span>
       </p>
     </div>
-    <div class="main-nav w-full top-12 left-0 right-0 z-10 md:px-4">
+    <div class="main-nav w-full top-12 left-0 right-0 z-10 px-4">
       <div class="container mx-auto py-10 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
           <div class="w-1/2 md:w-2/12">

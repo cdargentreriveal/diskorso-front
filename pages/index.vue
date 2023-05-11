@@ -47,13 +47,16 @@ onUnmounted(() => {
         </h2>
       </div>
     </div>
-    <div class="flex my-20 gap-6 flex-wrap -sm:my-8 lg:gap-0 md:my-10">
+    <div class="flex my-20 flex-wrap -sm:my-8 md:my-10">
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
-        class="card rounded bg-white box-shaddow w-[32%] -md:w-full -md:mx-5 lg:m-3 lg:w-[47%]"
+        class="card bg-white xl:w-4/12 -md:w-full -md:mx-5 lg:w-[47%] p-4 -md:px-0"
       >
-        <CardsTemplateCard :promenade="promenade" />
+        <CardsTemplateCard
+          :promenade="promenade"
+          class="box-shaddow rounded-lg overflow-hidden"
+        />
       </div>
     </div>
     <div class="text-center">
