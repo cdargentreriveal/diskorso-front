@@ -183,7 +183,7 @@ function getPromenadeEdit() {
             </div>
           </div>
         </div>
-        <div class="w-8/12 mx-auto xl:w-10/12 -lg:w-11/12">
+        <div class="2xl:w-8/12 mx-auto xl:w-10/12 -lg:w-11/12">
           <CtaLogin />
         </div>
       </div>

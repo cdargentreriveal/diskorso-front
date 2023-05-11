@@ -11,7 +11,7 @@ const config = useRuntimeConfig()
     class="menu fixed left-0 top-0 h-[100vh] bg-white 2xl:w-[210px] xl:w-[11vw] z-10 border-r-1 border-slate-300"
   >
     <div class="menu-admin pt-[150px] pb-[10px] h-full">
-      <ul class="divide-y divide-slate-300 text- xl:text-[11px]">
+      <ul class="divide-y divide-slate-300 text- xl:text-[11px] 2xl:text-xs">
         <NuxtLink
           to="/dashboard/tutoriel"
           class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4"

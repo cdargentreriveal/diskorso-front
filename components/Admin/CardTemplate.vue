@@ -38,11 +38,12 @@ function submitDeletedPromenade() {
         title: 'Êtes-vous sûr?',
         text: 'La suppression de promenade est définitive!',
         icon: 'warning',
+        showCloseButton: true,
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        confirmButtonColor: '#69B8D9',
+        cancelButtonColor: '#F55A78',
         confirmButtonText: 'Oui, je supprime!',
-        cancelButtonText: 'Fermer',
+        cancelButtonText: 'Annuler',
       })
       .then(async (result: any) => {
         if (result.isConfirmed) {

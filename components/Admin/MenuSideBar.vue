@@ -36,6 +36,7 @@ const displaySwal = (
     imageUrl,
   })
 }
+
 function submitCreatedPromenade() {
   if (PromenadeStore.creationTitlePromenade === '') {
     displaySwal(
@@ -72,16 +73,16 @@ function submitCreatedPromenade() {
   } else {
     $swal
       .fire({
-        title: 'Souhaitez-vous?',
+        title: 'Souhaitez-vous ?',
         icon: 'question',
-        showCancelButton: true,
+        iconColor: 'rgba(148, 163, 184, 0.5)',
+        showCloseButton: true,
         showDenyButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        denyButtonColor: '#3085d6',
+        confirmButtonColor: '#69B8D9',
+        denyButtonColor: '#986FFC',
         confirmButtonText: 'Enregistrer en brouillon',
         denyButtonText: 'Publier la promenade',
-        cancelButtonText: 'Fermer',
+        cancelButtonText: 'Annuler',
         cancelButtonMargin: 15,
         width: '48em',
       })
