@@ -21,7 +21,7 @@
               </h2>
             </div>
             <div
-              class="about-description mt-10 -md:w-full -md:text-sm md:text-sm xl:text-base"
+              class="about-description mt-10 -md:w-full -md:text-sm md:text-sm xl:text-md 2xl:text-base"
             >
               <p>
                 Diskorso est une plateforme collaborative permettant de mettre
