@@ -1,10 +1,10 @@
 <template>
   <div class="card">
     <NuxtLink :to="`/promenades/${promenade.slug}`">
-      <div class="card-image -sm:h-[180px] h-[240px]">
+      <div class="card-image -sm:h-[180px] 2xl:h-[240px] md:h-[200px]">
         <img
           v-if="promenade.main_image === ''"
-          class="w-full"
+          class="w-full h-full"
           src="../../assets/images/banner-diskorso-promenade.jpg"
           :alt="promenade.title"
         />
@@ -17,16 +17,16 @@
         />
       </div>
     </NuxtLink>
-    <div class="card-content p-8 -sm:p-5">
+    <div class="card-content xl:p-5 2xl:p-8 -lg:p-5">
       <div
-        class="card-content-title font-bold text-2xl my-1 h-[64px] -sm:text-xl"
+        class="card-content-title font-bold xl:text-xl 2xl:text-2xl my-1 h-[64px] -sm:text-xl"
       >
         <h2>{{ promenade.title }}</h2>
       </div>
       <div class="card-content-date text-sm gray-color mt-2 -sm:text-xs">
         Crée le : {{ getDate(promenade.createdAt) }}
       </div>
-      <div class="card-content-categories flex gap-4 py-5">
+      <div class="card-content-categories flex gap-4 py-5 -md:gap-2">
         <div
           v-for="(cat, index) in promenade.categories"
           :key="index"

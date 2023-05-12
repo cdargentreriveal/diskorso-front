@@ -61,10 +61,10 @@ export default {
         <span class="purple-color">100% gratuite</span>
       </p>
     </div>
-    <div class="main-nav w-full top-12 left-0 right-0 z-10">
+    <div class="main-nav w-full top-12 left-0 right-0 z-10 px-4">
       <div class="container mx-auto py-10 relative">
         <nav role="navigation" class="flex items-center -sm:mx-5">
-          <div class="w-1/2">
+          <div class="w-1/2 md:w-2/12">
             <div class="logo">
               <NuxtLink to="/">
                 <img
@@ -75,7 +75,7 @@ export default {
             </div>
           </div>
 
-          <div class="w-1/2">
+          <div class="w-1/2 md:w-10/12">
             <div v-if="windowWidth > 768">
               <ul class="flex justify-end items-center">
                 <li v-for="(item, i) in menus" :key="i">
@@ -107,15 +107,15 @@ export default {
               </div>
               <div
                 v-if="menuOpen === true"
-                class="menu-burger-open fixed left-0 bg-white w-full h-full z-50"
+                class="menu-burger-open fixed left-0 bg-white w-full h-full"
               >
                 <div
-                  class="closed absolute right-10 top-10"
+                  class="closed absolute right-4 top-10"
                   @click="displayMobileMenu"
                 >
                   Fermer
                 </div>
-                <ul class="py-10 text-xl mt-15">
+                <ul class="py-10 text-xl mt-15 text-black">
                   <li v-for="(item, i) in menus" :key="i" class="py-3">
                     <Anchor
                       v-if="item.type === 'link'"
@@ -190,12 +190,15 @@ li .Inscription {
 }
 
 .menu-burger {
-  & ul {
+  & ul li {
     cursor: pointer;
     color: black;
   }
   &-line {
     cursor: pointer;
+  }
+  .logo {
+    filter: invert(1);
   }
   &-open {
     top: -100%;

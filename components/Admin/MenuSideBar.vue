@@ -36,6 +36,7 @@ const displaySwal = (
     imageUrl,
   })
 }
+
 function submitCreatedPromenade() {
   if (PromenadeStore.creationTitlePromenade === '') {
     displaySwal(
@@ -72,16 +73,16 @@ function submitCreatedPromenade() {
   } else {
     $swal
       .fire({
-        title: 'Souhaitez-vous?',
+        title: 'Souhaitez-vous ?',
         icon: 'question',
-        showCancelButton: true,
+        iconColor: 'rgba(148, 163, 184, 0.5)',
+        showCloseButton: true,
         showDenyButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        denyButtonColor: '#3085d6',
+        confirmButtonColor: '#69B8D9',
+        denyButtonColor: '#986FFC',
         confirmButtonText: 'Enregistrer en brouillon',
         denyButtonText: 'Publier la promenade',
-        cancelButtonText: 'Fermer',
+        cancelButtonText: 'Annuler',
         cancelButtonMargin: 15,
         width: '48em',
       })
@@ -128,8 +129,9 @@ function submitCreatedPromenade() {
                 $swal.fire({
                   title: 'Promenade enregistrée!',
                   text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
-                  imageHeight: 120,
-                  imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                  imageHeight: 135,
+                  imageUrl:
+                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
                 })
                 PromenadeStore.setCreationTitlePromenade('')
                 PromenadeStore.setCreationSummaryPromenade('')
@@ -187,8 +189,9 @@ function submitCreatedPromenade() {
                 $swal.fire({
                   title: 'Promenade créee',
                   text: `Votre promenade ${data.title} a bien été créée et publiée`,
-                  imageHeight: 120,
-                  imageUrl: 'https://i.imgur.com/4NZ6uLY.jpg',
+                  imageHeight: 135,
+                  imageUrl:
+                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
                 })
                 PromenadeStore.setCreationTitlePromenade('')
                 PromenadeStore.setCreationSummaryPromenade('')
@@ -266,12 +269,12 @@ const toggle = () => {
 </script>
 <template>
   <div
-    class="menu fixed right-0 top-0 h-[100vh] bg-white w-[220px] border-l-1 border-slate-300 z-10"
+    class="menu fixed right-0 top-0 h-[100vh] bg-white 2xl:w-[210px] xl:w-[11vw] border-l-1 border-slate-300 z-10"
   >
     <div class="menu-admin pt-[150px] pb-[25px] h-full">
-      <div class="px-5 py-7 grow">
+      <div class="2xl:px-5 2xl:py-7 xl:p-4 grow">
         <div
-          class="preview w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
+          class="preview 2xl:w-8/12 mx-auto text-center px-3 py-2 text-xs rounded-md border border-black mt-2"
         >
           <button @click="toggle()">Prévisualiser</button>
         </div>
@@ -279,6 +282,9 @@ const toggle = () => {
           <div class="relative pb-15">
             <div
               class="closed absolute top-8 right-8 text-lg cursor-pointer"
+              :class="
+                PromenadeStore.mainImage !== '' ? 'text-white ' : 'text-black '
+              "
               @click="toggle()"
             >
               ✕
@@ -334,7 +340,7 @@ const toggle = () => {
                 </div>
                 <div class="promenade_page_content_header px-20 -sm:px-10">
                   <div
-                    class="promenade_page_content_title text-4xl font-bold -sm:text-2xl"
+                    class="promenade_page_content_title xl:text-2xl 2xl:text-3xl font-bold -sm:text-2xl"
                   >
                     <h1>{{ PromenadeStore.creationTitlePromenade }}</h1>
                   </div>
@@ -355,7 +361,9 @@ const toggle = () => {
                     </p>
                   </div>
                   <div class="flex justify-between items-center">
-                    <div class="card-content-categories flex gap-4 py-5">
+                    <div
+                      class="card-content-categories flex gap-4 py-5 -md:gap-2"
+                    >
                       <div
                         v-for="(cat, index) in selectedCategories"
                         :key="index"
@@ -434,11 +442,13 @@ const toggle = () => {
         </ModalBase>
         <Separator />
         <div class="categories">
-          <div class="categories_title text-base font-semibold mb-5">
+          <div
+            class="categories_title xl:text-sm 2xl:text-base font-semibold mb-5"
+          >
             <h4>Catégories<sup>*</sup></h4>
           </div>
           <div class="categories_list h-[150px] overflow-auto">
-            <ul class="text-sm">
+            <ul class="2xl:text-sm xl:text-[12px] -2xl:leading-4">
               <li
                 v-for="(categorie, index) in categories"
                 :key="index"
@@ -484,10 +494,10 @@ const toggle = () => {
           </div>
         </div> -->
       </div>
-      <div class="published px-5 pt-7 pb-[7px]">
+      <div class="published 2xl:px-5 pt-7 pb-[7px]">
         <button
           type="submit"
-          class="published_btn w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
+          class="published_btn 2xl:w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
           @click.prevent="submitCreatedPromenade"
         >
           <span class="font-semibold">Enregistrer</span>

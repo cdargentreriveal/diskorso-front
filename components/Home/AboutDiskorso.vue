@@ -1,7 +1,7 @@
 <template>
   <section id="about" class="about relative">
     <div
-      class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto xl:-top-5 -sm:-top-15"
+      class="diskorso-line-car absolute xl:w-1/2 2xl:w-auto xl:-top-5 -sm:-top-15 -xl:mx-5 -lg:w-full -xl:left-6/12 md:-top-5"
     >
       <img
         src="@/assets/images/diskorso-line-card.svg"
@@ -20,7 +20,9 @@
                 >
               </h2>
             </div>
-            <div class="about-description mt-10 -md:w-full -md:text-sm">
+            <div
+              class="about-description mt-10 -md:w-full -md:text-sm md:text-sm xl:text-md 2xl:text-base"
+            >
               <p>
                 Diskorso est une plateforme collaborative permettant de mettre
                 en relation les contributeurs, qui confectionneraient un nouveau

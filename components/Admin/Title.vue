@@ -1,7 +1,7 @@
 <template>
   <div class="w-9/12 mx-auto pt-[150px]">
     <div class="pt-7 flex items-center justify-between">
-      <div class="title uppercase font-bold text-2xl -md:text-2xl">
+      <div class="title uppercase font-bold xl:text-xl 2xl:text-2xl">
         <h2>
           {{ titleBlack }}
           <span class="font-medium purple-color">{{ titlePurple }}</span>
@@ -76,7 +76,7 @@
       <div v-else>
         <NuxtLink
           :to="'/' + propsAdminTitle.route"
-          class="px-4 py-3 text-sm rounded-md text-white"
+          class="px-4 py-3 text-sm rounded-md text-white lg:text-xs xl:text-sm"
           :class="actionBtn.length > 1 ? 'action-button ' : 'link-button '"
         >
           {{ actionBtn[0].action }}

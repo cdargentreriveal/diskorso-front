@@ -8,20 +8,23 @@ const config = useRuntimeConfig()
 
 <template>
   <div
-    class="menu fixed left-0 top-0 h-[100vh] bg-white w-[220px] z-10 border-r-1 border-slate-300"
+    class="menu fixed left-0 top-0 h-[100vh] bg-white 2xl:w-[210px] xl:w-[11vw] z-10 border-r-1 border-slate-300"
   >
     <div class="menu-admin pt-[150px] pb-[10px] h-full">
-      <ul class="divide-y divide-slate-300 text-xs">
+      <ul class="divide-y divide-slate-300 text- xl:text-[11px] 2xl:text-xs">
         <NuxtLink
           to="/dashboard/tutoriel"
-          class="px-5 py-7 flex items-center gap-2"
+          class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4"
         >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/eye.svg" alt=""
           /></span>
           <span>Tutoriel</span>
         </NuxtLink>
-        <NuxtLink to="/dashboard" class="px-5 py-7 flex items-center gap-2">
+        <NuxtLink
+          to="/dashboard"
+          class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4"
+        >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
           /></span>
@@ -29,16 +32,16 @@ const config = useRuntimeConfig()
         </NuxtLink>
         <NuxtLink
           to="/dashboard/creer-une-promenade"
-          class="px-5 py-7 flex items-center gap-2"
+          class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4"
         >
-          <span class="w-[16px]"
+          <span class="2xl:w-[16px] xl:w-[23px] "
             ><img src="@/assets/images/icons/menu-admin/create.svg" alt=""
           /></span>
           <span>Créer une promenade</span>
         </NuxtLink>
         <NuxtLink
           to="/dashboard/mes-extraits"
-          class="px-5 py-7 flex items-center gap-2"
+          class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4"
         >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/extrait.svg" alt=""
@@ -52,7 +55,7 @@ const config = useRuntimeConfig()
         >
           <NuxtLink
             to="/dashboard/gestion-utilisateurs"
-            class="px-5 py-7 flex items-center gap-2 bg-slate-100 relative"
+            class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4 bg-slate-100 relative"
           >
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/user.svg" alt=""
@@ -66,7 +69,7 @@ const config = useRuntimeConfig()
           </NuxtLink>
           <NuxtLink
             to="/dashboard/gestion-promenades"
-            class="px-5 py-7 flex items-center gap-2 bg-slate-100 relative"
+            class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4 bg-slate-100 relative"
           >
             <span class="w-[16px]"
               ><img src="@/assets/images/icons/menu-admin/promenade.svg" alt=""
@@ -84,14 +87,14 @@ const config = useRuntimeConfig()
       <ul class="divide-y divide-slate-300 text-xs">
         <NuxtLink
           to="/dashboard/account"
-          class="px-5 py-7 flex items-center gap-2"
+          class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4"
         >
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/compte.svg" alt=""
           /></span>
           <span>Mon compte</span>
         </NuxtLink>
-        <li class="px-5 py-7 flex items-center gap-2">
+        <li class="2xl:px-5 2xl:py-7 flex items-center gap-2 xl:p-4">
           <span class="w-[16px]"
             ><img src="@/assets/images/icons/menu-admin/deconnexion.svg" alt=""
           /></span>

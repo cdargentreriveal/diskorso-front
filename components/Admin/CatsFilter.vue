@@ -52,7 +52,7 @@ const categories = categoriesStore.categories
             >
               <button
                 v-if="route.name === 'dashboard-mes-extraits'"
-                :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie?.color} uppercase`"
+                :class="`category-btn px-8 py-4 mx-2 rounded-full xl:text-xs 2xl:text-sm ${categorie?.color} uppercase`"
               >
                 {{ categorie?.title }}
               </button>
@@ -60,7 +60,7 @@ const categories = categoriesStore.categories
                 v-else
                 :class="{
                   'category-btn': true,
-                  'px-8 py-4 mx-2 rounded-full text-sm uppercase': true,
+                  'px-8 py-4 mx-2 rounded-full xl:text-xs 2xl:text-sm uppercase': true,
                   [categorie.color]: categorie.slug === route.params.slug,
                   'bg-slate-200 text-white':
                     categorie.slug !== route.params.slug,
@@ -76,7 +76,7 @@ const categories = categoriesStore.categories
             >
               <button
                 v-if="route.name === 'dashboard'"
-                :class="`category-btn px-8 py-4 mx-2 rounded-full text-sm ${categorie?.color} uppercase`"
+                :class="`category-btn px-8 py-4 mx-2 rounded-full xl:text-xs 2xl:text-sm ${categorie?.color} uppercase`"
               >
                 {{ categorie.title }}
               </button>
@@ -84,7 +84,7 @@ const categories = categoriesStore.categories
                 v-else
                 :class="{
                   'category-btn': true,
-                  'px-8 py-4 mx-2 rounded-full text-sm uppercase': true,
+                  'px-8 py-4 mx-2 rounded-full xl:text-xs 2xl:text-sm uppercase': true,
                   [categorie.color]: categorie.slug === route.params.slug,
                   'bg-slate-200 text-white':
                     categorie.slug !== route.params.slug,

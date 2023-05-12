@@ -78,7 +78,7 @@ const onInput = (event: Event) => {
 </script>
 
 <template>
-  <div class="promenade_image font-semibold text-lg mb-10">
+  <div class="promenade_image font-semibold xl:text-md 2xl:text-lg mb-10">
     <h2>Ajouter la photo mise en avant</h2>
     <div class="my-5">
       <label for="avatar-upload text-sm">
