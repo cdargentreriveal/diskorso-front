@@ -40,8 +40,9 @@ const propsCard = defineProps({
         </button>
       </div>
       <div v-else class="search-bar-button text-white text-sm h-full">
-        {{ locate }}
-        <NuxtLink :to="`/dashboard/${{ locate }}/search/${searchTagConnected}`">
+        <NuxtLink
+          :to="`/dashboard/` + locate + `/search/${searchTagConnected}`"
+        >
           <button class="px-8 w-full h-full uppercase">
             <span class="flex items-center">Rechercher</span>
           </button>
