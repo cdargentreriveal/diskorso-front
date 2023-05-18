@@ -48,7 +48,7 @@ const windowWidth = ref(process.client ? window.innerWidth : 0)
 
 <style lang="scss" scoped>
 .search-bar-input input {
-  border-radius: 9999px 0 0 9999px;
+  border-radius: 9999px 0px 0px 9999px;
   color: var(--gray-color);
   &:focus {
     outline: none;
@@ -56,7 +56,7 @@ const windowWidth = ref(process.client ? window.innerWidth : 0)
 }
 .search-bar-button button {
   background-color: var(--blue-color);
-  border-radius: 0 9999px 9999px 0;
+  border-radius: 0px 9999px 9999px 0px;
   border: none;
   & :before {
     content: '';

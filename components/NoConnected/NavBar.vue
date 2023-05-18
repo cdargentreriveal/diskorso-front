@@ -56,7 +56,7 @@ export default {
 <template>
   <div class="navbar">
     <div class="w-full mx-auto py-3 text-center top-banner relative z-10">
-      <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm">
+      <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm xs-w">
         La plateforme collaborative
         <span class="purple-color">100% gratuite</span>
       </p>

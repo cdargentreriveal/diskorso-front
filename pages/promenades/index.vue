@@ -154,7 +154,7 @@ if (totalPromenades.value === null) {
       <div
         v-for="(promenade, index) in promenades"
         :key="index"
-        class="card bg-white xl:w-4/12 -md:w-full -md:mx-5 p-4 -md:px-0"
+        class="card bg-white xl:w-4/12 -md:w-full -md:mx-5 p-4 -md:px-0 xs"
       >
         <CardsTemplateCard
           :promenade="promenade"
