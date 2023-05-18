@@ -77,7 +77,13 @@
         <NuxtLink
           :to="'/' + propsAdminTitle.route"
           class="px-4 py-3 text-sm rounded-md text-white lg:text-xs xl:text-sm"
-          :class="actionBtn.length > 1 ? 'action-button ' : 'link-button '"
+          :class="
+            actionBtn.length > 1
+              ? 'action-button '
+              : 'link-button ' && actionBtn[0].action === 'Supprimer'
+              ? 'delete'
+              : 'link-button'
+          "
         >
           {{ actionBtn[0].action }}
         </NuxtLink>
@@ -142,6 +148,9 @@ const propsAdminTitle = defineProps({
 <style scoped lang="scss">
 .action-button {
   background-color: var(--blue-color);
+}
+.delete {
+  background-color: var(--red-color);
 }
 .link-button {
   background-color: var(--purple-color);
