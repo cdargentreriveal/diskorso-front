@@ -182,7 +182,7 @@ li .Inscription {
     filter: invert(0);
   }
   ul li {
-    color: white;
+    color: white !important;
   }
   .menu-burger-line {
     color: white;
