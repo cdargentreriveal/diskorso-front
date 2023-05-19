@@ -12,7 +12,7 @@ onMounted(() => {
 <template>
   <div>
     <div
-      v-if="intro"
+      v-if="intro && user.currentUser === null"
       class="intro fixed w-full h-full bg-white top-0 left-0 z-50 flex justify-center items-center"
     >
       <div>
