@@ -73,17 +73,18 @@
           </div>
         </div>
       </div>
+      <div
+        v-else-if="actionBtn[0].action === 'Supprimer'"
+        class="px-4 py-3 text-sm rounded-md text-white lg:text-xs xl:text-sm delete cursor-pointer"
+        @click.prevent="submitDeleteMyAccount"
+      >
+        {{ actionBtn[0].action }}
+      </div>
       <div v-else>
         <NuxtLink
           :to="'/' + propsAdminTitle.route"
           class="px-4 py-3 text-sm rounded-md text-white lg:text-xs xl:text-sm"
-          :class="
-            actionBtn.length > 1
-              ? 'action-button '
-              : 'link-button ' && actionBtn[0].action === 'Supprimer'
-              ? 'delete'
-              : 'link-button'
-          "
+          :class="actionBtn.length > 1 ? 'action-button ' : 'link-button '"
         >
           {{ actionBtn[0].action }}
         </NuxtLink>
@@ -94,6 +95,7 @@
 </template>
 
 <script lang="ts" setup>
+import { deleteMyAccount, logOut } from '~~/utils/connected'
 const emit = defineEmits(['myEvent'])
 const selectedOption = ref('Actions')
 const btnActionsOpen = ref(false)
@@ -106,6 +108,60 @@ const selectOption = (option: string) => {
   const value = option === 'Publier'
   emit('myEvent', value)
 }
+const config = useRuntimeConfig()
+const { $swal } = useNuxtApp()
+const displaySwal = (
+  title: string,
+  text: string,
+  icon: string,
+  confirmButtonText: string,
+  showCancelButton?: boolean
+) => {
+  $swal.fire({
+    title,
+    text,
+    icon,
+    confirmButtonText,
+    showCancelButton,
+  })
+}
+
+function submitDeleteMyAccount() {
+  try {
+    $swal
+      .fire({
+        title: 'Êtes-vous sûr?',
+        text: 'La suppression de votre compte est définitive!',
+        icon: 'warning',
+        showCloseButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#69B8D9',
+        cancelButtonColor: '#F55A78',
+        confirmButtonText: 'Oui, je supprime!',
+        cancelButtonText: 'Annuler',
+      })
+      .then(async (result: any) => {
+        if (result.isConfirmed) {
+          await deleteMyAccount(config.public.baseURL)
+          displaySwal(
+            'Compte supprimé',
+            `Votre compte a bien été supprimé`,
+            'success',
+            'Ok'
+          )
+          logOut(config.public.baseURL)
+        }
+      })
+  } catch (error) {
+    displaySwal(
+      'Erreur lors de la suppression',
+      'Une erreur est survenue lors de la suppression de votre compte. Veuillez réessayer plus tard.',
+      'error',
+      'Ok'
+    )
+  }
+}
+
 const propsAdminTitle = defineProps({
   titleBlack: {
     type: String,

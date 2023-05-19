@@ -12,7 +12,7 @@ export async function deleteMyAccount(baseURL: string) {
       credentials: 'include' as RequestCredentials,
     }
     const response = await fetch(
-      `${baseURL}/user/user-connected/delete-account`,
+      `${baseURL}/users/user-connected/delete-account`,
       options
     )
     const res = await response.json()
