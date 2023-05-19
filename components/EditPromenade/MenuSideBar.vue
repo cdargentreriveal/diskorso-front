@@ -102,7 +102,7 @@ function submitCreatedPromenade() {
                 content: itemsUpdated,
                 meta_title: 'Titre pour le référencement',
                 meta_description: 'Description pour le référencement',
-                categoriesIds: selectedIds.value,
+                categoriesIds: selectedIds,
                 extractsIds: excerptElementsId,
                 published: false,
                 publishedAt: PromenadeStore.selectPromenade?.publishedAt,
@@ -166,7 +166,7 @@ function submitCreatedPromenade() {
                 PromenadeStore.selectPromenade?.main_image_source,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
-              categoriesIds: selectedIds.value,
+              categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: false,
               publishedAt: PromenadeStore.selectPromenade?.publishedAt,
@@ -234,7 +234,7 @@ function submitCreatedPromenade() {
                 content: PromenadeStore.selectPromenade?.content,
                 meta_title: 'Titre pour le référencement',
                 meta_description: 'Description pour le référencement',
-                categoriesIds: selectedIds.value,
+                categoriesIds: selectedIds,
                 extractsIds: excerptElementsId,
                 published: true,
                 publishedAt: new Date().toISOString(),
@@ -294,7 +294,7 @@ function submitCreatedPromenade() {
                 PromenadeStore.selectPromenade?.main_image_source,
               meta_title: 'Titre pour le référencement',
               meta_description: 'Description pour le référencement',
-              categoriesIds: selectedIds.value,
+              categoriesIds: selectedIds,
               extractsIds: excerptElementsId,
               published: true,
               publishedAt: new Date().toISOString(),
@@ -391,7 +391,9 @@ const excerptElementsId = computed(() => {
   const excerptIds = excerptElements.map((item: any) => item.id)
   return excerptIds
 })
-const selectedIds = ref(selectedCategories.map((category) => category.id))
+const selectedIds = computed(() => {
+  return selectedCategories.map((category) => category.id)
+})
 function addMetaTitle(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaTitle', content: value })
