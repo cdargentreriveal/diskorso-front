@@ -18,7 +18,7 @@ export async function deleteMyAccount(baseURL: string) {
     const res = await response.json()
     if (res.statusCode === 401) {
       await refreshToken(baseURL)
-      await fetch(`${baseURL}/user/user-connected/delete-account`, options)
+      await fetch(`${baseURL}/users/user-connected/delete-account`, options)
     }
     if (res.ok) {
       return res
