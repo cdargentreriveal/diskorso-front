@@ -64,10 +64,10 @@ export default {
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 z-10 px-4">
-      <div class="container mx-auto py-10 relative">
-        <nav role="navigation" class="flex items-center -sm:mx-5">
+      <div class="container mx-auto -sm:py-12 py-10 relative">
+        <nav role="navigation" class="flex items-center">
           <div class="w-1/2">
-            <div class="logo w-[130px]">
+            <div class="logo -sm:w-[120px] w-[130px]">
               <NuxtLink to="/">
                 <img
                   src="@/assets/images/logos/diskorso-logo-white-2.svg"

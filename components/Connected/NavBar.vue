@@ -72,12 +72,12 @@ export default {
       "
     >
       <div
-        class="container mx-auto relative"
+        class="container mx-auto -sm:py-12 py-10 relative"
         :class="$route.path.indexOf('dashboard') === -1 ? 'py-10' : 'py-5'"
       >
         <nav role="navigation" class="flex items-center mx-5">
           <div class="w-1/2">
-            <div class="logo w-[130px]">
+            <div class="logo -sm:w-[120px] w-[130px]">
               <NuxtLink to="/">
                 <img
                   src="@/assets/images/logos/diskorso-logo-white-2.svg"
