@@ -72,7 +72,7 @@ export default {
       "
     >
       <div
-        class="container mx-auto -sm:py-12 py-10 relative"
+        class="container mx-auto relative"
         :class="$route.path.indexOf('dashboard') === -1 ? 'py-10' : 'py-5'"
       >
         <nav role="navigation" class="flex items-center mx-5">
