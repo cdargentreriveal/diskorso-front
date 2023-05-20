@@ -109,7 +109,7 @@ export default {
               </div>
               <div
                 v-if="menuOpen === true"
-                class="menu-burger-open fixed left-0 bg-white w-full h-full"
+                class="menu-burger-open fixed left-0 bg-[#e8deff] w-full h-full"
               >
                 <div
                   class="closed absolute right-4 top-10"
@@ -118,12 +118,12 @@ export default {
                   Fermer
                 </div>
                 <ul class="py-10 text-xl mt-15 text-black">
-                  <li v-for="(item, i) in menus" :key="i" class="py-3">
+                  <li v-for="(item, i) in menus" :key="i" class="py-3 btn">
                     <Anchor
                       v-if="item.type === 'link'"
                       :to="item.route ? item.route : undefined"
                       :href="item.href ? item.href : undefined"
-                      class="hover:no-underline mx-3"
+                      class="hover:no-underline mx-3 underline underline-offset-5"
                       @click="menuOpen = false"
                       >{{ item.text }}
                     </Anchor>
@@ -141,6 +141,11 @@ export default {
                     />
                   </li>
                 </ul>
+                <img
+                  src="@/assets/images/diskorso-people.svg"
+                  alt="ligne design diskorso"
+                  class="mx-auto w-full absolute bottom-[2.5rem] left-0 people"
+                />
               </div>
             </div>
           </div>
@@ -157,6 +162,14 @@ export default {
     padding: 0 1rem 0 1rem;
     border-left: 2px solid black;
     border-right: 2px solid black;
+  }
+}
+.people {
+  transform: scale(2);
+}
+.btn {
+  &:nth-child(2) {
+    margin-bottom: 1.5rem;
   }
 }
 .logo {
@@ -194,7 +207,7 @@ li .Inscription {
 .menu-burger {
   & ul li {
     cursor: pointer;
-    color: black;
+    color: black !important;
   }
   &-line {
     cursor: pointer;
