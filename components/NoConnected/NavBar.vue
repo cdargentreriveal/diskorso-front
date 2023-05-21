@@ -100,7 +100,7 @@ export default {
               </ul>
             </div>
             <!-- Menu burger mobile -->
-            <div v-else class="menu-burger">
+            <div v-else-if="windowWidth < 768" class="menu-burger">
               <div
                 class="menu-burger-line text-right"
                 @click="displayMobileMenu"
