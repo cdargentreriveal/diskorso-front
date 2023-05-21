@@ -134,9 +134,9 @@ export default {
               </li>
             </ul>
             <!-- Menu burger mobile -->
-            <div v-else-if="windowWidth < 768" class="menu-burger">
+            <div v-else>
               <div
-                class="menu-burger-line text-right"
+                class="menu-burger menu-burger-line text-right"
                 @click="displayMobileMenu"
               >
                 <span>Menu</span>
@@ -216,6 +216,9 @@ li .Inscription {
   &-open {
     top: -100%;
     animation: menuOpen 0.7s ease-in-out forwards;
+    & ul li {
+      color:black !important;
+    }
   }
 }
 @keyframes menuOpen {
