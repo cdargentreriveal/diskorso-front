@@ -176,3 +176,12 @@ sup {
     margin-top: 0;
   }
 }
+@media (max-width: 360px) {
+    .xs{
+    margin: 5%;
+    padding: 2.5% 0;
+   }
+   .xs-w{
+    width: 90%;
+   }
+}

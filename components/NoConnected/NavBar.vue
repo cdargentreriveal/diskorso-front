@@ -56,19 +56,21 @@ export default {
 <template>
   <div class="navbar">
     <div class="w-full mx-auto py-3 text-center top-banner relative z-10">
-      <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm">
+      <p
+        class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm xs-w"
+      >
         La plateforme collaborative
         <span class="purple-color">100% gratuite</span>
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 z-10 px-4">
-      <div class="container mx-auto py-10 relative">
-        <nav role="navigation" class="flex items-center -sm:mx-5">
-          <div class="w-1/2 md:w-2/12">
-            <div class="logo">
+      <div class="container mx-auto -sm:py-12 py-10 relative">
+        <nav role="navigation" class="flex items-center">
+          <div class="w-1/2">
+            <div class="logo -sm:w-[120px] w-[130px]">
               <NuxtLink to="/">
                 <img
-                  src="@/assets/images/logos/diskorso-logo-white.svg"
+                  src="@/assets/images/logos/diskorso-logo-white-2.svg"
                   alt="logo diskorso"
                 />
               </NuxtLink>
@@ -98,16 +100,16 @@ export default {
               </ul>
             </div>
             <!-- Menu burger mobile -->
-            <div v-else class="menu-burger">
+            <div v-else>
               <div
-                class="menu-burger-line text-right"
+                class="menu-burger menu-burger-line text-right"
                 @click="displayMobileMenu"
               >
                 <span>Menu</span>
               </div>
               <div
                 v-if="menuOpen === true"
-                class="menu-burger-open fixed left-0 bg-white w-full h-full"
+                class="menu-burger-open fixed left-0 bg-[#e8deff] w-full h-full"
               >
                 <div
                   class="closed absolute right-4 top-10"
@@ -116,12 +118,12 @@ export default {
                   Fermer
                 </div>
                 <ul class="py-10 text-xl mt-15 text-black">
-                  <li v-for="(item, i) in menus" :key="i" class="py-3">
+                  <li v-for="(item, i) in menus" :key="i" class="py-3 btn">
                     <Anchor
                       v-if="item.type === 'link'"
                       :to="item.route ? item.route : undefined"
                       :href="item.href ? item.href : undefined"
-                      class="hover:no-underline mx-3"
+                      class="hover:no-underline mx-3 underline underline-offset-5"
                       @click="menuOpen = false"
                       >{{ item.text }}
                     </Anchor>
@@ -139,6 +141,11 @@ export default {
                     />
                   </li>
                 </ul>
+                <img
+                  src="@/assets/images/diskorso-people.svg"
+                  alt="ligne design diskorso"
+                  class="mx-auto w-full absolute bottom-[2.5rem] left-0 people"
+                />
               </div>
             </div>
           </div>
@@ -155,6 +162,14 @@ export default {
     padding: 0 1rem 0 1rem;
     border-left: 2px solid black;
     border-right: 2px solid black;
+  }
+}
+.people {
+  transform: scale(2);
+}
+.btn {
+  &:nth-child(2) {
+    margin-bottom: 1.5rem;
   }
 }
 .logo {
@@ -182,7 +197,7 @@ li .Inscription {
     filter: invert(0);
   }
   ul li {
-    color: white;
+    color: white !important;
   }
   .menu-burger-line {
     color: white;
@@ -190,10 +205,6 @@ li .Inscription {
 }
 
 .menu-burger {
-  & ul li {
-    cursor: pointer;
-    color: black;
-  }
   &-line {
     cursor: pointer;
   }
@@ -204,6 +215,9 @@ li .Inscription {
     top: -100%;
     z-index: 100;
     animation: menuOpen 0.7s ease-in-out forwards;
+    & ul li {
+      color:black !important;
+    }
   }
 }
 @keyframes menuOpen {

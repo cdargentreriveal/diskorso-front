@@ -394,7 +394,6 @@ const excerptElementsId = computed(() => {
 const selectedIds = computed(() => {
   return selectedCategories.map((category) => category.id)
 })
-
 function addMetaTitle(event: Event): void {
   const value = (event.target as HTMLInputElement).value
   items.value.push({ type: 'metaTitle', content: value })
@@ -470,7 +469,7 @@ const toggle = () => {
                     alt="image de profil"
                   />
                 </div>
-                <div class="promenade_page_content_header px-20 -sm:px-10">
+                <div class="promenade_page_content_header px-20 -sm:px-10 xs">
                   <div
                     class="promenade_page_content_title xl:text-2xl 2xl:text-3xl font-bold -sm:text-2xl"
                   >
@@ -494,7 +493,7 @@ const toggle = () => {
                   </div>
                   <div class="flex justify-between items-center">
                     <div
-                      class="card-content-categories flex gap-4 py-5 -md:gap-2"
+                      class="card-content-categories flex flex-wrap gap-4 py-5 -md:gap-2"
                     >
                       <div
                         v-for="(cat, index) in PromenadeStore.selectPromenade!.categories"

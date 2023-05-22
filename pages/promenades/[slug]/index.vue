@@ -68,7 +68,7 @@ function getPromenadeEdit() {
               <img v-else :src="promenade.user.picture" alt="image de profil" />
             </NuxtLink>
           </div>
-          <div class="promenade_page_content_header px-20 -sm:px-10">
+          <div class="promenade_page_content_header px-20 -sm:px-10 xs">
             <div
               class="promenade_page_content_title 2xl:text-4xl font-bold xl:text-3xl -lg:text-2xl"
             >
@@ -87,7 +87,9 @@ function getPromenadeEdit() {
               </NuxtLink>
             </div>
             <div class="flex justify-between items-center">
-              <div class="card-content-categories flex gap-4 py-5 -md:gap-2">
+              <div
+                class="card-content-categories flex flex-wrap gap-4 py-5 -md:gap-2"
+              >
                 <div
                   v-for="(cat, index) in promenade.categories"
                   :key="index"

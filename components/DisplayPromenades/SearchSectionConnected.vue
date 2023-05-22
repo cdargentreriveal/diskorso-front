@@ -40,7 +40,9 @@ const propsCard = defineProps({
         </button>
       </div>
       <div v-else class="search-bar-button text-white text-sm h-full">
-        <NuxtLink :to="`/dashboard/${{ locate }}/search/${searchTagConnected}`">
+        <NuxtLink
+          :to="`/dashboard/` + locate + `/search/${searchTagConnected}`"
+        >
           <button class="px-8 w-full h-full uppercase">
             <span class="flex items-center">Rechercher</span>
           </button>
@@ -52,7 +54,7 @@ const propsCard = defineProps({
 
 <style lang="scss" scoped>
 .search-bar-input input {
-  border-radius: 9999px 0 0 9999px;
+  border-radius: 9999px 0px 0px 9999px;
   color: var(--gray-color);
   &:focus {
     outline: none;
@@ -60,7 +62,7 @@ const propsCard = defineProps({
 }
 .search-bar-button button {
   background-color: var(--blue-color);
-  border-radius: 0 9999px 9999px 0;
+  border-radius: 0px 9999px 9999px 0px;
   border: none;
   & :before {
     content: '';

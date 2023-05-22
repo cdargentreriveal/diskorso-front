@@ -71,20 +71,23 @@ export default {
           : 'bg-white z-10 border-b-1 border-slate-300'
       "
     >
-      <div class="container mx-auto py-5 relative">
+      <div
+        class="container mx-auto relative"
+        :class="$route.path.indexOf('dashboard') === -1 ? 'py-10' : 'py-5'"
+      >
         <nav role="navigation" class="flex items-center mx-5">
-          <div class="w-4/12">
-            <div class="logo">
+          <div class="w-1/2">
+            <div class="logo -sm:w-[120px] w-[130px]">
               <NuxtLink to="/">
                 <img
-                  src="@/assets/images/logos/diskorso-logo-white.svg"
+                  src="@/assets/images/logos/diskorso-logo-white-2.svg"
                   alt="logo diskorso"
                 />
               </NuxtLink>
             </div>
           </div>
           <!-- <client-only> -->
-          <div class="w-8/12">
+          <div class="w-1/2">
             <ul
               v-if="windowWidth > 768"
               class="flex justify-end items-center gap-4"
@@ -131,9 +134,9 @@ export default {
               </li>
             </ul>
             <!-- Menu burger mobile -->
-            <div v-else class="menu-burger">
+            <div v-else>
               <div
-                class="menu-burger-line text-right"
+                class="menu-burger menu-burger-line text-right"
                 @click="displayMobileMenu"
               >
                 <span>Menu</span>
@@ -213,6 +216,9 @@ li .Inscription {
   &-open {
     top: -100%;
     animation: menuOpen 0.7s ease-in-out forwards;
+    & ul li {
+      color:black !important;
+    }
   }
 }
 @keyframes menuOpen {

@@ -78,7 +78,7 @@ const onClick = (event: MouseEvent) => {
     :class="`${selectedStyle} ${selectedSize}`"
   >
     <div
-      class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4 -sm:text-sm"
+      class="cursor-pointer inline-flex justify-center items-center my-10 border border-black rounded-full px-8 hover:bg-gray-300 py-4 -sm:text-sm -sm:my-4 -sm:px-4"
     >
       <div class="link uppercase">
         <slot>{{ text }}</slot>
