@@ -33,7 +33,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: 'https://api.diskorso.org/',
+      baseURL: 'https://api.diskorso.org',
     },
   },
   css: [
