@@ -136,7 +136,7 @@ function submitCreatedPromenade() {
                     text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
                     imageHeight: 135,
                     imageUrl:
-                      'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
+                      'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008.png',
                   })
                   PromenadeStore.unsetIsBannerImageChanged()
                   navigateTo('/dashboard')
@@ -195,7 +195,7 @@ function submitCreatedPromenade() {
                   text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
                   imageHeight: 135,
                   imageUrl:
-                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
+                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008.png',
                 })
                 navigateTo('/dashboard')
               }
@@ -268,7 +268,7 @@ function submitCreatedPromenade() {
                     text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
                     imageHeight: 135,
                     imageUrl:
-                      'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
+                      'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008.png',
                   })
                   PromenadeStore.unsetIsBannerImageChanged()
                   navigateTo('/dashboard')
@@ -323,7 +323,7 @@ function submitCreatedPromenade() {
                   text: `Votre promenade ${data.title} a bien été enregistrée en brouillon.`,
                   imageHeight: 135,
                   imageUrl:
-                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008',
+                    'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008.png',
                 })
                 navigateTo('/dashboard')
               }

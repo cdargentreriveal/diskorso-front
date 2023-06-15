@@ -33,7 +33,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      baseURL: 'https://promenadesapi-production.up.railway.app',
+      baseURL: 'https://api.diskorso.org/',
     },
   },
   css: [
