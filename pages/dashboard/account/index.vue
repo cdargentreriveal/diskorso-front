@@ -1,11 +1,65 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
-import { modifyAvatar, modifyEmail, modifyUsername } from '~~/utils/connected'
+import {
+  modifyAvatar,
+  modifyEmail,
+  modifyUsername,
+  refreshToken,
+} from '~~/utils/connected'
+import { User } from '~~/types/User'
 
 definePageMeta({ layout: 'admin', middleware: ['is-logged'] })
 const config = useRuntimeConfig()
 const user = useUserStore()
+
+let xsrfToken: any = null
+let xsrfTokenTime: any = null
+if (process.client) {
+  xsrfToken = localStorage.getItem('xsrfToken')
+  xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+}
+
+interface UserFetched {
+  data: User
+  message: string
+  success: boolean
+}
+
+const {
+  data: response,
+  error,
+  execute,
+  refresh,
+} = await useAsyncData<UserFetched | null>(
+  'response',
+  async () =>
+    await $fetch(`${config.public.baseURL}/users/user-connected`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${xsrfToken}`,
+      },
+      credentials: 'include',
+    })
+)
+
+if (response && response.value && response.value.success) {
+  user.setUser(response.value.data)
+}
+
+if (error.value) {
+  refreshToken(config.public.baseURL)
+    .then(async () => {
+      await execute()
+      if (response?.value?.data) {
+        user.setUser(response.value.data)
+      }
+    })
+    .catch((error) => {
+      return error
+    })
+}
 
 const currentUsername = ref<string>(user.currentUser?.username ?? '')
 const displayedUsername = ref<string>(user.currentUser?.username ?? '')
@@ -264,7 +318,7 @@ async function changeAvatar(event: Event) {
                 ref="usernameInput"
                 class="py-3 border-b-1 block border-slate-300 text-sm focus:outline-none w-full disabled:bg-white"
                 :class="editModeUsername ? 'text-slate-400' : 'text-black '"
-                :value="displayedUsername"
+                :value="user.currentUser?.username"
                 type="text"
                 :disabled="editModeUsername"
                 placeholder="Votre username"
@@ -296,7 +350,7 @@ async function changeAvatar(event: Event) {
                 ref="emailInput"
                 class="py-3 border-b-1 block border-slate-300 text-sm focus:outline-none w-full disabled:bg-white"
                 :class="editModeEmail ? 'text-slate-400' : 'text-black '"
-                :value="displayedEmail"
+                :value="user.currentUser?.email"
                 type="text"
                 :disabled="editModeEmail"
                 placeholder="Votre email"
