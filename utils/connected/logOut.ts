@@ -8,7 +8,7 @@ export async function logOut(baseUrl: string) {
     method: 'POST',
     credentials: 'include',
   })
-  // Vider le token de localstorage et rediriger l'utilisateur vers la page de connexion
+  // Vider le token de localStorage et rediriger l'utilisateur vers la page de connexion
   localStorage.removeItem('xsrfToken')
   // Vider le store
   user.setUser(null)
