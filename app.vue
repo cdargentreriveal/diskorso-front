@@ -13,17 +13,17 @@ onMounted(() => {
   categoriesStore.setCategories(categories)
 })
 
-if (process.client) {
-  window.addEventListener('beforeunload', () => {
-    localStorage.clear()
-  })
-}
-onUnmounted(() => {
-  // Remove the beforeunload event listener
-  window.removeEventListener('beforeunload', () => {
-    localStorage.clear()
-  })
-})
+// if (process.client) {
+//   window.addEventListener('beforeunload', () => {
+//     localStorage.clear()
+//   })
+// }
+// onUnmounted(() => {
+//   // Remove the beforeunload event listener
+//   window.removeEventListener('beforeunload', () => {
+//     localStorage.clear()
+//   })
+// })
 </script>
 
 <template>

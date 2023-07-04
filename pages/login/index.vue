@@ -66,6 +66,10 @@ const login = async (email: string, password: string) => {
     }
   }
 }
+let xsrfTokenTime: any = null
+if (process.client) {
+  xsrfTokenTime = localStorage.getItem('xsrfToken')
+}
 </script>
 
 <template>
@@ -74,7 +78,7 @@ const login = async (email: string, password: string) => {
       <div v-if="windowWidth > 1100" class="py-8 text-center -sm:px-4">
         <div class="title uppercase font-bold 2xl:text-4xl -xl:text-3xl">
           <h2>
-            Se connecter <br />
+            Se connecter {{ xsrfTokenTime }}<br />
             <span class="font-medium">sur Diskorso</span>
           </h2>
         </div>
