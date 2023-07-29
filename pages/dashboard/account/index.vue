@@ -158,7 +158,7 @@ async function onEditEmailClick() {
         displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
       } else {
         displaySwal(
-          'Modification réussie!',
+          'Modification réussie !',
           `${response.data.message}`,
           'success',
           'ok'
@@ -227,7 +227,7 @@ async function changeAvatar(event: Event) {
       displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
     } else {
       displaySwal(
-        'Modification réussie!',
+        'Modification réussie !',
         'Votre image de profile a bien été mise à jour',
         'success',
         'ok'

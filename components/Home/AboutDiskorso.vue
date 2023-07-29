@@ -24,12 +24,16 @@
               class="about-description mt-10 -md:w-full -md:text-sm md:text-sm xl:text-md 2xl:text-base"
             >
               <p>
-                Diskorso est une plateforme collaborative permettant de mettre
-                en relation les contributeurs, qui confectionneraient un nouveau
-                document constitué d’extraits de pages existantes (une
-                promenade), et d’autre part le grand public souhaitant
-                s’informer sur un sujet et qui trouverait dans ces promenades un
-                contenu adapté selon le niveau de détails, de vulgarisation…
+                <span class="underline">Pour tous :</span> découvrir et
+                apprendre, sur tous les sujets, à partir de sources
+                sélectionnées et organisées par des passionnés.
+              </p>
+              <p class="mt-3">
+                <span class="underline"
+                  >Pour les passionnés et les experts :</span
+                >
+                partager ses connaissances et son enthousiasme sans tout
+                réinventer, en s'appuyant sur la richesse d'internet.
               </p>
               <Button
                 text="Voir les promenades"

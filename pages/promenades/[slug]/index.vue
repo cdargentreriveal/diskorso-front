@@ -129,6 +129,9 @@ function getPromenadeEdit() {
                 </div>
               </div>
             </div>
+            <p class="mt-5 text-sm italic gray-color">
+              Description : {{ promenade.summary }}
+            </p>
             <Separator />
           </div>
           <section class="promenade_page_content_details_transition">

@@ -129,9 +129,15 @@ function addCategories(value: any) {
     selectedCategories.push(value)
   }
 }
+function isCheckedArray(item: Category) {
+  return !!extractsStore.extractSelected?.categories.some(
+    (categorie) => categorie.slug === item.slug
+  )
+}
 function isCheckboxDisabled(categorie: Category): boolean {
   return (
-    selectedCategories.length === 3 && !selectedCategories.includes(categorie)
+    selectedCategories.length === 3 &&
+    !selectedCategories.some((cat) => cat.id === categorie.id)
   )
 }
 const selectedCategoryIds = computed(() => {
@@ -197,6 +203,7 @@ const selectedCategoryIds = computed(() => {
                   type="checkbox"
                   name="categories"
                   class="mx-2"
+                  :checked="isCheckedArray(categorie)"
                   :disabled="isCheckboxDisabled(categorie)"
                   :value="categorie.title"
                   @change="addCategories(categorie)"

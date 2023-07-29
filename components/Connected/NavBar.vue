@@ -20,7 +20,7 @@ export default {
       },
       {
         type: 'link',
-        text: 'Mon Dashboard',
+        text: 'Mon Espace',
         route: { name: 'dashboard' },
       },
     ])
@@ -217,7 +217,7 @@ li .Inscription {
     top: -100%;
     animation: menuOpen 0.7s ease-in-out forwards;
     & ul li {
-      color:black !important;
+      color: black !important;
     }
   }
 }
