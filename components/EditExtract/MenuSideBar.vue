@@ -129,6 +129,18 @@ function addCategories(value: any) {
     selectedCategories.push(value)
   }
 }
+const addSelectedCategories = (categories: Category[]) => {
+  categories.forEach((category) => {
+    const foundCategory = extractsStore.extractSelected?.categories.find(
+      (selectedCategory) => {
+        return selectedCategory.slug === category.slug
+      }
+    )
+    if (foundCategory) {
+      selectedCategories.push(category)
+    }
+  })
+}
 function isCheckedArray(item: Category) {
   return !!extractsStore.extractSelected?.categories.some(
     (categorie) => categorie.slug === item.slug
@@ -140,6 +152,12 @@ function isCheckboxDisabled(categorie: Category): boolean {
     !selectedCategories.some((cat) => cat.id === categorie.id)
   )
 }
+onMounted(() => {
+  // Assurez-vous que extractsStore.extractSelected existe et possède l'attribut categories
+  if (extractsStore.extractSelected?.categories) {
+    addSelectedCategories(categories)
+  }
+})
 const selectedCategoryIds = computed(() => {
   return selectedCategories.map((category) => category.id)
 })

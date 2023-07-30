@@ -460,7 +460,7 @@ const toggle = () => {
                 >
                   <img
                     v-if="PromenadeStore.selectPromenade!.user.picture === null"
-                    src="@/assets/images/test-avatar.jpg"
+                    src="@/assets/images/avatar-dk.jpg"
                     alt="image de profil"
                   />
                   <img

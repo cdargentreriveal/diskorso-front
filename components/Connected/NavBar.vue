@@ -122,7 +122,7 @@ export default {
                 <nuxt-link to="/dashboard/account">
                   <img
                     v-if="user.currentUser?.picture === null"
-                    src="@/assets/images/test-avatar.jpg"
+                    src="@/assets/images/avatar-dk.jpg"
                     alt="Photo de profil"
                   />
                   <img

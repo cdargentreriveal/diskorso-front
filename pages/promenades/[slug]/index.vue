@@ -62,7 +62,7 @@ function getPromenadeEdit() {
             <NuxtLink :to="`/contributor/${promenade.user.username}`">
               <img
                 v-if="promenade.user.picture === null"
-                src="@/assets/images/test-avatar.jpg"
+                src="@/assets/images/avatar-dk.jpg"
                 alt="image de profil"
               />
               <img v-else :src="promenade.user.picture" alt="image de profil" />
