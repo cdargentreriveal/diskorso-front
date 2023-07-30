@@ -19,7 +19,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
 ])
 
 function addImageInput(): void {
-  if (PromenadeStore.imageCount < 4) {
+  if (PromenadeStore.imageCount < 15) {
     PromenadeStore.pushItem({
       type: 'image',
       file: null,
@@ -31,7 +31,7 @@ function addImageInput(): void {
 }
 
 function addTransitionInput(): void {
-  if (PromenadeStore.transitionCount < 10) {
+  if (PromenadeStore.transitionCount < 15) {
     PromenadeStore.pushItem({
       type: 'transition',
       content: '',
@@ -78,7 +78,7 @@ function addTransitionInput(): void {
               <div
                 class="promenade_btn_image px-4 py-3 text-sm rounded text-white"
                 :class="
-                  PromenadeStore.imageCount === 4
+                  PromenadeStore.imageCount === 15
                     ? 'cursor-not-allowed disabled'
                     : ''
                 "
@@ -86,7 +86,7 @@ function addTransitionInput(): void {
               >
                 <button
                   :class="
-                    PromenadeStore.imageCount === 4 ? 'cursor-not-allowed' : ''
+                    PromenadeStore.imageCount === 15 ? 'cursor-not-allowed' : ''
                   "
                 >
                   Ajouter une image

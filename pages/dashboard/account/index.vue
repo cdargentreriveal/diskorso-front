@@ -93,7 +93,16 @@ const displaySwal = (
     confirmButtonText,
   })
 }
+const changeAvatarhover = document.querySelector('.change-avatar')
+const showChangeAvatar = (event: any) => {
+  const changeAvatarHover = event.currentTarget
+  changeAvatarHover?.classList.replace('opacity-0', 'opacity-100')
+}
 
+const hideChangeAvatar = (event: any) => {
+  const changeAvatarHover = event.currentTarget
+  changeAvatarHover?.classList.replace('opacity-100', 'opacity-0')
+}
 const mounted = () => {
   // Initialise la valeur affichée dans l'input
   displayedUsername.value = currentUsername.value
@@ -256,8 +265,28 @@ async function changeAvatar(event: Event) {
           <form v-if="user.currentUser" class="form">
             <div class="form-user pb-2 flex items-center relative">
               <div
-                class="avatar mx-auto w-[140px] h-[140px] rounded-full overflow-hidden"
+                class="avatar mx-auto w-[140px] h-[140px] rounded-full overflow-hidden relative"
               >
+                <div
+                  class="opacity-0 change-avatar absolute h-full w-full z-10 bg-gray-800/75 cursor-pointer"
+                  @mouseover="showChangeAvatar"
+                  @mouseleave="hideChangeAvatar"
+                >
+                  <label for="avatar-upload" class="cursor-pointer">
+                    <input
+                      id="avatar-upload"
+                      type="file"
+                      accept="image/*"
+                      style="display: none"
+                      @change="handleFileUpload"
+                    />
+                    <div
+                      class="absolute top-1/2 left-1/2 change-pic text-white w-1/2"
+                    >
+                      Changer la photo
+                    </div>
+                  </label>
+                </div>
                 <label for="avatar-upload">
                   <input
                     id="avatar-upload"
@@ -444,7 +473,7 @@ sup {
 .avatar img {
   cursor: pointer;
   &:hover {
-    opacity: 0.8;
+    opacity: 0.7;
   }
 }
 .edit_btn,
@@ -454,5 +483,11 @@ sup {
 }
 .bg-blue {
   background-color: #69b8d9;
+}
+.change-pic {
+  transform: translate(-50%, -50%);
+}
+.change-avatar {
+  transition: 0.25s ease-in-out;
 }
 </style>
