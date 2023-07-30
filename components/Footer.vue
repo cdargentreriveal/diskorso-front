@@ -9,12 +9,16 @@
           <div
             class="w-3/12 text-center underline -sm:w-full -sm:py-2 -sm:text-left"
           >
-            <span>Politique de protection des données</span>
+            <NuxtLink to="/politique-des-donnees"
+              ><span>Politique de protection des données</span></NuxtLink
+            >
           </div>
           <div
             class="w-2/12 text-right underline -sm:w-full -sm:py-2 -sm:text-left"
           >
-            <span>Mention légales</span>
+            <NuxtLink to="/mentions-legales"
+              ><span>Mention légales</span></NuxtLink
+            >
           </div>
           <div
             class="w-3/12 text-right -sm:w-full -sm:py-2 -sm:mt-5 -sm:text-left"

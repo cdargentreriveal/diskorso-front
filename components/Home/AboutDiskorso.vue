@@ -28,18 +28,14 @@
                 apprendre, sur tous les sujets, à partir de sources
                 sélectionnées et organisées par des passionnés.
               </p>
-              <p class="mt-3">
+              <p class="mt-3 mb-3 lg:mb-0">
                 <span class="underline"
                   >Pour les passionnés et les experts :</span
                 >
                 partager ses connaissances et son enthousiasme sans tout
                 réinventer, en s'appuyant sur la richesse d'internet.
               </p>
-              <Button
-                text="Voir les promenades"
-                type="secondary"
-                to="/promenades"
-              />
+              <Button text="En savoir plus" type="secondary" to="/a-propos" />
             </div>
           </div>
         </div>
