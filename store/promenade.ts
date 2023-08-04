@@ -61,6 +61,9 @@ export const usePromenadeStore = defineStore('promenadeStore', {
         this.isExcerptAdded.splice(index, 1)
       }
     },
+    removeAllExtract() {
+      this.isExcerptAdded = []
+    },
     setPromenade(currentPromenade: Promenade | null) {
       this.selectPromenade = currentPromenade
     },

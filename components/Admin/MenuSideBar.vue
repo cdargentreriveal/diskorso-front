@@ -137,7 +137,8 @@ function submitCreatedPromenade() {
                 PromenadeStore.setCreationSummaryPromenade('')
                 PromenadeStore.setMainImage('')
                 PromenadeStore.setmainImageToUpload(new FormData())
-                extractsStore.removeAllExtract()
+                PromenadeStore.removeAllExtract()
+                // extractsStore.removeAllExtract()
                 PromenadeStore.clearItems()
 
                 navigateTo('/dashboard')
@@ -197,7 +198,8 @@ function submitCreatedPromenade() {
                 PromenadeStore.setCreationSummaryPromenade('')
                 PromenadeStore.setMainImage('')
                 PromenadeStore.setmainImageToUpload(new FormData())
-                extractsStore.removeAllExtract()
+                // extractsStore.removeAllExtract()
+                PromenadeStore.removeAllExtract()
                 PromenadeStore.clearItems()
                 navigateTo('/dashboard')
               }
