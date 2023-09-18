@@ -19,6 +19,9 @@ const { data: promenade } = await useAsyncData<Promenade>('promenade', () =>
 function getPromenadeEdit() {
   PromnadeStore.setPromenade(promenade.value)
 }
+const mainImageSource = promenade.value?.main_image_source || ''
+const url = new URL(mainImageSource)
+const domaine = url.hostname
 </script>
 
 <template>
@@ -51,7 +54,9 @@ function getPromenadeEdit() {
           class="text-right text-xs italic p-3"
         >
           source :
-          <span class="underline">{{ promenade.main_image_source }}</span>
+          <a :href="promenade.main_image_source" class="underline">{{
+            domaine
+          }}</a>
         </div>
         <div
           class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -2xl:w-10/12 -md:w-full -lg:py-15"
