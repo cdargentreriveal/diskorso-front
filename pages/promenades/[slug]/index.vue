@@ -20,8 +20,14 @@ function getPromenadeEdit() {
   PromnadeStore.setPromenade(promenade.value)
 }
 const mainImageSource = promenade.value?.main_image_source || ''
-const url = new URL(mainImageSource)
-const domaine = url.hostname
+let domaine = ''
+if (mainImageSource){
+  domaine = new URL(mainImageSource).hostname
+} else {
+  domaine = ''
+}
+// const url = new URL(mainImageSource)
+// const domaine = url.hostname
 </script>
 
 <template>
