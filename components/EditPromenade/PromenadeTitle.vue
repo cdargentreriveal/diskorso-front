@@ -16,7 +16,7 @@ const onInput = (event: Event) => {
   <div class="promenade_title font-semibold xl:text-md 2xl:text-lg mb-8">
     <div class="flex items-center justify-between">
       <h2>Modifier le titre de la promenade<sup>*</sup></h2>
-      <div class="max_words font-normal text-xs italic">40 caractères max</div>
+      <div class="max_words font-normal text-xs italic">40 caractères maxs</div>
     </div>
     <div class="my-2">
       <input
