@@ -71,7 +71,9 @@ function handleResize() {
 }
 onMounted(() => {
   window.addEventListener('resize', handleResize)
-  handleResize()
+  setTimeout(() => {
+    handleResize()
+  }, 350)
 })
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
@@ -118,7 +120,7 @@ onBeforeUnmount(() => {
       <div v-else class="py-8 text-center -sm:px-4">
         <div class="title uppercase font-bold text-4xl -md:text-xl">
           <h2>
-            Dashboard accessible <br />
+            Dashboard accessibles <br />
             <span class="font-medium">uniquement depuis votre ordinateur</span>
           </h2>
         </div>
