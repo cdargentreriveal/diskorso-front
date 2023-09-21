@@ -6,7 +6,7 @@ const config = useRuntimeConfig()
 definePageMeta({
   layout: 'page',
 })
-const windowWidth = ref(process.client ? window.innerWidth : 0)
+
 interface GetAnswerLogin {
   success?: boolean
   message: string
@@ -66,27 +66,12 @@ const login = async (email: string, password: string) => {
     }
   }
 }
-function handleResize() {
-  windowWidth.value = window.innerWidth
-}
-onMounted(() => {
-  window.addEventListener('resize', handleResize)
-  setTimeout(() => {
-    handleResize()
-  }, 350)
-})
-onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize)
-})
 </script>
 
 <template>
   <div class="container mx-auto">
-    <div class="w-4/12 mx-auto my-10 -md:w-full">
-      <div
-        v-if="windowWidth > 1280"
-        class="py-8 text-center -sm:px-4 hidden xl:inline-block"
-      >
+    <div class="xl:w-4/12 mx-auto my-10 w-8/12">
+      <div class="py-8 text-center -sm:px-4 hidden xl:inline-block">
         <div class="title uppercase font-bold text-xl 2xl:text-4xl xl:text-3xl">
           <h2>
             Se connecter<br />
@@ -120,8 +105,8 @@ onBeforeUnmount(() => {
           </NuxtLink>
         </p>
       </div>
-      <div v-else class="py-8 text-center -sm:px-4 xl:hidden inline-block">
-        <div class="title uppercase font-bold xl:text-4xl text-xl">
+      <div class="py-8 text-center -sm:px-4 xl:hidden inline-block">
+        <div class="title uppercase font-bold xl:text-4xl text-2xl md:text-3xl">
           <h2>
             Dashboard accessible <br />
             <span class="font-medium">uniquement depuis votre ordinateur</span>
