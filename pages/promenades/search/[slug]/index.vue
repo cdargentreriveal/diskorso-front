@@ -132,14 +132,14 @@ const usernamesWithCounts = computed(() => {
               >
                 <div>
                   <input
-                    id="scales"
+                    :id="'checkboxCat' + index"
                     v-model="selectedCategories"
                     type="checkbox"
                     :value="categorie.title"
                     name="scales"
                     class="my-4 mx-2 text-sm"
                   />
-                  <label for="scales"
+                  <label :for="'checkboxCat' + index"
                     >{{ categorie.title }}
                     <span class="text-sm">({{ categorie.count }})</span></label
                   >
@@ -166,14 +166,14 @@ const usernamesWithCounts = computed(() => {
                 <div v-for="(user, index) in usernamesWithCounts" :key="index">
                   <div>
                     <input
-                      id="scales"
+                      :id="'checkboxAuth' + index"
                       v-model="selectedUsers"
                       type="checkbox"
                       name="scales"
                       :value="user.username"
                       class="my-4 mx-2 text-sm"
                     />
-                    <label for="scales"
+                    <label :for="'checkboxAuth' + index"
                       >{{ user.username }}
                       <span class="text-sm">({{ user.count }})</span></label
                     >
