@@ -24,12 +24,12 @@
               class="about-description mt-10 -md:w-full -md:text-sm md:text-sm xl:text-md 2xl:text-base"
             >
               <p>
-                <span class="underline">Pour tous :</span> découvrir et
+                <span class="font-bold">Pour tous :</span> découvrir et
                 apprendre, sur tous les sujets, à partir de sources
                 sélectionnées et organisées par des passionnés.
               </p>
               <p class="mt-3 mb-3 lg:mb-0">
-                <span class="underline"
+                <span class="font-bold"
                   >Pour les passionnés et les experts :</span
                 >
                 partager ses connaissances et son enthousiasme sans tout

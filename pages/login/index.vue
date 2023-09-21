@@ -66,6 +66,15 @@ const login = async (email: string, password: string) => {
     }
   }
 }
+function handleResize() {
+  windowWidth.value = window.innerWidth
+}
+onMounted(() => {
+  window.addEventListener('resize', handleResize)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
 </script>
 
 <template>

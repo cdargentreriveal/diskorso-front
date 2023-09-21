@@ -50,25 +50,30 @@ if (mainImageSource) {
         </div>
       </div>
       <div v-else>
-        <div
-          v-if="promenade.main_image === ''"
-          class="h-[55vh] w-full no-image"
-        ></div>
-        <div
-          v-else
-          class="promenade_page_banner h-[55vh] w-full bg-center bg-cover"
-          :style="{
-            backgroundImage: 'url(' + promenade.main_image + ')',
-          }"
-        ></div>
-        <div
-          v-if="promenade.main_image !== ''"
-          class="text-right text-xs italic p-3"
-        >
-          source :
-          <a :href="promenade.main_image_source" class="underline">{{
-            domaine
-          }}</a>
+        <div class="relative">
+          <div
+            class="overlay absolute h-[55vh] w-full top-0 left-0 bg-black/30 2xl:bg-black/20"
+          ></div>
+          <div
+            v-if="promenade.main_image === ''"
+            class="h-[55vh] w-full no-image"
+          ></div>
+          <div
+            v-else
+            class="promenade_page_banner h-[55vh] w-full bg-center bg-cover"
+            :style="{
+              backgroundImage: 'url(' + promenade.main_image + ')',
+            }"
+          ></div>
+          <div
+            v-if="promenade.main_image !== ''"
+            class="absolute text-white top-3 right-5 2xl:top-3 2xl:text-black 2xl:relative text-right text-xs italic p-3"
+          >
+            source :
+            <a :href="promenade.main_image_source" class="underline">{{
+              domaine
+            }}</a>
+          </div>
         </div>
         <div
           class="promenade_page_content w-8/12 mx-auto bg-white py-20 -mt-40 rounded-xl relative box-shaddow -2xl:w-10/12 -md:w-full -lg:py-15"
