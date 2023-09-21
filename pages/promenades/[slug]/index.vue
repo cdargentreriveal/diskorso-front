@@ -24,13 +24,13 @@ let domaine = ''
 
 if (mainImageSource) {
   try {
-    // Essayez de créer une instance de l'objet URL
-    const url = new URL(mainImageSource)
-    domaine = url.hostname
+    domaine = new URL(mainImageSource).hostname
   } catch (error) {
-    // Si une erreur est levée, cela signifie que mainImageSource n'est pas une URL valide
+    // Une erreur s'est produite lors de la création de l'URL, utilisez donc mainImageSource directement
     domaine = mainImageSource
   }
+} else {
+  domaine = ''
 }
 // const url = new URL(mainImageSource)
 // const domaine = url.hostname
