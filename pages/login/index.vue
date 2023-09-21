@@ -70,7 +70,7 @@ const login = async (email: string, password: string) => {
 
 <template>
   <div class="container mx-auto">
-    <div class="xl:w-4/12 mx-auto my-10 w-8/12">
+    <div class="xl:w-4/12 mx-auto my-10 w-9/12">
       <div class="py-8 text-center -sm:px-4 hidden xl:inline-block">
         <div class="title uppercase font-bold text-xl 2xl:text-4xl xl:text-3xl">
           <h2>

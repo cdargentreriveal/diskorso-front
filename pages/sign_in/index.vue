@@ -87,7 +87,9 @@ const signup = async (email: string, password: string, username: string) => {
   <div class="container mx-auto">
     <div class="w-4/12 mx-auto my-10 -md:w-full">
       <div class="py-8 text-center -sm:px-4">
-        <div class="title uppercase font-bold text-4xl -md:text-3xl">
+        <div
+          class="title uppercase font-bold text-2xl 2xl:text-4xl xl:text-3xl"
+        >
           <h2>
             S'inscrire <br />
             <span class="font-medium">sur Diskorso</span>
