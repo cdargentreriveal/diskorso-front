@@ -6,7 +6,7 @@ const config = useRuntimeConfig()
 definePageMeta({
   layout: 'page',
 })
-const windowWidth = ref(process.client && window.innerWidth)
+const windowWidth = ref(process.client ? window.innerWidth : 0)
 interface GetAnswerLogin {
   success?: boolean
   message: string
@@ -71,6 +71,7 @@ function handleResize() {
 }
 onMounted(() => {
   window.addEventListener('resize', handleResize)
+  handleResize()
 })
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
@@ -80,10 +81,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="container mx-auto">
     <div class="w-4/12 mx-auto my-10 -md:w-full">
-      <div
-        v-if="typeof windowWidth === 'number' && windowWidth > 1100"
-        class="py-8 text-center -sm:px-4"
-      >
+      <div v-if="windowWidth > 1100" class="py-8 text-center -sm:px-4">
         <div class="title uppercase font-bold 2xl:text-4xl -xl:text-3xl">
           <h2>
             Se connecter<br />
@@ -120,7 +118,7 @@ onBeforeUnmount(() => {
       <div v-else class="py-8 text-center -sm:px-4">
         <div class="title uppercase font-bold text-4xl -md:text-xl">
           <h2>
-            Dashboard accessibles <br />
+            Dashboard accessible <br />
             <span class="font-medium">uniquement depuis votre ordinateur</span>
           </h2>
         </div>
