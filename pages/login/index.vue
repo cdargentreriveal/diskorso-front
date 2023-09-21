@@ -123,7 +123,7 @@ onBeforeUnmount(() => {
       <div v-else class="py-8 text-center -sm:px-4 xl:hidden inline-block">
         <div class="title uppercase font-bold xl:text-4xl text-xl">
           <h2>
-            Dashboard accessibles <br />
+            Dashboard accessible <br />
             <span class="font-medium">uniquement depuis votre ordinateur</span>
           </h2>
         </div>
