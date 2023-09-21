@@ -21,10 +21,16 @@ function getPromenadeEdit() {
 }
 const mainImageSource = promenade.value?.main_image_source || ''
 let domaine = ''
-if (mainImageSource){
-  domaine = new URL(mainImageSource).hostname
-} else {
-  domaine = ''
+
+if (mainImageSource) {
+  try {
+    // Essayez de créer une instance de l'objet URL
+    const url = new URL(mainImageSource)
+    domaine = url.hostname
+  } catch (error) {
+    // Si une erreur est levée, cela signifie que mainImageSource n'est pas une URL valide
+    domaine = mainImageSource
+  }
 }
 // const url = new URL(mainImageSource)
 // const domaine = url.hostname
