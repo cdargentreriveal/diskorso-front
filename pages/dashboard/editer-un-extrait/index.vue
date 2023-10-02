@@ -70,7 +70,7 @@ const onInputSource = (event: Event) => {
                 type="text"
                 name="scales"
                 class="my-2 p-2 text-sm border border-slate-300 rounded w-full h-[40px]"
-                maxlength="30"
+                maxlength="60"
                 @input="onInputName"
               />
             </div>
