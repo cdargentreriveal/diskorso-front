@@ -195,7 +195,7 @@ const selectedCategoryIds = computed(() => {
                   <a
                     :href="extractsStore.extractSelected!.source"
                     target="_blank"
-                    >{{ extractsStore.extractSelected!.source }}</a
+                    >{{ getDomain(extractsStore.extractSelected!.source) }}</a
                   >
                 </div>
               </div>

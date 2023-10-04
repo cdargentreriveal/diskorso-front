@@ -77,7 +77,7 @@ const clearData = (): void => {
             ref="wysiwygEditorRef"
             v-model="contentInput"
             class="h-full bg-white"
-            @update:value="(content) => (contentInput = content)"
+            @update:value="(content:any) => (contentInput = content)"
           />
         </div>
       </div>

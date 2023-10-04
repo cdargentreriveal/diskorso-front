@@ -70,9 +70,9 @@ if (mainImageSource) {
             class="absolute text-white top-3 right-5 2xl:top-3 2xl:text-black 2xl:relative text-right text-xs italic p-3"
           >
             source :
-            <a :href="promenade.main_image_source" class="underline">{{
-              domaine
-            }}</a>
+            <a :href="promenade.main_image_source" class="underline">
+              {{ getDomain(promenade.main_image_source) }}
+            </a>
           </div>
         </div>
         <div
@@ -99,7 +99,7 @@ if (mainImageSource) {
             <div
               class="promenade_page_content_created flex gap-2 italic text-sm py-4"
             >
-              <p>Créee le : {{ getDate(promenade.createdAt) }}</p>
+              <p>Créée le : {{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
               <NuxtLink :to="`/contributor/${promenade.user.username}`">
                 <p>
@@ -177,7 +177,9 @@ if (mainImageSource) {
                   <div v-html="blocsContent.content"></div>
                   <div class="source text-xs italic text-right mb-3">
                     <span>source: </span>
-                    <span class="underline">{{ blocsContent.source }}</span>
+                    <a :href="blocsContent.source" class="underline">{{
+                      getDomain(blocsContent.source as string)
+                    }}</a>
                   </div>
                 </div>
                 <div
@@ -191,7 +193,9 @@ if (mainImageSource) {
                   />
                   <div class="text-right text-xs italic p-3">
                     source :
-                    <span class="underline">{{ blocsContent.source }}</span>
+                    <a :href="blocsContent.source" class="underline">{{
+                      getDomain(blocsContent.source as string)
+                    }}</a>
                   </div>
                 </div>
               </div>

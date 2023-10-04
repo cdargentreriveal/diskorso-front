@@ -97,7 +97,7 @@ const onInputSource = (event: Event) => {
           <WYSIWYGWysywygEditorWithoutToolBarEdit
             class="h-full bg-white"
             :content="extractsStore.extractSelected?.content"
-            @update:value="(value) => (extractsStore.extractSelected!.content= value)"
+            @update:value="(value: any) => (extractsStore.extractSelected!.content= value)"
           />
         </div>
       </div>

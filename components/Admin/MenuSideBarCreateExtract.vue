@@ -186,7 +186,7 @@ const selectedCategoryIds = computed(() => {
                 <div
                   class="text-xs italic font-semibold my-5 text-slate-500 text-right"
                 >
-                  <a :href="source" target="_blank">{{ source }}</a>
+                  <a :href="source" target="_blank">{{ getDomain(source) }}</a>
                 </div>
               </div>
             </div>

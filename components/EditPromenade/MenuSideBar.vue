@@ -448,7 +448,7 @@ const toggle = () => {
                 >
                   source : <br />
                   <span class="underline">{{
-                    PromenadeStore.selectPromenade!.main_image_source
+                    getDomain(PromenadeStore.selectPromenade!.main_image_source)
                   }}</span>
                 </div>
               </div>
@@ -537,7 +537,7 @@ const toggle = () => {
                         <div class="source text-xs italic text-right mb-3">
                           <span>source: </span>
                           <span class="underline">{{
-                            blocsContent.source
+                            getDomain(blocsContent.source as string)
                           }}</span>
                         </div>
                       </div>
@@ -555,7 +555,7 @@ const toggle = () => {
                         <div class="text-right text-xs italic p-3">
                           source :
                           <span class="underline">{{
-                            blocsContent.source
+                            getDomain(blocsContent.source as string)
                           }}</span>
                         </div>
                       </div>

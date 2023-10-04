@@ -147,7 +147,7 @@ const toggle = (extract: any): boolean => {
                         class="text-xs italic font-semibold my-5 text-slate-500 text-right"
                       >
                         <a :href="extract.source" target="_blank">{{
-                          extract.source
+                          getDomain(extract.source)
                         }}</a>
                       </div>
                     </div>

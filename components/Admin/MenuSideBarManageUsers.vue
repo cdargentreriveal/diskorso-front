@@ -32,7 +32,7 @@ async function submitCreatedPromenade() {
       displaySwal('Echec', `${response.message}`, 'error', 'ok')
     } else {
       displaySwal(
-        'Promenade créee',
+        'Promenade créée',
         `Votre promenade ${data.title} a bien été créée`,
         'success',
         'Ok'
