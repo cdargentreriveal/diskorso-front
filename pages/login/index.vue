@@ -60,6 +60,8 @@ const login = async (email: string, password: string) => {
     const userConnected = await user.json()
     if (userConnected.success) {
       await userToStore.setUser(userConnected.data)
+      const userDataJSON = JSON.stringify(userConnected.data)
+      await localStorage.setItem('user_data', userDataJSON)
       await navigateTo(`/dashboard`)
     } else {
       displaySwal('Error!', 'Echec de la connexion', 'error', 'Ok')

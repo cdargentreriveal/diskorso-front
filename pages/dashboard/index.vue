@@ -211,16 +211,43 @@ const options = [
 const selectedOption = ref('all')
 
 onMounted(async () => {
-  const resultLast = await lastNumberData(
-    config.public.baseURL,
-    'promenadeditor/findLastPromenade'
-  )
-  lastNumberId.value = resultLast
-  const resultFirst = await firstNumberData(
-    config.public.baseURL,
-    'promenadeditor/findFirstPromenade'
-  )
-  firstNumberId.value = resultFirst
+  if (
+    (user.currentUser?.publishedPromenadesCount ?? 0) +
+      (user.currentUser?.unpublishedPromenadesCount ?? 0) !==
+    0
+  ) {
+    const resultLast = await lastNumberData(
+      config.public.baseURL,
+      'promenadeditor/findLastPromenade'
+    )
+    if (resultLast.statusCode === 401) {
+      await refreshToken(config.public.baseURL)
+      const resultLast2 = await lastNumberData(
+        config.public.baseURL,
+        'promenadeditor/findLastPromenade'
+      )
+      lastNumberId.value = resultLast2
+      const userDataJSON = localStorage.getItem('user_data')
+      if (userDataJSON) {
+        // Convertissez la chaîne JSON en objet JavaScript
+        const userData = JSON.parse(userDataJSON)
+        // Maintenant, userData contient l'objet que vous avez stocké
+        await user.setUser(userData)
+      } else {
+        // Si aucune donnée n'a été trouvée, vous pouvez gérer cela ici
+        // eslint-disable-next-line no-console
+        console.log('Aucune donnée trouvée dans le local storage.')
+      }
+    } else {
+      lastNumberId.value = resultLast
+    }
+    // lastNumberId.value = resultLast
+    const resultFirst = await firstNumberData(
+      config.public.baseURL,
+      'promenadeditor/findFirstPromenade'
+    )
+    firstNumberId.value = resultFirst
+  }
 })
 </script>
 

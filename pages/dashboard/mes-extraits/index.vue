@@ -208,7 +208,28 @@ onMounted(async () => {
     config.public.baseURL,
     'extract/findLastExtract'
   )
-  lastNumberId.value = resultLast
+  if (resultLast.statusCode === 401) {
+    await refreshToken(config.public.baseURL)
+    const resultLast2 = await lastNumberData(
+      config.public.baseURL,
+      'extract/findLastExtract'
+    )
+    lastNumberId.value = resultLast2
+    const userDataJSON = localStorage.getItem('user_data')
+    if (userDataJSON) {
+      // Convertissez la chaîne JSON en objet JavaScript
+      const userData = JSON.parse(userDataJSON)
+      // Maintenant, userData contient l'objet que vous avez stocké
+      await user.setUser(userData)
+    } else {
+      // Si aucune donnée n'a été trouvée, vous pouvez gérer cela ici
+      // eslint-disable-next-line no-console
+      console.log('Aucune donnée trouvée dans le local storage.')
+    }
+  } else {
+    lastNumberId.value = resultLast
+  }
+
   const resultFirst = await firstNumberData(
     config.public.baseURL,
     'extract/findFirstExtract'
@@ -248,6 +269,7 @@ const deleteAllExtracts = () => {
     />
 
     <AdminCatsFilter page="extraits" />
+
     <DisplayPromenadesSearchSectionConnected locate="mes-extraits" />
     <div
       v-if="extractsStore.extracts.length > 0"
@@ -261,6 +283,12 @@ const deleteAllExtracts = () => {
         <span>Tout déselectionner</span>
       </button>
     </div>
+    <button
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-auto flex items-center flex-wrap mb-8 h-8 px-3 text-xs rounded"
+      role="menuitem"
+    >
+      <span>Tout supprimer</span>
+    </button>
     <div
       class="container_promenade w-9/12 mx-auto flex items-center flex-wrap mb-8"
     >

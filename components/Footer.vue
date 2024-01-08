@@ -9,8 +9,8 @@
           <div
             class="w-3/12 text-center underline -sm:w-full -sm:py-2 -sm:text-left"
           >
-            <NuxtLink to="/politique-des-donnees"
-              ><span>Politique de protection des données</span></NuxtLink
+            <NuxtLink to="/charte-de-participation"
+              ><span>Charte de participation</span></NuxtLink
             >
           </div>
           <div

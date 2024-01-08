@@ -252,4 +252,3 @@ const propsAdminTitle = defineProps({
   }
 }
 </style>
-
