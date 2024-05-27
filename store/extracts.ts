@@ -34,6 +34,16 @@ export const useExtractStore = defineStore('extractStore', {
 
       // Ajouter l'extrait s'il n'existe pas encore
       this.extracts.push(extract)
+      this.saveExtractsToLocalStorage()
+    },
+    saveExtractsToLocalStorage() {
+      localStorage.setItem('extracts', JSON.stringify(this.extracts))
+    },
+    loadExtractsFromLocalStorage() {
+      const extracts = localStorage.getItem('extracts')
+      if (extracts) {
+        this.extracts = JSON.parse(extracts)
+      }
     },
     removeExtract(id: number) {
       const index = this.extracts.findIndex((extract) => extract.id === id)
