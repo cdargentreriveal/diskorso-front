@@ -65,6 +65,9 @@ const toggle = (extract: any): boolean => {
   extract.showModal = !extract.showModal
   return extract.showModal
 }
+onMounted(() => {
+  extractsStore.loadExtractsFromLocalStorage()
+})
 </script>
 
 <template>
