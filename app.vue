@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { Category } from './types/Categories'
 import { useCategoryStore } from '~~/store/category'
-const config = useRuntimeConfig()
+import { useExtractStore } from '~~/store/extracts'
+import { usePromenadeStore } from '~~/store/promenade'
+import { useUserStore } from '~~/store/user'
 
+const config = useRuntimeConfig()
 const categoriesStore = useCategoryStore()
+const userStore = useUserStore()
+const extractsStore = useExtractStore()
+const promenadesStore = usePromenadeStore()
 
 const { data: categories } = await useAsyncData<Category[]>('categories', () =>
   $fetch(`${config.public.baseURL}/category/all`)
@@ -11,19 +17,19 @@ const { data: categories } = await useAsyncData<Category[]>('categories', () =>
 
 onMounted(() => {
   categoriesStore.setCategories(categories)
+  const userData = sessionStorage.getItem('user_data')
+  const extractsData = sessionStorage.getItem('extracts')
+  const promenadesData = sessionStorage.getItem('promenades')
+  if (userData) {
+    userStore.setUser(JSON.parse(userData))
+  }
+  if (extractsData) {
+    extractsStore.setExtractsFromdb(JSON.parse(extractsData))
+  }
+  if (promenadesData) {
+    promenadesStore.setPromenadesFromdb(JSON.parse(promenadesData))
+  }
 })
-
-// if (process.client) {
-//   window.addEventListener('beforeunload', () => {
-//     localStorage.clear()
-//   })
-// }
-// onUnmounted(() => {
-//   // Remove the beforeunload event listener
-//   window.removeEventListener('beforeunload', () => {
-//     localStorage.clear()
-//   })
-// })
 </script>
 
 <template>

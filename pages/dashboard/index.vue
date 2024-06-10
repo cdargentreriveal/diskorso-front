@@ -179,6 +179,29 @@ async function first() {
   })
 }
 
+async function last() {
+  Loading.value = true
+  // Calculer l'offset pour obtenir la dernière page
+  const offset =
+    (totalPages.value - 1) * numberOfPromenadeUserConnectedToDisplay.value
+
+  query.value = `extract/getpromenades/${numberOfPromenadeUserConnectedToDisplay.value}?offset=${offset}`
+
+  const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+  if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
+    await refreshToken(config.public.baseURL)
+    execute()
+  } else {
+    execute()
+  }
+  await nextTick(() => {
+    paginationPageCurrent.value = totalPages.value
+    setTimeout(() => {
+      Loading.value = false
+    }, 250)
+  })
+}
+
 // ________________________________________________________________________________________
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
@@ -305,6 +328,7 @@ onMounted(async () => {
       <DisplayPromenadesPagination
         v-if="totalPromenades !== null"
         :first="first"
+        :last="last"
         :previous="previous"
         :next="next"
         :total-promenade="+totalPromenades"

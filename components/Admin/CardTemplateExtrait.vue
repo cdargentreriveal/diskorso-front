@@ -127,11 +127,16 @@ watch(
         </label>
       </div>
       <hr class="my-6" />
-      <span class="small text-slate-400">{{ getDate(extract.createdAt) }}</span>
+      <span class="small text-slate-400"
+        >Créé : {{ getDate(extract.createdAt) }}</span
+      ><br />
+      <span class="small text-slate-400"
+        >Dernière modification : {{ getDate(extract.updatedAt) }}</span
+      >
       <div
         class="card-content-title font-bold 2xl:text-lg my-1 mb-3 2xl:h-[50px] xl:h-[40px]"
       >
-        <h2>{{ extract.name }}</h2>
+        <h2 class="pt-4">{{ extract.name }}</h2>
       </div>
       <div class="card-content-categories flex py-5 gap-2">
         <div

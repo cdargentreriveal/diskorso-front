@@ -11,6 +11,7 @@ interface ExtractState {
   extracts: Extracts
   tout_selectionner: number
   extractSelected: ExtractWithModal | null
+  extracts_from_db: Extracts
   // nameInputEdit: string
   // sourceInputEdit: string
   // contentInputEdit: string
@@ -20,8 +21,12 @@ export const useExtractStore = defineStore('extractStore', {
     extracts: [],
     tout_selectionner: 0,
     extractSelected: null,
+    extracts_from_db: [],
   }),
   actions: {
+    setExtractsFromdb(extracts: Extracts) {
+      this.extracts_from_db = extracts
+    },
     addExtracts(extract: ExtractWithModal) {
       const existingExtract = this.extracts.find(
         (extractP) => extractP.name === extract.name

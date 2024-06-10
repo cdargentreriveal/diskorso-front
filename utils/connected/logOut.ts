@@ -12,7 +12,7 @@ export async function logOut(baseUrl: string) {
   localStorage.removeItem('xsrfToken')
   // Vider le store
   user.setUser(null)
-  localStorage.clear()
+  sessionStorage.clear()
   // Rediriger vers login
   await navigateTo(`/login`)
 }

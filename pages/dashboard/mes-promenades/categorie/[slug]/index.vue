@@ -154,6 +154,18 @@ async function first() {
   }
 }
 
+async function last() {
+  // TODO: corriger méthode
+  query.value = `promenadeditor/getpromenades/category/findLastPromenades/${route.params.slug}/${numberOfPromenade.value}`
+  const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+  if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
+    await refreshToken(config.public.baseURL)
+    execute()
+  } else {
+    execute()
+  }
+}
+
 // ________________________________________________________________________________________
 //* Methods pour metadata : nombre total de promenades et de pages
 // ________________________________________________________________________________________
@@ -226,8 +238,9 @@ onMounted(async () => {
     </div>
     <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
       <DisplayPromenadesPagination
-        v-if="totalPromenades !== null"
+        v-if="totalPromenades !== null && numberOfPromenade !== null"
         :first="first"
+        :last="last"
         :previous="previous"
         :next="next"
         :total-promenade="+totalPromenades"

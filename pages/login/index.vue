@@ -1,6 +1,11 @@
 <script lang="ts" setup>
 import { useUserStore } from '~~/store/user'
+import { useExtractStore } from '~~/store/extracts'
+import { usePromenadeStore } from '~~/store/promenade'
+import { ExtractFetched } from '~~/types/Extracts'
 const userToStore = useUserStore()
+const extractToStore = useExtractStore()
+const promenadeToStore = usePromenadeStore()
 const config = useRuntimeConfig()
 
 definePageMeta({
@@ -59,9 +64,50 @@ const login = async (email: string, password: string) => {
     })
     const userConnected = await user.json()
     if (userConnected.success) {
-      await userToStore.setUser(userConnected.data)
-      const userDataJSON = JSON.stringify(userConnected.data)
-      await localStorage.setItem('user_data', userDataJSON)
+      const userToRegister = {
+        id: userConnected.data.id,
+        username: userConnected.data.username,
+        email: userConnected.data.email,
+        role: userConnected.data.role,
+        picture: userConnected.data.picture,
+        createdAt: userConnected.data.createdAt,
+        publishedPromenadesCount: userConnected.data.publishedPromenadesCount,
+        unpublishedPromenadesCount:
+          userConnected.data.unpublishedPromenadesCoun,
+        usedExtractsCount: userConnected.data.usedExtractsCountt,
+        totalExtracts: userConnected.data.totalExtracts,
+      }
+      await userToStore.setUser(userToRegister)
+      await extractToStore.setExtractsFromdb(
+        userConnected.data.extracts
+          .map((extract: ExtractFetched) => ({
+            ...extract,
+            updatedAt: new Date(extract.updatedAt),
+            showModal: false,
+          }))
+          .sort(
+            (a: ExtractFetched, b: ExtractFetched) =>
+              b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
+          )
+      )
+      await promenadeToStore.setPromenadesFromdb(userConnected.data.promenades)
+      const userDataJSON = JSON.stringify(userToRegister)
+      const extractsDataJson = JSON.stringify(
+        userConnected.data.extracts
+          .map((extract: ExtractFetched) => ({
+            ...extract,
+            updatedAt: new Date(extract.updatedAt),
+            showModal: false,
+          }))
+          .sort(
+            (a: ExtractFetched, b: ExtractFetched) =>
+              b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
+          )
+      )
+      const promenadesDataJson = JSON.stringify(userConnected.data.promenades)
+      await sessionStorage.setItem('user_data', userDataJSON)
+      await sessionStorage.setItem('extracts', extractsDataJson)
+      await sessionStorage.setItem('promenades', promenadesDataJson)
       await navigateTo(`/dashboard`)
     } else {
       displaySwal('Error!', 'Echec de la connexion', 'error', 'Ok')

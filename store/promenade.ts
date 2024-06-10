@@ -24,6 +24,7 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imagesToDelete: string[]
     imagesToDeleteAllPromenade: string[]
     isBannerImageChanged: boolean
+    promenades_from_db: Promenade[]
   } => ({
     selectPromenade: null,
     creationTitlePromenade: '',
@@ -45,8 +46,12 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     imagesToDelete: [],
     imagesToDeleteAllPromenade: [],
     isBannerImageChanged: false,
+    promenades_from_db: [],
   }),
   actions: {
+    setPromenadesFromdb(promenades: Promenade[]) {
+      this.promenades_from_db = promenades
+    },
     addExtractid(id: number): boolean {
       if (this.isExcerptAdded.includes(id)) {
         return true

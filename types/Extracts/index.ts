@@ -20,7 +20,7 @@ export interface ExtractFetched {
   promenades: Promenade[]
   source: string
   status: string
-  updatedAt: string
+  updatedAt: Date
   used_in_article: boolean
   user_id: number
 }
