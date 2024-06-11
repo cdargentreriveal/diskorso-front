@@ -17,6 +17,7 @@ export async function deletedExtract(baseURL: string, data: object) {
     }
     const response = await fetch(`${baseURL}/extract/user-connected`, options)
     const res = await response.json()
+    console.log(res)
     const currentUser = userToStore.currentUser
     if (currentUser) {
       const totalExtracts = currentUser.totalExtracts - 1
@@ -37,7 +38,7 @@ export async function deletedExtract(baseURL: string, data: object) {
         })
       }
     }
-    if (res.ok) {
+    if (res.success) {
       return res
     } else {
       return 'Error'

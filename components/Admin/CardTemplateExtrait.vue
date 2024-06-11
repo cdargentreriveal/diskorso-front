@@ -49,10 +49,24 @@ async function submitDeletedExtract() {
   }
 
   try {
-    await deletedExtract(config.public.baseURL, data)
-    displaySwal('Extrait(s) supprimé(s)', ``, 'success', 'Ok')
+    const response = await deletedExtract(config.public.baseURL, data)
+    await displaySwal('Extrait(s) supprimé(s)', ``, 'success', 'Ok')
+    console.log('response', response)
+    const newAllExtracts = response.data
+      .map((extract: ExtractFetched) => ({
+        ...extract,
+        updatedAt: new Date(extract.updatedAt),
+        showModal: false,
+      }))
+      .sort(
+        (a: ExtractFetched, b: ExtractFetched) =>
+          b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
+      )
+    await extractsStore.setExtractsFromdb(newAllExtracts)
+    await sessionStorage.setItem('extracts', JSON.stringify(newAllExtracts))
     refreshNuxtData()
   } catch (error) {
+    console.log(error)
     displaySwal(
       'Erreur lors de la modification',
       'Une erreur est survenue. Veuillez réessayer plus tard.',

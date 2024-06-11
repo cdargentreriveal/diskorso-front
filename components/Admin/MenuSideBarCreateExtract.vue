@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import { Category } from '~~/types/Categories'
 import { useCategoryStore } from '~~/store/category'
+import { useExtractStore } from '~~/store/extracts'
 import { createdExtract } from '~~/utils/connected'
+import { ExtractFetched } from '~~/types/Extracts'
 const config = useRuntimeConfig()
 
 const categoriesStore = useCategoryStore()
+const extractsStore = useExtractStore()
 const categories = categoriesStore.categories
 definePageMeta({
   layout: 'page',
@@ -65,12 +68,24 @@ async function submitCreatedPromenade() {
       if (!response.success && response.statusCode !== 401) {
         displaySwal('Echec', `${response.message}`, 'error', 'ok')
       } else {
-        displaySwal(
+        await displaySwal(
           'Extrait sauvegardé',
           `Votre extrait ${data.name} a bien été sauvegardé`,
           'success',
           'Ok'
         )
+        const newAllExtracts = response.data
+          .map((extract: ExtractFetched) => ({
+            ...extract,
+            updatedAt: new Date(extract.updatedAt),
+            showModal: false,
+          }))
+          .sort(
+            (a: ExtractFetched, b: ExtractFetched) =>
+              b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
+          )
+        await extractsStore.setExtractsFromdb(newAllExtracts)
+        await sessionStorage.setItem('extracts', JSON.stringify(newAllExtracts))
         propsAdminMenuSideBarExtract.clearData()
         selectedCategories.splice(0, selectedCategories.length)
         clearSelectedCategories()
