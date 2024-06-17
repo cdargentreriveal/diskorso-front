@@ -6,8 +6,6 @@ import { useExtractStore } from '~~/store/extracts'
 
 const extractsStore = useExtractStore()
 
-// const showModal = ref(false)
-// const showModal = useState<boolean>('showModal', () => false)
 const config = useRuntimeConfig()
 const { $swal } = useNuxtApp()
 const displaySwal = (
@@ -29,21 +27,20 @@ const propsCard = defineProps({
     type: Object as PropType<ExtractFetched>,
     default: null,
   },
-  showModal: {
-    type: Boolean,
-    required: true,
-  },
-  toggle: {
-    type: Function,
-    required: true,
-  },
 })
+
+const showModal = ref<boolean>(false)
+
+const toggle = () => {
+  showModal.value = !showModal.value
+}
 
 interface ExtractWithModal extends ExtractFetched {
   showModal: boolean
 }
 
 async function submitDeletedExtract() {
+  // TODO: ne fonctionne pas quand déconnecté
   const data = {
     ids: [propsCard.extract.id],
   }
@@ -51,7 +48,6 @@ async function submitDeletedExtract() {
   try {
     const response = await deletedExtract(config.public.baseURL, data)
     await displaySwal('Extrait(s) supprimé(s)', ``, 'success', 'Ok')
-    console.log('response', response)
     const newAllExtracts = response.data
       .map((extract: ExtractFetched) => ({
         ...extract,
@@ -66,7 +62,6 @@ async function submitDeletedExtract() {
     await sessionStorage.setItem('extracts', JSON.stringify(newAllExtracts))
     refreshNuxtData()
   } catch (error) {
-    console.log(error)
     displaySwal(
       'Erreur lors de la modification',
       'Une erreur est survenue. Veuillez réessayer plus tard.',

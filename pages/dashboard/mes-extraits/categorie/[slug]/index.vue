@@ -79,11 +79,6 @@ const deleteAllExtracts = () => {
   }
 }
 
-const toggle = (extract: ExtractWithModal): boolean => {
-  extract.showModal = !extract.showModal
-  return extract.showModal
-}
-
 const datasTitle = computed((): BtnAdminPage[] => [
   {
     type: 'link',
@@ -132,12 +127,7 @@ const datasTitle = computed((): BtnAdminPage[] => [
         :key="index"
         class="w-4/12 p-2 h-full"
       >
-        <AdminCardTemplateExtrait
-          :extract="extract"
-          :show-modal="extract.showModal"
-          :toggle="() => toggle(extract)"
-          class="h-full"
-        />
+        <AdminCardTemplateExtrait :extract="extract" class="h-full" />
       </div>
     </div>
     <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">

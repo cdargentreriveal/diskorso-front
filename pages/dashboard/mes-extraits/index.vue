@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { useExtractStore } from '~~/store/extracts'
+import { ExtractFetched } from '~~/types/Extracts'
 
 definePageMeta({
   layout: 'admin',
@@ -19,14 +20,23 @@ const datasTitle = computed((): BtnAdminPage[] => [
   },
 ])
 
-const toggle = (extract: any): boolean => {
-  extract.showModal = !extract.showModal
-  return extract.showModal
-}
-
 const numberOfExtractToDisplay = ref(9)
 
 const totalExtracts = computed(() => extractsStore.extracts_from_db.length || 0)
+
+interface ExtractWithModal extends ExtractFetched {
+  showModal: boolean
+}
+
+const filteredExtracts = ref<ExtractWithModal[]>([])
+
+onMounted(() => {
+  const initialExtracts = extractsStore.extracts_from_db.map((extract) => ({
+    ...extract,
+    showModal: false,
+  }))
+  filteredExtracts.value = initialExtracts
+})
 
 const totalPages = computed(() =>
   Math.ceil(totalExtracts.value / numberOfExtractToDisplay.value)
@@ -38,10 +48,7 @@ const paginatedExtracts = computed(() => {
   const start =
     (paginationPageCurrent.value - 1) * numberOfExtractToDisplay.value
   const end = start + numberOfExtractToDisplay.value
-  return extractsStore.extracts_from_db.slice(start, end).map((extract) => ({
-    ...extract,
-    showModal: false,
-  }))
+  return filteredExtracts.value.slice(start, end)
 })
 
 const next = () => {
@@ -123,12 +130,7 @@ const deleteAllExtracts = () => {
         :key="index"
         class="w-4/12 p-2 h-full"
       >
-        <AdminCardTemplateExtrait
-          :extract="extract"
-          :show-modal="extract.showModal"
-          :toggle="() => toggle(extract)"
-          class="h-full"
-        />
+        <AdminCardTemplateExtrait :extract="extract" class="h-full" />
       </div>
     </div>
     <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
