@@ -1,21 +1,15 @@
 <script lang="ts" setup>
 import { useCategoryStore } from '~~/store/category'
 import { BtnAdminPage } from '~~/types/AdminTitlePage'
+import { usePromenadeStore } from '~~/store/promenade'
 import { Promenade } from '~~/types/Promenades'
-import { refreshToken } from '~~/utils/connected'
-
-const categoriesStore = useCategoryStore()
-const categories = categoriesStore.categories
 
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
 
-let xsrfToken: any = null
-if (process.client) {
-  xsrfToken = localStorage.getItem('xsrfToken')
-}
+const route = useRoute()
 
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -29,62 +23,58 @@ const datasTitle = computed((): BtnAdminPage[] => [
     ),
   },
 ])
-// ________________________________________________________________________________________
-//* state
-// ________________________________________________________________________________________
 
-const config = useRuntimeConfig()
-const route = useRoute()
+const categoriesStore = useCategoryStore()
+const categories = categoriesStore.categories
+const promenadesStore = usePromenadeStore()
+const numberOfPromenadeUserConnectedToDisplayBySearch = ref(9)
 
-// ________________________________________________________________________________________
-//* Methods pour mettre à jour promenades en fonction de la navigation
-// ________________________________________________________________________________________
+const filteredPromenades = ref<Promenade[]>([])
 
-const {
-  data: promenadeByCat,
-  execute,
-  error,
-} = await useAsyncData<Promenade[]>(
-  'promenadeByCat',
-  async () =>
-    await $fetch<any>(
-      `${config.public.baseURL}/promenadeditor/tag/search/${route.params.slug}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${xsrfToken}`,
-        },
-        credentials: 'include',
-      }
-    ).then((res: any) => {
-      const promenades = res.data.sort((a: any, b: any) => {
-        const dateA = new Date(a.createdAt)
-        const dateB = new Date(b.createdAt)
-        return dateB.getTime() - dateA.getTime()
-      })
-      return promenades
-    })
+onMounted(() => {
+  const slug = route.params.slug
+  const search = Array.isArray(slug) ? slug[0] : slug
+  filteredPromenades.value = promenadesStore.filterPromenadesBySearch(search)
+})
+
+const totalPromenades = computed(() => filteredPromenades.value.length || 0)
+
+const totalPages = computed(() =>
+  Math.ceil(
+    totalPromenades.value /
+      numberOfPromenadeUserConnectedToDisplayBySearch.value
+  )
 )
 
-if (error.value !== null) {
-  refreshToken(config.public.baseURL)
-    .then(() => {
-      execute()
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.error('Erreur lors du rafraîchissement du token:', error)
-    })
+const paginationPageCurrent = ref(1)
+
+const paginatedPromenades = computed(() => {
+  const start =
+    (paginationPageCurrent.value - 1) *
+    numberOfPromenadeUserConnectedToDisplayBySearch.value
+  const end = start + numberOfPromenadeUserConnectedToDisplayBySearch.value
+  return filteredPromenades.value.slice(start, end)
+})
+
+const next = () => {
+  if (paginationPageCurrent.value < totalPages.value) {
+    paginationPageCurrent.value++
+  }
 }
 
-const nombrePromenades = computed(() => {
-  if (promenadeByCat.value) {
-    return promenadeByCat.value.length
-  } else {
-    return 0
+const previous = () => {
+  if (paginationPageCurrent.value > 1) {
+    paginationPageCurrent.value--
   }
-})
+}
+
+const first = () => {
+  paginationPageCurrent.value = 1
+}
+
+const last = () => {
+  paginationPageCurrent.value = totalPages.value
+}
 </script>
 
 <template>
@@ -111,7 +101,7 @@ const nombrePromenades = computed(() => {
       </div>
       <div class="promenade-number">
         <span class="mr-2 text-lg font-bold purple-color">{{
-          nombrePromenades
+          totalPromenades
         }}</span>
         <span>promenade(s) trouvée(s) pour</span
         ><span class="italic">"{{ route.params.slug }}"</span>
@@ -120,12 +110,23 @@ const nombrePromenades = computed(() => {
     <DisplayPromenadesSearchSectionConnected locate="mes-promenades" />
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full">
       <div
-        v-for="(promenade, index) in promenadeByCat"
+        v-for="(promenade, index) in paginatedPromenades"
         :key="index"
         class="w-4/12 p-2 h-full"
       >
         <AdminCardTemplate :promenade="promenade" class="h-full" />
       </div>
+    </div>
+    <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
+      <AdminPagination
+        v-if="totalPromenades !== null && totalPromenades !== null"
+        :first="first"
+        :last="last"
+        :previous="previous"
+        :next="next"
+        :total-promenade="+totalPromenades"
+        :totalpage="+totalPages"
+      />
     </div>
   </div>
 </template>

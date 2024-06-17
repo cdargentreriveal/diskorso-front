@@ -4,6 +4,10 @@ const propsNavigation = defineProps({
     type: Function,
     required: true,
   },
+  last: {
+    type: Function,
+    required: true,
+  },
   previous: {
     type: Function,
     required: true,
@@ -97,8 +101,9 @@ const propsNavigation = defineProps({
         >
       </div>
       <div
-        class="relative last inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
+        class="click relative last inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20"
         :class="paginationPageCurrent === totalpage ? 'active' : ''"
+        @click="last()"
       >
         {{ totalpage }}
       </div>

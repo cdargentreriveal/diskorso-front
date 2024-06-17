@@ -1,91 +1,72 @@
 <script lang="ts" setup>
 import { BtnAdminPage } from '@/types/AdminTitlePage'
-import { useUserStore } from '~~/store/user'
 import { ExtractFetched } from '~~/types/Extracts'
-import { refreshToken } from '~~/utils/connected/refreshToken'
+import { useCategoryStore } from '~~/store/category'
 import { useExtractStore } from '~~/store/extracts'
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
-const config = useRuntimeConfig()
-const user = useUserStore()
-const extractsStore = useExtractStore()
-let xsrfToken: any = null
-if (process.client) {
-  xsrfToken = localStorage.getItem('xsrfToken')
-}
 
-const datasTitle = computed((): BtnAdminPage[] => [
-  {
-    type: 'link',
-    titleBlack: 'Mes',
-    titlePurple: 'extraits',
-    actionBtn: [{ action: 'Créer un extrait' }],
-    route: { name: 'dashboard/creer-un-extrait' },
-  },
-])
+const route = useRoute()
+
+const categoriesStore = useCategoryStore()
+const categories = categoriesStore.categories
+
+const extractsStore = useExtractStore()
+
+const numberOfExtractToDisplay = ref(9)
 
 interface ExtractWithModal extends ExtractFetched {
   showModal: boolean
 }
 
-type Response = {
-  data: ExtractWithModal[]
-  message: string
-  success: boolean
-}
+const filteredExtracts = ref<ExtractWithModal[]>([])
 
-const route = useRoute()
-
-const {
-  data: extractsBySlug,
-  error,
-  execute,
-} = await useAsyncData<Response>(
-  'extractsBySlug',
-  async () =>
-    await $fetch(
-      `${config.public.baseURL}/extract/tag/search/${route.params.slug}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${xsrfToken}`,
-        },
-        credentials: 'include',
-      }
-    ).then((res: any) => {
-      const extracts = res.data.map((extract: ExtractFetched) => ({
-        ...extract,
-        showModal: false,
-      }))
-      return { data: extracts, message: res.message, success: res.success }
-    })
-)
-
-if (error.value !== null) {
-  refreshToken(config.public.baseURL)
-    .then(() => {
-      execute()
-    })
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.error('Erreur lors du rafraîchissement du token:', error)
-    })
-}
-
-const totalExtracts = computed(() => {
-  if (extractsBySlug.value) {
-    return extractsBySlug.value.data.length
-  } else {
-    return 0
-  }
+onMounted(() => {
+  const slug = route.params.slug
+  const search = Array.isArray(slug) ? slug[0] : slug
+  filteredExtracts.value = extractsStore
+    .filterExtractsBySearch(search)
+    .map((extract) => ({
+      ...extract,
+      showModal: false,
+    }))
 })
 
-const toggle = (extract: any): boolean => {
-  extract.showModal = !extract.showModal
-  return extract.showModal
+const totalExtracts = computed(() => filteredExtracts.value.length || 0)
+
+const totalPages = computed(() =>
+  Math.ceil(totalExtracts.value / numberOfExtractToDisplay.value)
+)
+
+const paginationPageCurrent = ref(1)
+
+const paginatedExtracts = computed(() => {
+  const start =
+    (paginationPageCurrent.value - 1) * numberOfExtractToDisplay.value
+  const end = start + numberOfExtractToDisplay.value
+  return filteredExtracts.value.slice(start, end)
+})
+
+const next = () => {
+  if (paginationPageCurrent.value < totalPages.value) {
+    paginationPageCurrent.value++
+  }
+}
+
+const previous = () => {
+  if (paginationPageCurrent.value > 1) {
+    paginationPageCurrent.value--
+  }
+}
+
+const first = () => {
+  paginationPageCurrent.value = 1
+}
+
+const last = () => {
+  paginationPageCurrent.value = totalPages.value
 }
 
 const deleteAllExtracts = () => {
@@ -97,6 +78,24 @@ const deleteAllExtracts = () => {
     }
   }
 }
+
+const toggle = (extract: ExtractWithModal): boolean => {
+  extract.showModal = !extract.showModal
+  return extract.showModal
+}
+
+const datasTitle = computed((): BtnAdminPage[] => [
+  {
+    type: 'link',
+    titleBlack: 'Mes',
+    titlePurple: 'Extraits',
+    actionBtn: [{ action: 'Créer un extrait' }],
+    route: { name: 'dashboard/creer-un-extrait' },
+    category: categories.find(
+      (category) => category.slug === route.params.slug
+    ),
+  },
+])
 </script>
 
 <template>
@@ -147,7 +146,7 @@ const deleteAllExtracts = () => {
       class="container_promenade w-9/12 mx-auto flex items-center flex-wrap mb-8"
     >
       <div
-        v-for="(extract, index) in extractsBySlug?.data"
+        v-for="(extract, index) in paginatedExtracts"
         :key="index"
         class="w-4/12 p-2 h-full"
       >
@@ -158,6 +157,17 @@ const deleteAllExtracts = () => {
           class="h-full"
         />
       </div>
+    </div>
+    <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
+      <DisplayPromenadesPagination
+        v-if="totalExtracts !== null"
+        :first="first"
+        :last="last"
+        :previous="previous"
+        :next="next"
+        :total-promenade="+totalExtracts"
+        :totalpage="+totalPages"
+      />
     </div>
   </div>
 </template>

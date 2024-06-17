@@ -48,6 +48,18 @@ export const usePromenadeStore = defineStore('promenadeStore', {
     isBannerImageChanged: false,
     promenades_from_db: [],
   }),
+  getters: {
+    filterPromenadesByCategory: (state) => (categoryName: string) => {
+      return state.promenades_from_db.filter((promenade) =>
+        promenade.categories.some((category) => category.slug === categoryName)
+      )
+    },
+    filterPromenadesBySearch: (state) => (search: string) => {
+      return state.promenades_from_db.filter((promenade) =>
+        promenade.title.toLowerCase().includes(search.toLowerCase())
+      )
+    },
+  },
   actions: {
     setPromenadesFromdb(promenades: Promenade[]) {
       this.promenades_from_db = promenades

@@ -1,15 +1,12 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
-import { useUserStore } from '~~/store/user'
 import { useExtractStore } from '~~/store/extracts'
 
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
-const config = useRuntimeConfig()
-const user = useUserStore()
 const extractsStore = useExtractStore()
 
 const datasTitle = computed((): BtnAdminPage[] => [
@@ -41,7 +38,10 @@ const paginatedExtracts = computed(() => {
   const start =
     (paginationPageCurrent.value - 1) * numberOfExtractToDisplay.value
   const end = start + numberOfExtractToDisplay.value
-  return extractsStore.extracts_from_db.slice(start, end)
+  return extractsStore.extracts_from_db.slice(start, end).map((extract) => ({
+    ...extract,
+    showModal: false,
+  }))
 })
 
 const next = () => {
@@ -63,10 +63,19 @@ const first = () => {
 const last = () => {
   paginationPageCurrent.value = totalPages.value
 }
+const deleteAllExtracts = () => {
+  extractsStore.removeAllExtract()
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
+      localStorage.removeItem(key!)
+    }
+  }
+}
 </script>
 
 <template>
-  <div
+  <!-- <div
     v-if="Loading"
     class="loading fixed bg-slate-600/[0.9] h-full w-full left-0 top-0 z-15 flex items-center justify-center"
   >
@@ -74,7 +83,7 @@ const last = () => {
       <div class="loader"></div>
       <div class="text-white mt-5 text-lg">Chargement des extraits</div>
     </div>
-  </div>
+  </div> -->
   <AdminMenu />
   <div class="container mx-auto">
     <AdminTitle
@@ -123,7 +132,7 @@ const last = () => {
       </div>
     </div>
     <div class="py-5 w-9/12 mx-auto flex flex-wrap mb-10">
-      <DisplayPromenadesPagination
+      <AdminPagination
         v-if="totalExtracts !== null"
         :first="first"
         :previous="previous"

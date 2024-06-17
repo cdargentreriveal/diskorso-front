@@ -23,6 +23,18 @@ export const useExtractStore = defineStore('extractStore', {
     extractSelected: null,
     extracts_from_db: [],
   }),
+  getters: {
+    filterExtractsByCategory: (state) => (categoryName: string) => {
+      return state.extracts_from_db.filter((extract) =>
+        extract.categories.some((category) => category.slug === categoryName)
+      )
+    },
+    filterExtractsBySearch: (state) => (search: string) => {
+      return state.extracts_from_db.filter((extract) =>
+        extract.name.toLowerCase().includes(search.toLowerCase())
+      )
+    },
+  },
   actions: {
     setExtractsFromdb(extracts: Extracts) {
       this.extracts_from_db = extracts
