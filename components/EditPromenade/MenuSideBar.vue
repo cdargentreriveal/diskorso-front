@@ -139,6 +139,7 @@ function submitCreatedPromenade() {
                       'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008.png',
                   })
                   PromenadeStore.unsetIsBannerImageChanged()
+                  PromenadeStore.isExcerptAdded = []
                   navigateTo('/dashboard')
                 }
               } catch (error) {
@@ -197,6 +198,7 @@ function submitCreatedPromenade() {
                   imageUrl:
                     'https://diskord-api.s3.eu-west-3.amazonaws.com/file1683741866008.png',
                 })
+                PromenadeStore.isExcerptAdded = []
                 navigateTo('/dashboard')
               }
             } catch (error) {

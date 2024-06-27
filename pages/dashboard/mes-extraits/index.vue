@@ -3,12 +3,14 @@ import { ref, computed } from 'vue'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { useExtractStore } from '~~/store/extracts'
 import { ExtractFetched } from '~~/types/Extracts'
+import { usePromenadeStore } from '~~/store/promenade'
 
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
 const extractsStore = useExtractStore()
+const promenadesStore = usePromenadeStore()
 
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -105,6 +107,31 @@ const deleteAllExtracts = () => {
 
     <DisplayPromenadesSearchSectionConnected locate="mes-extraits" />
     <div
+      v-if="promenadesStore.creationTitlePromenade"
+      class="container_promenade w-9/12 switch-btn mb-10 flex items-center text-xs mx-auto my-4"
+    >
+      <nuxt-link :to="`/dashboard/creer-une-promenade`"
+        ><button
+          class="bg-lime-600 py-2 px-4 ml-2 rounded-full font-bold text-white"
+        >
+          Revenir à la création de la promenade
+        </button></nuxt-link
+      >
+    </div>
+    <div
+      v-if="promenadesStore.selectPromenade"
+      class="container_promenade w-9/12 switch-btn mb-10 flex items-center text-xs mx-auto my-4"
+    >
+      <nuxt-link
+        :to="`/dashboard/editer-une-promenade/${promenadesStore.selectPromenade.title}`"
+        ><button
+          class="bg-lime-600 py-2 px-4 ml-2 rounded-full font-bold text-white"
+        >
+          Revenir à la modification de la promenade
+        </button></nuxt-link
+      >
+    </div>
+    <div
       v-if="extractsStore.extracts.length > 0"
       class="container_promenade w-9/12 switch-btn mb-4 flex items-center text-xs mx-auto -mt-4"
     >
@@ -116,6 +143,7 @@ const deleteAllExtracts = () => {
         <span>Tout déselectionner</span>
       </button>
     </div>
+
     <button
       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-auto flex items-center flex-wrap mb-8 h-8 px-3 text-xs rounded"
       role="menuitem"

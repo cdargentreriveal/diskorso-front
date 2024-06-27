@@ -31,7 +31,6 @@ function submitDeletedPromenade() {
   const data = {
     id: propsCard.promenade.id,
   }
-
   try {
     $swal
       .fire({
