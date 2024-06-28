@@ -5,5 +5,5 @@ export interface TransitionItem {
   imageUrl?: string
   imagetoUpload?: FormData
   source?: string
-  index: number
+  index?: number
 }

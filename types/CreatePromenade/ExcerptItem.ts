@@ -1,7 +1,7 @@
 export interface ExcerptItem {
   type: 'excerpt'
   id: number
-  index: number
+  index?: number
   content: string
   key: string
   source?: string
