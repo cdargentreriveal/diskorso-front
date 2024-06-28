@@ -89,7 +89,7 @@ function submitCreatedPromenade() {
             } else {
               const itemsUpdated = await sendContentImagePromenade(
                 config.public.baseURL,
-                PromenadeStore.selectPromenade!.content
+                PromenadeStore.itemsEdit
               )
               const data = reactive({
                 id: PromenadeStore.selectPromenade?.id,
@@ -154,7 +154,7 @@ function submitCreatedPromenade() {
           } else {
             const itemsUpdated = await sendContentImagePromenade(
               config.public.baseURL,
-              PromenadeStore.selectPromenade!.content
+              PromenadeStore.itemsEdit
             )
             const data = reactive({
               id: PromenadeStore.selectPromenade?.id,

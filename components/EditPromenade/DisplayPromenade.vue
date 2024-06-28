@@ -188,7 +188,7 @@ const onInput = (key: string, event: Event) => {
         <div class="w-full">
           <WysiwygEditor
             :content="item.content"
-            @update:value="(value) => (item.content = value)"
+            @update:value="(value: any) => (item.content = value)"
           />
         </div>
         <div class="btns">

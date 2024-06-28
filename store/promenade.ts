@@ -62,7 +62,9 @@ export const usePromenadeStore = defineStore('promenadeStore', {
   },
   actions: {
     setPromenadesFromdb(promenades: Promenade[]) {
-      this.promenades_from_db = promenades
+      this.promenades_from_db = promenades.sort((a, b) => {
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      })
     },
     addExtractid(id: number): boolean {
       if (this.isExcerptAdded.includes(id)) {
@@ -82,6 +84,11 @@ export const usePromenadeStore = defineStore('promenadeStore', {
       this.isExcerptAdded = []
     },
     setPromenade(currentPromenade: Promenade | null) {
+      // if (currentPromenade && currentPromenade.content) {
+      //   currentPromenade.content.forEach((item, index) => {
+      //     item.index = index
+      //   })
+      // }
       this.selectPromenade = currentPromenade
     },
     setCreationTitlePromenade(title: string) {
