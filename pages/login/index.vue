@@ -156,15 +156,41 @@ const login = async (email: string, password: string) => {
       <div class="py-8 text-center -sm:px-4 xl:hidden inline-block">
         <div class="title uppercase font-bold xl:text-4xl text-2xl md:text-3xl">
           <h2>
-            Dashboard accessible <br />
-            <span class="font-medium">uniquement depuis votre ordinateur</span>
+            DPOur une meilleure expérience <br />
+            <span class="font-medium">passer sur grand écran</span>
           </h2>
         </div>
-        <NuxtLink to="/">
+        <!-- <NuxtLink to="/">
           <div class="my-10 py-3 border border-black rounded-md mx-8">
             Retour a l'accueil
           </div>
-        </NuxtLink>
+        </NuxtLink> -->
+        <form action="" class="my-8" @submit.prevent="login(email, password)">
+          <input
+            v-model="email"
+            type="mail"
+            placeholder="Email"
+            class="rounded-md border border-gray w-full p-4 my-2"
+          />
+          <input
+            v-model="password"
+            type="password"
+            placeholder="Mot de passe"
+            class="rounded-md border border-gray w-full p-4 my-2"
+          />
+          <button
+            type="submit"
+            class="py-4 px-8 my-4 btn-submit rounded-md text-white font-semibold w-full"
+          >
+            Se connecter
+          </button>
+        </form>
+        <p class="text-left font-medium">
+          Mot de passe perdu ?
+          <NuxtLink to="/reset-password" class="underline">
+            Recevoir un nouveau mot de passe
+          </NuxtLink>
+        </p>
       </div>
     </div>
   </div>
