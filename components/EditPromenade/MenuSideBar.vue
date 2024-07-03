@@ -8,8 +8,10 @@ import {
 } from '~~/utils/connected'
 import { useCategoryStore } from '~~/store/category'
 import { usePromenadeStore } from '~~/store/promenade'
+import { useUserStore } from '~~/store/user'
 
 const PromenadeStore = usePromenadeStore()
+const user = useUserStore()
 const config = useRuntimeConfig()
 
 const categoriesStore = useCategoryStore()
@@ -387,10 +389,10 @@ function isCheckboxDisabled(categorie: Category): boolean {
   )
 }
 const excerptElementsId = computed(() => {
-  const excerptElements = PromenadeStore.items.filter(
+  const excerptElements = PromenadeStore.selectPromenade?.content.filter(
     (item: any) => item.type === 'excerpt'
   )
-  const excerptIds = excerptElements.map((item: any) => item.id)
+  const excerptIds = excerptElements?.map((item: any) => item.id)
   return excerptIds
 })
 const selectedIds = computed(() => {
@@ -461,13 +463,13 @@ const toggle = () => {
                   class="promenade_page_content_avatar w-[80px] h-[80px] rounded-full overflow-hidden absolute -top-10 left-17 -sm:left-10 border border-black border-2"
                 >
                   <img
-                    v-if="PromenadeStore.selectPromenade!.user.picture === null"
+                    v-if="user.currentUser?.picture === null"
                     src="@/assets/images/avatar-dk.jpg"
                     alt="image de profil"
                   />
                   <img
                     v-else
-                    :src="PromenadeStore.selectPromenade!.user.picture"
+                    :src="user.currentUser?.picture"
                     alt="image de profil"
                   />
                 </div>
@@ -489,7 +491,7 @@ const toggle = () => {
                     <p>
                       par :
                       <span class="underline">{{
-                        PromenadeStore.selectPromenade!.user.username
+                        user.currentUser?.username
                       }}</span>
                     </p>
                   </div>
