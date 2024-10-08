@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ItemType } from '~~/types/CreatePromenade'
 import { Promenade } from '~~/types/Promenades'
+import { publishPromenade } from '~~/utils/connected'
 
 export const usePromenadeStore = defineStore('promenadeStore', {
   state: (): {
@@ -74,6 +75,18 @@ export const usePromenadeStore = defineStore('promenadeStore', {
         return false
       }
     },
+    publishPromenade(promenadeId: number) {
+      const promenade = this.promenades_from_db.find(
+        (p) => p.id === promenadeId
+      )
+
+      if (!promenade) {
+        throw new Error('Promenade non trouvée')
+      } else {
+        promenade!.published = !promenade!.published
+      }
+    },
+
     removeExtractid(id: number): void {
       const index = this.isExcerptAdded.indexOf(id)
       if (index !== -1) {

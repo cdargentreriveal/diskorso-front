@@ -68,6 +68,10 @@ const options = [
 ]
 
 const selectedOption = ref('all')
+
+// const refreshPromenades = async () => {
+//   await promenadesStore.fetchPromenadesFromDb() // Assurez-vous que cette méthode rafraîchit les promenades à partir de la base de données
+// }
 </script>
 
 <template>
@@ -82,26 +86,6 @@ const selectedOption = ref('all')
     />
     <AdminCatsFilter />
     <DisplayPromenadesSearchSectionConnected locate="mes-promenades" />
-    <!-- <div class="w-9/12 mx-auto filter-draft-published">
-      <div
-        class="flex items-center gap-10 justify-center mb-8 text-sm text-slate-500"
-      >
-        <div
-          v-for="(option, index) in options"
-          :key="index"
-          class="flex items-center"
-        >
-          <input
-            :id="'option-' + index"
-            v-model="selectedOption"
-            type="radio"
-            :value="option.value"
-            class="h-[15px] w-[15px] mr-2 cursor-pointer"
-          />
-          <label :for="'option-' + index">{{ option.label }}</label>
-        </div>
-      </div>
-    </div> -->
     <div class="w-9/12 mx-auto flex flex-wrap mb-10 h-full mt-20">
       <div
         v-for="(promenade, index) in paginatedPromenades"

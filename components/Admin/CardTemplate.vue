@@ -67,7 +67,7 @@ function submitDeletedPromenade() {
             'success',
             'Ok'
           )
-          refreshNuxtData()
+          await refreshNuxtData()
         }
       })
   } catch (error) {
@@ -88,7 +88,8 @@ async function submitPublishPromenade(id: number) {
       'success',
       'Ok'
     )
-    refreshNuxtData()
+    await PromnadeStore.publishPromenade(id)
+    await refreshNuxtData()
   } catch (error) {
     displaySwal(
       'Erreur lors de la modification',
@@ -107,7 +108,8 @@ async function submitUnpublishPromenade(id: number) {
       'success',
       'Ok'
     )
-    refreshNuxtData()
+    await refreshNuxtData()
+    await PromnadeStore.publishPromenade(id)
   } catch (error) {
     displaySwal(
       'Erreur lors de la modification',
