@@ -89,7 +89,13 @@ function submitCreatedPromenade() {
       .then(async (result: any) => {
         if (result.isConfirmed) {
           let url = ''
-          if (!PromenadeStore.mainImageToUpload.has('file')) {
+          // TODO: il faut vérifier avant que PromenadeStore.mainImageToUpload existe
+          if (
+            Object.keys(PromenadeStore.mainImageToUpload).length === 0 &&
+            PromenadeStore.mainImageToUpload.constructor === Object
+          ) {
+            url = ''
+          } else if (!PromenadeStore.mainImageToUpload.has('file')) {
             url = ''
           } else {
             const image = PromenadeStore.mainImageToUpload
@@ -154,7 +160,12 @@ function submitCreatedPromenade() {
           }
         } else if (result.isDenied) {
           let url2 = ''
-          if (!PromenadeStore.mainImageToUpload.has('file')) {
+          if (
+            Object.keys(PromenadeStore.mainImageToUpload).length === 0 &&
+            PromenadeStore.mainImageToUpload.constructor === Object
+          ) {
+            url2 = ''
+          } else if (!PromenadeStore.mainImageToUpload.has('file')) {
             url2 = ''
           } else {
             const image = PromenadeStore.mainImageToUpload
@@ -350,7 +361,7 @@ const toggle = () => {
                     class="promenade_page_content_created flex gap-2 italic text-sm py-4"
                   >
                     <p>
-                      Créée le :
+                      Créé le :
                       {{ getDate(new Date().toISOString()) }}
                     </p>
                     <span>-</span>
