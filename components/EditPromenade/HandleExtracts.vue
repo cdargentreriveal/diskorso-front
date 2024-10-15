@@ -33,7 +33,7 @@ function addExcerptBlock(
   id: number,
   index: number
 ): void {
-  if (PromenadeStore.excerptCountEdit < 4) {
+  if (PromenadeStore.excerptCountEdit < 500) {
     // Vérifier si l'extrait est déjà présent
     nextTick(() => {
       const existingExcerpt = PromenadeStore.itemsEdit.find(
