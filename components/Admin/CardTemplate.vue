@@ -109,6 +109,7 @@ async function submitUnpublishPromenade(id: number) {
       'Ok'
     )
     await refreshNuxtData()
+    // TODO: vérifier l'action du store, changer dans le localstorage
     await PromnadeStore.publishPromenade(id)
   } catch (error) {
     displaySwal(
