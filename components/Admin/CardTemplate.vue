@@ -140,7 +140,7 @@ const propsCard = defineProps({
 
 <template>
   <div class="card rounded-md overflow-hidden bg-white box-shaddow h-full">
-    <NuxtLink :to="`/promenades/${promenade.slug}`">
+    <NuxtLink :to="`/dashboard/promenades/${promenade.slug}`">
       <div
         class="card-image relative 2xl:h-[180px] xl:h-[150px]"
         :class="!promenade.published ? 'filter-gray' : ''"
