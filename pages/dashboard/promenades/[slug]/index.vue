@@ -167,19 +167,19 @@ if (mainImageSource) {
               <div
                 v-for="(blocsContent, i) in promenade.content"
                 :key="i"
-                class="px-20 py-5 -sm:px-5 -sm:py-5"
+                class="px-20 py-2 -sm:px-5 -sm:py-2"
               >
                 <div
                   v-if="blocsContent.type === 'transition'"
-                  class="transition"
+                  class="transition -2xl:text-sm"
                 >
-                  <div v-html="blocsContent.content"></div>
+                  <p v-html="blocsContent.content"></p>
                 </div>
                 <div
                   v-if="blocsContent.type === 'excerpt'"
                   class="extrait bg-slate-100 relative py-3 -2xl:text-sm"
                 >
-                  <div v-html="blocsContent.content"></div>
+                  <p v-html="blocsContent.content"></p>
                   <div class="source text-xs italic text-right mb-3">
                     <span>source: </span>
                     <a

@@ -133,7 +133,7 @@ if (mainImageSource) {
                   </NuxtLink>
                 </div>
               </div>
-              <div v-if="user.currentUser !== null">
+              <!-- <div v-if="user.currentUser !== null">
                 <div
                   class="edit-promenade flex items-center gap-2 text-xs border border-[gray-color] rounded-md p-2 gray-color"
                 >
@@ -153,7 +153,7 @@ if (mainImageSource) {
                     </div>
                   </NuxtLink>
                 </div>
-              </div>
+              </div> -->
             </div>
             <p class="mt-5 text-sm italic gray-color">
               Description : {{ promenade.summary }}
@@ -166,19 +166,19 @@ if (mainImageSource) {
               <div
                 v-for="(blocsContent, i) in promenade.content"
                 :key="i"
-                class="px-20 py-5 -sm:px-5 -sm:py-5"
+                class="px-20 py-2 -sm:px-5 -sm:py-2"
               >
                 <div
                   v-if="blocsContent.type === 'transition'"
-                  class="transition"
+                  class="transition -2xl:text-sm"
                 >
-                  <div v-html="blocsContent.content"></div>
+                  <p v-html="blocsContent.content"></p>
                 </div>
                 <div
                   v-if="blocsContent.type === 'excerpt'"
                   class="extrait bg-slate-100 relative py-3 -2xl:text-sm"
                 >
-                  <div v-html="blocsContent.content"></div>
+                  <p v-html="blocsContent.content"></p>
                   <div class="source text-xs italic text-right mb-3">
                     <span>source: </span>
                     <a

@@ -190,7 +190,7 @@ onMounted(() => {
               <div
                 :class="{
                   'cursor-not-allowed disabled':
-                    PromenadeStore.excerptCount === 4 ||
+                    PromenadeStore.excerptCount === 500 ||
                     PromenadeStore.isExcerptAdded.includes(extract.id),
                 }"
                 class="btn_add_extrait extrait_btn px-3 py-2 rounded text-white"
