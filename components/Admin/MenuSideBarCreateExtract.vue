@@ -102,11 +102,13 @@ async function submitCreatedPromenade() {
 }
 
 const clearSelectedCategories = () => {
-  const checkboxes = document.getElementsByName(
-    'categories'
-  ) as NodeListOf<HTMLInputElement>
-  for (let i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].checked = false
+  if (process.client) {
+    const checkboxes = document.getElementsByName(
+      'categories'
+    ) as NodeListOf<HTMLInputElement>
+    for (let i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = false
+    }
   }
 }
 

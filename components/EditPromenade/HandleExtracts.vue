@@ -59,7 +59,9 @@ function addExcerptBlock(
 // const items = ref<ExcerptItem[]>([])
 function sendToPinia(extract: number) {
   extractsStore.removeExtract(extract)
-  localStorage.removeItem(`extract_${extract}_isChecked`) // remove the extract if the checkbox is unchecked
+  if (process.client) {
+    localStorage.removeItem(`extract_${extract}_isChecked`)
+  } // remove the extract if the checkbox is unchecked
 }
 const toggle = (extract: any): boolean => {
   extract.showModal = !extract.showModal

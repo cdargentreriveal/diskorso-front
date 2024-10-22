@@ -15,6 +15,10 @@ const datasTitle = computed((): BtnAdminPage[] => [
     route: { name: 'dashboard/tutoriel' },
   },
 ])
+const isClient = ref(false)
+onMounted(() => {
+  isClient.value = true
+})
 const nameInput = ref('')
 const sourceInput = ref('')
 const contentInput = ref('')
@@ -73,12 +77,14 @@ const clearData = (): void => {
       <div class="extrait-content">
         <div class="font-semibold mb-4">Collez votre contenu <sup>*</sup></div>
         <div class="my-2 w-full h-[30vh] max-h-[30vh]">
-          <WYSIWYGWysywygEditorWithoutToolBar
-            ref="wysiwygEditorRef"
-            v-model="contentInput"
-            class="h-full bg-white"
-            @update:value="(content:any) => (contentInput = content)"
-          />
+          <ClientOnly>
+            <WysywygEditorWithoutToolBar
+              ref="wysiwygEditorRef"
+              v-model="contentInput"
+              class="h-full bg-white"
+              @update:value="(content) => (contentInput = content)"
+            />
+          </ClientOnly>
         </div>
       </div>
     </div>

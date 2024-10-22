@@ -74,28 +74,30 @@ function handleImageUpload(event: Event, index: number): void {
 }
 const blocTransition = ref<HTMLElement | null>(null)
 onMounted(() => {
-  PromenadeStore.itemsEdit = PromenadeStore.selectPromenade!.content
-  if (blocTransition.value) {
-    const sortableTransition = new Sortable(blocTransition.value, {
-      group: 'bloc',
-      handle: '.drag',
-      animation: 250,
-      onEnd: (event: any) => {
-        const newIndex = event.newIndex
-        const oldIndex = event.oldIndex
-        const updatedItems = [...PromenadeStore.itemsEdit] // créer une copie du tableau
-        const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
-        updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
-        PromenadeStore.itemsEdit = updatedItems // mettre à jour le tableau d'origine
-      },
-    })
-  }
-  const descriptionCard = document.querySelectorAll('.extraits_item_text')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 100) ?? ''
-      element.textContent = shortDescription + '...'
-    })
+  if (process.client) {
+    PromenadeStore.itemsEdit = PromenadeStore.selectPromenade!.content
+    if (blocTransition.value) {
+      const sortableTransition = new Sortable(blocTransition.value, {
+        group: 'bloc',
+        handle: '.drag',
+        animation: 250,
+        onEnd: (event: any) => {
+          const newIndex = event.newIndex
+          const oldIndex = event.oldIndex
+          const updatedItems = [...PromenadeStore.itemsEdit] // créer une copie du tableau
+          const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
+          updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
+          PromenadeStore.itemsEdit = updatedItems // mettre à jour le tableau d'origine
+        },
+      })
+    }
+    const descriptionCard = document.querySelectorAll('.extraits_item_text')
+    if (descriptionCard) {
+      descriptionCard.forEach((element) => {
+        const shortDescription = element.textContent?.substring(0, 100) ?? ''
+        element.textContent = shortDescription + '...'
+      })
+    }
   }
 })
 const onInput = (key: string, event: Event) => {

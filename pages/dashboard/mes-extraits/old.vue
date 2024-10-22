@@ -140,19 +140,21 @@ async function next() {
     return 'no more promenade'
   } else {
     query.value = `extract/extract-cursor/${numberOfExtractToDisplay.value}/${lastId.value}/0/desc`
-    const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
-    if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
-      await refreshToken(config.public.baseURL)
-      execute()
-    } else {
-      execute()
+    if (process.client) {
+      const xsrfTokenTime = localStorage.getItem('xsrfToken_time')
+      if (xsrfTokenTime !== null && Date.now() >= +xsrfTokenTime - 2000) {
+        await refreshToken(config.public.baseURL)
+        execute()
+      } else {
+        execute()
+      }
+      await nextTick(() => {
+        paginationPageCurrent.value = paginationPageCurrent.value + 1
+        setTimeout(() => {
+          Loading.value = false
+        }, 250)
+      })
     }
-    await nextTick(() => {
-      paginationPageCurrent.value = paginationPageCurrent.value + 1
-      setTimeout(() => {
-        Loading.value = false
-      }, 250)
-    })
   }
 }
 // previous

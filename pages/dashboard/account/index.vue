@@ -93,7 +93,7 @@ const displaySwal = (
     confirmButtonText,
   })
 }
-const changeAvatarhover = document.querySelector('.change-avatar')
+// const changeAvatarhover = document.querySelector('.change-avatar')
 const showChangeAvatar = (event: any) => {
   const changeAvatarHover = event.currentTarget
   changeAvatarHover?.classList.replace('opacity-0', 'opacity-100')
@@ -225,24 +225,27 @@ function handleFileUpload(event: Event) {
 async function changeAvatar(event: Event) {
   event.preventDefault()
   try {
-    const file = (document.getElementById('avatar-upload') as HTMLInputElement)
-      .files?.[0]
-    if (!file) return
+    if (process.client) {
+      const file = (
+        document.getElementById('avatar-upload') as HTMLInputElement
+      ).files?.[0]
+      if (!file) return
 
-    const formData = new FormData()
-    formData.append('file', file)
-    const response = await modifyAvatar(config.public.baseURL, formData)
-    if (!response.success) {
-      displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
-    } else {
-      displaySwal(
-        'Modification réussie !',
-        'Votre image de profile a bien été mise à jour',
-        'success',
-        'ok'
-      )
+      const formData = new FormData()
+      formData.append('file', file)
+      const response = await modifyAvatar(config.public.baseURL, formData)
+      if (!response.success) {
+        displaySwal('Echec', `${response.data.message}`, 'error', 'ok')
+      } else {
+        displaySwal(
+          'Modification réussie !',
+          'Votre image de profile a bien été mise à jour',
+          'success',
+          'ok'
+        )
+      }
+      AvatarUrl.value = user.currentUser!.picture
     }
-    AvatarUrl.value = user.currentUser!.picture
   } catch (error) {
     return error
   }

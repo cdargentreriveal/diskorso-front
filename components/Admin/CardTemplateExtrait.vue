@@ -83,10 +83,17 @@ function sendToPinia(extract: ExtractFetched) {
 
   if (isChecked.value) {
     extractsStore.addExtracts(newExtract)
-    localStorage.setItem(`extract_${extractId.value}_isChecked`, 'true') // add the extract if the checkbox is checked
+    localStorage.setItem(`extract_${extract.id}_isChecked`, 'true') // add the extract if the checkbox is checked
   } else {
-    extractsStore.removeExtract(newExtract.id)
-    localStorage.removeItem(`extract_${extractId.value}_isChecked`) // remove the extract if the checkbox is unchecked
+    extractsStore.removeExtract(newExtract.id) // Remove the extract from Pinia
+    localStorage.removeItem(`extract_${extract.id}_isChecked`) // remove the checked state from localStorage
+
+    // Now, let's also update the extracts array in localStorage
+    const extracts = JSON.parse(localStorage.getItem('extracts') || '[]')
+    const updatedExtracts = extracts.filter(
+      (e: ExtractFetched) => e.id !== newExtract.id
+    ) // Remove the extract by ID
+    localStorage.setItem('extracts', JSON.stringify(updatedExtracts)) // Save the updated extracts array
   }
 }
 

@@ -54,8 +54,10 @@
 export default {
   methods: {
     scrollTo() {
-      const element = document.getElementById('about')
-      element.scrollIntoView({ behavior: 'smooth' })
+      if (process.client) {
+        const element = document.getElementById('about')
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
     },
   },
 }

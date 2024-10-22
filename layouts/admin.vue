@@ -3,15 +3,19 @@ import { useUserStore } from '~~/store/user'
 
 const user = useUserStore()
 onMounted(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = '#F8F8F8'
+  if (process.client) {
+    const body = document.querySelector('body')
+    if (body) {
+      body.style.backgroundColor = '#F8F8F8'
+    }
   }
 })
 onBeforeUnmount(() => {
-  const body = document.querySelector('body')
-  if (body) {
-    body.style.backgroundColor = ''
+  if (process.client) {
+    const body = document.querySelector('body')
+    if (body) {
+      body.style.backgroundColor = ''
+    }
   }
 })
 </script>

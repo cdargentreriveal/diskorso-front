@@ -32,96 +32,105 @@ function removeItem(index: number, id: number): void {
   PromenadeStore.items.splice(index, 1)
 }
 
-async function handleImageUpload(
+const handleImageUpload = async (
   event: Event,
   index: number,
   key: string
-): Promise<void> {
-  await idImage.value++
-  const file = (event.target as HTMLInputElement).files?.[0]
+): Promise<void> => {
+  if (process.client) {
+    // Vérification pour s'assurer que c'est exécuté côté client
+    await idImage.value++
+    const file = (event.target as HTMLInputElement).files?.[0]
 
-  if (!file) return
-  const maxSize = 500 * 1024
-  if (file.size > maxSize) {
-    displaySwal(
-      "Taille de l'image trop grande",
-      `La taille de l'image ne peut dépasser 500 ko`,
-      'error',
-      'Ok'
-    )
-    return
-  }
-  const allowedExtensions = ['png', 'svg', 'jpeg', 'jpg', 'webp']
-  const fileNameParts = file.name.split('.')
-  const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
-  if (!allowedExtensions.includes(fileExtension)) {
-    displaySwal(
-      'Format non autorisé',
-      `Les formats autorisés sont jpeg, png, webp et svg `,
-      'error',
-      'Ok'
-    )
-    return
-  }
-  const formData = new FormData()
-  formData.append('file', file)
-  PromenadeStore.items[index].imagetoUpload = formData
-  const reader = new FileReader()
-  reader.onload = () => {
-    const image = new Image()
-    image.onload = () => {
+    if (!file) return
+    const maxSize = 500 * 1024
+    if (file.size > maxSize) {
+      displaySwal(
+        "Taille de l'image trop grande",
+        `La taille de l'image ne peut dépasser 500 ko`,
+        'error',
+        'Ok'
+      )
+      return
+    }
+    const allowedExtensions = ['png', 'svg', 'jpeg', 'jpg', 'webp']
+    const fileNameParts = file.name.split('.')
+    const fileExtension = fileNameParts[fileNameParts.length - 1].toLowerCase()
+    if (!allowedExtensions.includes(fileExtension)) {
+      displaySwal(
+        'Format non autorisé',
+        `Les formats autorisés sont jpeg, png, webp et svg `,
+        'error',
+        'Ok'
+      )
+      return
+    }
+    const formData = new FormData()
+    formData.append('file', file)
+    PromenadeStore.items[index].imagetoUpload = formData
+    const reader = new FileReader()
+    reader.onload = () => {
+      const image = new Image()
+      image.onload = () => {
+        PromenadeStore.items[index].imageUrl = reader.result as string
+      }
+      image.src = reader.result as string
       PromenadeStore.items[index].imageUrl = reader.result as string
     }
-    image.src = reader.result as string
-    PromenadeStore.items[index].imageUrl = reader.result as string
+    reader.readAsDataURL(file)
+
+    // Manipulation du DOM pour ajouter l'input de source
+    const sourceDiv = document.createElement('div')
+    sourceDiv.className = 'source py-2 w-full flex items-center'
+    const label = document.createElement('label')
+    label.className = 'text-sm pr-5 ml-2'
+    label.innerHTML = 'Source : <sup>*</sup>'
+    const input = document.createElement('input')
+    input.className =
+      'p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400'
+    input.type = 'text'
+    input.placeholder = 'Le nom de la source'
+    input.value = PromenadeStore.items[index].source || ''
+    input.addEventListener('input', (event) => {
+      PromenadeStore.setCreationSourceImageContent(
+        index,
+        (event.target as HTMLInputElement).value
+      )
+    })
+    sourceDiv.appendChild(label)
+    sourceDiv.appendChild(input)
+    const parentDiv = document.getElementById('image-upload' + key)
+    parentDiv!.appendChild(sourceDiv)
   }
-  reader.readAsDataURL(file)
-  const sourceDiv = document.createElement('div')
-  sourceDiv.className = 'source py-2 w-full flex items-center'
-  const label = document.createElement('label')
-  label.className = 'text-sm pr-5 ml-2'
-  label.innerHTML = 'Source : <sup>*</sup>'
-  const input = document.createElement('input')
-  input.className =
-    'p-3 border-b-1 border-slate-300 text-xs focus:outline-none w-6/12 bg-transparent text-slate-400'
-  input.type = 'text'
-  input.placeholder = 'Le nom de la source'
-  input.value = PromenadeStore.items[index].source || ''
-  input.addEventListener('input', (event) => {
-    PromenadeStore.setCreationSourceImageContent(
-      index,
-      (event.target as HTMLInputElement).value
-    )
-  })
-  sourceDiv.appendChild(label)
-  sourceDiv.appendChild(input)
-  const parentDiv = document.getElementById('image-upload' + key)
-  parentDiv!.appendChild(sourceDiv)
 }
 
 const blocTransition = ref<HTMLElement | null>(null)
+
 onMounted(() => {
-  if (blocTransition.value) {
-    const sortableTransition = new Sortable(blocTransition.value, {
-      group: 'bloc',
-      handle: '.drag',
-      animation: 250,
-      onEnd: (event: any) => {
-        const newIndex = event.newIndex
-        const oldIndex = event.oldIndex
-        const updatedItems = [...PromenadeStore.items] // créer une copie du tableau
-        const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
-        updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
-        PromenadeStore.items = updatedItems // mettre à jour le tableau d'origine
-      },
-    })
-  }
-  const descriptionCard = document.querySelectorAll('.extraits_item_text')
-  if (descriptionCard) {
-    descriptionCard.forEach((element) => {
-      const shortDescription = element.textContent?.substring(0, 100) ?? ''
-      element.textContent = shortDescription + '...'
-    })
+  if (process.client) {
+    // Vérification côté client
+    if (blocTransition.value) {
+      const sortableTransition = new Sortable(blocTransition.value, {
+        group: 'bloc',
+        handle: '.drag',
+        animation: 250,
+        onEnd: (event: any) => {
+          const newIndex = event.newIndex
+          const oldIndex = event.oldIndex
+          const updatedItems = [...PromenadeStore.items] // créer une copie du tableau
+          const [removed] = updatedItems.splice(oldIndex, 1) // supprimer l'élément à l'ancienne position
+          updatedItems.splice(newIndex, 0, removed) // insérer l'élément à la nouvelle position
+          PromenadeStore.items = updatedItems // mettre à jour le tableau d'origine
+        },
+      })
+    }
+    const descriptionCard = document.querySelectorAll('.extraits_item_text')
+    if (descriptionCard) {
+      descriptionCard.forEach((element) => {
+        const shortDescription = element.textContent?.substring(0, 100) ?? ''
+        element.textContent = shortDescription + '...'
+      })
+    }
   }
 })
 </script>

@@ -19,17 +19,21 @@ const { data: promenades } = await useAsyncData<Promenade[]>('promenades', () =>
 )
 
 onMounted(() => {
-  const navbar = document.querySelector('.navbar')
-  if (navbar) {
-    const navBarWhite = navbar.classList.add('navbar-white')
-    return navBarWhite
+  if (process.client) {
+    const navbar = document.querySelector('.navbar')
+    if (navbar) {
+      const navBarWhite = navbar.classList.add('navbar-white')
+      return navBarWhite
+    }
   }
 })
 onUnmounted(() => {
-  const navbar = document.querySelector('.navbar')
-  if (navbar) {
-    const navBarWhite = navbar.classList.remove('navbar-white')
-    return navBarWhite
+  if (process.client) {
+    const navbar = document.querySelector('.navbar')
+    if (navbar) {
+      const navBarWhite = navbar.classList.remove('navbar-white')
+      return navBarWhite
+    }
   }
 })
 </script>

@@ -71,10 +71,12 @@ const last = () => {
 
 const deleteAllExtracts = () => {
   extractsStore.removeAllExtract()
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
-      localStorage.removeItem(key!)
+  if (process.client) {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
+        localStorage.removeItem(key!)
+      }
     }
   }
 }

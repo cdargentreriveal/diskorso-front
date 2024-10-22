@@ -32,7 +32,8 @@ interface ExtractWithModal extends ExtractFetched {
 
 const filteredExtracts = ref<ExtractWithModal[]>([])
 
-onMounted(() => {
+onMounted(async () => {
+  await extractsStore.loadExtractsFromLocalStorage()
   const initialExtracts = extractsStore.extracts_from_db.map((extract) => ({
     ...extract,
     showModal: false,
@@ -73,12 +74,19 @@ const last = () => {
   paginationPageCurrent.value = totalPages.value
 }
 const deleteAllExtracts = () => {
-  extractsStore.removeAllExtract()
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i)
-    if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
-      localStorage.removeItem(key!)
+  extractsStore.removeAllExtract() // Supprimer tous les extraits de Pinia
+
+  if (process.client) {
+    // Supprimer les éléments associés aux extraits dans localStorage
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
+        localStorage.removeItem(key!) // Supprimer les clés des cases à cocher
+      }
     }
+
+    // Vider la clé 'extracts' dans localStorage
+    localStorage.removeItem('extracts')
   }
 }
 </script>
@@ -144,12 +152,12 @@ const deleteAllExtracts = () => {
       </button>
     </div>
 
-    <button
+    <!-- <button
       class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-auto flex items-center flex-wrap mb-8 h-8 px-3 text-xs rounded"
       role="menuitem"
     >
       <span>Tout supprimer</span>
-    </button>
+    </button> -->
     <div
       class="container_promenade w-9/12 mx-auto flex items-center flex-wrap mb-8"
     >

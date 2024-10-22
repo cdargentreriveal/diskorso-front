@@ -21,10 +21,12 @@ export default defineComponent({
     let quillInstance: MyQuill | null = null
 
     const updateValue = () => {
-      if (quillInstance && editorRef.value) {
-        const html =
-          editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
-        emit('update:value', html)
+      if (process.client) {
+        if (quillInstance && editorRef.value) {
+          const html =
+            editorRef.value?.querySelector('.ql-editor')?.innerHTML || ''
+          emit('update:value', html)
+        }
       }
     }
 
