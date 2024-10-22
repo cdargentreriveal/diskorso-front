@@ -483,7 +483,7 @@ const toggle = () => {
                     class="promenade_page_content_created flex gap-2 italic text-sm py-4"
                   >
                     <p>
-                      Créee le :
+                      Créée le :
                       {{ getDate(PromenadeStore.selectPromenade!.createdAt) }}
                     </p>
                     <span>-</span>

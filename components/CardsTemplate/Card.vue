@@ -24,7 +24,7 @@
         <h2>{{ promenade.title }}</h2>
       </div>
       <div class="card-content-date text-sm gray-color mt-2 -sm:text-xs">
-        Crée le : {{ getDate(promenade.createdAt) }}
+        Créée le : {{ getDate(promenade.publishedAt) }}
       </div>
       <div class="card-content-categories flex flex-wrap gap-4 py-5 -md:gap-2">
         <div

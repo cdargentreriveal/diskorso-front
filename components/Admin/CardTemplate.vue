@@ -184,7 +184,7 @@ const propsCard = defineProps({
         <div
           class="date absolute bottom-0 right-0 bg-white card-content-date text-xs gray-color text-xs p-3"
         >
-          Crée le : {{ getDate(promenade.createdAt) }}
+          Créée le : {{ getDate(promenade.publishedAt) }}
         </div>
       </div>
     </NuxtLink>
