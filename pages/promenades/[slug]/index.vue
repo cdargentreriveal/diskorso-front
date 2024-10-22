@@ -103,7 +103,7 @@ if (mainImageSource) {
             <div
               class="promenade_page_content_created flex gap-2 italic text-sm py-4"
             >
-              <p>Créé le : {{ getDate(promenade.createdAt) }}</p>
+              <p>Créée le : {{ getDate(promenade.createdAt) }}</p>
               <span>-</span>
               <NuxtLink :to="`/contributor/${promenade.user.username}`">
                 <p>

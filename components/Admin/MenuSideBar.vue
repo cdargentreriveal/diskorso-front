@@ -361,7 +361,7 @@ const toggle = () => {
                     class="promenade_page_content_created flex gap-2 italic text-sm py-4"
                   >
                     <p>
-                      Créé le :
+                      Créée le :
                       {{ getDate(new Date().toISOString()) }}
                     </p>
                     <span>-</span>
