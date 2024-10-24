@@ -87,7 +87,45 @@ async function submitCreatedPromenade() {
               b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
           )
         await extractsStore.setExtractsFromdb(newAllExtracts)
-        await sessionStorage.setItem('extracts', JSON.stringify(newAllExtracts))
+        if (process.client) {
+          // Récupérer les extraits stockés dans localStorage
+          const extractsFromLocalStorage = JSON.parse(
+            localStorage.getItem('extracts') || '[]'
+          )
+
+          // Trouver l'index de l'extrait à remplacer
+          const indexToRemove = extractsFromLocalStorage.findIndex(
+            (extract: ExtractFetched) =>
+              extract.id === extractsStore.extractSelected!.id
+          )
+
+          // Si l'extrait est trouvé, on le retire du tableau
+          if (indexToRemove !== -1) {
+            extractsFromLocalStorage.splice(indexToRemove, 1)
+          }
+
+          // Ajouter le nouvel extrait mis à jour
+          extractsFromLocalStorage.push({
+            ...extractsStore.extractSelected!,
+            updatedAt: new Date(),
+          })
+
+          // Sauvegarder le tableau mis à jour dans localStorage
+          await localStorage.setItem(
+            'extracts',
+            JSON.stringify(extractsFromLocalStorage)
+          )
+
+          // Sauvegarder dans sessionStorage
+          await sessionStorage.setItem(
+            'extracts',
+            JSON.stringify(newAllExtracts)
+          )
+          await extractsStore.updateExtractIfExists(
+            extractsStore.extractSelected!
+          )
+        }
+
         selectedCategories.splice(0, selectedCategories.length)
         clearSelectedCategories()
         navigateTo('/dashboard/mes-extraits')

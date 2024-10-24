@@ -81,5 +81,15 @@ export const useExtractStore = defineStore('extractStore', {
     setEditSourceExtract(source: string) {
       this.extractSelected!.source = source
     },
+    updateExtractIfExists(updatedExtract: ExtractWithModal) {
+      const index = this.extracts.findIndex(
+        (extract) => extract.id === updatedExtract.id
+      )
+      if (index !== -1) {
+        // Remplacer l'extrait existant par l'extrait mis à jour
+        this.extracts[index] = updatedExtract
+        this.saveExtractsToLocalStorage()
+      }
+    },
   },
 })

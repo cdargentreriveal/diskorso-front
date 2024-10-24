@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useExtractStore } from '~~/store/extracts'
 import { usePromenadeStore } from '~~/store/promenade'
+import { ExtractFetched } from '~~/types/Extracts'
 const extractsStore = useExtractStore()
 const PromenadeStore = usePromenadeStore()
 
@@ -57,11 +58,15 @@ function addExcerptBlock(
 }
 
 // const items = ref<ExcerptItem[]>([])
-function sendToPinia(extract: number) {
-  extractsStore.removeExtract(extract)
+function sendToPinia(extract: ExtractFetched) {
   if (process.client) {
-    localStorage.removeItem(`extract_${extract}_isChecked`)
-    // TODO: enelever dans le tableau extracts (et ancienne version toujours présente alors que la version modifiée n'apparaît pas)
+    extractsStore.removeExtract(extract.id)
+    localStorage.removeItem(`extract_${extract.id}_isChecked`)
+    const extracts = JSON.parse(localStorage.getItem('extracts') || '[]')
+    const updatedExtracts = extracts.filter(
+      (e: ExtractFetched) => e.id !== extract.id
+    ) // Remove the extract by ID
+    localStorage.setItem('extracts', JSON.stringify(updatedExtracts)) // Save the updated extracts array
   } // remove the extract if the checkbox is unchecked
 }
 const toggle = (extract: any): boolean => {
@@ -101,7 +106,7 @@ onMounted(() => {
         >
           <div
             class="closed absolute top-5 right-5 text-xs cursor-pointer"
-            @click="sendToPinia(extract.id)"
+            @click="sendToPinia(extract)"
           >
             ✕
           </div>
