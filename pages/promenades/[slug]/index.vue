@@ -3,6 +3,7 @@
 import { Promenade } from '@/types/Promenades'
 import { useUserStore } from '~~/store/user'
 import { usePromenadeStore } from '~~/store/promenade'
+
 const user = useUserStore()
 const PromnadeStore = usePromenadeStore()
 definePageMeta({
@@ -34,6 +35,9 @@ if (mainImageSource) {
 }
 // const url = new URL(mainImageSource)
 // const domaine = url.hostname
+if (promenade.value?.published === false) {
+  await navigateTo('/') // Redirige vers la page d'accueil
+}
 </script>
 
 <template>
