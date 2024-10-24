@@ -61,6 +61,7 @@ function sendToPinia(extract: number) {
   extractsStore.removeExtract(extract)
   if (process.client) {
     localStorage.removeItem(`extract_${extract}_isChecked`)
+    // TODO: enelever dans le tableau extracts (et ancienne version toujours présente alors que la version modifiée n'apparaît pas)
   } // remove the extract if the checkbox is unchecked
 }
 const toggle = (extract: any): boolean => {

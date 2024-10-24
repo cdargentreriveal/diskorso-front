@@ -94,7 +94,7 @@ async function submitCreatedPromenade() {
   } catch (error) {
     displaySwal(
       'Erreur lors de la création',
-      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'Une erreur est survenue lors de la création de votre extrait. Veuillez réessayer plus tard.',
       'error',
       'Ok'
     )

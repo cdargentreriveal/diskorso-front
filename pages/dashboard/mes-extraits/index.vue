@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { BtnAdminPage } from '@/types/AdminTitlePage'
 import { useExtractStore } from '~~/store/extracts'
 import { ExtractFetched } from '~~/types/Extracts'
 import { usePromenadeStore } from '~~/store/promenade'
-
+const promenadesStore = usePromenadeStore()
 definePageMeta({
   layout: 'admin',
   middleware: ['is-logged'],
 })
+
 const extractsStore = useExtractStore()
-const promenadesStore = usePromenadeStore()
 
 const datasTitle = computed((): BtnAdminPage[] => [
   {
@@ -30,16 +30,13 @@ interface ExtractWithModal extends ExtractFetched {
   showModal: boolean
 }
 
-const filteredExtracts = ref<ExtractWithModal[]>([])
-
-onMounted(async () => {
-  await extractsStore.loadExtractsFromLocalStorage()
-  const initialExtracts = extractsStore.extracts_from_db.map((extract) => ({
+// Ici on utilise directement extracts_from_db dans paginatedExtracts
+const filteredExtracts = computed(() =>
+  extractsStore.extracts_from_db.map((extract) => ({
     ...extract,
     showModal: false,
   }))
-  filteredExtracts.value = initialExtracts
-})
+)
 
 const totalPages = computed(() =>
   Math.ceil(totalExtracts.value / numberOfExtractToDisplay.value)
@@ -54,6 +51,11 @@ const paginatedExtracts = computed(() => {
   return filteredExtracts.value.slice(start, end)
 })
 
+onMounted(async () => {
+  await extractsStore.loadExtractsFromLocalStorage()
+})
+
+// Fonctions pour la pagination
 const next = () => {
   if (paginationPageCurrent.value < totalPages.value) {
     paginationPageCurrent.value++
@@ -73,6 +75,8 @@ const first = () => {
 const last = () => {
   paginationPageCurrent.value = totalPages.value
 }
+
+// Fonction pour supprimer tous les extraits
 const deleteAllExtracts = () => {
   extractsStore.removeAllExtract() // Supprimer tous les extraits de Pinia
 
@@ -90,7 +94,6 @@ const deleteAllExtracts = () => {
   }
 }
 </script>
-
 <template>
   <!-- <div
     v-if="Loading"
