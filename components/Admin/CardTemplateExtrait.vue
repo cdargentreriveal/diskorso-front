@@ -147,7 +147,7 @@ watch(
         >Créé : {{ getDate(extract.createdAt) }}</span
       ><br />
       <span class="small text-slate-400"
-        >Dernière modification : {{ getDate(extract.updatedAt) }}</span
+        >Dernière activité : {{ getDate(extract.updatedAt) }}</span
       >
       <div
         class="card-content-title font-bold 2xl:text-lg my-1 mb-3 2xl:h-[50px] xl:h-[40px]"
