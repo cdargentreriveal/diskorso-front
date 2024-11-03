@@ -68,9 +68,21 @@ export const useExtractStore = defineStore('extractStore', {
         this.extracts.splice(index, 1)
       }
     },
-    removeAllExtract() {
+    async removeAllExtract() {
       this.extracts.splice(0, this.extracts.length)
       this.tout_selectionner++
+      if (process.client) {
+        // Supprimer les éléments associés aux extraits dans localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i)
+          if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
+            localStorage.removeItem(key!) // Supprimer les clés des cases à cocher
+          }
+        }
+
+        // Vider la clé 'extracts' dans localStorage
+        await localStorage.removeItem('extracts')
+      }
     },
     selectExtract(extract: ExtractWithModal) {
       this.extractSelected = extract

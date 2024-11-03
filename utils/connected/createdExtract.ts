@@ -83,9 +83,10 @@ export async function createdExtract(baseURL: string, data: object) {
     }
     return data
   } else {
-    const data = await response.json()
     await refreshToken(baseURL)
-    await fetch(`${baseURL}/extract/create`, options)
+    const data = await response.json()
+    const responseUpdated = await fetch(`${baseURL}/extract/create`, options)
+    const dataFethed2 = await responseUpdated.json()
     const user = await fetch(`${baseURL}/users/user-connected`, {
       method: 'GET',
       headers: {
@@ -145,6 +146,6 @@ export async function createdExtract(baseURL: string, data: object) {
       // eslint-disable-next-line no-console
       console.log('error new data')
     }
-    return data
+    return dataFethed2
   }
 }

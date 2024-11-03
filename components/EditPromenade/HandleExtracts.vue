@@ -151,9 +151,12 @@ onMounted(() => {
                       <div
                         class="text-xs italic font-semibold my-5 text-slate-500 text-right"
                       >
-                        <a :href="extract.source" target="_blank">{{
-                          extract.source
-                        }}</a>
+                        <span v-if="isValidUrl(extract.source)">
+                          <a :href="extract.source" target="_blank">{{
+                            extract.source
+                          }}</a>
+                        </span>
+                        <span v-else>{{ extract.source }}</span>
                       </div>
                     </div>
                     <div class="flex flex-col">

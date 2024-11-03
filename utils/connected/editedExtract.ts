@@ -20,7 +20,7 @@ export async function editedExtract(baseURL: string, data: object) {
     body: JSON.stringify(data),
   }
   const response = await fetch(`${baseURL}/extract/edit`, options)
-  if (response.ok) {
+  if (response.status === 200) {
     const data = await response.json()
     const user = await fetch(`${baseURL}/users/user-connected`, {
       method: 'GET',
@@ -83,9 +83,10 @@ export async function editedExtract(baseURL: string, data: object) {
     }
     return data
   } else {
-    const data = await response.json()
     await refreshToken(baseURL)
-    await fetch(`${baseURL}/extract/edit`, options)
+
+    const responseUpdated = await fetch(`${baseURL}/extract/edit`, options)
+    const dataFethed2 = await responseUpdated.json()
     const user = await fetch(`${baseURL}/users/user-connected`, {
       method: 'GET',
       headers: {
@@ -94,6 +95,7 @@ export async function editedExtract(baseURL: string, data: object) {
       },
       credentials: 'include',
     })
+
     const userConnected = await user.json()
     if (userConnected.success) {
       const userToRegister = {
@@ -140,11 +142,12 @@ export async function editedExtract(baseURL: string, data: object) {
       await sessionStorage.setItem('user_data', userDataJSON)
       await sessionStorage.setItem('extracts', extractsDataJson)
       await sessionStorage.setItem('promenades', promenadesDataJson)
+
       await navigateTo(`/dashboard/mes-extraits`)
     } else {
       // eslint-disable-next-line no-console
       console.log('error new data')
     }
-    return data
+    return dataFethed2
   }
 }

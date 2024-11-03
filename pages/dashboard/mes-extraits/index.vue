@@ -79,19 +79,6 @@ const last = () => {
 // Fonction pour supprimer tous les extraits
 const deleteAllExtracts = () => {
   extractsStore.removeAllExtract() // Supprimer tous les extraits de Pinia
-
-  if (process.client) {
-    // Supprimer les éléments associés aux extraits dans localStorage
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-      if (key!.startsWith('extract_') && key!.endsWith('_isChecked')) {
-        localStorage.removeItem(key!) // Supprimer les clés des cases à cocher
-      }
-    }
-
-    // Vider la clé 'extracts' dans localStorage
-    localStorage.removeItem('extracts')
-  }
 }
 </script>
 <template>

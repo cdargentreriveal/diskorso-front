@@ -8,9 +8,9 @@ const config = useRuntimeConfig()
 const extractsStore = useExtractStore()
 const categoriesStore = useCategoryStore()
 const categories = categoriesStore.categories
-definePageMeta({
-  layout: 'page',
-})
+// definePageMeta({
+//   layout: 'page',
+// })
 const { $swal } = useNuxtApp()
 const displaySwal = (
   title: string,
@@ -25,7 +25,7 @@ const displaySwal = (
     confirmButtonText,
   })
 }
-async function submitCreatedPromenade() {
+async function submitEditExtract() {
   const data = reactive({
     id: extractsStore.extractSelected!.id,
     name: extractsStore.extractSelected!.name,
@@ -67,74 +67,67 @@ async function submitCreatedPromenade() {
       )
     } else {
       const response = await editedExtract(config.public.baseURL, data)
-      if (!response.success && response.statusCode !== 401) {
-        displaySwal('Echec', `${response.message}`, 'error', 'ok')
-      } else {
-        await displaySwal(
-          'Extrait mis à jour',
-          `Votre extrait ${data.name} a bien été mis à jour`,
-          'success',
-          'Ok'
+      await displaySwal(
+        'Extrait mis à jour',
+        `Votre extrait ${data.name} a bien été mis à jour`,
+        'success',
+        'Ok'
+      )
+      const newAllExtracts = response.data
+        .map((extract: ExtractFetched) => ({
+          ...extract,
+          updatedAt: new Date(extract.updatedAt),
+          showModal: false,
+        }))
+        .sort(
+          (a: ExtractFetched, b: ExtractFetched) =>
+            b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
         )
-        const newAllExtracts = response.data
-          .map((extract: ExtractFetched) => ({
-            ...extract,
-            updatedAt: new Date(extract.updatedAt),
-            showModal: false,
-          }))
-          .sort(
-            (a: ExtractFetched, b: ExtractFetched) =>
-              b.updatedAt.getTime() - a.updatedAt.getTime() // Inverser l'ordre de comparaison
-          )
-        await extractsStore.setExtractsFromdb(newAllExtracts)
-        if (process.client) {
-          // Récupérer les extraits stockés dans localStorage
-          const extractsFromLocalStorage = JSON.parse(
-            localStorage.getItem('extracts') || '[]'
-          )
+      await extractsStore.setExtractsFromdb(newAllExtracts)
+      if (process.client) {
+        // Récupérer les extraits stockés dans localStorage
+        const extractsFromLocalStorage = JSON.parse(
+          localStorage.getItem('extracts') || '[]'
+        )
 
-          // Trouver l'index de l'extrait à remplacer
-          const indexToRemove = extractsFromLocalStorage.findIndex(
-            (extract: ExtractFetched) =>
-              extract.id === extractsStore.extractSelected!.id
-          )
+        // Trouver l'index de l'extrait à remplacer
+        const indexToRemove = extractsFromLocalStorage.findIndex(
+          (extract: ExtractFetched) =>
+            extract.id === extractsStore.extractSelected!.id
+        )
 
-          // Si l'extrait est trouvé, on le retire du tableau
-          if (indexToRemove !== -1) {
-            extractsFromLocalStorage.splice(indexToRemove, 1)
-          }
-
-          // Ajouter le nouvel extrait mis à jour
-          extractsFromLocalStorage.push({
-            ...extractsStore.extractSelected!,
-            updatedAt: new Date(),
-          })
-
-          // Sauvegarder le tableau mis à jour dans localStorage
-          await localStorage.setItem(
-            'extracts',
-            JSON.stringify(extractsFromLocalStorage)
-          )
-
-          // Sauvegarder dans sessionStorage
-          await sessionStorage.setItem(
-            'extracts',
-            JSON.stringify(newAllExtracts)
-          )
-          await extractsStore.updateExtractIfExists(
-            extractsStore.extractSelected!
-          )
+        // Si l'extrait est trouvé, on le retire du tableau
+        if (indexToRemove !== -1) {
+          extractsFromLocalStorage.splice(indexToRemove, 1)
         }
 
-        selectedCategories.splice(0, selectedCategories.length)
-        clearSelectedCategories()
-        navigateTo('/dashboard/mes-extraits')
+        // Ajouter le nouvel extrait mis à jour
+        extractsFromLocalStorage.push({
+          ...extractsStore.extractSelected!,
+          updatedAt: new Date(),
+        })
+
+        // Sauvegarder le tableau mis à jour dans localStorage
+        await localStorage.setItem(
+          'extracts',
+          JSON.stringify(extractsFromLocalStorage)
+        )
+
+        // Sauvegarder dans sessionStorage
+        await sessionStorage.setItem('extracts', JSON.stringify(newAllExtracts))
+        await extractsStore.updateExtractIfExists(
+          extractsStore.extractSelected!
+        )
       }
+
+      selectedCategories.splice(0, selectedCategories.length)
+      clearSelectedCategories()
+      navigateTo('/dashboard/mes-extraits')
     }
   } catch (error) {
     displaySwal(
       'Erreur lors de la création',
-      'Une erreur est survenue lors de la création de votre promenade. Veuillez réessayer plus tard.',
+      'Une erreur est survenue lors de la modification de votre extrait. Veuillez réessayer plus tard.',
       'error',
       'Ok'
     )
@@ -289,7 +282,7 @@ const selectedCategoryIds = computed(() => {
         <button
           type="submit"
           class="published_btn 2xl:w-8/12 mx-auto text-center px-4 py-3 text-sm rounded-md text-white block"
-          @click.prevent="submitCreatedPromenade"
+          @click.prevent="submitEditExtract"
         >
           <span class="font-semibold">Modifier</span>
         </button>
