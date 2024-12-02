@@ -16,6 +16,7 @@ export async function publishPromenade(baseURL: string, id: number) {
       id,
     }),
   }
+
   const response = await fetch(
     `${baseURL}/promenadeditor/publish-promenade`,
     options
