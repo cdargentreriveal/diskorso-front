@@ -44,7 +44,7 @@ definePageMeta({
             <h2 class="pt-12 pb-4 text-2xl">Coordonnées</h2>
 
             <ul>
-              <li class="pt-4">Contact : contact (at) diskorso (dot) org.</li>
+              <li class="pt-4">Contact : contact@diskorso.org</li>
               <li class="pt-4">
                 Université Paris Cité, établissement public à caractère
                 scientifique, culturel et professionnel, dont le siège est situé
