@@ -59,8 +59,8 @@ export default {
   >
     <div class="w-full mx-auto py-3 text-center top-banner relative">
       <p class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm">
-        La plateforme collaborative
-        <span class="purple-color">100% gratuite</span>
+        Plateforme collaborative de
+        <span class="purple-color">partage de connaissances</span>
       </p>
     </div>
     <div

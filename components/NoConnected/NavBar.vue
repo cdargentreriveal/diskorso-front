@@ -59,8 +59,8 @@ export default {
       <p
         class="top-banner-text font-bold uppercase -sm:w-9/12 -sm:text-sm xs-w"
       >
-        La plateforme collaborative
-        <span class="purple-color">100% gratuite</span>
+        Plateforme collaborative de
+        <span class="purple-color">partage de connaissances</span>
       </p>
     </div>
     <div class="main-nav w-full top-12 left-0 right-0 z-10 px-4">
@@ -216,7 +216,7 @@ li .Inscription {
     z-index: 100;
     animation: menuOpen 0.7s ease-in-out forwards;
     & ul li {
-      color:black !important;
+      color: black !important;
     }
   }
 }

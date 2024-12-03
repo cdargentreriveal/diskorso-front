@@ -19,30 +19,59 @@ definePageMeta({
             class="about-description mt-10 -md:w-full -md:text-sm md:text-sm xl:text-md 2xl:text-base"
           >
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              faucibus ante vitae ipsum blandit, in porttitor ligula
-              sollicitudin. Integer et justo sit amet neque aliquam tempus. Nam
-              eget malesuada nisl. Phasellus volutpat a lacus in lacinia.
-              Aliquam dictum eu erat et ornare. Phasellus elementum nunc feugiat
-              ipsum feugiat, et sollicitudin lorem tincidunt. Praesent vel dui
-              orci. Vestibulum ante ipsum primis in faucibus orci luctus et
-              ultrices posuere cubilia curae; Donec varius neque et pharetra
-              tempus. Nullam ut rutrum massa. Proin eu eros vitae quam euismod
-              pretium non tincidunt nisl.
+              L'idée de Diskorso a germé dans l'esprit de trois
+              enseignants-chercheurs qui ont répondu à un appel à projet de la
+              <span class="purple-color"
+                ><a href="https://u-paris.fr/sciences/"
+                  >Faculté des sciences de l'université Paris Cité</a
+                >.</span
+              >
+              Le financement obtenu a permis la création du présent site par
+              l'agence
+              <span class="purple-color"
+                ><a href="https://www.riveal.fr/">Riveal</a>.</span
+              >
             </p>
-            <p class="mt-5 mb-5 lg:mb-0">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              faucibus ante vitae ipsum blandit, in porttitor ligula
-              sollicitudin. Integer et justo sit amet neque aliquam tempus. Nam
-              eget malesuada nisl. Phasellus volutpat a lacus in lacinia.
-              Aliquam dictum eu erat et ornare. Phasellus elementum nunc feugiat
-              ipsum feugiat, et sollicitudin lorem tincidunt. Praesent vel dui
-              orci. Vestibulum ante ipsum primis in faucibus orci luctus et
-              ultrices posuere cubilia curae; Donec varius neque et pharetra
-              tempus. Nullam ut rutrum massa. Proin eu eros vitae quam euismod
-              pretium non tincidunt nisl.
+            <p class="pt-8">
+              L'utilisation de ce site est conditionnée à l'approbation de la
+              <span class="purple-color"
+                ><NuxtLink to="/charte-de-participation"
+                  >charte de participation.
+                </NuxtLink></span
+              >
             </p>
+
+            <h2 class="pt-12 pb-4 text-2xl">Coordonnées</h2>
+
+            <ul>
+              <li class="pt-4">Contact : contact (at) diskorso (dot) org.</li>
+              <li class="pt-4">
+                Université Paris Cité, établissement public à caractère
+                scientifique, culturel et professionnel, dont le siège est situé
+                au 85 boulevard Saint-Germain, 75006 Paris. Contact&nbsp;:
+                <a href="https://u-paris.fr/contact/"
+                  >https://u-paris.fr/contact/</a
+                >.
+              </li>
+              <li class="pt-4">
+                Faculté des sciences&nbsp;:
+                <a href="https://u-paris.fr/sciences/"
+                  >https://u-paris.fr/sciences/</a
+                >.
+              </li>
+              <li class="pt-4">
+                Agence Riveal&nbsp;:
+                <a href="https://www.riveal.fr/">https://www.riveal.fr/</a>.
+              </li>
+              <li class="pt-4">
+                Hébergement&nbsp;: Email: team@railway.com <br />Phone: (415)
+                707-7675<br />
+                Address: 548 Market St PMB 68956, San Francisco, California
+                94104
+              </li>
+            </ul>
             <Button
+              class="pt-12"
               text="voir les promenades"
               type="secondary"
               to="/promenades"

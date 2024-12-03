@@ -18,7 +18,7 @@ export default defineNuxtConfig({
         {
           hid: 'description',
           name: 'description',
-          content: 'Plateforme collaborative de promenades numériques',
+          content: 'Plateforme collaborative de partage de connaissances',
         },
         { name: 'format-detection', content: 'telephone=no' },
       ],
