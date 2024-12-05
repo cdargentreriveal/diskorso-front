@@ -156,7 +156,7 @@ const login = async (email: string, password: string) => {
       <div class="py-8 text-center -sm:px-4 xl:hidden inline-block">
         <div class="title uppercase font-bold xl:text-4xl text-2xl md:text-3xl">
           <h2>
-            DPOur une meilleure expérience <br />
+            POur une meilleure expérience <br />
             <span class="font-medium">passer sur grand écran</span>
           </h2>
         </div>
