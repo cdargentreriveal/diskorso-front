@@ -17,7 +17,7 @@
             class="w-2/12 text-right underline -sm:w-full -sm:py-2 -sm:text-left"
           >
             <NuxtLink to="/mentions-legales"
-              ><span>Mention légales</span></NuxtLink
+              ><span>Mentions légales</span></NuxtLink
             >
           </div>
           <div
